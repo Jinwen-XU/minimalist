@@ -1,0 +1,842 @@
+%<*driver>
+\ProvidesFile{minimalist.dtx}
+%</driver>
+\NeedsTeXFormat{LaTeX2e}[2020-10-01]
+%<*einfart>
+\ProvidesClass{einfart}
+    [2021/03/09 A simple and clear article style]
+%</einfart>
+%<*einfartfast>
+\ProvidesClass{einfartfast}
+    [2021/03/09 A faster but rougher version of einfart]
+%</einfartfast>
+%<*simplivre>
+\ProvidesClass{simplivre}
+    [2021/03/09 A simple and clear book style]
+%</simplivre>
+%<*simplivrefast>
+\ProvidesClass{simplivrefast}
+    [2021/03/09 A faster but rougher version of simplivre]
+%</simplivrefast>
+
+%<*einfart|einfartfast>
+\DeclareOption*{%
+    \PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptions\relax
+\LoadClass{article}
+%</einfart|einfartfast>
+%<*simplivre|simplivrefast>
+\DeclareOption*{%
+    \PassOptionsToClass{\CurrentOption}{book}}
+\ProcessOptions\relax
+\LoadClass{book}
+%</simplivre|simplivrefast>
+
+\RequirePackage{etoolbox}
+
+%%================================
+%% Fonts
+%%================================
+\RequirePackage{anyfontsize}
+
+%% Title fonts
+\newcommand{\partfont}{\sffamily}
+%<simplivre|simplivrefast>\newcommand{\chapfont}{\sffamily}
+\newcommand{\secfont}{}
+\newcommand{\subsecfont}{}
+%<*einfartfast|simplivrefast>
+
+%% Math fonts
+\RequirePackage{mathpazo}
+%</einfartfast|simplivrefast>
+
+%% English fonts
+\PassOptionsToPackage{no-math}{fontspec}
+\RequirePackage{fontspec}
+\IfFontExistsTF{Palatino Linotype}{%
+    \setmainfont{Palatino Linotype}
+}{
+    \setmainfont{texgyrepagella-regular.otf}[
+        BoldFont       = texgyrepagella-bold.otf ,
+        ItalicFont     = texgyrepagella-italic.otf ,
+        BoldItalicFont = texgyrepagella-bolditalic.otf ]
+}
+    \setsansfont{SourceSansPro-Regular.otf}[
+        Scale          = MatchLowercase,
+        BoldFont       = SourceSansPro-Bold.otf ,
+        ItalicFont     = SourceSansPro-RegularIt.otf ,
+        BoldItalicFont = SourceSansPro-BoldIt.otf ]
+
+%% Chinese fonts
+\PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
+\RequirePackage{ctex}
+\IfFontExistsTF{FZYouSongS 507R}{%
+    \setCJKmainfont{FZYouSongS 507R}[
+        BoldFont       = FZYouSongS 509R ,
+        BoldFeatures   = {FakeBold=2} ,
+        ItalicFont     = * ,
+        BoldItalicFont = FZYouSongS 509R ,
+        BoldItalicFeatures = {FakeBold=2} ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKmainfont{FandolSong-Regular.otf}[
+        BoldFont       = FandolSong-Bold.otf ,
+        ItalicFont     = FandolKai-Regular.otf ,
+        BoldItalicFont = FandolKai-Regular.otf ,
+        BoldItalicFeatures = {FakeBold=4} ,
+        SmallCapsFont  = * ]
+}
+\IfFontExistsTF{FZYouSongS 507R}{%
+    \setCJKmonofont{FZYouSongS 507R}[
+        BoldFont       = FZYouSongS 509R ,
+        BoldFeatures   = {FakeBold=2} ,
+        ItalicFont     = * ,
+        BoldItalicFont = FZYouSongS 509R ,
+        BoldItalicFeatures = {FakeBold=2} ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKmonofont{FandolFang-Regular.otf}[
+        BoldFont       = * ,
+        BoldFeatures   = {FakeBold=4} ,
+        ItalicFont     = * ,
+        BoldItalicFont = * ,
+        BoldItalicFeatures = {FakeBold=4} ,
+        SmallCapsFont  = * ]
+}
+\IfFontExistsTF{FZYouHeiS 506L}{%
+    \setCJKsansfont{FZYouHeiS 506L}[
+        BoldFont       = FZYouHeiS 509R,
+        ItalicFont     = * ,
+        BoldItalicFont = FZYouHeiS 509R ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKsansfont{FandolHei-Regular.otf}[
+        BoldFont       = FandolHei-Bold.otf ,
+        ItalicFont     = * ,
+        BoldItalicFont = FandolHei-Bold.otf ,
+        SmallCapsFont  = * ]
+}
+%<*einfart|simplivre>
+
+%% Math fonts
+\PassOptionsToPackage
+    {warnings-off={mathtools-colon,mathtools-overbracket}}{unicode-math}
+\RequirePackage{unicode-math}
+\unimathsetup{math-style=ISO}
+\setmathfont{Asana-Math.otf}
+\IfFontExistsTF{Neo Euler}{%
+\setmathfont{Neo Euler} % From https://tex.stackexchange.com/a/425887
+    [range={"0000-"0001,"0020-"007E,
+            "00A0,"00A7-"00A8,"00AC,"00AF,"00B1,"00B4-"00B5,"00B7,
+            "00D7,"00F7,
+            "0131,
+            "0237,"02C6-"02C7,"02D8-"02DA,"02DC,
+            "0300-"030C,"030F,"0311,"0323-"0325,"032E-"0332,"0338,
+            "0391-"0393,"0395-"03A1,"03A3-"03A8,"03B1-"03BB,
+            "03BD-"03C1,"03C3-"03C9,"03D1,"03D5-"03D6,"03F5,
+            "2016,"2018-"2019,"2021,"2026-"202C,"2032-"2037,"2044,
+            "2057,"20D6-"20D7,"20DB-"20DD,"20E1,"20EE-"20EF,
+            "210B-"210C,"210E-"2113,"2118,"211B-"211C,"2126-"2128,
+            "212C-"212D,"2130-"2131,"2133,"2135,"2190-"2199,
+            "21A4,"21A6,"21A9-"21AA,"21BC-"21CC,"21D0-"21D5,
+            "2200,"2202-"2209,"220B-"220C,"220F-"2213,"2215-"221E,
+            "2223,"2225,"2227-"222E,"2234-"2235,"2237-"223D,
+            "2240-"224C,"2260-"2269,"226E-"2279,"2282-"228B,"228E,
+            "2291-"2292,"2295-"2299,"22A2-"22A5,"22C0-"22C5,
+            "22DC-"22DD,"22EF,"22F0-"22F1,
+            "2308-"230B,"2320-"2321,"2329-"232A,"239B-"23AE,
+            "23DC-"23DF,
+            "27E8-"27E9,"27F5-"27FE,"2A0C,"2B1A,
+            "1D400-"1D433,"1D49C,"1D49E-"1D49F,"1D4A2,"1D4A5-"1D4A6,
+            "1D4A9-"1D4AC,"1D4AE-"1D4B5,"1D4D0-"1D4E9,"1D504-"1D505,
+            "1D507-"1D50A,"1D50D-"1D514,"1D516-"1D51C,"1D51E-"1D537,
+            "1D56C-"1D59F,"1D6A8-"1D6B8,"1D6BA-"1D6D2,"1D6D4-"1D6DD,
+            "1D6DF,"1D6E1,"1D7CE-"1D7D7 }]
+}{}
+%</einfart|simplivre>
+
+\RequirePackage[verbose=silent]{microtype}
+
+%%================================
+%% Page layout
+%%================================
+\RequirePackage[heightrounded]{geometry}
+\geometry{
+    papersize={7in,10in},
+    total={40em,60em},
+    hmarginratio=1:1,
+    vmarginratio=1:1,
+    footnotesep=2em plus 2pt minus 2pt,
+}
+
+\RequirePackage{xcolor}
+\definecolor{paper}{RGB}{255,255,255}
+%<*simplivre>
+
+\RequirePackage{tikz}
+\usetikzlibrary{calc,shadings}
+\RequirePackage{tikzpagenodes}% For `current page text area`
+\newcommand{\drawHelpLine}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \foreach\i in {0,1,...,5}{%
+            \fill[opacity=0.12-0.02*\i] 
+                ($(current page text area.north east)
+                    +(-\i*0.5em-.025em,-10pt+\i*1.1pt)$) 
+                rectangle ($(current page text area.south east)
+                    +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+            \shade[top color=paper,bottom color=black,opacity=0.12-0.02*\i] 
+                ($(current page text area.north east)
+                    +(-\i*0.5em-.025em,2pt)$) 
+                rectangle ($(current page text area.north east)
+                    +(-\i*0.5em+.025em,-10pt+\i*1.1pt)$);
+            \shade[top color=black,bottom color=paper,opacity=0.12-0.02*\i] 
+                ($(current page text area.south east)
+                    +(-\i*0.5em-.025em,-2pt)$) 
+                rectangle ($(current page text area.south east)
+                    +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+        }
+    \end{tikzpicture}%
+}
+%</simplivre>
+%<*simplivrefast>
+
+\newcommand{\drawHelpLine}{}
+%</simplivrefast>
+
+\RequirePackage{fancyhdr}
+\RequirePackage{extramarks}
+\fancypagestyle{fancy}{
+    \fancyhf{}
+    \if@twoside
+        \fancyfoot[RO]{\small\textcolor{black!30!paper}{\lastrightmark}%
+            ~~\rlap{\textcolor{gray!55!paper}{$|$}~~\thepage}}
+        \fancyfoot[LE]{\small\leavevmode\llap{\thepage%
+            ~~\textcolor{gray!55!paper}{$|$}}%
+            ~~\textcolor{black!30!paper}{\lastleftmark}}
+    \else
+        \fancyfoot[R]{\small\textcolor{black!30!paper}{\lastrightmark}%
+            ~~\rlap{\textcolor{gray!55!paper}{$|$}~~\thepage}}
+    \fi
+    \renewcommand{\headrulewidth}{0pt}
+}
+\pagestyle{fancy}
+
+\fancypagestyle{plain}{
+    \fancyhf{}
+    \if@twoside
+        \fancyfoot[RO]{\small%
+            ~\rlap{\textcolor{gray!55!paper}{$|$}~~\thepage}}
+        \fancyfoot[LE]{\small\leavevmode\llap{\thepage%
+            ~~\textcolor{gray!55!paper}{$|$}}}
+    \else
+        \fancyfoot[R]{\small%
+            ~\rlap{\textcolor{gray!55!paper}{$|$}~~\thepage}}
+    \fi
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+%<*einfart|einfartfast>
+\if@twoside
+    \renewcommand*{\sectionmark}[1]{\markboth{\uppercase{#1}}{}}
+\else
+    \renewcommand*{\sectionmark}[1]{\markboth{\uppercase{#1}}{\uppercase{#1}}}
+\fi
+%</einfart|einfartfast>
+%<*simplivre|simplivrefast>
+\if@twoside
+    \renewcommand{\chaptermark}[1]{\markboth{\uppercase{#1}}{}}
+\else
+    \renewcommand{\chaptermark}[1]{\markboth{\uppercase{#1}}{\uppercase{#1}}}
+\fi
+\renewcommand*{\sectionmark}[1]{%
+    \markright{\raisebox{.03em}{\footnotesize/}%
+    ~\thesection~\raisebox{.03em}{\footnotesize/}~~~#1}}
+
+\fancypagestyle{part}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+    \fancyhead[C]{\drawHelpLine}
+}
+
+\addtolength{\headheight}{20pt}
+\addtolength{\topmargin}{-20pt}
+%</simplivre|simplivrefast>
+
+%%================================
+%% Line spacing
+%%================================
+\RequirePackage{setspace}
+\onehalfspacing
+% To avoid `Underfull \vbox (badness 10000)`
+\raggedbottom
+
+\AtEndPreamble{\RequirePackage{parskip}}
+
+%%================================
+%% Line numbers
+%%================================
+\PassOptionsToPackage{pagewise,mathlines}{lineno}
+\RequirePackage{lineno}
+\renewcommand\linenumberfont{\ttfamily\color{gray!15!paper}\footnotesize}
+\setlength\linenumbersep{1em}
+
+\RequirePackage{mathtools}
+
+%% From https://tex.stackexchange.com/a/461192
+% Patch 'normal' math environments:
+\newcommand*\linenomathpatch[1]{%
+    \cspreto{#1}{\linenomath}%
+    \cspreto{#1*}{\linenomath}%
+    \cspreto{end#1}{\endlinenomath}%
+    \cspreto{end#1*}{\endlinenomath}%
+}
+% Patch AMS math environments:
+\newcommand*\linenomathpatchAMS[1]{%
+    \cspreto{#1}{\linenomathAMS}%
+    \cspreto{#1*}{\linenomathAMS}%
+    \csappto{end#1}{\endlinenomath}%
+    \csappto{end#1*}{\endlinenomath}%
+}
+% Define \linenomathAMS depending on whether 'mathlines' option is provided
+\expandafter\ifx\linenomath\linenomathWithnumbers
+    \let\linenomathAMS\linenomathWithnumbers
+% The following line gets rid of an extra line numbers at the bottom:
+    \patchcmd\linenomathAMS{\advance\postdisplaypenalty\linenopenalty}{}{}{}
+\else
+    \let\linenomathAMS\linenomathNonumbers
+\fi
+
+\linenomathpatch{equation}
+\linenomathpatchAMS{gather}
+\linenomathpatchAMS{multline}
+\linenomathpatchAMS{align}
+\linenomathpatchAMS{alignat}
+\linenomathpatchAMS{flalign}
+
+% record whether linenumber has turned on
+\newif\ifLNturnsON
+\def\LocallyStopLineNumbers{\LNturnsONfalse%
+    \ifLineNumbers\LNturnsONtrue\fi\nolinenumbers}
+\def\ResumeLineNumbers{\ifLNturnsON\linenumbers\fi}
+% switch off the line numbers of TOC
+\pretocmd{\tableofcontents}{\LocallyStopLineNumbers}{}{\FAIL}
+\apptocmd{\tableofcontents}{\ResumeLineNumbers}{}{\FAIL}
+% switch off the line numbers of bibliography
+\pretocmd{\thebibliography}{\LocallyStopLineNumbers}{}{\FAIL}
+\apptocmd{\endthebibliography}{\ResumeLineNumbers}{}{\FAIL}
+
+
+%%================================
+%% Title format
+%%================================
+\RequirePackage[explicit,newparttoc]{titlesec}
+\PassOptionsToPackage{normalem}{ulem}
+\RequirePackage{ulem}
+
+%<*einfart|einfartfast>
+%% Part
+\titleformat{\part}[display]
+    {\LocallyStopLineNumbers%
+    \partfont\filleft}
+    {\MakeUppercase{\partname~\protect\thepart}}
+    {.3em}
+    {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
+    [\ResumeLineNumbers]
+\titleformat{name=\part,numberless}[display]
+    {\LocallyStopLineNumbers%
+    % \phantomsection\addcontentsline{toc}{part}{#1}%
+    \partfont\filleft}
+    {\phantom{\MakeUppercase{\partname}}}
+    {.3em}
+    {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
+    [\ResumeLineNumbers]
+%% Text after part
+\newcommand{\parttext}[1]{%
+    \LocallyStopLineNumbers%
+    \begin{flushright}%
+        \begin{minipage}{0.833\textwidth}%
+            \color{black!80!paper}\raggedleft#1%
+        \end{minipage}%
+    \end{flushright}%
+    \ResumeLineNumbers%
+}
+%</einfart|einfartfast>
+%<*simplivre|simplivrefast>
+%% Part
+\titleclass{\part}{top} % make part like a chapter
+\titleformat{\part}[display]
+    {\thispagestyle{part}%
+    \LocallyStopLineNumbers%
+    \partfont\filleft}
+    {\MakeUppercase{\partname~\protect\thepart}}
+    {1em}
+    {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+    [\ResumeLineNumbers]
+\titleformat{name=\part,numberless}[display]
+    {\thispagestyle{part}%
+    \LocallyStopLineNumbers%
+    % \phantomsection\addcontentsline{toc}{part}{#1}%
+    \partfont\filleft}
+    {\phantom{\MakeUppercase{\partname}}}
+    {1em}
+    {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+    [\ResumeLineNumbers]
+\titlespacing*{\part}{0pt}{5em}{6em}
+%% Text after part
+\newcommand{\parttext}[1]{%
+\vfill%
+\LocallyStopLineNumbers%
+\begin{flushright}%
+    \begin{minipage}{0.833\textwidth}%
+        \color{black!80!paper}\raggedleft#1%
+    \end{minipage}%
+\end{flushright}%
+\ResumeLineNumbers%
+\vfill\vfill%
+\cleardoublepage%
+}
+
+%% Chapter
+\titleformat{\chapter}
+    {\thispagestyle{fancy}%
+    \LocallyStopLineNumbers%
+    \color{black!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
+    {\rlap{\hspace*{-.5em}{\color{gray!25!paper}%
+        \fontsize{80}{0}\selectfont\raisebox{-7pt}{\thechapter}}}#1}
+    [\ResumeLineNumbers]
+\titleformat{name=\chapter,numberless}
+    {\thispagestyle{fancy}%
+    \LocallyStopLineNumbers%
+    % \phantomsection\addcontentsline{toc}{chapter}{#1}%
+    \color{black!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
+    {\rlap{\hspace*{-.5em}{\color{gray!25!paper}%
+        \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
+    [\ResumeLineNumbers]
+%</simplivre|simplivrefast>
+
+%% Section
+\newcommand\seculine{\bgroup\markoverwith{\color{gray!55!paper}%
+    \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
+\renewcommand\thesection{\arabic{section}}
+\titleformat{\section}
+    {\LocallyStopLineNumbers%
+    \secfont\centering}{}{0em}
+    {{\small\textcolor{gray!55!paper}{\raisebox{.03em}{\footnotesize/}}%
+        \,\,\textcolor{black!80!paper}{\arabic{section}}%
+        \,\,\textcolor{gray!55!paper}{\raisebox{.03em}{\footnotesize/}}}\\
+        \seculine{#1}}
+    [\ResumeLineNumbers]
+\titleformat{name=\section,numberless}
+    {\LocallyStopLineNumbers%
+    % \phantomsection\addcontentsline{toc}{section}{#1}%
+    \secfont\centering}{}{0em}
+    {\seculine{#1}}
+    [\ResumeLineNumbers]
+
+%% Subsection
+\newcommand\subseculine{\bgroup\markoverwith{\color{gray!55!paper}%
+    \rule[-1ex]{2pt}{.75pt}}\ULon}
+\renewcommand\thesubsection{%
+    \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
+\titleformat{\subsection}
+    {\LocallyStopLineNumbers%
+    \subsecfont}{}{0em}
+    {\subseculine{\thesubsection~\textcolor{gray!55!paper}{$|$}~#1}}
+    [\ResumeLineNumbers]
+\titleformat{name=\subsection,numberless}
+    {\LocallyStopLineNumbers%
+    \subsecfont}{}{0em}
+    {\subseculine{#1}}
+    [\ResumeLineNumbers]
+
+%%================================
+%% TOC format
+%%================================
+\RequirePackage{titletoc}
+\titlecontents{part}
+    [0em]
+    {\addvspace{1.5pc}\filcenter\partfont}
+    {\thecontentslabel\\\uppercase}
+    {}
+    {} % without page number
+    [\addvspace{.5pc}]
+%<*einfart|einfartfast>
+\titlecontents{section}
+    [2em] % i.e., 0em (part) + 2em
+    {\secfont}
+    {\contentslabel{1.75em}}
+    {\hspace*{-1.75em}}
+    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+\titlecontents{subsection}
+    [5em] % i.e., 2em (section) + 3em
+    {\subsecfont}
+    {\contentslabel{2.75em}}
+    {\hspace*{-2.75em}}
+    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+%</einfart|einfartfast>
+%<*simplivre|simplivrefast>
+\titlecontents{chapter}
+    [2em] % i.e., 0em (part) + 2em
+    {\addvspace{.5pc}\chapfont}
+    {\contentslabel{2em}}
+    {\hspace*{-2em}}
+    {\normalfont\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+\titlecontents{section}
+    [4em] % i.e., 2em (chapter) + 2em
+    {\secfont}
+    {\contentslabel{1.75em}}
+    {\hspace*{-1.75em}}
+    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+\titlecontents{subsection}
+    [7em] % i.e., 4em (section) + 3em
+    {\subsecfont}
+    {\contentslabel{2.75em}}
+    {\hspace*{-2.75em}}
+    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+%</simplivre|simplivrefast>
+
+%%================================
+%% Graphics
+%%================================
+\RequirePackage{graphicx}
+\graphicspath{{images/}}
+\RequirePackage{wrapfig}
+\RequirePackage{caption}
+
+%%================================
+%% Lists
+%%================================
+\RequirePackage{enumitem}
+\setlist{noitemsep,leftmargin=2em}
+\renewcommand\labelitemi{\color{gray!50}$\bullet$} 
+
+%%================================
+%% Blank page
+%%================================
+\newcommand{\blinkpagetext}{This page is intentionally left blank}
+\renewcommand{\cleardoublepage}{\relax
+    \clearpage
+    \if@twoside\ifodd\c@page\relax\else
+    \thispagestyle{empty}
+    \newgeometry{centering}
+    \null\vfill
+    \centerline{\large\color{gray!20!paper}\blinkpagetext}
+    \vfill\restoregeometry\newpage\fi\fi}
+
+%%================================
+%% Index
+%%================================
+\RequirePackage{imakeidx}
+% switch off the line numbers of index
+\pretocmd{\printindex}{\LocallyStopLineNumbers}{}{\FAIL}
+\apptocmd{\printindex}{\ResumeLineNumbers}{}{\FAIL}
+
+%%================================
+%% Theorems
+%%================================
+\RequirePackage{amsthm}
+\newtheoremstyle{simple}%
+    {}{}%
+    {\normalfont}{}%
+    {\normalfont}{}%
+    {0pt}%
+    {\thmname{\textsc{#1}}\thmnumber{ #2}\hspace{.4em}%
+        \textcolor{gray!55!paper}{$|$}\hspace{.4em}%
+        \color{gray}\thmnote{\ensuremath{(\text{#3})}~~}\pushQED{\qed}}
+\def\@endtheorem{\popQED\endtrivlist\@endpefalse }
+
+\renewcommand{\qedsymbol}{%
+    \makebox[1em]{\color{gray!55!paper}\rule[-0.1em]{.95em}{.95em}}}
+
+%<einfart|simplivre>\PassOptionsToPackage{hidelinks,linktoc=all}{hyperref}
+\RequirePackage{aliascnt}
+% To solve `Difference between bookmark levels is greater than one`
+%<einfart|simplivre>\RequirePackage{bookmark}
+%<einfart|simplivre>\RequirePackage{hyperref}
+\PassOptionsToPackage{nameinlink}{cleveref}
+\RequirePackage{cleveref}
+\crefdefaultlabelformat{#2#1#3~\aftergroup\ignorespaces}
+
+\newcommand\englishABBR{EN}
+\newcommand\frenchABBR{FR}
+\newcommand\chineseABBR{CN}
+
+%% Macro for creating theorems
+\RequirePackage{xstring}
+\newcommand\PassFirstToSecond[2]{#2{#1}}%
+\NewDocumentCommand{\CreateTheorem}{sm}{%
+    \begingroup
+    \protected@edef\temp{#2}%
+    \expandafter\IfEndWith\expandafter{\temp}{*}{%
+        \expandafter\StrGobbleRight\expandafter{\temp}{1}[\temp]%
+        \PassFirstToSecond{*}%
+    }{%
+        \PassFirstToSecond{}%
+    }%
+    {\expandafter\PassFirstToSecond%
+        \expandafter{\temp}{\endgroup\InnerCreateTheorem{#1}}}%
+}%
+\NewDocumentCommand{\InnerCreateTheorem}{mmmod<>}{%
+    % #1 = star or no star
+    % #2 = name of environment
+    % #3 = emptiness or star to append to name of environment
+    % #4 = numbered like
+    % #5 = numbered within
+    \IfBooleanTF{#1}{%
+        \IfValueTF{#4}
+            {\@firstoftwo}
+            {\IfValueTF{#5}{\@firstoftwo}{\@secondoftwo}}%
+    }{%
+        \IfValueTF{#4}
+            {\IfValueTF{#5}{\@firstoftwo}{\@secondoftwo}}{
+            \@secondoftwo}
+    }%
+    {%
+        \GenericError{}%
+        {\string\CreateTheorem\space syntax error\on@line}{%
+        You cannot call the starred variant with optional argument,\MessageBreak
+        nor call the unstarred variant with several optional arguments.}%
+        {}%
+    }{%
+        \IfBooleanTF{#1}{%
+            \newtheorem*{#2EN#3}{\csname#2nameEN\endcsname}
+            \newtheorem*{#2FR#3}{\csname#2nameFR\endcsname}
+            \newtheorem*{#2CN#3}{\csname#2nameCN\endcsname}
+        }{%
+            \IfValueTF{#5}{%
+                \newcounter{#2#3}[{#5}]%
+                \expandafter\renewcommand\expandafter*%
+                    \csname the#2#3\expandafter\endcsname%
+                    \expandafter{\csname the#5\endcsname.\arabic{#2#3}}%
+            }{%
+                \IfValueTF{#4}
+                    {\newaliascnt{#2#3}{#4}}
+                    {\newcounter{#2#3}}%
+            }%
+            %-------------------------------------------------------------------
+            \CreateTheoremNumberedLikeAliasCounter{#2}{EN}{#3}%
+            \CreateTheoremNumberedLikeAliasCounter{#2}{FR}{#3}%
+            \CreateTheoremNumberedLikeAliasCounter{#2}{CN}{#3}%
+            %-------------------------------------------------------------------
+        }%
+        \NewDocumentEnvironment{#2#3}{}
+            {\csname#2\csname\languagename ABBR\endcsname#3\endcsname}%
+            {\csname end#2\csname\languagename ABBR\endcsname#3\endcsname}%
+    }%
+}%
+\NewDocumentCommand{\CreateTheoremNumberedLikeAliasCounter}{mmm}{%
+    \newaliascnt{#1#2#3}{#1#3}%
+    \newtheorem{#1#2#3}[{#1#2#3}]{\csname#1name#2\endcsname}%
+    \aliascntresetthe{#1#2#3}%
+    \crefname{#1#2#3}%
+        {\csname#1name#2\endcsname}%
+        {\csname#1name#2\endcsname}%
+}%
+
+%% English theorems names
+\def\theoremnameEN{\unskip~\textsc{Theorem}}
+\def\lemmanameEN{\unskip~\textsc{Lemma}}
+\def\propositionnameEN{\unskip~\textsc{Proposition}}
+\def\corollarynameEN{\unskip~\textsc{Corollary}}
+\def\factnameEN{\unskip~\textsc{Fact}}
+\def\conjecturenameEN{\unskip~\textsc{Conjecture}}
+\def\definitionnameEN{\unskip~\textsc{Definition}}
+\def\examplenameEN{\unskip~\textsc{Example}}
+\def\problemnameEN{\unskip~\textsc{Problem}}
+\def\remarknameEN{\unskip~\textsc{Remark}}
+
+%% French theorems names
+\def\theoremnameFR{\unskip~\textsc{Théorème}}
+\def\lemmanameFR{\unskip~\textsc{Lemme}}
+\def\propositionnameFR{\unskip~\textsc{Proposition}}
+\def\corollarynameFR{\unskip~\textsc{Corollaire}}
+\def\factnameFR{\unskip~\textsc{Fait}}
+\def\conjecturenameFR{\unskip~\textsc{Conjecture}}
+\def\definitionnameFR{\unskip~\textsc{Définition}}
+\def\examplenameFR{\unskip~\textsc{Exemple}}
+\def\problemnameFR{\unskip~\textsc{Problème}}
+\def\remarknameFR{\unskip~\textsc{Remarque}}
+
+%% Chinese theorems names
+\def\theoremnameCN{定理}
+\def\lemmanameCN{引理}
+\def\propositionnameCN{命题}
+\def\corollarynameCN{推论}
+\def\factnameCN{事实}
+\def\conjecturenameCN{猜想}
+\def\definitionnameCN{定义}
+\def\examplenameCN{例}
+\def\problemnameCN{问题}
+\def\remarknameCN{备注}
+
+%% Theorem environments
+\theoremstyle{simple}
+%<einfart|einfartfast>\CreateTheorem{theorem}<section>
+%<simplivre|simplivrefast>\CreateTheorem{theorem}<chapter>
+\CreateTheorem{lemma}[theorem]
+\CreateTheorem{proposition}[theorem]
+\CreateTheorem{corollary}[theorem]
+\CreateTheorem{fact}[theorem]
+%<einfart|einfartfast>\CreateTheorem{conjecture}<section>
+%<simplivre|simplivrefast>\CreateTheorem{conjecture}<chapter>
+\CreateTheorem*{theorem*}
+\CreateTheorem*{lemma*}
+\CreateTheorem*{proposition*}
+\CreateTheorem*{corollary*}
+\CreateTheorem*{fact*}
+\CreateTheorem*{conjecture*}
+\CreateTheorem{definition}[theorem]
+%<einfart|einfartfast>\CreateTheorem{example}<section>
+%<simplivre|simplivrefast>\CreateTheorem{example}<chapter>
+%<einfart|einfartfast>\CreateTheorem{problem}<section>
+%<simplivre|simplivrefast>\CreateTheorem{problem}<chapter>
+\CreateTheorem*{definition*}
+\CreateTheorem*{example*}
+\CreateTheorem*{problem*}
+%<einfart|einfartfast>\CreateTheorem{remark}<section>
+%<simplivre|simplivrefast>\CreateTheorem{remark}<chapter>
+\CreateTheorem*{remark*}
+
+%%================================
+%% Language configuration
+%%================================
+%<*einfart|simplivre>
+\PassOptionsToPackage{french,english}{babel}
+\RequirePackage{babel}
+\frenchsetup{PartNameFull=false}
+%</einfart|simplivre>
+%<*einfartfast|simplivrefast>
+\RequirePackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguage[frenchpart=false]{french}
+%</einfartfast|simplivrefast>
+
+\newcommand{\minimalist@langconfig@chinese}{%
+    \def\abstractname{摘要}%
+    \def\proofname{证明}%
+    \def\contentsname{目录}%
+    \def\listfigurename{插图}%
+    \def\listtablename{表格}%
+    \def\figurename{图}%
+    \def\tablename{表}%
+    \def\indexname{索引}%
+    \def\appendixname{附录}%
+    \def\bibname{参考文献}%
+    \renewcommand{\languagename}{chinese}%
+}
+\newcommand{\minimalist@langconfig@english}{%
+    \selectlanguage{english}%
+}
+\newcommand{\minimalist@langconfig@french}{%
+    \selectlanguage{french}%
+% The line below is only needed for 'babel'
+%<einfart|simplivre>    \def\frenchpartname{Partie}%
+}
+
+\newcommand{\UseLanguageCORE}[1]{%
+    \ifstrequal{#1}{chinese}{\minimalist@langconfig@chinese}{}%
+    \ifstrequal{#1}{Chinese}{\minimalist@langconfig@chinese}{}%
+    \ifstrequal{#1}{english}{\minimalist@langconfig@english}{}%
+    \ifstrequal{#1}{English}{\minimalist@langconfig@english}{}%
+    \ifstrequal{#1}{french}{\minimalist@langconfig@french}{}
+    \ifstrequal{#1}{French}{\minimalist@langconfig@french}{}
+}
+\newcommand{\UseLanguage}[1]{%
+    \ifx\@onlypreamble\@notprerr%
+        \UseLanguageCORE{#1}%
+    \else%
+        \AfterEndPreamble{\UseLanguageCORE{#1}}%
+    \fi%
+}
+
+%%================================
+%% Draft mark
+%%================================
+\def\dnfFont{\ttfamily}
+\def\needgraphFont{\ttfamily}
+
+\def\dnfTextEN{To be finished here}
+\def\needgraphTextEN{A graph is needed here}
+\def\dnfTextFR{À terminer ici}
+\def\needgraphTextFR{Il manque encore un graphique ici}
+\def\dnfTextCN{这里的内容尚未完成}
+\def\needgraphTextCN{这里需要一张图片}
+
+\definecolor{dnfColor}{RGB}{21,122,20}
+\definecolor{needgraphColor}{RGB}{70,130,180}
+
+%<*einfart|simplivre>
+\PassOptionsToPackage{many}{tcolorbox}
+\RequirePackage{tcolorbox}
+\newtcbox{\plainBox}[1][-paper]{enhanced jigsaw,%
+    on line, arc = 1.2pt, outer arc = 1pt,breakable,%
+    colframe = #1,colupper=#1,opacityback=0,%
+    boxsep = 1pt,boxrule = 1.2pt,%
+    left = 1pt, right = 1pt, top = 0pt, bottom = 0pt,%
+}
+%</einfart|simplivre>
+%<*einfartfast|simplivrefast>
+\newcommand{\plainBox}[2][-paper]{\textcolor{#1}{%
+    \setlength{\fboxsep}{1.5pt}%
+    \setlength{\fboxrule}{1.2pt}%
+    \fbox{#2}}}
+%</einfartfast|simplivrefast>
+
+\NewDocumentCommand{\dnf}{d<>}{%
+    \noindent\plainBox[dnfColor]%
+    {\normalfont\dnfFont\bfseries\small%
+    \csname dnfText\csname\languagename ABBR\endcsname\endcsname%
+    \IfNoValueF{#1}{ : #1}}%
+}
+\NewDocumentCommand{\needgraph}{d<>}{%
+    \par%
+    \centerline{\plainBox[needgraphColor]%
+    {\normalfont\needgraphFont\bfseries\small%
+    \csname needgraphText\csname\languagename ABBR\endcsname\endcsname%
+    \IfNoValueF{#1}{ : #1}}}%
+    \par%
+}
+%<*einfart|einfartfast>
+
+%%================================
+%% Title block style
+%%================================
+\renewcommand{\@maketitle}{%
+    \LocallyStopLineNumbers%
+    \noindent%
+    {\textcolor{gray!55!paper}{\rule{\textwidth}{0.75pt}}}%
+    \vspace{-\parskip}%
+    \begin{flushright}%
+        {\@title}\\\medskip%
+        \color{black!80!paper}%
+        {\small\scshape\@author}\\%
+        {\small\@date}%
+    \end{flushright}%
+    \vspace{-\parskip}%
+    \vspace{-.5\baselineskip}%
+    {\textcolor{gray!55!paper}{\rule{\textwidth}{0.75pt}}\par}%
+    \ResumeLineNumbers%
+}
+\apptocmd{\maketitle}{\thispagestyle{fancy}}{}{\FAIL}
+
+%%================================
+%% Abstract style
+%%================================
+\renewenvironment{abstract}{%
+    \LocallyStopLineNumbers%
+    \begin{flushright}%
+        \textsc{\small\abstractname}\par%
+        \vspace{-.75\baselineskip}%
+        \begin{minipage}[t]{.833\textwidth}%
+            \vspace{0pt}%
+            \color{black!80!paper}%
+            \footnotesize%
+            \parindent=2em
+}{%
+        \end{minipage}%
+    \end{flushright}%
+    \ResumeLineNumbers%
+}
+%</einfart|einfartfast>
+
+\endinput
