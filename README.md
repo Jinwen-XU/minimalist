@@ -1,3 +1,11 @@
+<!-- Copyright (C) 2021 by Jinwen XU -->
+
+[Github](https://github.com/Jinwen-XU/minimalist) | [CTAN](https://ctan.org/pkg/minimalist) | [Download](https://github.com/Jinwen-XU/minimalist/releases)
+
+![License](https://img.shields.io/ctan/l/minimalist.svg) ![CTAN Version](https://img.shields.io/ctan/v/minimalist.svg) ![Github Version](https://img.shields.io/github/release/Jinwen-XU/minimalist.svg) ![Repo Size](https://img.shields.io/github/repo-size/Jinwen-XU/minimalist.svg)
+
+---
+
 # The minimalist class series
 
 This is a series of classes to typeset articles or books, with a simple and
@@ -12,11 +20,4 @@ may compile with either XeLaTeX or LuaLaTeX.
 
 # License
 
-This file may be distributed and/or modified under the conditions of the LaTeX
-Project Public License, either version 1.3 of this license or (at your option)
-any later version.  The latest version of this license is in:
-
-   http://www.latex-project.org/lppl.txt
-
-and version 1.3 or later is part of all distributions of LaTeX version
-2005/12/01 or later.
+This work is released under the LaTeX Project Public License, v1.3c or later.

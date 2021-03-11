@@ -18,7 +18,7 @@
 \definecolor{lightergray}{gray}{0.99}
 \lstset{language=[LaTeX]TeX,
     keywordstyle=\color{RoyalBlue},
-    basicstyle=\small\ttfamily,
+    basicstyle=\ttfamily,
     commentstyle=\color{ForestGreen}\ttfamily,
     stringstyle=\rmfamily,
     showstringspaces=false,
@@ -43,31 +43,39 @@
 }
 {\ResumeLineNumbers}
 
+\providecommand{\minimalist}{\textsf{minimalist}}
+\providecommand{\einfart}{\textsf{einfart}}
+\providecommand{\einfartfast}{\textsf{einfartfast}}
+\providecommand{\simplivre}{\textsf{simplivre}}
+\providecommand{\simplivrefast}{\textsf{simplivrefast}}
+
 %%================================
 %% 正文
 %%================================
 \begin{document}
 
-\title{minimalist，极简主义风格的文档类系列\thanks{对应版本. \texttt{minimalist 2021/03/09}}}
+\title{\minimalist{}，极简主义风格的文档类系列\thanks{对应版本. \texttt{\minimalist{} 2021/03/11}}}
 \author{锦文}
 \date{2021年3月，北京}
 
 \maketitle
 
 \begin{abstract}
-    minimalist文档类系列包含用于排版文章的einfart、用于排版书的simplivre，以及对应的两个fast版本。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴但不简陋。
+    \minimalist{}文档类系列包含用于排版文章的\einfart{}、用于排版书的\simplivre{}，以及对应的两个“fast”版本。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴但不简陋。
 
     这些文档类支持英文、法文、中文三种语言，并且同一篇文档中三种语言可以很好地协调。由于采用了自定义字体，需要采用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 进行编译。
     
-    最后，这篇说明文档是用einfart排版的，你可以把它看作一份简短的说明与演示。
+    最后，这篇说明文档是用\einfart{}排版的，你可以把它看作一份简短的说明与演示。
 \end{abstract}
 
+\tableofcontents
+
 \section{关于这些文档类的名称与区别}
-einfart取自于德文的einfach (“简约”)，并取了artikel (“文章”)的前三个字母组合而成。
+\einfart{}取自于德文的einfach (“简约”)，并取了artikel (“文章”)的前三个字母组合而成。
 
-simplivre取自于法文的simple (“简约”)，以及livre (“书”)，由二者组合而成。
+\simplivre{}取自于法文的simple (“简约”)，以及livre (“书”)，由二者组合而成。
 
-einfartfast与simplivrefast是更快速但略微粗糙的einfart与simplivre。主要区别是：
+\einfartfast{}与\simplivrefast{}是更快速但略微粗糙的\einfart{}与\simplivre{}，主要区别是：
 \begin{itemize}
     \item 使用较为简单的数学字体设置；
     \item 不使用hyperref；
@@ -151,6 +159,8 @@ einfartfast与simplivrefast是更快速但略微粗糙的einfart与simplivre。�
 
 引用时，定理的名称总是与定理所在区域的语言匹配，例如，开头的定义在现在的英文模式下依然显示为中文：\cref{def: strange}和\cref{thm}。
 
+\UseLanguage{Chinese}
+
 \subsection{关于行号}
 行号可以随时开启和关闭。\lstinline|\linenumbers| 用来开启行号，\lstinline|\nolinenumbers| 用来关闭行号。标题、目录、索引等位置为了美观，不进行编号。
 
@@ -158,7 +168,7 @@ einfartfast与simplivrefast是更快速但略微粗糙的einfart与simplivre。�
 在 \lstinline|\section| 或 \lstinline|\subsection| 中，如果想使用脚注，只能：
 \begin{itemize}
     \item 先写 \lstinline|\mbox{\protect\footnotemark}|，
-    \item 再在后面用 \lstinline|\footnotemark|。
+    \item 再在后面用 \lstinline|\footnotetext{...}|。
 \end{itemize}
 这是标题使用下划线装饰之后带来的一个缺点。
 
@@ -178,6 +188,8 @@ einfart与simplivre使用Palatino Linotype作为英文字体，方正悠宋、�
 
 \section{文档示例}
 
+\singlespacing
+
 \LocallyStopLineNumbers
 \begin{minipage}{0.4\textwidth}
 \begin{code}
@@ -196,7 +208,6 @@ einfart与simplivre使用Palatino Linotype作为英文字体，方正悠宋、�
 \maketitle
 
 %% Texte ici
-
 
 \end{document}
 \end{code}
@@ -222,7 +233,6 @@ einfart与simplivre使用Palatino Linotype作为英文字体，方正悠宋、�
 
 %% 正文部分
 
-
 \end{document}
 \end{code}
 \end{minipage}
@@ -230,6 +240,6 @@ einfart与simplivre使用Palatino Linotype作为英文字体，方正悠宋、�
 \ResumeLineNumbers
 
 \bigskip
-(\lstinline|\UseLanguage| 既可以放在preamble中，也可以放在正文部分，并且可以按照需要反复使用)
+(\lstinline|\UseLanguage| 既可以放在导言中，也可以放在正文部分，并且可以按照需要反复使用)
 
 \end{document}
