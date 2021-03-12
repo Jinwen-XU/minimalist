@@ -17,19 +17,19 @@
 \NeedsTeXFormat{LaTeX2e}[2020-10-01]
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/03/11 A simple and clear article style]
+    [2021/03/12 A simple and clear article style]
 %</einfart>
 %<*einfartfast>
 \ProvidesClass{einfartfast}
-    [2021/03/11 A faster but rougher version of einfart]
+    [2021/03/12 A faster but rougher version of einfart]
 %</einfartfast>
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/03/11 A simple and clear book style]
+    [2021/03/12 A simple and clear book style]
 %</simplivre>
 %<*simplivrefast>
 \ProvidesClass{simplivrefast}
-    [2021/03/11 A faster but rougher version of simplivre]
+    [2021/03/12 A faster but rougher version of simplivre]
 %</simplivrefast>
 
 %<*einfart|einfartfast>
@@ -279,7 +279,7 @@
 %% Line spacing
 %%================================
 \RequirePackage{setspace}
-\onehalfspacing
+\setstretch{1.07}
 % To avoid `Underfull \vbox (badness 10000)`
 \raggedbottom
 
@@ -747,12 +747,12 @@
 }
 
 \newcommand{\UseLanguageCORE}[1]{%
-    \ifstrequal{#1}{chinese}{\minimalist@langconfig@chinese}{}%
-    \ifstrequal{#1}{Chinese}{\minimalist@langconfig@chinese}{}%
-    \ifstrequal{#1}{english}{\minimalist@langconfig@english}{}%
-    \ifstrequal{#1}{English}{\minimalist@langconfig@english}{}%
-    \ifstrequal{#1}{french}{\minimalist@langconfig@french}{}
-    \ifstrequal{#1}{French}{\minimalist@langconfig@french}{}
+    \ifstrequal{#1}{chinese}{\onehalfspacing\minimalist@langconfig@chinese}{}%
+    \ifstrequal{#1}{Chinese}{\onehalfspacing\minimalist@langconfig@chinese}{}%
+    \ifstrequal{#1}{english}{\setstretch{1.07}\minimalist@langconfig@english}{}%
+    \ifstrequal{#1}{English}{\setstretch{1.07}\minimalist@langconfig@english}{}%
+    \ifstrequal{#1}{french}{\setstretch{1.07}\minimalist@langconfig@french}{}%
+    \ifstrequal{#1}{French}{\setstretch{1.07}\minimalist@langconfig@french}{}%
 }
 \newcommand{\UseLanguage}[1]{%
     \ifx\@onlypreamble\@notprerr%
@@ -760,6 +760,17 @@
     \else%
         \AfterEndPreamble{\UseLanguageCORE{#1}}%
     \fi%
+}
+\newcommand{\UseOtherLanguage}[2]{%
+\begingroup%
+    \ifstrequal{#1}{chinese}{\minimalist@langconfig@chinese}{}%
+    \ifstrequal{#1}{Chinese}{\minimalist@langconfig@chinese}{}%
+    \ifstrequal{#1}{english}{\minimalist@langconfig@english}{}%
+    \ifstrequal{#1}{English}{\minimalist@langconfig@english}{}%
+    \ifstrequal{#1}{french}{\minimalist@langconfig@french}{}%
+    \ifstrequal{#1}{French}{\minimalist@langconfig@french}{}%
+    #2%
+\endgroup%
 }
 
 %%================================
@@ -822,7 +833,7 @@
     \begin{flushright}%
         {\@title}\\\medskip%
         \color{black!80!paper}%
-        {\small\scshape\@author}\\%
+        {\small\scshape\@author}\\[2pt]%
         {\small\@date}%
     \end{flushright}%
     \vspace{-\parskip}%
