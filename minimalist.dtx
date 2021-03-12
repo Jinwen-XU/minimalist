@@ -251,16 +251,16 @@
 
 %<*einfart|einfartfast>
 \if@twoside
-    \renewcommand*{\sectionmark}[1]{\markboth{\uppercase{#1}}{}}
+    \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{}}
 \else
-    \renewcommand*{\sectionmark}[1]{\markboth{\uppercase{#1}}{\uppercase{#1}}}
+    \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
 \fi
 %</einfart|einfartfast>
 %<*simplivre|simplivrefast>
 \if@twoside
-    \renewcommand{\chaptermark}[1]{\markboth{\uppercase{#1}}{}}
+    \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
 \else
-    \renewcommand{\chaptermark}[1]{\markboth{\uppercase{#1}}{\uppercase{#1}}}
+    \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
 \fi
 \renewcommand*{\sectionmark}[1]{%
     \markright{\raisebox{.03em}{\footnotesize/}%
