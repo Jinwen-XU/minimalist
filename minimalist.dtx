@@ -57,6 +57,7 @@
 %<simplivre|simplivrefast>\newcommand{\chapfont}{\sffamily}
 \newcommand{\secfont}{}
 \newcommand{\subsecfont}{}
+\newcommand{\subsubsecfont}{}
 %<*einfartfast|simplivrefast>
 
 %% Math fonts
@@ -461,6 +462,14 @@
     \subsecfont}{}{0em}
     {\subseculine{#1}}
     [\ResumeLineNumbers]
+
+%% Subsubsection
+\titleformat{\subsubsection}
+    {\LocallyStopLineNumbers%
+    \subsubsecfont}{\thesubsubsection}{1em}
+    {#1}
+    [\ResumeLineNumbers]
+\titlespacing{\subsubsection}{0pt}{.8\baselineskip}{.5\baselineskip}
 
 %%================================
 %% TOC format
