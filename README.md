@@ -8,6 +8,9 @@
 
 # The minimalist class series
 
+> Currently it needs to be heavily modified in order to get imported
+> into TeX Live. This will be done in the next few days.
+
 This is a series of classes to typeset articles or books, with a simple and
 clear design. It contains:
 - einfart.cls
