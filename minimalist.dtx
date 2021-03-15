@@ -651,9 +651,11 @@
     \clearpage
     \if@twoside\ifodd\c@page\relax\else
     \thispagestyle{empty}
-    \null\vfill
-    \centerline{\large\color{gray!20!paper}\blinkpagetext}
-    \vfill\newpage\fi\fi}
+    \AddToHookNext{shipout/background}
+      {% 
+       \put(0.5\paperwidth,-0.5\paperheight){%
+       \makebox[0pt]{\large\color{gray!20!paper}\blinkpagetext}}}
+    \null\newpage\fi\fi}
 
 %%================================
 %% Theorems
