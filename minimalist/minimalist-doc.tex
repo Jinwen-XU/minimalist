@@ -60,9 +60,9 @@
 \maketitle
 
 \begin{abstract}
-    \minimalist{} is series of styles and classes for you to typeset your articles or books in a simple and clear manner. My original intention in designing this series was to write drafts and notes that look simple but not shabby.
+    \minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. My original intention in designing this series was to write drafts and notes that look simple but not shabby.
     
-    The entire collection includes \verb|minimalist.sty|, which is the main style shared by all the following classes; \verb|minimart.cls| for typesetting articles and \verb|minimbook.cls| for typesetting books. They can be used with all LaTeX engines, with native support to English and French typesetting via \lstinline|\UseLanguage|, see the instruction below for detail.
+    The entire collection includes \verb|minimalist.sty|, which is the main style shared by all the following classes; \verb|minimart.cls| for typesetting articles and \verb|minimbook.cls| for typesetting books. They compile with any major \TeX{} engine, with native support to English and French typesetting via \lstinline|\UseLanguage| (see the instruction below for detail).
 
     You can also found \einfart{} and \simplivre{} on CTAN. They are the enhanced version of \minimart{} and \minimbook{} with unicode support. With this, they can access to more beautiful fonts, and also have native support for Chinese typesetting. On the other hand, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX} (not pdf\LaTeX).
     
@@ -181,6 +181,7 @@ This is a disadvantage brought about by the underline decoration of the title.
 \singlespacing
 
 \LocallyStopLineNumbers
+\begin{center}
 \begin{minipage}{0.45\textwidth}
 \begin{code}
 \documentclass[fast]{minimart}
@@ -201,6 +202,7 @@ This is a disadvantage brought about by the underline decoration of the title.
 \end{document}
 \end{code}
 \end{minipage}
+\end{center}
 \par
 \ResumeLineNumbers
 
