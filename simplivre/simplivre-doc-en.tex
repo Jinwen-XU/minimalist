@@ -1,0 +1,243 @@
+%! TEX program = xelatex
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\documentclass{simplivre}
+
+\linenumbers % Enable line numbers
+
+%%================================
+%% TeX logo and URL
+%%================================
+\usepackage{hologo}
+\usepackage{url}
+
+%%================================
+%% For typestting code
+%%================================
+\usepackage{listings}
+\definecolor{lightergray}{gray}{0.99}
+\lstset{language=[LaTeX]TeX,
+    keywordstyle=\color{RoyalBlue},
+    basicstyle=\ttfamily,
+    commentstyle=\color{ForestGreen}\ttfamily,
+    stringstyle=\rmfamily,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{lightergray},
+    flexiblecolumns=true,
+    escapeinside={(*}{*)},
+    % numbers=left,
+    numberstyle=\scriptsize, stepnumber=1, numbersep=5pt,
+    firstnumber=last,
+} 
+\providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
+\lstset{morekeywords=%
+    {CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,
+    linenumbers,nolinenumbers,section,maketitle
+    }
+}
+\lstnewenvironment{code}% 
+{\LocallyStopLineNumbers%
+\setkeys{lst}{columns=fullflexible,keepspaces=true}%
+}
+{\ResumeLineNumbers}
+
+\providecommand{\minimalist}{\textsf{minimalist}}
+\providecommand{\minimart}{\textsf{minimart}}
+\providecommand{\minimbook}{\textsf{minimbook}}
+\providecommand{\einfart}{\textsf{einfart}}
+\providecommand{\simplivre}{\textsf{simplivre}}
+
+%%================================
+%% Main text
+%%================================
+\begin{document}
+
+\title{\simplivre{}, write your books in a simple and clear way\thanks{Corresponding to: \texttt{\simplivre{} 2021/03/15}}}
+\author{Jinwen}
+\date{March 2021, Beijing}
+
+\maketitle
+
+\frontmatter
+\chapter*{Preface}
+
+\simplivre{} is a member of the \minimalist{} class series. The entire collection includes \minimart{} and \einfart{} for typesetting articles and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing this series was to write drafts and notes that look simple but not shabby.
+
+Among them, \einfart{} and \simplivre{} support three languages: English, French, and Chinese, and these three languages can be switched seamlessly in a single document. Due to the usage of custom fonts, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
+
+This documentation is typeset using \einfart{}. You can think of it as a short introduction and demonstration.
+
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{On the naming and differences}
+\einfart{} is taken from German word ``einfach'' (``simple''), combined with the first three letters of ``artikel'' (``article'').
+
+\simplivre{} is taken from French words ``simple'' and ``livre'' (for ``book'').
+
+You can use the option \verb|fast| to enable a fast but slightly rough version. The main differences are:
+\begin{itemize}
+    \item Use simpler math font configuration; 
+    \item Do not use hyperref; 
+    \item Do not use tikz; 
+    \item Use polyglossia instead of babel to support multiple languages. (Using polyglossia will increase the compilation speed slightly, but the current compatibility with Chinese is not perfect. When it becomes more stable, I will consider fully switching to polyglossia)
+\end{itemize}
+
+During the writing stage of your document, it is recommended to use the \verb|fast| option to speed up compilation and improve the smoothness of your writing experience. At the end, you can remove the ``fast'' mark to get the final version.
+
+\chapter{Some instructions}
+
+There is no indentation at the beginning of each paragraph, but there will be a half-line space between each two paragraphs. like this ---
+
+Here is the next paragraph.
+
+\section{Theorems and how to reference them}
+
+Environments such as definitions and theorems have been pre-defined and can be used directly, for example:
+\begin{code}
+  \begin{definition}[Strange things] \label{def: strange} ...
+\end{code}
+will produce
+\begin{definition}[Strange things]\label{def: strange}
+    This is the definition of some strange objects.
+\end{definition}
+
+There is approximately an one-line space before and after the theorem environment. There will be a symbol to mark the end of the environment.
+
+When referencing, you can directly use clever reference \lstinline|\cref{(label name)}|. For example, \lstinline|\cref{def: strange}| will be displayed as: \cref{def: strange}.
+
+\section{Define a new theorem-like environment}
+
+First define the name of this environment in the language used: \lstinline|\(name of environment)(language name)|. Where \lstinline|(language name)| can be \lstinline|EN|, \lstinline|FR|, \lstinline|CN|, etc., and then define this environment in one of the following four ways:
+\begin{itemize}
+    \item \lstinline|\CreateTheorem*{(name of environment)}|
+    \item \lstinline|\CreateTheorem{(name of environment)}[(numbered like)]|
+    \item \lstinline|\CreateTheorem{(name of environment)}<(numbered within)>|
+    \item \lstinline|\CreateTheorem{(name of environment)}|
+\end{itemize}
+
+\def\proofideanameEN{Idea}
+\CreateTheorem*{proofidea}
+
+For example,
+\begin{code}
+  \def\proofideanameEN{Idea}
+  \CreateTheorem*{proofidea}
+\end{code}
+defines an unnumbered environment \lstinline|proofidea|, which supports using in the English context, and the effect is as follows:
+
+\begin{proofidea}
+    ...
+\end{proofidea}
+
+\section{Draft mark}
+
+You can use \lstinline|\dnf| to mark the unfinished part. For example:
+\begin{itemize}
+    \item \lstinline|\dnf|: \quad \dnf
+    \item \lstinline|\dnf<Still need ...>|: \quad \dnf<Still need ...>
+\end{itemize}
+
+Similarly, there is \lstinline|\needgraph| ：
+\begin{itemize}
+    \item \lstinline|\needgraph|: \needgraph
+    \item \lstinline|\needgraph<About ...>|: \needgraph<About ...>
+\end{itemize}
+
+\section{Language configuration}
+You can use \lstinline|\UseLanguage{(name of language))}| at any time to change the language, Language names include Chinese, English, French (the case of the first letter is arbitrary, for example, ``chinese'' is also acceptable). With this, the effects of various commands and environments will also change accordingly.
+
+For example, after using \lstinline|\UseLanguage{French}|, the theorem and the draft mark will be displayed as:
+
+\UseLanguage{French}
+\begin{theorem}[Inutile]\label{thm}
+    Un théorème en français. \dnf
+\end{theorem}
+
+When referenced, the name of the theorem always matches the language of the region in which the theorem is located, for example, the definition of the beginning is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. 
+
+\UseLanguage{English}
+
+\section{On the line numbers}
+Line numbers can be turned on and off at any time. \lstinline|\linenumbers| is used to enable the line numbers, and \lstinline|\nolinenumbers| is used to disable them. For the sake of beauty, the title, table of contents, index and some other elements are not numbered.
+
+\section{On the footnotes in the title}
+In \lstinline|\chapter| or \lstinline|\chapter| , if you wish to add footnotes, you can only:
+\begin{itemize}
+    \item first write \lstinline|\mbox{\protect\footnotemark}|, 
+    \item then add \lstinline|\footnotetext{...}| afterwards. 
+\end{itemize}
+This is a disadvantage brought about by the underline decoration of the title.
+
+\section{On the fonts}
+\einfart{} and \simplivre{} use Palatino Linotype as the English font, FounderType's YouSong and YouHei Simplified as the Chinese fonts, and partially use Neo Euler as the mathematical font:
+\begin{itemize}
+    \item English main font. \textsf{English sans serif font}.
+    \item 中文主要字体, \textsf{中文无衬线字体}
+    \item Math demonstration: \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
+\end{itemize}
+
+Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. Other fonts are not free, you need to purchase and use them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
+
+When the corresponding font is not installed, the font that comes with TeX Live will be used instead, and the experience might be reduced.
+
+\chapter{Document templates}
+
+\singlespacing
+
+\LocallyStopLineNumbers
+\begin{minipage}{0.45\textwidth}
+\begin{code}
+%! TEX program = xelatex
+\documentclass[fast]{simplivre}
+
+\linenumbers
+\UseLanguage{French}
+
+\begin{document}
+
+\title{Titre}
+\author{Nom}
+\date{03 / 2021, Lieu}
+
+\maketitle
+
+%% Texte ici
+
+\end{document}
+\end{code}
+\end{minipage}
+%
+\hfill
+%
+\begin{minipage}{0.45\textwidth}
+\begin{code}
+%! TEX program = xelatex
+\documentclass[fast]{simplivre}
+
+\linenumbers
+\UseLanguage{Chinese}
+
+\begin{document}
+
+\title{标题}
+\author{姓名}
+\date{2021年3月, 地点}
+
+\maketitle
+
+%% 正文部分
+
+\end{document}
+\end{code}
+\end{minipage}
+\par
+\ResumeLineNumbers
+
+\bigskip
+(\lstinline|\UseLanguage| can be placed either in the preamble or in the body part, and can be used repeatedly as needed)
+
+\end{document}

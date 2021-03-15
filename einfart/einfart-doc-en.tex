@@ -43,38 +43,38 @@
 {\ResumeLineNumbers}
 
 \providecommand{\minimalist}{\textsf{minimalist}}
+\providecommand{\minimart}{\textsf{minimart}}
+\providecommand{\minimbook}{\textsf{minimbook}}
 \providecommand{\einfart}{\textsf{einfart}}
-\providecommand{\einfartfast}{\textsf{einfartfast}}
 \providecommand{\simplivre}{\textsf{simplivre}}
-\providecommand{\simplivrefast}{\textsf{simplivrefast}}
 
 %%================================
 %% Main text
 %%================================
 \begin{document}
 
-\title{\minimalist{}, document-class series with simple and clear design\thanks{Corresponding to: \texttt{\minimalist{} 2021/03/12}}}
+\title{\einfart{}, write your articles in a simple and clear way\thanks{Corresponding to: \texttt{\einfart{} 2021/03/15}}}
 \author{Jinwen}
 \date{March 2021, Beijing}
 
 \maketitle
 
 \begin{abstract}
-    The \minimalist{} class series currently includes \einfart{} for typesetting articles, \simplivre{} for typesetting books, and two corresponding ``fast'' versions. My original intention in designing this series was to write drafts and notes that look simple but not shabby.
+    \einfart{} is a member of the \minimalist{} class series. The entire collection includes \minimart{} and \einfart{} for typesetting articles and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing this series was to write drafts and notes that look simple but not shabby.
 
-    These document-classes support three languages: English, French, and Chinese, and these three languages can be switched seamlessly in a single document. Due to the usage of custom fonts, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
+    Among them, \einfart{} and \simplivre{} support three languages: English, French, and Chinese, and these three languages can be switched seamlessly in a single document. Due to the usage of custom fonts, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
     
-    Finally, this documentation is typeset using \einfart{}. You can think of it as a short introduction and demonstration.
+    This documentation is typeset using \einfart{}. You can think of it as a short introduction and demonstration.
 \end{abstract}
 
 \tableofcontents
 
-\section{On the naming and differences of these document-classes}
+\section{On the naming and options}
 \einfart{} is taken from German word ``einfach'' (``simple''), combined with the first three letters of ``artikel'' (``article'').
 
 \simplivre{} is taken from French words ``simple'' and ``livre'' (for ``book'').
 
-\einfartfast{} and \simplivrefast{} are faster but slightly rougher version of \einfart{} and \simplivre{}. The main differences are:
+You can use the option \verb|fast| to enable a fast but slightly rough version. The main differences are:
 \begin{itemize}
     \item Use simpler math font configuration; 
     \item Do not use hyperref; 
@@ -82,7 +82,7 @@
     \item Use polyglossia instead of babel to support multiple languages. (Using polyglossia will increase the compilation speed slightly, but the current compatibility with Chinese is not perfect. When it becomes more stable, I will consider fully switching to polyglossia)
 \end{itemize}
 
-During the writing stage of your document, it is recommended to use the ``fast'' version to speed up compilation and improve the smoothness of your writing experience. At the end, you can remove the ``fast'' mark to get the final version.
+During the writing stage of your document, it is recommended to use the \verb|fast| option to speed up compilation and improve the smoothness of your writing experience. At the end, you can remove the ``fast'' mark to get the final version.
 
 \section{Some instructions}
 
@@ -153,7 +153,7 @@ For example, after using \lstinline|\UseLanguage{French}|, the theorem and the d
     Un théorème en français. \dnf
 \end{theorem}
 
-When referenced, the name of the theorem always matches the language of the region in which the theorem is located, for example, the definition of the beginning is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}。
+When referenced, the name of the theorem always matches the language of the region in which the theorem is located, for example, the definition of the beginning is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. 
 
 \UseLanguage{English}
 
@@ -163,8 +163,8 @@ Line numbers can be turned on and off at any time. \lstinline|\linenumbers| is u
 \subsection{On the footnotes in the title}
 In \lstinline|\section| or \lstinline|\subsection| , if you wish to add footnotes, you can only:
 \begin{itemize}
-    \item first write \lstinline|\mbox{\protect\footnotemark}|，
-    \item then add \lstinline|\footnotetext{...}| afterwards。
+    \item first write \lstinline|\mbox{\protect\footnotemark}|, 
+    \item then add \lstinline|\footnotetext{...}| afterwards. 
 \end{itemize}
 This is a disadvantage brought about by the underline decoration of the title.
 
@@ -172,7 +172,7 @@ This is a disadvantage brought about by the underline decoration of the title.
 \einfart{} and \simplivre{} use Palatino Linotype as the English font, FounderType's YouSong and YouHei Simplified as the Chinese fonts, and partially use Neo Euler as the mathematical font:
 \begin{itemize}
     \item English main font. \textsf{English sans serif font}.
-    \item 中文主要字体，\textsf{中文无衬线字体}
+    \item 中文主要字体, \textsf{中文无衬线字体}
     \item Math demonstration: \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
 \end{itemize}
 
@@ -183,11 +183,12 @@ When the corresponding font is not installed, the font that comes with TeX Live 
 \section{Document templates}
 
 \singlespacing
+
 \LocallyStopLineNumbers
-\begin{minipage}{0.4\textwidth}
+\begin{minipage}{0.45\textwidth}
 \begin{code}
 %! TEX program = xelatex
-\documentclass{einfartfast}
+\documentclass[fast]{einfart}
 
 \linenumbers
 \UseLanguage{French}
@@ -208,10 +209,10 @@ When the corresponding font is not installed, the font that comes with TeX Live 
 %
 \hfill
 %
-\begin{minipage}{0.4\textwidth}
+\begin{minipage}{0.45\textwidth}
 \begin{code}
 %! TEX program = xelatex
-\documentclass{einfartfast}
+\documentclass[fast]{einfart}
 
 \linenumbers
 \UseLanguage{Chinese}

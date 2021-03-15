@@ -1,0 +1,247 @@
+%! TEX program = xelatex
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\documentclass{simplivre}
+
+\linenumbers % 开启行号
+\UseLanguage{Chinese}
+
+%%================================
+%% TeX logo 与 网址
+%%================================
+\usepackage{hologo}
+\usepackage{url}
+
+%%================================
+%% 排版代码
+%%================================
+\usepackage{listings}
+\definecolor{lightergray}{gray}{0.99}
+\lstset{language=[LaTeX]TeX,
+    keywordstyle=\color{RoyalBlue},
+    basicstyle=\ttfamily,
+    commentstyle=\color{ForestGreen}\ttfamily,
+    stringstyle=\rmfamily,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{lightergray},
+    flexiblecolumns=true,
+    escapeinside={(*}{*)},
+    % numbers=left,
+    numberstyle=\scriptsize, stepnumber=1, numbersep=5pt,
+    firstnumber=last,
+} 
+\providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
+\lstset{morekeywords=%
+    {CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,
+    linenumbers,nolinenumbers,subsection,maketitle
+    }
+}
+\lstnewenvironment{code}% 
+{\LocallyStopLineNumbers%
+\setkeys{lst}{columns=fullflexible,keepspaces=true}%
+}
+{\ResumeLineNumbers}
+
+\providecommand{\minimalist}{\textsf{minimalist}}
+\providecommand{\minimart}{\textsf{minimart}}
+\providecommand{\minimbook}{\textsf{minimbook}}
+\providecommand{\einfart}{\textsf{einfart}}
+\providecommand{\simplivre}{\textsf{simplivre}}
+
+%%================================
+%% 正文
+%%================================
+\begin{document}
+
+\title{\simplivre{}，以极简主义风格排版你的图书\thanks{对应版本. \texttt{\simplivre{} 2021/03/15}}}
+\author{锦文}
+\date{2021年3月，北京}
+
+\maketitle
+
+\frontmatter
+\chapter*{前言}
+
+\simplivre{}是\minimalist{}文档类系列的成员之一，整个系列包含用于排版文章的\minimart{}、\einfart{}以及用于排版书的\minimbook{}、\simplivre{}。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴而不简陋。
+
+其中，\einfart{}与\simplivre{}支持英文、法文、中文三种语言，并且同一篇文档中三种语言可以很好地协调。由于采用了自定义字体，需要采用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 进行编译。
+
+最后，这篇说明文档是用\simplivre{}排版的，你可以把它看作一份简短的说明与演示。
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{关于文档类的名称与选项}
+
+\einfart{}取自于德文的einfach (“简约”)，并取了artikel (“文章”)的前三个字母组合而成。
+
+\simplivre{}取自于法文的simple (“简约”)，以及livre (“书”)，由二者组合而成。
+
+你可以使用选项 \verb|fast| 来启用快速但略微粗糙的样式，主要区别是：
+\begin{itemize}
+    \item 使用较为简单的数学字体设置；
+    \item 不使用hyperref；
+    \item 不使用tikz；
+    \item 使用polyglossia而不是babel来支持多语言。(使用polyglossia编译速度会略有提高，但目前对于中文的兼容不太完善，在它更加稳定后，将会考虑全面切换到polyglossia)
+\end{itemize}
+
+在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。
+
+\chapter{一些使用说明}
+
+正文部分每段的开头没有缩进，但每两段之间会有半行左右的间距。就像这样——
+
+这里是下一个自然段。
+
+\section{定理，以及引用}
+
+定义、定理等环境已经被预定义，可以直接使用，例如：
+\begin{code}
+  \begin{definition}[奇异物品] \label{def: strange} ...
+\end{code}
+将会生成
+\begin{definition}[奇异物品]\label{def: strange}
+    这是奇异物品的定义。
+\end{definition}
+
+定理类环境的前后有一行左右的间距。在定义结束的时候会有一个符号来标记。
+
+引用时，可以直接使用智能引用 \lstinline|\cref{标签名称}|，例如：\lstinline|\cref{def: strange}| 会显示为：\cref{def: strange}。
+
+\section{定义新的定理型环境}
+
+首先定义这个环境在所用语言下的名称 \lstinline|\(name of environment)(language name)|，其中 \\\lstinline|(language name)| 是 \lstinline|EN|、\lstinline|FR|、\lstinline|CN| 等，然后用下面四种方式之一定义这一环境：
+\begin{itemize}
+    \item \lstinline|\CreateTheorem*{(name of environment)}|
+    \item \lstinline|\CreateTheorem{(name of environment)}[(numbered like)]|
+    \item \lstinline|\CreateTheorem{(name of environment)}<(numbered within)>|
+    \item \lstinline|\CreateTheorem{(name of environment)}|
+\end{itemize}
+
+\def\proofideanameCN{思路}
+\CreateTheorem*{proofidea}
+
+例如，
+
+\begin{code}
+  \def\proofideanameCN{思路}
+  \CreateTheorem*{proofidea}
+\end{code}
+可以定义不编号的环境 \lstinline|proofidea|，它支持在中文环境中使用，效果如下所示：
+
+\begin{proofidea}
+    ...
+\end{proofidea}
+
+\section{未完成标记}
+
+你可以通过 \lstinline|\dnf| 来标记尚未完成的部分。例如：
+\begin{itemize}
+    \item \lstinline|\dnf|: \quad \dnf
+    \item \lstinline|\dnf<还需加入…>|: \quad \dnf<还需加入…>
+\end{itemize}
+
+类似的，还有 \lstinline|\needgraph| ：
+\begin{itemize}
+    \item \lstinline|\needgraph|: \needgraph
+    \item \lstinline|\needgraph<关于…>|: \needgraph<关于…>
+\end{itemize}
+
+\section{语言设置}
+可以随时使用 \lstinline|\UseLanguage{语言名称}| 更改语言，语言名称包括Chinese、English、French（首字母大小写随意，例如chinese亦可）。这样，各种指令和环境的效果也会随之变动。
+
+例如，使用 \lstinline|\UseLanguage{English}| 后，定理与未完成标记会显示为：
+
+\UseLanguage{English}
+\begin{theorem}[Useless]\label{thm}
+    Some theorem in English. \dnf
+\end{theorem}
+
+引用时，定理的名称总是与定理所在区域的语言匹配，例如，开头的定义在现在的英文模式下依然显示为中文：\cref{def: strange} 和 \cref{thm}。
+
+\UseLanguage{Chinese}
+
+\section{关于行号}
+行号可以随时开启和关闭。\lstinline|\linenumbers| 用来开启行号，\lstinline|\nolinenumbers| 用来关闭行号。标题、目录、索引等位置为了美观，不进行编号。
+
+\section{关于标题中的脚注}
+在 \lstinline|\section| 或 \lstinline|\subsection| 中，如果想使用脚注，只能：
+\begin{itemize}
+    \item 先写 \lstinline|\mbox{\protect\footnotemark}|，
+    \item 再在后面用 \lstinline|\footnotetext{...}|。
+\end{itemize}
+这是标题使用下划线装饰之后带来的一个缺点。
+
+\section{关于字体}
+\einfart{}与\simplivre{}使用Palatino Linotype作为英文字体，方正悠宋、悠黑简体作为中文字体，并部分使用了Neo Euler作为数学字体：
+\begin{itemize}
+    \item English main font. \textsf{English sans serif font}.
+    \item 中文主要字体，\textsf{中文无衬线字体}
+    \item 数学示例： \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
+\end{itemize}
+
+其中，Neo Euler可以在 \url{https://github.com/khaledhosny/euler-otf} 下载。
+
+其他字体不是免费字体，需要自行购买使用（你可以在方正字库网站查询详细资料：\url{https://www.foundertype.com}）。
+
+在没有安装相应的字体时，将采用TeX Live中自带的字体来代替，效果可能会有所折扣。
+
+\section{文档示例}
+
+\singlespacing
+
+\LocallyStopLineNumbers
+\begin{minipage}{0.45\textwidth}
+\begin{code}
+%! TEX program = xelatex
+\documentclass[fast]{simplivre}
+
+\linenumbers
+\UseLanguage{French}
+
+\begin{document}
+
+\title{Titre}
+\author{Nom}
+\date{03 / 2021, Lieu}
+
+\maketitle
+
+%% Texte ici
+
+\end{document}
+\end{code}
+\end{minipage}
+%
+\hfill
+%
+\begin{minipage}{0.45\textwidth}
+\begin{code}
+%! TEX program = xelatex
+\documentclass[fast]{simplivre}
+
+\linenumbers
+\UseLanguage{Chinese}
+
+\begin{document}
+
+\title{标题}
+\author{姓名}
+\date{2021年3月，地点}
+
+\maketitle
+
+%% 正文部分
+
+\end{document}
+\end{code}
+\end{minipage}
+\par
+\ResumeLineNumbers
+
+\bigskip
+(\lstinline|\UseLanguage| 既可以放在导言中，也可以放在正文部分，并且可以按照需要反复使用)
+
+\end{document}

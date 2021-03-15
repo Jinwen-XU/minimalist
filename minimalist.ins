@@ -13,20 +13,37 @@
 \keepsilent
 \askforoverwritefalse
 
-\usedir{tex/latex/minimalist}
-
-\preamble
+\begingroup
+\catcode`\^^M=\active%
+\obeyspaces%
+\gdef\copyright{%
+\ds@heading% This is file... generated with the docstrip utility.
 
 Copyright (C) 2021 by Jinwen XU
 
 This is part of the minimalist class series.
+}%
+\gdef\lppllicense{%
 
-\endpreamble
+This work may be distributed and/or modified under the conditions of the
+LaTeX Project Public License, either version 1.3c of this license or (at
+your option) any later version. The latest version of this license is in
 
-\generate{\file{einfart.cls}{\from{minimalist.dtx}{einfart}}}
-\generate{\file{einfartfast.cls}{\from{minimalist.dtx}{einfartfast}}}
-\generate{\file{simplivre.cls}{\from{minimalist.dtx}{simplivre}}}
-\generate{\file{simplivrefast.cls}{\from{minimalist.dtx}{simplivrefast}}}
+    http://www.latex-project.org/lppl.txt
+
+and version 1.3c or later is part of all distributions of LaTeX version
+2005/12/01 or later.
+}%
+\endgroup
+
+\def\mypreamble{\copyright\lppllicense}
+\usepreamble\mypreamble
+
+\generate{\file{minimalist/minimalist.sty}{\from{minimalist.dtx}{minimalist}}}
+\generate{\file{minimalist/minimart.cls}{\from{minimalist.dtx}{minimart,class}}}
+\generate{\file{minimalist/minimbook.cls}{\from{minimalist.dtx}{minimbook,class}}}
+\generate{\file{einfart/einfart.cls}{\from{minimalist.dtx}{einfart,class}}}
+\generate{\file{simplivre/simplivre.cls}{\from{minimalist.dtx}{simplivre,class}}}
 
 \obeyspaces
 \Msg{*************************************************************}
@@ -34,10 +51,11 @@ This is part of the minimalist class series.
 \Msg{* To finish the installation you have to move the following *}
 \Msg{* files into a directory searched by TeX:                   *}
 \Msg{*                                                           *}
+\Msg{*     minimalist.sty                                        *}
+\Msg{*     minimart.cls                                          *}
+\Msg{*     minimbook.cls                                         *}
 \Msg{*     einfart.cls                                           *}
-\Msg{*     einfartfast.cls                                       *}
 \Msg{*     simplivre.cls                                         *}
-\Msg{*     simplivrefast.cls                                     *}
 \Msg{*                                                           *}
 \Msg{* Happy TeXing!                                             *}
 \Msg{*                                                           *}

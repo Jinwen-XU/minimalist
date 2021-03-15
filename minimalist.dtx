@@ -15,54 +15,88 @@
 \ProvidesFile{minimalist.dtx}
 %</driver>
 \NeedsTeXFormat{LaTeX2e}[2020-10-01]
+%
+%<*minimart>
+\ProvidesClass{minimart}
+    [2021/03/15 A simple and clear article style]
+\def\minimclass@baseclass{article}
+%</minimart>
+%
+%<*minimbook>
+\ProvidesClass{minimbook}
+    [2021/03/15 A simple and clear book style]
+\def\minimclass@baseclass{book}
+%</minimbook>
+%
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/03/12 A simple and clear article style]
+    [2021/03/15 A simple and clear article style]
+\def\minimclass@baseclass{article}
 %</einfart>
-%<*einfartfast>
-\ProvidesClass{einfartfast}
-    [2021/03/12 A faster but rougher version of einfart]
-%</einfartfast>
+%
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/03/12 A simple and clear book style]
+    [2021/03/15 A simple and clear book style]
+\def\minimclass@baseclass{book}
 %</simplivre>
-%<*simplivrefast>
-\ProvidesClass{simplivrefast}
-    [2021/03/12 A faster but rougher version of simplivre]
-%</simplivrefast>
-
-%<*einfart|einfartfast>
-\DeclareOption*{%
-    \PassOptionsToClass{\CurrentOption}{article}}
-\ProcessOptions\relax
-\LoadClass{article}
-%</einfart|einfartfast>
-%<*simplivre|simplivrefast>
-\DeclareOption*{%
-    \PassOptionsToClass{\CurrentOption}{book}}
-\ProcessOptions\relax
-\LoadClass{book}
-%</simplivre|simplivrefast>
-
+%
+%<*class>
+\RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
+\SetupKeyvalOptions{
+    family = @minimclass,
+    prefix = @minimclass@,
+}
+\DeclareBoolOption[false]{draft}
+\DeclareBoolOption[false]{fast}
+\DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{\minimclass@baseclass}}
+\ProcessKeyvalOptions*\relax
+\LoadClass{\minimclass@baseclass}
+\if@minimclass@draft
+    \@minimclass@fasttrue
+\fi
+
+%%================================
+%% Page layout
+%%================================
+\RequirePackage[heightrounded]{geometry}
+\geometry{
+    papersize={7in,10in},
+    total={40em,60em},
+    hmarginratio=1:1,
+    vmarginratio=1:1,
+    footnotesep=2em plus 2pt minus 2pt,
+}
+
+\if@minimclass@fast
+    \PassOptionsToPackage{fast}{minimalist}
+\fi
+%<*einfart|simplivre>
+\if@minimclass@fast
+    \PassOptionsToPackage{polyglossia}{minimalist}
+\fi
+%</einfart|simplivre>
+\RequirePackage{minimalist}
+\AtEndPreamble{\RequirePackage{parskip}}
 
 %%================================
 %% Fonts
 %%================================
-\RequirePackage{anyfontsize}
-
-%% Title fonts
-\newcommand{\partfont}{\sffamily}
-%<simplivre|simplivrefast>\newcommand{\chapfont}{\sffamily}
-\newcommand{\secfont}{}
-\newcommand{\subsecfont}{}
-\newcommand{\subsubsecfont}{}
-%<*einfartfast|simplivrefast>
-
-%% Math fonts
+%<*minimart|minimbook>
+\RequirePackage{iftex}
+\ifPDFTeX
+\RequirePackage[T1]{fontenc}
+\RequirePackage{inputenc}
+\fi
 \RequirePackage{mathpazo}
-%</einfartfast|simplivrefast>
+\RequirePackage{newpxtext}
+%</minimart|minimbook>
+%
+%<*einfart|simplivre>
+%% Math fonts in fast mode
+\if@minimclass@fast
+    \RequirePackage{mathpazo}
+\fi
 
 %% English fonts
 \PassOptionsToPackage{no-math}{fontspec}
@@ -130,9 +164,9 @@
         BoldItalicFont = FandolHei-Bold.otf ,
         SmallCapsFont  = * ]
 }
-%<*einfart|simplivre>
 
-%% Math fonts
+%% Math font
+\if@minimclass@fast\else
 \PassOptionsToPackage
     {warnings-off={mathtools-colon,mathtools-overbracket}}{unicode-math}
 \RequirePackage{unicode-math}
@@ -167,56 +201,117 @@
             "1D56C-"1D59F,"1D6A8-"1D6B8,"1D6BA-"1D6D2,"1D6D4-"1D6DD,
             "1D6DF,"1D6E1,"1D7CE-"1D7D7 }]
 }{}
+\fi
 %</einfart|simplivre>
 
 \RequirePackage[verbose=silent]{microtype}
 
 %%================================
-%% Page layout
+%% Graphics
 %%================================
-\RequirePackage[heightrounded]{geometry}
-\geometry{
-    papersize={7in,10in},
-    total={40em,60em},
-    hmarginratio=1:1,
-    vmarginratio=1:1,
-    footnotesep=2em plus 2pt minus 2pt,
-}
+\RequirePackage{graphicx}
+\graphicspath{{images/}}
+\RequirePackage{wrapfig}
+\RequirePackage{caption}
 
+%%================================
+%% Index
+%%================================
+\RequirePackage{imakeidx}
+% switch off the line numbers of index
+\pretocmd{\printindex}{\LocallyStopLineNumbers}{}{\FAIL}
+\apptocmd{\printindex}{\ResumeLineNumbers}{}{\FAIL}
+
+%%================================
+%% Draft mark
+%%================================
+\def\dnfFont{\ttfamily}
+\def\needgraphFont{\ttfamily}
+
+\def\dnfTextEN{To be finished here}
+\def\needgraphTextEN{A graph is needed here}
+\def\dnfTextFR{À terminer ici}
+\def\needgraphTextFR{Il manque encore un graphique ici}
+\def\dnfTextCN{这里的内容尚未完成}
+\def\needgraphTextCN{这里需要一张图片}
+
+\definecolor{dnfColor}{RGB}{21,122,20}
+\definecolor{needgraphColor}{RGB}{70,130,180}
+
+\if@minimclass@fast
+    \newcommand{\plainBox}[2][-paper]{\textcolor{#1}{%
+    \setlength{\fboxsep}{1.5pt}%
+    \setlength{\fboxrule}{1.2pt}%
+    \fbox{#2}}}
+\else
+    \PassOptionsToPackage{many}{tcolorbox}
+    \RequirePackage{tcolorbox}
+    \newtcbox{\plainBox}[1][-paper]{enhanced jigsaw,%
+        on line, arc = 1.2pt, outer arc = 1pt,breakable,%
+        colframe = #1,colupper=#1,opacityback=0,%
+        boxsep = 1pt,boxrule = 1.2pt,%
+        left = 1pt, right = 1pt, top = 0pt, bottom = 0pt,%
+    }
+\fi
+
+\NewDocumentCommand{\dnf}{d<>}{%
+    \noindent\plainBox[dnfColor]%
+    {\normalfont\dnfFont\bfseries\small%
+    \csname dnfText\csname\languagename ABBR\endcsname\endcsname%
+    \IfNoValueF{#1}{ : #1}}%
+}
+\NewDocumentCommand{\needgraph}{d<>}{%
+    \par%
+    \centerline{\plainBox[needgraphColor]%
+    {\normalfont\needgraphFont\bfseries\small%
+    \csname needgraphText\csname\languagename ABBR\endcsname\endcsname%
+    \IfNoValueF{#1}{ : #1}}}%
+    \par%
+}
+%</class>
+%
+%
+%<*minimalist>
+\ProvidesPackage{minimalist}
+    [2021/03/15 A simple and clear style for articles and books]
+\RequirePackage{etoolbox}
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{%
+    family = @minimalist,
+    prefix = @minimalist@
+}
+\DeclareBoolOption[false]{draft}
+\DeclareBoolOption[false]{fast}
+\DeclareBoolOption[false]{polyglossia}
+\ProcessKeyvalOptions*\relax
+
+\if@minimalist@draft
+  \@minimalist@fasttrue
+\fi
+
+\newif\ifIsBook
+\ifdefined\chapter\IsBooktrue\else\IsBookfalse\fi
+
+%%================================
+%% Title fonts
+%%================================
+\RequirePackage{anyfontsize}
+\newcommand{\partfont}{\sffamily}
+\newcommand{\chapfont}{\sffamily}
+\newcommand{\secfont}{}
+\newcommand{\subsecfont}{}
+\newcommand{\subsubsecfont}{}
+
+%%================================
+%% Color
+%%================================
 \RequirePackage{xcolor}
 \definecolor{paper}{RGB}{255,255,255}
-%<*simplivre>
 
-\RequirePackage{tikz}
-\usetikzlibrary{calc,shadings}
-\RequirePackage{tikzpagenodes}% For `current page text area`
-\newcommand{\drawHelpLine}{%
-    \begin{tikzpicture}[remember picture,overlay]
-        \foreach\i in {0,1,...,5}{%
-            \fill[opacity=0.12-0.02*\i] 
-                ($(current page text area.north east)
-                    +(-\i*0.5em-.025em,-10pt+\i*1.1pt)$) 
-                rectangle ($(current page text area.south east)
-                    +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
-            \shade[top color=paper,bottom color=black,opacity=0.12-0.02*\i] 
-                ($(current page text area.north east)
-                    +(-\i*0.5em-.025em,2pt)$) 
-                rectangle ($(current page text area.north east)
-                    +(-\i*0.5em+.025em,-10pt+\i*1.1pt)$);
-            \shade[top color=black,bottom color=paper,opacity=0.12-0.02*\i] 
-                ($(current page text area.south east)
-                    +(-\i*0.5em-.025em,-2pt)$) 
-                rectangle ($(current page text area.south east)
-                    +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
-        }
-    \end{tikzpicture}%
-}
-%</simplivre>
-%<*simplivrefast>
-
-\newcommand{\drawHelpLine}{}
-%</simplivrefast>
-
+%%================================
+%% Footer
+%%================================
+\RequirePackage{geometry}
 \RequirePackage{fancyhdr}
 \RequirePackage{extramarks}
 \fancypagestyle{fancy}{
@@ -234,7 +329,6 @@
     \renewcommand{\headrulewidth}{0pt}
 }
 \pagestyle{fancy}
-
 \fancypagestyle{plain}{
     \fancyhf{}
     \if@twoside
@@ -248,43 +342,67 @@
     \fi
     \renewcommand{\headrulewidth}{0pt}
 }
-
-%<*einfart|einfartfast>
-\if@twoside
-    \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{}}
-\else
-    \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
-\fi
-%</einfart|einfartfast>
-%<*simplivre|simplivrefast>
-\if@twoside
-    \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
-\else
-    \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
-\fi
-\renewcommand*{\sectionmark}[1]{%
-    \markright{\raisebox{.03em}{\footnotesize/}%
-    ~\thesection~\raisebox{.03em}{\footnotesize/}~~~#1}}
-
-\fancypagestyle{part}{
-    \fancyhf{}
-    \renewcommand{\headrulewidth}{0pt}
-    \fancyhead[C]{\drawHelpLine}
+\ifbool{IsBook}{
+% For book
+    \if@minimalist@fast
+    \newcommand{\drawHelpLine}{}
+    \else
+    \RequirePackage{tikz}
+    \usetikzlibrary{calc,shadings}
+    \RequirePackage{tikzpagenodes}% For `current page text area`
+    \newcommand{\drawHelpLine}{%
+        \begin{tikzpicture}[remember picture,overlay]
+            \foreach\i in {0,1,...,5}{%
+                \fill[opacity=0.12-0.02*\i] 
+                    ($(current page text area.north east)
+                        +(-\i*0.5em-.025em,-10pt+\i*1.1pt)$) 
+                    rectangle ($(current page text area.south east)
+                        +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+                \shade[top color=paper,bottom color=black,opacity=0.12-0.02*\i] 
+                    ($(current page text area.north east)
+                        +(-\i*0.5em-.025em,2pt)$) 
+                    rectangle ($(current page text area.north east)
+                        +(-\i*0.5em+.025em,-10pt+\i*1.1pt)$);
+                \shade[top color=black,bottom color=paper,opacity=0.12-0.02*\i] 
+                    ($(current page text area.south east)
+                        +(-\i*0.5em-.025em,-2pt)$) 
+                    rectangle ($(current page text area.south east)
+                        +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+            }
+        \end{tikzpicture}%
+    }
+    \fi
+    \fancypagestyle{part}{
+        \fancyhf{}
+        \renewcommand{\headrulewidth}{0pt}
+        \fancyhead[C]{\drawHelpLine}
+    }
+    \addtolength{\headheight}{20pt}
+    \addtolength{\topmargin}{-20pt}
+    \if@twoside
+        \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
+    \else
+        \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
+    \fi
+    \renewcommand*{\sectionmark}[1]{%
+        \markright{\raisebox{.03em}{\footnotesize/}%
+        ~\thesection~\raisebox{.03em}{\footnotesize/}~~~#1}}
+}{
+% For article
+    \if@twoside
+        \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{}}
+    \else
+        \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
+    \fi
 }
-
-\addtolength{\headheight}{20pt}
-\addtolength{\topmargin}{-20pt}
-%</simplivre|simplivrefast>
-
-%%================================
+%
+%%===============================
 %% Line spacing
 %%================================
 \RequirePackage{setspace}
 \setstretch{1.07}
 % To avoid `Underfull \vbox (badness 10000)`
 \raggedbottom
-
-\AtEndPreamble{\RequirePackage{parskip}}
 
 %%================================
 %% Line numbers
@@ -296,7 +414,7 @@
 
 \RequirePackage{mathtools}
 
-%% From https://tex.stackexchange.com/a/461192
+% From https://tex.stackexchange.com/a/461192
 % Patch 'normal' math environments:
 \newcommand*\linenomathpatch[1]{%
     \cspreto{#1}{\linenomath}%
@@ -339,7 +457,6 @@
 \pretocmd{\thebibliography}{\LocallyStopLineNumbers}{}{\FAIL}
 \apptocmd{\endthebibliography}{\ResumeLineNumbers}{}{\FAIL}
 
-
 %%================================
 %% Title format
 %%================================
@@ -347,25 +464,31 @@
 \PassOptionsToPackage{normalem}{ulem}
 \RequirePackage{ulem}
 
-%<*einfart|einfartfast>
-%% Part
-\titleformat{\part}[display]
-    {\LocallyStopLineNumbers%
-    \partfont\filleft}
-    {\MakeUppercase{\partname~\protect\thepart}}
-    {.3em}
-    {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
-    [\ResumeLineNumbers]
-\titleformat{name=\part,numberless}[display]
-    {\LocallyStopLineNumbers%
-    % \phantomsection\addcontentsline{toc}{part}{#1}%
-    \partfont\filleft}
-    {\phantom{\MakeUppercase{\partname}}}
-    {.3em}
-    {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
-    [\ResumeLineNumbers]
-%% Text after part
-\newcommand{\parttext}[1]{%
+\ifbool{IsBook}{
+% For book
+    %% Part
+    \titleclass{\part}{top} % make part like a chapter
+    \titleformat{\part}[display]
+        {\thispagestyle{part}%
+        \LocallyStopLineNumbers%
+        \partfont\filleft}
+        {\MakeUppercase{\partname~\protect\thepart}}
+        {1em}
+        {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+        [\ResumeLineNumbers]
+    \titleformat{name=\part,numberless}[display]
+        {\thispagestyle{part}%
+        \LocallyStopLineNumbers%
+        % \phantomsection\addcontentsline{toc}{part}{#1}%
+        \partfont\filleft}
+        {\phantom{\MakeUppercase{\partname}}}
+        {1em}
+        {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+        [\ResumeLineNumbers]
+    \titlespacing*{\part}{0pt}{5em}{6em}
+    %% Text after part
+    \newcommand{\parttext}[1]{%
+    \vfill%
     \LocallyStopLineNumbers%
     \begin{flushright}%
         \begin{minipage}{0.833\textwidth}%
@@ -373,60 +496,55 @@
         \end{minipage}%
     \end{flushright}%
     \ResumeLineNumbers%
+    \vfill\vfill%
+    \cleardoublepage%
+    }
+    
+    %% Chapter
+    \titleformat{\chapter}
+        {\thispagestyle{fancy}%
+        \LocallyStopLineNumbers%
+        \color{black!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
+        {\rlap{\hspace*{-.5em}{\color{gray!25!paper}%
+            \fontsize{80}{0}\selectfont\raisebox{-7pt}{\thechapter}}}#1}
+        [\ResumeLineNumbers]
+    \titleformat{name=\chapter,numberless}
+        {\thispagestyle{fancy}%
+        \LocallyStopLineNumbers%
+        % \phantomsection\addcontentsline{toc}{chapter}{#1}%
+        \color{black!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
+        {\rlap{\hspace*{-.5em}{\color{gray!25!paper}%
+            \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
+        [\ResumeLineNumbers]
+}{
+% For article
+    %% Part
+    \titleformat{\part}[display]
+        {\LocallyStopLineNumbers%
+        \partfont\filleft}
+        {\MakeUppercase{\partname~\protect\thepart}}
+        {.3em}
+        {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
+        [\ResumeLineNumbers]
+    \titleformat{name=\part,numberless}[display]
+        {\LocallyStopLineNumbers%
+        % \phantomsection\addcontentsline{toc}{part}{#1}%
+        \partfont\filleft}
+        {\phantom{\MakeUppercase{\partname}}}
+        {.3em}
+        {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
+        [\ResumeLineNumbers]
+    %% Text after part
+    \newcommand{\parttext}[1]{%
+        \LocallyStopLineNumbers%
+        \begin{flushright}%
+            \begin{minipage}{0.833\textwidth}%
+                \color{black!80!paper}\raggedleft#1%
+            \end{minipage}%
+        \end{flushright}%
+        \ResumeLineNumbers%
+    }
 }
-%</einfart|einfartfast>
-%<*simplivre|simplivrefast>
-%% Part
-\titleclass{\part}{top} % make part like a chapter
-\titleformat{\part}[display]
-    {\thispagestyle{part}%
-    \LocallyStopLineNumbers%
-    \partfont\filleft}
-    {\MakeUppercase{\partname~\protect\thepart}}
-    {1em}
-    {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
-    [\ResumeLineNumbers]
-\titleformat{name=\part,numberless}[display]
-    {\thispagestyle{part}%
-    \LocallyStopLineNumbers%
-    % \phantomsection\addcontentsline{toc}{part}{#1}%
-    \partfont\filleft}
-    {\phantom{\MakeUppercase{\partname}}}
-    {1em}
-    {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
-    [\ResumeLineNumbers]
-\titlespacing*{\part}{0pt}{5em}{6em}
-%% Text after part
-\newcommand{\parttext}[1]{%
-\vfill%
-\LocallyStopLineNumbers%
-\begin{flushright}%
-    \begin{minipage}{0.833\textwidth}%
-        \color{black!80!paper}\raggedleft#1%
-    \end{minipage}%
-\end{flushright}%
-\ResumeLineNumbers%
-\vfill\vfill%
-\cleardoublepage%
-}
-
-%% Chapter
-\titleformat{\chapter}
-    {\thispagestyle{fancy}%
-    \LocallyStopLineNumbers%
-    \color{black!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
-    {\rlap{\hspace*{-.5em}{\color{gray!25!paper}%
-        \fontsize{80}{0}\selectfont\raisebox{-7pt}{\thechapter}}}#1}
-    [\ResumeLineNumbers]
-\titleformat{name=\chapter,numberless}
-    {\thispagestyle{fancy}%
-    \LocallyStopLineNumbers%
-    % \phantomsection\addcontentsline{toc}{chapter}{#1}%
-    \color{black!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
-    {\rlap{\hspace*{-.5em}{\color{gray!25!paper}%
-        \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
-    [\ResumeLineNumbers]
-%</simplivre|simplivrefast>
 
 %% Section
 \newcommand\seculine{\bgroup\markoverwith{\color{gray!55!paper}%
@@ -482,48 +600,41 @@
     {}
     {} % without page number
     [\addvspace{.5pc}]
-%<*einfart|einfartfast>
-\titlecontents{section}
-    [2em] % i.e., 0em (part) + 2em
-    {\secfont}
-    {\contentslabel{1.75em}}
-    {\hspace*{-1.75em}}
-    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
-\titlecontents{subsection}
-    [5em] % i.e., 2em (section) + 3em
-    {\subsecfont}
-    {\contentslabel{2.75em}}
-    {\hspace*{-2.75em}}
-    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
-%</einfart|einfartfast>
-%<*simplivre|simplivrefast>
-\titlecontents{chapter}
-    [2em] % i.e., 0em (part) + 2em
-    {\addvspace{.5pc}\chapfont}
-    {\contentslabel{2em}}
-    {\hspace*{-2em}}
-    {\normalfont\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
-\titlecontents{section}
-    [4em] % i.e., 2em (chapter) + 2em
-    {\secfont}
-    {\contentslabel{1.75em}}
-    {\hspace*{-1.75em}}
-    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
-\titlecontents{subsection}
-    [7em] % i.e., 4em (section) + 3em
-    {\subsecfont}
-    {\contentslabel{2.75em}}
-    {\hspace*{-2.75em}}
-    {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
-%</simplivre|simplivrefast>
-
-%%================================
-%% Graphics
-%%================================
-\RequirePackage{graphicx}
-\graphicspath{{images/}}
-\RequirePackage{wrapfig}
-\RequirePackage{caption}
+\ifbool{IsBook}{
+% For book
+    \titlecontents{chapter}
+        [2em] % i.e., 0em (part) + 2em
+        {\addvspace{.5pc}\chapfont}
+        {\contentslabel{2em}}
+        {\hspace*{-2em}}
+        {\normalfont\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+    \titlecontents{section}
+        [4em] % i.e., 2em (chapter) + 2em
+        {\secfont}
+        {\contentslabel{1.75em}}
+        {\hspace*{-1.75em}}
+        {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+    \titlecontents{subsection}
+        [7em] % i.e., 4em (section) + 3em
+        {\subsecfont}
+        {\contentslabel{2.75em}}
+        {\hspace*{-2.75em}}
+        {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+}{
+% For article
+    \titlecontents{section}
+        [2em] % i.e., 0em (part) + 2em
+        {\secfont}
+        {\contentslabel{1.75em}}
+        {\hspace*{-1.75em}}
+        {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+    \titlecontents{subsection}
+        [5em] % i.e., 2em (section) + 3em
+        {\subsecfont}
+        {\contentslabel{2.75em}}
+        {\hspace*{-2.75em}}
+        {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+}
 
 %%================================
 %% Lists
@@ -540,18 +651,9 @@
     \clearpage
     \if@twoside\ifodd\c@page\relax\else
     \thispagestyle{empty}
-    \newgeometry{centering}
     \null\vfill
     \centerline{\large\color{gray!20!paper}\blinkpagetext}
-    \vfill\restoregeometry\newpage\fi\fi}
-
-%%================================
-%% Index
-%%================================
-\RequirePackage{imakeidx}
-% switch off the line numbers of index
-\pretocmd{\printindex}{\LocallyStopLineNumbers}{}{\FAIL}
-\apptocmd{\printindex}{\ResumeLineNumbers}{}{\FAIL}
+    \vfill\newpage\fi\fi}
 
 %%================================
 %% Theorems
@@ -570,11 +672,13 @@
 \renewcommand{\qedsymbol}{%
     \makebox[1em]{\color{gray!55!paper}\rule[-0.1em]{.95em}{.95em}}}
 
-%<einfart|simplivre>\PassOptionsToPackage{hidelinks,linktoc=all}{hyperref}
-\RequirePackage{aliascnt}
+\if@minimalist@fast\else
+    \PassOptionsToPackage{hidelinks,linktoc=all}{hyperref}
 % To solve `Difference between bookmark levels is greater than one`
-%<einfart|simplivre>\RequirePackage{bookmark}
-%<einfart|simplivre>\RequirePackage{hyperref}
+    \RequirePackage{bookmark}
+    \RequirePackage{hyperref}
+\fi
+\RequirePackage{aliascnt}
 \PassOptionsToPackage{nameinlink}{cleveref}
 \RequirePackage{cleveref}
 
@@ -582,7 +686,7 @@
 \newcommand\frenchABBR{FR}
 \newcommand\chineseABBR{CN}
 
-%% Macro for creating theorems
+% Macro for creating theorems
 \RequirePackage{xstring}
 \newcommand\PassFirstToSecond[2]{#2{#1}}%
 \NewDocumentCommand{\CreateTheorem}{sm}{%
@@ -598,11 +702,11 @@
         \expandafter{\temp}{\endgroup\InnerCreateTheorem{#1}}}%
 }%
 \NewDocumentCommand{\InnerCreateTheorem}{mmmod<>}{%
-    % #1 = star or no star
-    % #2 = name of environment
-    % #3 = emptiness or star to append to name of environment
-    % #4 = numbered like
-    % #5 = numbered within
+% #1 = star or no star
+% #2 = name of environment
+% #3 = emptiness or star to append to name of environment
+% #4 = numbered like
+% #5 = numbered within
     \IfBooleanTF{#1}{%
         \IfValueTF{#4}
             {\@firstoftwo}
@@ -692,14 +796,17 @@
 
 %% Theorem environments
 \theoremstyle{simple}
-%<einfart|einfartfast>\CreateTheorem{theorem}<section>
-%<simplivre|simplivrefast>\CreateTheorem{theorem}<chapter>
+\ifbool{IsBook}{
+    \newaliascnt{highest}{chapter}
+}{
+    \newaliascnt{highest}{section}
+}
+\CreateTheorem{theorem}<highest>
 \CreateTheorem{lemma}[theorem]
 \CreateTheorem{proposition}[theorem]
 \CreateTheorem{corollary}[theorem]
 \CreateTheorem{fact}[theorem]
-%<einfart|einfartfast>\CreateTheorem{conjecture}<section>
-%<simplivre|simplivrefast>\CreateTheorem{conjecture}<chapter>
+\CreateTheorem{conjecture}<highest>
 \CreateTheorem*{theorem*}
 \CreateTheorem*{lemma*}
 \CreateTheorem*{proposition*}
@@ -707,31 +814,27 @@
 \CreateTheorem*{fact*}
 \CreateTheorem*{conjecture*}
 \CreateTheorem{definition}[theorem]
-%<einfart|einfartfast>\CreateTheorem{example}<section>
-%<simplivre|simplivrefast>\CreateTheorem{example}<chapter>
-%<einfart|einfartfast>\CreateTheorem{problem}<section>
-%<simplivre|simplivrefast>\CreateTheorem{problem}<chapter>
+\CreateTheorem{example}<highest>
+\CreateTheorem{problem}<highest>
 \CreateTheorem*{definition*}
 \CreateTheorem*{example*}
 \CreateTheorem*{problem*}
-%<einfart|einfartfast>\CreateTheorem{remark}<section>
-%<simplivre|simplivrefast>\CreateTheorem{remark}<chapter>
+\CreateTheorem{remark}<highest>
 \CreateTheorem*{remark*}
 
 %%================================
 %% Language configuration
 %%================================
-%<*einfart|simplivre>
-\PassOptionsToPackage{french,english}{babel}
-\RequirePackage{babel}
-\frenchsetup{PartNameFull=false}
-%</einfart|simplivre>
-%<*einfartfast|simplivrefast>
-\RequirePackage{polyglossia}
-\setdefaultlanguage{english}
-\setotherlanguage[frenchpart=false]{french}
-%</einfartfast|simplivrefast>
-
+\if@minimalist@polyglossia
+    \RequirePackage{polyglossia}
+    \setdefaultlanguage{english}
+    \setotherlanguage[frenchpart=false]{french}
+\else
+    \PassOptionsToPackage{french,english}{babel}
+    \RequirePackage{babel}
+    \frenchsetup{PartNameFull=false}
+\fi
+%
 \newcommand{\minimalist@langconfig@chinese}{%
     \def\abstractname{摘要}%
     \def\proofname{证明}%
@@ -750,10 +853,10 @@
 }
 \newcommand{\minimalist@langconfig@french}{%
     \selectlanguage{french}%
-% The line below is only needed for 'babel'
-%<einfart|simplivre>    \def\frenchpartname{Partie}%
+% The line below is currently only needed for 'babel', but also works with 'polyglossia'
+    \def\frenchpartname{Partie}%
 }
-
+%
 \newcommand{\UseLanguageCORE}[1]{%
     \ifstrequal{#1}{chinese}{\onehalfspacing\minimalist@langconfig@chinese}{}%
     \ifstrequal{#1}{Chinese}{\onehalfspacing\minimalist@langconfig@chinese}{}%
@@ -781,54 +884,7 @@
 \endgroup%
 }
 
-%%================================
-%% Draft mark
-%%================================
-\def\dnfFont{\ttfamily}
-\def\needgraphFont{\ttfamily}
-
-\def\dnfTextEN{To be finished here}
-\def\needgraphTextEN{A graph is needed here}
-\def\dnfTextFR{À terminer ici}
-\def\needgraphTextFR{Il manque encore un graphique ici}
-\def\dnfTextCN{这里的内容尚未完成}
-\def\needgraphTextCN{这里需要一张图片}
-
-\definecolor{dnfColor}{RGB}{21,122,20}
-\definecolor{needgraphColor}{RGB}{70,130,180}
-
-%<*einfart|simplivre>
-\PassOptionsToPackage{many}{tcolorbox}
-\RequirePackage{tcolorbox}
-\newtcbox{\plainBox}[1][-paper]{enhanced jigsaw,%
-    on line, arc = 1.2pt, outer arc = 1pt,breakable,%
-    colframe = #1,colupper=#1,opacityback=0,%
-    boxsep = 1pt,boxrule = 1.2pt,%
-    left = 1pt, right = 1pt, top = 0pt, bottom = 0pt,%
-}
-%</einfart|simplivre>
-%<*einfartfast|simplivrefast>
-\newcommand{\plainBox}[2][-paper]{\textcolor{#1}{%
-    \setlength{\fboxsep}{1.5pt}%
-    \setlength{\fboxrule}{1.2pt}%
-    \fbox{#2}}}
-%</einfartfast|simplivrefast>
-
-\NewDocumentCommand{\dnf}{d<>}{%
-    \noindent\plainBox[dnfColor]%
-    {\normalfont\dnfFont\bfseries\small%
-    \csname dnfText\csname\languagename ABBR\endcsname\endcsname%
-    \IfNoValueF{#1}{ : #1}}%
-}
-\NewDocumentCommand{\needgraph}{d<>}{%
-    \par%
-    \centerline{\plainBox[needgraphColor]%
-    {\normalfont\needgraphFont\bfseries\small%
-    \csname needgraphText\csname\languagename ABBR\endcsname\endcsname%
-    \IfNoValueF{#1}{ : #1}}}%
-    \par%
-}
-%<*einfart|einfartfast>
+\ifbool{IsBook}{}{
 
 %%================================
 %% Title block style
@@ -869,6 +925,8 @@
     \end{flushright}%
     \ResumeLineNumbers%
 }
-%</einfart|einfartfast>
+
+}
+%</minimalist>
 
 \endinput

@@ -44,38 +44,39 @@
 {\ResumeLineNumbers}
 
 \providecommand{\minimalist}{\textsf{minimalist}}
+\providecommand{\minimart}{\textsf{minimart}}
+\providecommand{\minimbook}{\textsf{minimbook}}
 \providecommand{\einfart}{\textsf{einfart}}
-\providecommand{\einfartfast}{\textsf{einfartfast}}
 \providecommand{\simplivre}{\textsf{simplivre}}
-\providecommand{\simplivrefast}{\textsf{simplivrefast}}
 
 %%================================
 %% 正文
 %%================================
 \begin{document}
 
-\title{\minimalist{}，极简主义风格的文档类系列\thanks{对应版本. \texttt{\minimalist{} 2021/03/12}}}
+\title{\einfart{}，以极简主义风格排版你的文章\thanks{对应版本. \texttt{\einfart{} 2021/03/15}}}
 \author{锦文}
 \date{2021年3月，北京}
 
 \maketitle
 
 \begin{abstract}
-    \minimalist{}文档类系列包含用于排版文章的\einfart{}、用于排版书的\simplivre{}，以及对应的两个“fast”版本。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴但不简陋。
+    \einfart{}是\minimalist{}文档类系列的成员之一，整个系列包含用于排版文章的\minimart{}、\einfart{}以及用于排版书的\minimbook{}、\simplivre{}。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴而不简陋。
 
-    这些文档类支持英文、法文、中文三种语言，并且同一篇文档中三种语言可以很好地协调。由于采用了自定义字体，需要采用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 进行编译。
+    其中，\einfart{}与\simplivre{}支持英文、法文、中文三种语言，并且同一篇文档中三种语言可以很好地协调。由于采用了自定义字体，需要采用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 进行编译。
     
-    最后，这篇说明文档是用\einfart{}排版的，你可以把它看作一份简短的说明与演示。
+    这篇说明文档是用\einfart{}排版的，你可以把它看作一份简短的说明与演示。
 \end{abstract}
 
 \tableofcontents
 
-\section{关于这些文档类的名称与区别}
+\section{关于文档类的名称与选项}
+
 \einfart{}取自于德文的einfach (“简约”)，并取了artikel (“文章”)的前三个字母组合而成。
 
 \simplivre{}取自于法文的simple (“简约”)，以及livre (“书”)，由二者组合而成。
 
-\einfartfast{}与\simplivrefast{}是更快速但略微粗糙的\einfart{}与\simplivre{}，主要区别是：
+你可以使用选项 \verb|fast| 来启用快速但略微粗糙的样式，主要区别是：
 \begin{itemize}
     \item 使用较为简单的数学字体设置；
     \item 不使用hyperref；
@@ -83,7 +84,7 @@
     \item 使用polyglossia而不是babel来支持多语言。(使用polyglossia编译速度会略有提高，但目前对于中文的兼容不太完善，在它更加稳定后，将会考虑全面切换到polyglossia)
 \end{itemize}
 
-在文章的撰写阶段，建议使用fast版本以加快编译速度，改善写作时的流畅程度。在最后，可以把fast标记去除，从而得到正式的版本。
+在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。
 
 \section{一些使用说明}
 
@@ -171,7 +172,7 @@
 这是标题使用下划线装饰之后带来的一个缺点。
 
 \subsection{关于字体}
-einfart与simplivre使用Palatino Linotype作为英文字体，方正悠宋、悠黑简体作为中文字体，并部分使用了Neo Euler作为数学字体：
+\einfart{}与\simplivre{}使用Palatino Linotype作为英文字体，方正悠宋、悠黑简体作为中文字体，并部分使用了Neo Euler作为数学字体：
 \begin{itemize}
     \item English main font. \textsf{English sans serif font}.
     \item 中文主要字体，\textsf{中文无衬线字体}
@@ -189,10 +190,10 @@ einfart与simplivre使用Palatino Linotype作为英文字体，方正悠宋、�
 \singlespacing
 
 \LocallyStopLineNumbers
-\begin{minipage}{0.4\textwidth}
+\begin{minipage}{0.45\textwidth}
 \begin{code}
 %! TEX program = xelatex
-\documentclass{einfartfast}
+\documentclass[fast]{einfart}
 
 \linenumbers
 \UseLanguage{French}
@@ -213,10 +214,10 @@ einfart与simplivre使用Palatino Linotype作为英文字体，方正悠宋、�
 %
 \hfill
 %
-\begin{minipage}{0.4\textwidth}
+\begin{minipage}{0.45\textwidth}
 \begin{code}
 %! TEX program = xelatex
-\documentclass{einfartfast}
+\documentclass[fast]{einfart}
 
 \linenumbers
 \UseLanguage{Chinese}
