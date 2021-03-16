@@ -10,9 +10,9 @@ simple and clear design. It mainly consists of two parts.
     - minimart.cls : class for typesetting articles
     - minimbook.cls : class for typesetting books
 
-    They can be used with any LaTeX engine. Currently they have native support
-    to English and French typesetting. (I have planed to add more language
-    support)
+    They can be used with any major TeX engine. Currently they have native
+    support to English and French typesetting. (I have planed to add more
+    language support)
 
 
 - Derivative part (they have separate pages on CTAN):
