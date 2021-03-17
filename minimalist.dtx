@@ -273,7 +273,7 @@
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/03/15 A simple and clear style for articles and books]
+    [2021/03/17 A simple and clear style for articles and books]
 \RequirePackage{etoolbox}
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{%
@@ -415,6 +415,7 @@
 \RequirePackage{mathtools}
 
 % From https://tex.stackexchange.com/a/461192
+\ifdefined\linenomathpatch\else
 % Patch 'normal' math environments:
 \newcommand*\linenomathpatch[1]{%
     \cspreto{#1}{\linenomath}%
@@ -444,6 +445,7 @@
 \linenomathpatchAMS{align}
 \linenomathpatchAMS{alignat}
 \linenomathpatchAMS{flalign}
+\fi
 
 % record whether linenumber has turned on
 \newif\ifLNturnsON
