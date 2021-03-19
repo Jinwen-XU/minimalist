@@ -18,25 +18,25 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/03/15 A simple and clear article style]
+    [2021/03/19 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/03/15 A simple and clear book style]
+    [2021/03/19 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/03/15 A simple and clear article style]
+    [2021/03/19 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/03/15 A simple and clear book style]
+    [2021/03/19 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
@@ -59,6 +59,8 @@
 %%================================
 %% Page layout
 %%================================
+\RequirePackage{silence}
+\WarningFilter{geometry}{Over-specification in}
 \RequirePackage[heightrounded]{geometry}
 \geometry{
     papersize={7in,10in},
@@ -261,19 +263,19 @@
     \IfNoValueF{#1}{ : #1}}%
 }
 \NewDocumentCommand{\needgraph}{d<>}{%
-    \par%
-    \centerline{\plainBox[needgraphColor]%
-    {\normalfont\needgraphFont\bfseries\small%
-    \csname needgraphText\csname\languagename ABBR\endcsname\endcsname%
-    \IfNoValueF{#1}{ : #1}}}%
-    \par%
+    \begin{center}%
+        \plainBox[needgraphColor]%
+        {\normalfont\needgraphFont\bfseries\small%
+        \csname needgraphText\csname\languagename ABBR\endcsname\endcsname%
+        \IfNoValueF{#1}{ : #1}}%
+    \end{center}%
 }
 %</class>
 %
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/03/17 A simple and clear style for articles and books]
+    [2021/03/19 A simple and clear style for articles and books]
 \RequirePackage{etoolbox}
 \RequirePackage{kvoptions}
 \SetupKeyvalOptions{%
@@ -314,6 +316,7 @@
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
 \RequirePackage{extramarks}
+\AtEndPreamble{\fancyhfoffset{0pt}}
 \fancypagestyle{fancy}{
     \fancyhf{}
     \if@twoside
@@ -676,7 +679,9 @@
 \renewcommand{\qedsymbol}{%
     \makebox[1em]{\color{gray!55!paper}\rule[-0.1em]{.95em}{.95em}}}
 
-\if@minimalist@fast\else
+\if@minimalist@fast
+    \providecommand{\phantomsection}{}
+\else
     \PassOptionsToPackage{hidelinks,linktoc=all}{hyperref}
 % To solve `Difference between bookmark levels is greater than one`
     \RequirePackage{bookmark}
@@ -849,6 +854,7 @@
     \def\tablename{表}%
     \def\indexname{索引}%
     \def\appendixname{附录}%
+    \def\refname{参考文献}%
     \def\bibname{参考文献}%
     \renewcommand{\languagename}{chinese}%
 }
