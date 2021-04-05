@@ -18,31 +18,37 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/03/19 A simple and clear article style]
+    [2021/04/05 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/03/19 A simple and clear book style]
+    [2021/04/05 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/03/19 A simple and clear article style]
+    [2021/04/05 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/03/19 A simple and clear book style]
+    [2021/04/05 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
-%<*class>
+%<*minimalist>
+\ProvidesPackage{minimalist}
+    [2021/04/05 A simple and clear style for articles and books]
+%</minimalist>
+%
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
+%
+%<*class>
 \SetupKeyvalOptions{
     family = @minimclass,
     prefix = @minimclass@,
@@ -168,14 +174,17 @@
 }
 
 %% Math font
-\if@minimclass@fast\else
+\if@minimclass@fast
+\RequirePackage{amssymb}
+\else
 \PassOptionsToPackage
     {warnings-off={mathtools-colon,mathtools-overbracket}}{unicode-math}
 \RequirePackage{unicode-math}
-\unimathsetup{math-style=ISO}
+\unimathsetup{math-style=ISO, partial=upright, nabla=upright}
 \setmathfont{Asana-Math.otf}
 \IfFontExistsTF{Neo Euler}{%
-\setmathfont{Neo Euler} % From https://tex.stackexchange.com/a/425887
+% From https://tex.stackexchange.com/a/425887
+\setmathfont{Neo Euler}
     [range={"0000-"0001,"0020-"007E,
             "00A0,"00A7-"00A8,"00AC,"00AF,"00B1,"00B4-"00B5,"00B7,
             "00D7,"00F7,
@@ -202,6 +211,17 @@
             "1D507-"1D50A,"1D50D-"1D514,"1D516-"1D51C,"1D51E-"1D537,
             "1D56C-"1D59F,"1D6A8-"1D6B8,"1D6BA-"1D6D2,"1D6D4-"1D6DD,
             "1D6DF,"1D6E1,"1D7CE-"1D7D7 }]
+\setmathfont[range=up/{greek,Greek}, script-features={}, sscript-features={}
+            ]{Neo Euler}
+\setmathfont[range=up/{latin,Latin}, script-features={}, sscript-features={}
+            ]{Neo Euler}
+\setmathfont[range={bfup/{latin, Latin, greek, Greek}, frak, bffrak, cal},
+             script-features={}, sscript-features={}
+            ]{Neo Euler}
+\setmathfont[range={up/num, bfup/num, it, bfit, scr, bfscr,
+                    sfup, sfit, bfsfup, bfsfit, tt}
+            ]{Asana-Math.otf}
+\setmathfont[range=bfcal, Scale=MatchUppercase, Alternate]{Asana-Math.otf}
 }{}
 \fi
 %</einfart|simplivre>
@@ -214,7 +234,9 @@
 \RequirePackage{graphicx}
 \graphicspath{{images/}}
 \RequirePackage{wrapfig}
+\RequirePackage{float}
 \RequirePackage{caption}
+\captionsetup{font=small}
 
 %%================================
 %% Index
@@ -230,11 +252,11 @@
 \def\dnfFont{\ttfamily}
 \def\needgraphFont{\ttfamily}
 
-\def\dnfTextEN{To be finished here}
+\def\dnfTextEN{To be finished}
 \def\needgraphTextEN{A graph is needed here}
 \def\dnfTextFR{À terminer ici}
 \def\needgraphTextFR{Il manque encore un graphique ici}
-\def\dnfTextCN{这里的内容尚未完成}
+\def\dnfTextCN{这里尚未完成}
 \def\needgraphTextCN{这里需要一张图片}
 
 \definecolor{dnfColor}{RGB}{21,122,20}
@@ -256,28 +278,29 @@
     }
 \fi
 
+\newcounter{dnfcnt}
+\newcounter{needgraphcnt}
+
 \NewDocumentCommand{\dnf}{d<>}{%
     \noindent\plainBox[dnfColor]%
     {\normalfont\dnfFont\bfseries\small%
     \csname dnfText\csname\languagename ABBR\endcsname\endcsname%
-    \IfNoValueF{#1}{ : #1}}%
+    \stepcounter{dnfcnt}~\#\thednfcnt%
+    \IfNoValueF{#1}{\,: #1}}%
 }
 \NewDocumentCommand{\needgraph}{d<>}{%
     \begin{center}%
         \plainBox[needgraphColor]%
         {\normalfont\needgraphFont\bfseries\small%
         \csname needgraphText\csname\languagename ABBR\endcsname\endcsname%
-        \IfNoValueF{#1}{ : #1}}%
+        \stepcounter{needgraphcnt}~\#\theneedgraphcnt%
+        \IfNoValueF{#1}{\,: #1}}%
     \end{center}%
 }
 %</class>
 %
 %
 %<*minimalist>
-\ProvidesPackage{minimalist}
-    [2021/03/19 A simple and clear style for articles and books]
-\RequirePackage{etoolbox}
-\RequirePackage{kvoptions}
 \SetupKeyvalOptions{%
     family = @minimalist,
     prefix = @minimalist@
@@ -423,8 +446,8 @@
 \newcommand*\linenomathpatch[1]{%
     \cspreto{#1}{\linenomath}%
     \cspreto{#1*}{\linenomath}%
-    \cspreto{end#1}{\endlinenomath}%
-    \cspreto{end#1*}{\endlinenomath}%
+    \csappto{end#1}{\endlinenomath}%
+    \csappto{end#1*}{\endlinenomath}%
 }
 % Patch AMS math environments:
 \newcommand*\linenomathpatchAMS[1]{%
@@ -681,6 +704,7 @@
 
 \if@minimalist@fast
     \providecommand{\phantomsection}{}
+    \RequirePackage{url}
 \else
     \PassOptionsToPackage{hidelinks,linktoc=all}{hyperref}
 % To solve `Difference between bookmark levels is greater than one`
@@ -911,7 +935,11 @@
         {\small\@date}%
     \end{flushright}%
     \vspace{-\parskip}%
-    \vspace{-.5\baselineskip}%
+    \ifx\@date\@empty%
+        \vspace{-.2\baselineskip}%
+    \else%
+        \vspace{-.5\baselineskip}%
+    \fi%
     {\textcolor{gray!55!paper}{\rule{\textwidth}{0.75pt}}\par}%
     \ResumeLineNumbers%
 }

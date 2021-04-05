@@ -53,9 +53,9 @@
 %%================================
 \begin{document}
 
-\title{\simplivre{}, write your books in a simple and clear way\thanks{Corresponding to: \texttt{\simplivre{} 2021/03/15}}}
+\title{\simplivre{}, write your books in a simple and clear way\thanks{Corresponding to: \texttt{\simplivre{} 2021/04/05}}}
 \author{Jinwen}
-\date{March 2021, Beijing}
+\date{April 2021, Beijing}
 
 \maketitle
 
@@ -96,10 +96,12 @@ Here is the next paragraph.
 
 \section{Theorems and how to reference them}
 
-Environments such as definitions and theorems have been pre-defined and can be used directly, for example:
+Environments such as definitions and theorems have been pre-defined and can be used directly. For example:
+
 \begin{code}
   \begin{definition}[Strange things] \label{def: strange} ...
 \end{code}
+
 will produce
 \begin{definition}[Strange things]\label{def: strange}
     This is the definition of some strange objects.
@@ -123,10 +125,12 @@ First define the name of this environment in the language used: \lstinline|\(nam
 \CreateTheorem*{proofidea}
 
 For example,
+
 \begin{code}
   \def\proofideanameEN{Idea}
   \CreateTheorem*{proofidea}
 \end{code}
+
 defines an unnumbered environment \lstinline|proofidea|, which supports using in the English context, and the effect is as follows:
 
 \begin{proofidea}

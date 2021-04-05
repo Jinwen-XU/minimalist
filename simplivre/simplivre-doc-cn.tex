@@ -54,9 +54,9 @@
 %%================================
 \begin{document}
 
-\title{\simplivre{}，以极简主义风格排版你的图书\thanks{对应版本. \texttt{\simplivre{} 2021/03/15}}}
+\title{\simplivre{}，以极简主义风格排版你的图书\thanks{对应版本. \texttt{\simplivre{} 2021/04/05}}}
 \author{锦文}
-\date{2021年3月，北京}
+\date{2021年4月，北京}
 
 \maketitle
 
@@ -98,9 +98,11 @@
 \section{定理，以及引用}
 
 定义、定理等环境已经被预定义，可以直接使用，例如：
+
 \begin{code}
   \begin{definition}[奇异物品] \label{def: strange} ...
 \end{code}
+
 将会生成
 \begin{definition}[奇异物品]\label{def: strange}
     这是奇异物品的定义。
@@ -129,6 +131,7 @@
   \def\proofideanameCN{思路}
   \CreateTheorem*{proofidea}
 \end{code}
+
 可以定义不编号的环境 \lstinline|proofidea|，它支持在中文环境中使用，效果如下所示：
 
 \begin{proofidea}

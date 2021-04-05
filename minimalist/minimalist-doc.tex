@@ -53,9 +53,9 @@
 %%================================
 \begin{document}
 
-\title{\minimalist{}, write your articles or books in a simple and clear way\thanks{Corresponding to: \texttt{\minimalist{} 2021/03/15}}}
+\title{\minimalist{}, write your articles or books in a simple and clear way\thanks{Corresponding to: \texttt{\minimalist{} 2021/04/05}}}
 \author{Jinwen}
-\date{March 2021, Beijing}
+\date{April 2021, Beijing}
 
 \maketitle
 
@@ -79,6 +79,7 @@ You can directly use \minimart{} or \minimbook{} as your document class. In this
 \end{code}
 
 And of course, you can also use the default classes \textsf{article} or \textsf{book}, and load the \minimalist{} package. This way, only the basic styles are set, and you can thus use your preferred fonts and page layout. All the features mentioned in this article (except for draft marks) are provided.
+
 \begin{code}
   \usepackage{minimalist}
 \end{code}
@@ -101,9 +102,11 @@ Here is the next paragraph.
 \subsection{Theorems and how to reference them}
 
 Environments such as definitions and theorems have been pre-defined and can be used directly, for example:
+
 \begin{code}
   \begin{definition}[Strange things] \label{def: strange} ...
 \end{code}
+
 will produce
 \begin{definition}[Strange things]\label{def: strange}
     This is the definition of some strange objects.
@@ -127,10 +130,12 @@ First define the name of this environment in the language used: \lstinline|\(nam
 \CreateTheorem*{proofidea}
 
 For example,
+
 \begin{code}
   \def\proofideanameEN{Idea}
   \CreateTheorem*{proofidea}
 \end{code}
+
 defines an unnumbered environment \lstinline|proofidea|, which supports using in the English context, and the effect is as follows:
 
 \begin{proofidea}
