@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/04/05 A simple and clear article style]
+    [2021/04/07 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/04/05 A simple and clear book style]
+    [2021/04/07 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/04/05 A simple and clear article style]
+    [2021/04/07 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/04/05 A simple and clear book style]
+    [2021/04/07 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/04/05 A simple and clear style for articles and books]
+    [2021/04/07 A simple and clear style for articles and books]
 %</minimalist>
 %
 \RequirePackage{kvoptions}
@@ -55,6 +55,7 @@
 }
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
+\DeclareBoolOption[false]{classical}
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{\minimclass@baseclass}}
 \ProcessKeyvalOptions*\relax
 \LoadClass{\minimclass@baseclass}
@@ -84,8 +85,12 @@
     \PassOptionsToPackage{polyglossia}{minimalist}
 \fi
 %</einfart|simplivre>
+\if@minimclass@classical
+    \RequirePackage{indentfirst}
+\else
+    \AtEndPreamble{\RequirePackage{parskip}}
+\fi
 \RequirePackage{minimalist}
-\AtEndPreamble{\RequirePackage{parskip}}
 
 %%================================
 %% Fonts
@@ -129,10 +134,10 @@
 \IfFontExistsTF{FZYouSongS 507R}{%
     \setCJKmainfont{FZYouSongS 507R}[
         BoldFont       = FZYouSongS 509R ,
-        BoldFeatures   = {FakeBold=2} ,
+        BoldFeatures   = {FakeBold=4} ,
         ItalicFont     = * ,
         BoldItalicFont = FZYouSongS 509R ,
-        BoldItalicFeatures = {FakeBold=2} ,
+        BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }{
     \setCJKmainfont{FandolSong-Regular.otf}[
@@ -145,10 +150,10 @@
 \IfFontExistsTF{FZYouSongS 507R}{%
     \setCJKmonofont{FZYouSongS 507R}[
         BoldFont       = FZYouSongS 509R ,
-        BoldFeatures   = {FakeBold=2} ,
+        BoldFeatures   = {FakeBold=4} ,
         ItalicFont     = * ,
         BoldItalicFont = FZYouSongS 509R ,
-        BoldItalicFeatures = {FakeBold=2} ,
+        BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }{
     \setCJKmonofont{FandolFang-Regular.otf}[
@@ -162,6 +167,7 @@
 \IfFontExistsTF{FZYouHeiS 506L}{%
     \setCJKsansfont{FZYouHeiS 506L}[
         BoldFont       = FZYouHeiS 509R,
+        BoldFeatures   = {FakeBold=4} ,
         ItalicFont     = * ,
         BoldItalicFont = FZYouHeiS 509R ,
         SmallCapsFont  = * ]
@@ -307,11 +313,19 @@
 }
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
+\DeclareBoolOption[false]{allowbf}
+\DeclareBoolOption[false]{classical}
 \DeclareBoolOption[false]{polyglossia}
 \ProcessKeyvalOptions*\relax
 
 \if@minimalist@draft
   \@minimalist@fasttrue
+\fi
+
+\if@minimalist@allowbf
+    \newcommand{\conditionalbfseries}{\bfseries\color{black!83!paper}}
+\else
+    \newcommand{\conditionalbfseries}{}
 \fi
 
 \newif\ifIsBook
@@ -321,11 +335,19 @@
 %% Title fonts
 %%================================
 \RequirePackage{anyfontsize}
-\newcommand{\partfont}{\sffamily}
-\newcommand{\chapfont}{\sffamily}
-\newcommand{\secfont}{}
-\newcommand{\subsecfont}{}
-\newcommand{\subsubsecfont}{}
+\if@minimalist@classical
+\newcommand{\partfont}{\conditionalbfseries\sffamily}
+\newcommand{\chapfont}{\conditionalbfseries\sffamily}
+\newcommand{\secfont}{\conditionalbfseries\sffamily}
+\newcommand{\subsecfont}{\conditionalbfseries\sffamily}
+\newcommand{\subsubsecfont}{\conditionalbfseries\sffamily}
+\else
+\newcommand{\partfont}{\conditionalbfseries\sffamily}
+\newcommand{\chapfont}{\conditionalbfseries\sffamily}
+\newcommand{\secfont}{\conditionalbfseries}
+\newcommand{\subsecfont}{\conditionalbfseries}
+\newcommand{\subsubsecfont}{\conditionalbfseries}
+\fi
 
 %%================================
 %% Color
@@ -575,8 +597,12 @@
 }
 
 %% Section
+\if@minimalist@classical
+\newcommand\seculine{}
+\else
 \newcommand\seculine{\bgroup\markoverwith{\color{gray!55!paper}%
     \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
+\fi
 \renewcommand\thesection{\arabic{section}}
 \titleformat{\section}
     {\LocallyStopLineNumbers%
@@ -594,15 +620,27 @@
     [\ResumeLineNumbers]
 
 %% Subsection
+\if@minimalist@classical
+\newcommand\subseculine{}
+\else
 \newcommand\subseculine{\bgroup\markoverwith{\color{gray!55!paper}%
     \rule[-1ex]{2pt}{.75pt}}\ULon}
+\fi
 \renewcommand\thesubsection{%
     \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
+\if@minimalist@classical
+\titleformat{\subsection}
+    {\LocallyStopLineNumbers%
+    \subsecfont}{}{0em}
+    {\subseculine{\thesubsection\hspace{.75em}#1}}
+    [\ResumeLineNumbers]
+\else
 \titleformat{\subsection}
     {\LocallyStopLineNumbers%
     \subsecfont}{}{0em}
     {\subseculine{\thesubsection~\textcolor{gray!55!paper}{$|$}~#1}}
     [\ResumeLineNumbers]
+\fi
 \titleformat{name=\subsection,numberless}
     {\LocallyStopLineNumbers%
     \subsecfont}{}{0em}
@@ -623,7 +661,7 @@
 \RequirePackage{titletoc}
 \titlecontents{part}
     [0em]
-    {\addvspace{1.5pc}\filcenter\partfont}
+    {\addvspace{1.5pc}\filcenter\normalfont}
     {\thecontentslabel\\\uppercase}
     {}
     {} % without page number
@@ -632,19 +670,19 @@
 % For book
     \titlecontents{chapter}
         [2em] % i.e., 0em (part) + 2em
-        {\addvspace{.5pc}\chapfont}
+        {\addvspace{.5pc}\normalfont}
         {\contentslabel{2em}}
         {\hspace*{-2em}}
         {\normalfont\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
     \titlecontents{section}
         [4em] % i.e., 2em (chapter) + 2em
-        {\secfont}
+        {\normalfont}
         {\contentslabel{1.75em}}
         {\hspace*{-1.75em}}
         {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
     \titlecontents{subsection}
         [7em] % i.e., 4em (section) + 3em
-        {\subsecfont}
+        {\normalfont}
         {\contentslabel{2.75em}}
         {\hspace*{-2.75em}}
         {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
@@ -652,13 +690,13 @@
 % For article
     \titlecontents{section}
         [2em] % i.e., 0em (part) + 2em
-        {\secfont}
+        {\normalfont}
         {\contentslabel{1.75em}}
         {\hspace*{-1.75em}}
         {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
     \titlecontents{subsection}
         [5em] % i.e., 2em (section) + 3em
-        {\subsecfont}
+        {\normalfont}
         {\contentslabel{2.75em}}
         {\hspace*{-2.75em}}
         {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
@@ -689,15 +727,59 @@
 %% Theorems
 %%================================
 \RequirePackage{amsthm}
+\if@minimalist@classical
+% Style #1
+% \newtheoremstyle{simple}%
+%     {}{}%
+%     {\normalfont}{}%
+%     {\normalfont}{}%
+%     {0pt}%
+%     {\thmname{\textsc{#1}}\thmnumber{ #2}\hspace{.4em}%
+%         \ifstrequal{#3}{}{\@empty\textcolor{gray!55!paper}{$-$}\hspace{.4em}}%
+%         {\color{gray}\thmnote{\ensuremath{(\text{#3})}~~}}}
+%
+% Style #2
+% \newcommand\thmuline{\bgroup\markoverwith{\color{gray!55!paper}%
+%     \rule[-.6ex]{2pt}{.75pt}}\ULon}
+% \newtheoremstyle{simple}%
+%     {}{}%
+%     {\normalfont}{}%
+%     {\normalfont}{}%
+%     {0pt}%
+%     {\thmuline{\thmname{\textsc{#1}}\thmnumber{ #2}}\hspace{.4em}%
+%         {\color{gray}\thmnote{\ensuremath{(\text{#3})}~~}}}
+%
+% Style #3
+    \if@minimalist@allowbf
+    \newtheoremstyle{simple}%
+        {}{}%
+        {\normalfont}{}%
+        {\normalfont}{}%
+        {0pt}%
+        {{\conditionalbfseries\sffamily\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
+            {\color{gray}\thmnote{\ensuremath{(\text{#3})}~~}}}
+    \else
+    \newcommand\thmuline{\bgroup\markoverwith{\color{gray!55!paper}%
+        \rule[-.6ex]{2pt}{.5pt}}\ULon}
+    \newtheoremstyle{simple}%
+        {}{}%
+        {\normalfont}{}%
+        {\normalfont}{}%
+        {0pt}%
+        {{\sffamily\thmuline{\thmname{\textsc{#1}}\thmnumber{ #2}}}\hspace{.4em}%
+            {\color{gray}\thmnote{\ensuremath{(\text{#3})}~~}}}
+    \fi
+\else
 \newtheoremstyle{simple}%
     {}{}%
     {\normalfont}{}%
     {\normalfont}{}%
     {0pt}%
-    {\thmname{\textsc{#1}}\thmnumber{ #2}\hspace{.4em}%
+    {{\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
         \textcolor{gray!55!paper}{$|$}\hspace{.4em}%
         \color{gray}\thmnote{\ensuremath{(\text{#3})}~~}\pushQED{\qed}}
 \def\@endtheorem{\popQED\endtrivlist\@endpefalse }
+\fi
 
 \renewcommand{\qedsymbol}{%
     \makebox[1em]{\color{gray!55!paper}\rule[-0.1em]{.95em}{.95em}}}
@@ -918,18 +1000,33 @@
 \endgroup%
 }
 
+\setlength{\parindent}{2em}
+
 \ifbool{IsBook}{}{
 
 %%================================
 %% Title block style
 %%================================
+\if@minimalist@classical
+\renewcommand{\@maketitle}{%
+    \LocallyStopLineNumbers%
+    \begin{center}%
+        {\conditionalbfseries\sffamily\large\@title}\\\bigskip%
+        \color{black!80!paper}%
+        {\small\scshape\@author}\\[2pt]%
+        {\small\@date}%
+    \end{center}%
+    \bigskip\par%
+    \ResumeLineNumbers%
+}
+\else
 \renewcommand{\@maketitle}{%
     \LocallyStopLineNumbers%
     \noindent%
     {\textcolor{gray!55!paper}{\rule{\textwidth}{0.75pt}}}%
     \vspace{-\parskip}%
     \begin{flushright}%
-        {\@title}\\\medskip%
+        {\conditionalbfseries\@title}\\\medskip%
         \color{black!80!paper}%
         {\small\scshape\@author}\\[2pt]%
         {\small\@date}%
@@ -943,15 +1040,33 @@
     {\textcolor{gray!55!paper}{\rule{\textwidth}{0.75pt}}\par}%
     \ResumeLineNumbers%
 }
+\fi
 \apptocmd{\maketitle}{\thispagestyle{fancy}}{}{\FAIL}
 
 %%================================
 %% Abstract style
 %%================================
+\if@minimalist@classical
+\renewenvironment{abstract}{%
+    \LocallyStopLineNumbers%
+    \begin{center}%
+        \textsc{\conditionalbfseries\small\abstractname}\\%
+        \vspace{-.3\baselineskip}%
+        \begin{minipage}[t]{.833\textwidth}%
+            \vspace{0pt}%
+            \color{black!80!paper}%
+            \footnotesize%
+            \parindent=2em
+}{%
+        \end{minipage}%
+    \end{center}%
+    \ResumeLineNumbers%
+}
+\else
 \renewenvironment{abstract}{%
     \LocallyStopLineNumbers%
     \begin{flushright}%
-        \textsc{\small\abstractname}\par%
+        \textsc{\conditionalbfseries\small\abstractname}\par%
         \vspace{-.75\baselineskip}%
         \begin{minipage}[t]{.833\textwidth}%
             \vspace{0pt}%
@@ -963,6 +1078,7 @@
     \end{flushright}%
     \ResumeLineNumbers%
 }
+\fi
 
 }
 %</minimalist>
