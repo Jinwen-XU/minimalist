@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/04/07 A simple and clear article style]
+    [2021/05/05 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/04/07 A simple and clear book style]
+    [2021/05/05 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/04/07 A simple and clear article style]
+    [2021/05/05 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/04/07 A simple and clear book style]
+    [2021/05/05 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/04/07 A simple and clear style for articles and books]
+    [2021/05/05 A simple and clear style for articles and books]
 %</minimalist>
 %
 \RequirePackage{kvoptions}
@@ -81,9 +81,9 @@
     \PassOptionsToPackage{fast}{minimalist}
 \fi
 %<*einfart|simplivre>
-\if@minimclass@fast
-    \PassOptionsToPackage{polyglossia}{minimalist}
-\fi
+% \if@minimclass@fast
+%     \PassOptionsToPackage{polyglossia}{PLlang}
+% \fi
 %</einfart|simplivre>
 \if@minimclass@classical
     \RequirePackage{indentfirst}
@@ -131,12 +131,12 @@
 %% Chinese fonts
 \PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
 \RequirePackage{ctex}
-\IfFontExistsTF{FZYouSongS 507R}{%
-    \setCJKmainfont{FZYouSongS 507R}[
-        BoldFont       = FZYouSongS 509R ,
+\IfFontExistsTF{FZYOUSK_507R--GBK1-0}{%
+    \setCJKmainfont{FZYOUSK_507R--GBK1-0}[
+        BoldFont       = FZYOUSK_509R--GBK1-0 ,
         BoldFeatures   = {FakeBold=4} ,
         ItalicFont     = * ,
-        BoldItalicFont = FZYouSongS 509R ,
+        BoldItalicFont = FZYOUSK_509R--GBK1-0 ,
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }{
@@ -147,12 +147,12 @@
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }
-\IfFontExistsTF{FZYouSongS 507R}{%
-    \setCJKmonofont{FZYouSongS 507R}[
-        BoldFont       = FZYouSongS 509R ,
+\IfFontExistsTF{FZYOUSK_507R--GBK1-0}{%
+    \setCJKmonofont{FZYOUSK_507R--GBK1-0}[
+        BoldFont       = FZYOUSK_509R--GBK1-0 ,
         BoldFeatures   = {FakeBold=4} ,
         ItalicFont     = * ,
-        BoldItalicFont = FZYouSongS 509R ,
+        BoldItalicFont = FZYOUSK_509R--GBK1-0 ,
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }{
@@ -164,12 +164,12 @@
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }
-\IfFontExistsTF{FZYouHeiS 506L}{%
-    \setCJKsansfont{FZYouHeiS 506L}[
-        BoldFont       = FZYouHeiS 509R,
+\IfFontExistsTF{FZYOUHK_506L--GBK1-0}{%
+    \setCJKsansfont{FZYOUHK_506L--GBK1-0}[
+        BoldFont       = FZYOUHK_509R--GBK1-0 ,
         BoldFeatures   = {FakeBold=4} ,
         ItalicFont     = * ,
-        BoldItalicFont = FZYouHeiS 509R ,
+        BoldItalicFont = FZYOUHK_509R--GBK1-0 ,
         SmallCapsFont  = * ]
 }{
     \setCJKsansfont{FandolHei-Regular.otf}[
@@ -251,58 +251,6 @@
 % switch off the line numbers of index
 \pretocmd{\printindex}{\LocallyStopLineNumbers}{}{\FAIL}
 \apptocmd{\printindex}{\ResumeLineNumbers}{}{\FAIL}
-
-%%================================
-%% Draft mark
-%%================================
-\def\dnfFont{\ttfamily}
-\def\needgraphFont{\ttfamily}
-
-\def\dnfTextEN{To be finished}
-\def\needgraphTextEN{A graph is needed here}
-\def\dnfTextFR{À terminer ici}
-\def\needgraphTextFR{Il manque encore un graphique ici}
-\def\dnfTextCN{这里尚未完成}
-\def\needgraphTextCN{这里需要一张图片}
-
-\definecolor{dnfColor}{RGB}{21,122,20}
-\definecolor{needgraphColor}{RGB}{70,130,180}
-
-\if@minimclass@fast
-    \newcommand{\plainBox}[2][-paper]{\textcolor{#1}{%
-    \setlength{\fboxsep}{1.5pt}%
-    \setlength{\fboxrule}{1.2pt}%
-    \fbox{#2}}}
-\else
-    \PassOptionsToPackage{many}{tcolorbox}
-    \RequirePackage{tcolorbox}
-    \newtcbox{\plainBox}[1][-paper]{enhanced jigsaw,%
-        on line, arc = 1.2pt, outer arc = 1pt,breakable,%
-        colframe = #1,colupper=#1,opacityback=0,%
-        boxsep = 1pt,boxrule = 1.2pt,%
-        left = 1pt, right = 1pt, top = 0pt, bottom = 0pt,%
-    }
-\fi
-
-\newcounter{dnfcnt}
-\newcounter{needgraphcnt}
-
-\NewDocumentCommand{\dnf}{d<>}{%
-    \noindent\plainBox[dnfColor]%
-    {\normalfont\dnfFont\bfseries\small%
-    \csname dnfText\csname\languagename ABBR\endcsname\endcsname%
-    \stepcounter{dnfcnt}~\#\thednfcnt%
-    \IfNoValueF{#1}{\,: #1}}%
-}
-\NewDocumentCommand{\needgraph}{d<>}{%
-    \begin{center}%
-        \plainBox[needgraphColor]%
-        {\normalfont\needgraphFont\bfseries\small%
-        \csname needgraphText\csname\languagename ABBR\endcsname\endcsname%
-        \stepcounter{needgraphcnt}~\#\theneedgraphcnt%
-        \IfNoValueF{#1}{\,: #1}}%
-    \end{center}%
-}
 %</class>
 %
 %
@@ -315,7 +263,6 @@
 \DeclareBoolOption[false]{fast}
 \DeclareBoolOption[false]{allowbf}
 \DeclareBoolOption[false]{classical}
-\DeclareBoolOption[false]{polyglossia}
 \ProcessKeyvalOptions*\relax
 
 \if@minimalist@draft
@@ -350,10 +297,9 @@
 \fi
 
 %%================================
-%% Color
+%% Paper configuration
 %%================================
-\RequirePackage{xcolor}
-\definecolor{paper}{RGB}{255,255,255}
+\RequirePackage{PLpaper}
 
 %%================================
 %% Footer
@@ -444,7 +390,7 @@
     \fi
 }
 %
-%%===============================
+%%================================
 %% Line spacing
 %%================================
 \RequirePackage{setspace}
@@ -513,6 +459,7 @@
 \RequirePackage[explicit,newparttoc]{titlesec}
 \PassOptionsToPackage{normalem}{ulem}
 \RequirePackage{ulem}
+\RequirePackage{PLlang}
 
 \ifbool{IsBook}{
 % For book
@@ -569,10 +516,11 @@
 }{
 % For article
     %% Part
+    \newcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}
     \titleformat{\part}[display]
         {\LocallyStopLineNumbers%
         \partfont\filleft}
-        {\MakeUppercase{\partname~\protect\thepart}}
+        {\partstring}
         {.3em}
         {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
         [\ResumeLineNumbers]
@@ -584,6 +532,18 @@
         {.3em}
         {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
         [\ResumeLineNumbers]
+    \gappto{\PLlang@langconfig@common}{%
+        \renewcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}%
+    }
+    \gappto{\PLlang@langconfig@chinese}{%
+        \renewcommand{\partstring}{第~\thepart~部分}%
+    }
+    \gappto{\PLlang@langconfig@tchinese}{%
+        \renewcommand{\partstring}{第~\thepart~部分}%
+    }
+    \gappto{\PLlang@langconfig@japanese}{%
+        \renewcommand{\partstring}{第~\thepart~部}%
+    }
     %% Text after part
     \newcommand{\parttext}[1]{%
         \LocallyStopLineNumbers%
@@ -656,7 +616,7 @@
 \titlespacing{\subsubsection}{0pt}{.8\baselineskip}{.5\baselineskip}
 
 %%================================
-%% TOC format
+%% ToC format
 %%================================
 \RequirePackage{titletoc}
 \titlecontents{part}
@@ -722,6 +682,11 @@
        \put(0.5\paperwidth,-0.5\paperheight){%
        \makebox[0pt]{\large\color{gray!20!paper}\blinkpagetext}}}
     \null\newpage\fi\fi}
+
+%%================================
+%% Draft mark
+%%================================
+\RequirePackage{PLdraft}
 
 %%================================
 %% Theorems
@@ -793,87 +758,11 @@
     \RequirePackage{bookmark}
     \RequirePackage{hyperref}
 \fi
-\RequirePackage{aliascnt}
-\PassOptionsToPackage{nameinlink}{cleveref}
-\RequirePackage{cleveref}
 
-\newcommand\englishABBR{EN}
-\newcommand\frenchABBR{FR}
-\newcommand\chineseABBR{CN}
+% Should be placed after "hyperref"
+\RequirePackage[nothms]{PLthm}
 
-% Macro for creating theorems
-\RequirePackage{xstring}
-\newcommand\PassFirstToSecond[2]{#2{#1}}%
-\NewDocumentCommand{\CreateTheorem}{sm}{%
-    \begingroup
-    \protected@edef\temp{#2}%
-    \expandafter\IfEndWith\expandafter{\temp}{*}{%
-        \expandafter\StrGobbleRight\expandafter{\temp}{1}[\temp]%
-        \PassFirstToSecond{*}%
-    }{%
-        \PassFirstToSecond{}%
-    }%
-    {\expandafter\PassFirstToSecond%
-        \expandafter{\temp}{\endgroup\InnerCreateTheorem{#1}}}%
-}%
-\NewDocumentCommand{\InnerCreateTheorem}{mmmod<>}{%
-% #1 = star or no star
-% #2 = name of environment
-% #3 = emptiness or star to append to name of environment
-% #4 = numbered like
-% #5 = numbered within
-    \IfBooleanTF{#1}{%
-        \IfValueTF{#4}
-            {\@firstoftwo}
-            {\IfValueTF{#5}{\@firstoftwo}{\@secondoftwo}}%
-    }{%
-        \IfValueTF{#4}
-            {\IfValueTF{#5}{\@firstoftwo}{\@secondoftwo}}{
-            \@secondoftwo}
-    }%
-    {%
-        \GenericError{}%
-        {\string\CreateTheorem\space syntax error\on@line}{%
-        You cannot call the starred variant with optional argument,\MessageBreak
-        nor call the unstarred variant with several optional arguments.}%
-        {}%
-    }{%
-        \IfBooleanTF{#1}{%
-            \newtheorem*{#2EN#3}{\csname#2nameEN\endcsname}
-            \newtheorem*{#2FR#3}{\csname#2nameFR\endcsname}
-            \newtheorem*{#2CN#3}{\csname#2nameCN\endcsname}
-        }{%
-            \IfValueTF{#5}{%
-                \newcounter{#2#3}[{#5}]%
-                \expandafter\renewcommand\expandafter*%
-                    \csname the#2#3\expandafter\endcsname%
-                    \expandafter{\csname the#5\endcsname.\arabic{#2#3}}%
-            }{%
-                \IfValueTF{#4}
-                    {\newaliascnt{#2#3}{#4}}
-                    {\newcounter{#2#3}}%
-            }%
-            %-------------------------------------------------------------------
-            \CreateTheoremNumberedLikeAliasCounter{#2}{EN}{#3}%
-            \CreateTheoremNumberedLikeAliasCounter{#2}{FR}{#3}%
-            \CreateTheoremNumberedLikeAliasCounter{#2}{CN}{#3}%
-            %-------------------------------------------------------------------
-        }%
-        \NewDocumentEnvironment{#2#3}{}
-            {\csname#2\csname\languagename ABBR\endcsname#3\endcsname}%
-            {\csname end#2\csname\languagename ABBR\endcsname#3\endcsname}%
-    }%
-}%
-\NewDocumentCommand{\CreateTheoremNumberedLikeAliasCounter}{mmm}{%
-    \newaliascnt{#1#2#3}{#1#3}%
-    \newtheorem{#1#2#3}[{#1#2#3}]{\csname#1name#2\endcsname}%
-    \aliascntresetthe{#1#2#3}%
-    \crefname{#1#2#3}%
-        {\csname#1name#2\endcsname}%
-        {\csname#1name#2\endcsname}%
-}%
-
-%% English theorems names
+%% Redefine English theorems names
 \def\theoremnameEN{\textsc{Theorem}}
 \def\lemmanameEN{\textsc{Lemma}}
 \def\propositionnameEN{\textsc{Proposition}}
@@ -881,11 +770,13 @@
 \def\factnameEN{\textsc{Fact}}
 \def\conjecturenameEN{\textsc{Conjecture}}
 \def\definitionnameEN{\textsc{Definition}}
+\def\axiomnameEN{\textsc{Axiom}}
+\def\assumptionnameEN{\textsc{Assumption}}
 \def\examplenameEN{\textsc{Example}}
 \def\problemnameEN{\textsc{Problem}}
 \def\remarknameEN{\textsc{Remark}}
 
-%% French theorems names
+%% Redefine French theorems names
 \def\theoremnameFR{\textsc{Théorème}}
 \def\lemmanameFR{\textsc{Lemme}}
 \def\propositionnameFR{\textsc{Proposition}}
@@ -893,21 +784,11 @@
 \def\factnameFR{\textsc{Fait}}
 \def\conjecturenameFR{\textsc{Conjecture}}
 \def\definitionnameFR{\textsc{Définition}}
+\def\axiomnameFR{\textsc{Axiome}}
+\def\assumptionnameFR{\textsc{Supposition}}
 \def\examplenameFR{\textsc{Exemple}}
 \def\problemnameFR{\textsc{Problème}}
 \def\remarknameFR{\textsc{Remarque}}
-
-%% Chinese theorems names
-\def\theoremnameCN{定理}
-\def\lemmanameCN{引理}
-\def\propositionnameCN{命题}
-\def\corollarynameCN{推论}
-\def\factnameCN{事实}
-\def\conjecturenameCN{猜想}
-\def\definitionnameCN{定义}
-\def\examplenameCN{例}
-\def\problemnameCN{问题}
-\def\remarknameCN{备注}
 
 %% Theorem environments
 \theoremstyle{simple}
@@ -929,80 +810,21 @@
 \CreateTheorem*{fact*}
 \CreateTheorem*{conjecture*}
 \CreateTheorem{definition}[theorem]
+\CreateTheorem{axiom}[theorem]
+\CreateTheorem{assumption}[theorem]
 \CreateTheorem{example}<highest>
 \CreateTheorem{problem}<highest>
 \CreateTheorem*{definition*}
+\CreateTheorem*{axiom*}
+\CreateTheorem*{assumption*}
 \CreateTheorem*{example*}
 \CreateTheorem*{problem*}
 \CreateTheorem{remark}<highest>
 \CreateTheorem*{remark*}
 
-%%================================
-%% Language configuration
-%%================================
-\if@minimalist@polyglossia
-    \RequirePackage{polyglossia}
-    \setdefaultlanguage{english}
-    \setotherlanguage[frenchpart=false]{french}
-\else
-    \PassOptionsToPackage{french,english}{babel}
-    \RequirePackage{babel}
-    \frenchsetup{PartNameFull=false}
-\fi
-%
-\newcommand{\minimalist@langconfig@chinese}{%
-    \def\abstractname{摘要}%
-    \def\proofname{证明}%
-    \def\contentsname{目录}%
-    \def\listfigurename{插图}%
-    \def\listtablename{表格}%
-    \def\figurename{图}%
-    \def\tablename{表}%
-    \def\indexname{索引}%
-    \def\appendixname{附录}%
-    \def\refname{参考文献}%
-    \def\bibname{参考文献}%
-    \renewcommand{\languagename}{chinese}%
-}
-\newcommand{\minimalist@langconfig@english}{%
-    \selectlanguage{english}%
-}
-\newcommand{\minimalist@langconfig@french}{%
-    \selectlanguage{french}%
-% The line below is currently only needed for 'babel', but also works with 'polyglossia'
-    \def\frenchpartname{Partie}%
-}
-%
-\newcommand{\UseLanguageCORE}[1]{%
-    \ifstrequal{#1}{chinese}{\onehalfspacing\minimalist@langconfig@chinese}{}%
-    \ifstrequal{#1}{Chinese}{\onehalfspacing\minimalist@langconfig@chinese}{}%
-    \ifstrequal{#1}{english}{\setstretch{1.07}\minimalist@langconfig@english}{}%
-    \ifstrequal{#1}{English}{\setstretch{1.07}\minimalist@langconfig@english}{}%
-    \ifstrequal{#1}{french}{\setstretch{1.07}\minimalist@langconfig@french}{}%
-    \ifstrequal{#1}{French}{\setstretch{1.07}\minimalist@langconfig@french}{}%
-}
-\newcommand{\UseLanguage}[1]{%
-    \ifx\@onlypreamble\@notprerr%
-        \UseLanguageCORE{#1}%
-    \else%
-        \AfterEndPreamble{\UseLanguageCORE{#1}}%
-    \fi%
-}
-\newcommand{\UseOtherLanguage}[2]{%
-\begingroup%
-    \ifstrequal{#1}{chinese}{\minimalist@langconfig@chinese}{}%
-    \ifstrequal{#1}{Chinese}{\minimalist@langconfig@chinese}{}%
-    \ifstrequal{#1}{english}{\minimalist@langconfig@english}{}%
-    \ifstrequal{#1}{English}{\minimalist@langconfig@english}{}%
-    \ifstrequal{#1}{french}{\minimalist@langconfig@french}{}%
-    \ifstrequal{#1}{French}{\minimalist@langconfig@french}{}%
-    #2%
-\endgroup%
-}
-
 \setlength{\parindent}{2em}
 
-\ifbool{IsBook}{}{
+\ifbool{IsBook}{}{%
 
 %%================================
 %% Title block style
