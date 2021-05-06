@@ -80,11 +80,6 @@
 \if@minimclass@fast
     \PassOptionsToPackage{fast}{minimalist}
 \fi
-%<*einfart|simplivre>
-% \if@minimclass@fast
-%     \PassOptionsToPackage{polyglossia}{PLlang}
-% \fi
-%</einfart|simplivre>
 \if@minimclass@classical
     \RequirePackage{indentfirst}
 \else
@@ -127,6 +122,11 @@
         BoldFont       = SourceSansPro-Bold.otf ,
         ItalicFont     = SourceSansPro-RegularIt.otf ,
         BoldItalicFont = SourceSansPro-BoldIt.otf ]
+    \setmonofont{cmuntt.otf}[
+        Scale          = MatchLowercase,
+        BoldFont       = cmuntb.otf ,
+        ItalicFont     = cmunst.otf ,
+        BoldItalicFont = cmuntb.otf ]
 
 %% Chinese fonts
 \PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
@@ -461,6 +461,20 @@
 \RequirePackage{ulem}
 \RequirePackage{PLlang}
 
+\newcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}
+\gappto{\PLlang@langconfig@common}{%
+\renewcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}%
+}
+\gappto{\PLlang@langconfig@chinese}{%
+\renewcommand{\partstring}{第~\thepart~部分}%
+}
+\gappto{\PLlang@langconfig@tchinese}{%
+\renewcommand{\partstring}{第~\thepart~部分}%
+}
+\gappto{\PLlang@langconfig@japanese}{%
+\renewcommand{\partstring}{第~\thepart~部}%
+}
+
 \ifbool{IsBook}{
 % For book
     %% Part
@@ -469,7 +483,7 @@
         {\thispagestyle{part}%
         \LocallyStopLineNumbers%
         \partfont\filleft}
-        {\MakeUppercase{\partname~\protect\thepart}}
+        {\partstring}
         {1em}
         {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
         [\ResumeLineNumbers]
@@ -516,7 +530,6 @@
 }{
 % For article
     %% Part
-    \newcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}
     \titleformat{\part}[display]
         {\LocallyStopLineNumbers%
         \partfont\filleft}
@@ -532,18 +545,6 @@
         {.3em}
         {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
         [\ResumeLineNumbers]
-    \gappto{\PLlang@langconfig@common}{%
-        \renewcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}%
-    }
-    \gappto{\PLlang@langconfig@chinese}{%
-        \renewcommand{\partstring}{第~\thepart~部分}%
-    }
-    \gappto{\PLlang@langconfig@tchinese}{%
-        \renewcommand{\partstring}{第~\thepart~部分}%
-    }
-    \gappto{\PLlang@langconfig@japanese}{%
-        \renewcommand{\partstring}{第~\thepart~部}%
-    }
     %% Text after part
     \newcommand{\parttext}[1]{%
         \LocallyStopLineNumbers%
