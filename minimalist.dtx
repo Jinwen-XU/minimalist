@@ -270,7 +270,7 @@
 \fi
 
 \if@minimalist@allowbf
-    \newcommand{\conditionalbfseries}{\bfseries\color{black!83!paper}}
+    \newcommand{\conditionalbfseries}{\bfseries\colorlet{PLtempcolor}{.}\color{PLtempcolor!83!paper}}
 \else
     \newcommand{\conditionalbfseries}{}
 \fi
@@ -861,14 +861,17 @@
     \LocallyStopLineNumbers%
     \noindent%
     {\textcolor{gray!55!paper}{\rule{\textwidth}{0.75pt}}}%
-    \vspace{-\parskip}%
+    % \vspace{-\parskip}%
+    \vspace{-.5\baselineskip}%
     \begin{flushright}%
         {\conditionalbfseries\@title}\\\medskip%
         \color{black!80!paper}%
-        {\small\scshape\@author}\\[2pt]%
+        {\small\scshape\@author}%
+        \par\vspace{-\parskip}\vspace{2pt}%
         {\small\@date}%
     \end{flushright}%
-    \vspace{-\parskip}%
+    % \vspace{-\parskip}%
+    \vspace{-.5\baselineskip}%
     \ifx\@date\@empty%
         \vspace{-.2\baselineskip}%
     \else%
@@ -904,7 +907,8 @@
     \LocallyStopLineNumbers%
     \begin{flushright}%
         \textsc{\conditionalbfseries\small\abstractname}\par%
-        \vspace{-.75\baselineskip}%
+        \vspace{-\parskip}%
+        \vspace{-.25\baselineskip}%
         \begin{minipage}[t]{.833\textwidth}%
             \vspace{0pt}%
             \color{black!80!paper}%
@@ -917,6 +921,99 @@
     \ResumeLineNumbers%
 }
 \fi
+
+%%================================
+%% Simulate features of amsart
+%%================================
+% keywords
+\def\keywordsnameEN{\textsc{Key words and phrases}}
+\def\keywordsnameFR{\textsc{Mots et phrases clés}}
+\def\keywordsnameDE{\textsc{Schlüsselwörter und Phrasen}}
+\def\keywordsnameCN{关键词}
+\def\keywordsnameTC{關鍵詞}
+\def\keywordsnameJP{キーワード}
+\def\keywordsnameRU{Ключевые слова и фразы}
+
+\ifdefined\keywords\else
+    \def\PL@keywords{}
+    \newcommand*{\keywords}[1]{\def\PL@keywords{#1}}
+\fi
+
+% dedicatory
+\ifdefined\dedicatory\else
+    \def\PL@dedicatory{}
+    \newcommand*{\dedicatory}[1]{\def\PL@dedicatory{#1}}
+\fi
+
+% \thanks: behave like article-style when in \author, and ams-style (no marker) when outside
+\AtEndPreamble{
+% In case that \@author changes again
+\let\footnotemark@PLoriginal\footnotemark%
+\let\footnotemark\relax%
+\let\thanks@PLoriginal\thanks%
+\newlength\PL@templength
+\setlength{\PL@templength}{\widthof{*}}
+\def\FCtempstr{}
+\renewcommand*{\thanks}[1]{%
+    \def\FCtempstr{#1}%
+    \ifx\FCtempstr\@empty\else%
+        \thanks@PLoriginal{\hspace*{-\PL@templength}#1}%
+    \fi}
+\pretocmd{\@author}{\let\footnotemark\footnotemark@PLoriginal\let\thanks\thanks@PLoriginal}{}{}
+\apptocmd{\@author}{\let\footnotemark\relax}{}{}
+}
+
+%% Modify abstract to allow it before maketitle
+\let\abstract@PLoriginal\abstract%
+\let\endabstract@PLoriginal\endabstract%
+\RequirePackage{environ}
+\newtoggle{maketitle}
+\def\abstractContent{}
+\RenewEnviron{abstract}{%
+    \iftoggle{maketitle}{%
+        \begin{abstract@PLoriginal}%
+            \BODY%
+            % \ifx\PL@keywords\@empty\else%
+            %     \par\smallskip\noindent{\conditionalbfseries\csname keywordsname\csname\languagename ABBR\endcsname\endcsname.}~\PL@keywords%
+            % \fi%
+        \end{abstract@PLoriginal}%
+    }%
+    {\global\let\abstractContent\BODY}%
+}
+
+%% Modify maketitle
+\AtEndPreamble{%
+% Add dedicatory to @maketitle
+\patchcmd{\@maketitle}{\@date}{%
+    \ifx\@date\@empty\vspace{-2\baselineskip}%
+    \else\@date\fi%
+    \ifx\PL@dedicatory\@empty\else%
+    \par\vspace{-\parskip}\bigskip%
+    {\itshape\PL@dedicatory}\fi}
+    {}{\FAIL}
+% Add keywords to maketitle
+\apptocmd{\maketitle}{\ifx\PL@keywords\@empty\else{\let\thefootnote\relax\footnote{{\conditionalbfseries\csname keywordsname\csname\languagename ABBR\endcsname\endcsname.}~\PL@keywords}\par\vspace{-\parskip}\vspace{-\baselineskip}}\fi}{}{\FAIL}
+% Add abstract to maketitle
+\apptocmd{\maketitle}{%
+    \ifx\abstractContent\@empty\else%
+    \begin{abstract@PLoriginal}%
+        \abstractContent%
+        % \ifx\PL@keywords\@empty\else%
+        %         \par\smallskip\noindent{\conditionalbfseries\csname keywordsname\csname\languagename ABBR\endcsname\endcsname.}~\PL@keywords%
+        % \fi%
+    \end{abstract@PLoriginal}%
+    \fi%
+    \global\let\address\relax
+    \global\let\curraddr\relax
+    \global\let\email\relax
+    \global\let\dedicatory\relax
+    \global\let\keywords\relax
+    \global\toggletrue{maketitle}
+}{}{\FAIL}
+% Disbale the \newpage in maketitle
+% \let\maketitle@PLoriginal=\maketitle
+% \renewcommand*{\maketitle}{{\let\newpage\relax\maketitle@PLoriginal}}
+}
 
 }
 %</minimalist>
