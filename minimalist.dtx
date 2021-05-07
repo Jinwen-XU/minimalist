@@ -379,8 +379,7 @@
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
     \renewcommand*{\sectionmark}[1]{%
-        \markright{\raisebox{.03em}{\footnotesize/}%
-        ~\thesection~\raisebox{.03em}{\footnotesize/}~~~#1}}
+        \markright{\sec@decochar~\thesection~\sec@decochar~~~#1}}
 }{
 % For article
     \if@twoside
@@ -558,19 +557,25 @@
 }
 
 %% Section
+\renewcommand\thesection{\arabic{section}}
 \if@minimalist@classical
-\newcommand\seculine{}
+\newcommand\sec@decochar{}
+\titleformat{\section}
+    {\LocallyStopLineNumbers%
+    \secfont\centering}
+    {\thesection}{.75em}
+    {#1}
+    [\ResumeLineNumbers]
 \else
 \newcommand\seculine{\bgroup\markoverwith{\color{gray!55!paper}%
     \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
-\fi
-\renewcommand\thesection{\arabic{section}}
+\newcommand\sec@decochar{\raisebox{.03em}{\normalfont\footnotesize/}}
 \titleformat{\section}
     {\LocallyStopLineNumbers%
     \secfont\centering}{}{0em}
-    {{\small\textcolor{gray!55!paper}{\raisebox{.03em}{\footnotesize/}}%
-        \,\,\textcolor{black!80!paper}{\arabic{section}}%
-        \,\,\textcolor{gray!55!paper}{\raisebox{.03em}{\footnotesize/}}}\\
+    {{\small\textcolor{gray!55!paper}{\sec@decochar}%
+        \,\,\textcolor{black!90!paper}{\conditionalbfseries\arabic{section}}%
+        \,\,\textcolor{gray!55!paper}{\sec@decochar}}\\
         \seculine{#1}}
     [\ResumeLineNumbers]
 \titleformat{name=\section,numberless}
@@ -579,42 +584,43 @@
     \secfont\centering}{}{0em}
     {\seculine{#1}}
     [\ResumeLineNumbers]
+\fi
 
 %% Subsection
-\if@minimalist@classical
-\newcommand\subseculine{}
-\else
-\newcommand\subseculine{\bgroup\markoverwith{\color{gray!55!paper}%
-    \rule[-1ex]{2pt}{.75pt}}\ULon}
-\fi
 \renewcommand\thesubsection{%
     \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
 \if@minimalist@classical
 \titleformat{\subsection}
     {\LocallyStopLineNumbers%
-    \subsecfont}{}{0em}
-    {\subseculine{\thesubsection\hspace{.75em}#1}}
+    \subsecfont}
+    {\thesubsection}{.75em}
+    {#1}
     [\ResumeLineNumbers]
 \else
+\newcommand\subseculine{\bgroup\markoverwith{\color{gray!55!paper}%
+    \rule[-1ex]{2pt}{.75pt}}\ULon}
 \titleformat{\subsection}
     {\LocallyStopLineNumbers%
     \subsecfont}{}{0em}
     {\subseculine{\thesubsection~\textcolor{gray!55!paper}{$|$}~#1}}
     [\ResumeLineNumbers]
-\fi
 \titleformat{name=\subsection,numberless}
     {\LocallyStopLineNumbers%
     \subsecfont}{}{0em}
     {\subseculine{#1}}
     [\ResumeLineNumbers]
+\fi
 
 %% Subsubsection
 \titleformat{\subsubsection}
     {\LocallyStopLineNumbers%
-    \subsubsecfont}{\thesubsubsection}{1em}
+    \color{paper!30!-paper}\subsubsecfont}{\thesubsubsection}{1em}
     {#1}
     [\ResumeLineNumbers]
-\titlespacing{\subsubsection}{0pt}{.8\baselineskip}{.5\baselineskip}
+
+\titlespacing{\section}{0pt}{\baselineskip}{.6\baselineskip}
+\titlespacing{\subsection}{0pt}{.75\baselineskip}{.4\baselineskip}
+\titlespacing{\subsubsection}{0pt}{.5\baselineskip}{.2\baselineskip}
 
 %%================================
 %% ToC format
@@ -889,6 +895,7 @@
 \if@minimalist@classical
 \renewenvironment{abstract}{%
     \LocallyStopLineNumbers%
+    \vspace{-\baselineskip}%
     \begin{center}%
         \textsc{\conditionalbfseries\small\abstractname}\\%
         \vspace{-.3\baselineskip}%
@@ -900,6 +907,7 @@
 }{%
         \end{minipage}%
     \end{center}%
+    \medskip%
     \ResumeLineNumbers%
 }
 \else
@@ -1014,6 +1022,26 @@
 % \let\maketitle@PLoriginal=\maketitle
 % \renewcommand*{\maketitle}{{\let\newpage\relax\maketitle@PLoriginal}}
 }
+
+\newcommand*\subjclass[2][2020]{%
+    \def\@subjclass{#2}%
+    \@ifundefined{subjclassname@#1}{%
+        \ClassWarning{\@currname}{Unknown edition (#1) of Mathematics
+        Subject Classification; using '2020'}%
+        \expandafter\let\expandafter\subjclassname\csname subjclassname@2020\endcsname
+    }{%
+        \expandafter\let\expandafter\subjclassname\csname subjclassname@#1\endcsname
+    }%
+    \thanks{{\itshape\subjclassname.}\enspace\@subjclass{}.}
+}
+\@namedef{subjclassname@1991}{%
+  \textup{1991} Mathematics Subject Classification}
+\@namedef{subjclassname@2000}{%
+  \textup{2000} Mathematics Subject Classification}
+\@namedef{subjclassname@2010}{%
+  \textup{2010} Mathematics Subject Classification}
+\@namedef{subjclassname@2020}{%
+  \textup{2020} Mathematics Subject Classification}
 
 }
 %</minimalist>
