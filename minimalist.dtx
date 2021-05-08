@@ -984,16 +984,30 @@
 \let\footnotemark@PLoriginal\footnotemark%
 \let\footnotemark\relax%
 \let\thanks@PLoriginal\thanks%
-\newlength\PL@templength
-\setlength{\PL@templength}{\widthof{*}}
-\def\FCtempstr{}
+\newlength\PL@starlength
+\setlength{\PL@starlength}{\widthof{*}}
+\newcommand*{\PL@prethanks}[1]{\thanks@PLoriginal{\hspace*{-\PL@starlength}#1}}
+% \renewcommand*{\thanks}[1]{%
+%     \ifx#1\@empty\else%
+%         \thanks@PLoriginal{\hspace*{-\PL@starlength}#1}%
+%     \fi}
 \renewcommand*{\thanks}[1]{%
-    \def\FCtempstr{#1}%
-    \ifx\FCtempstr\@empty\else%
-        \thanks@PLoriginal{\hspace*{-\PL@templength}#1}%
+    \ifx#1\@empty\else%
+        \apptocmd{\@title}{%
+            \thanks@PLoriginal{\hspace*{-\PL@starlength}#1}%
+        }{}{\FAIL}%
     \fi}
-\pretocmd{\@author}{\let\footnotemark\footnotemark@PLoriginal\let\thanks\thanks@PLoriginal}{}{}
-\apptocmd{\@author}{\let\footnotemark\relax}{}{}
+\let\author@PLoriginal\author
+\renewcommand{\author}[1]{%
+    \author@PLoriginal{%
+        \let\footnotemark\footnotemark@PLoriginal%
+        \let\thanks\thanks@PLoriginal%
+        #1%
+        \let\footnotemark\relax%
+    }%
+}
+% \pretocmd{\@author}{\let\footnotemark\footnotemark@PLoriginal\let\thanks\thanks@PLoriginal}{}{\FAIL}
+% \apptocmd{\@author}{\let\footnotemark\relax}{}{\FAIL}
 }
 
 %% Modify abstract to allow it before maketitle
@@ -1025,7 +1039,12 @@
     {\itshape\PL@dedicatory}\fi}
     {}{\FAIL}
 % Add keywords to maketitle
-\apptocmd{\maketitle}{\ifx\PL@keywords\@empty\else{\let\thefootnote\relax\footnote{{\conditionalbfseries\csname keywordsname\csname\languagename ABBR\endcsname\endcsname.}~\PL@keywords}\par\vspace{-\parskip}\vspace{-\baselineskip}}\fi}{}{\FAIL}
+\pretocmd{\maketitle}{%
+    \ifx\PL@keywords\@empty\else%
+    \PL@prethanks{{\conditionalbfseries%
+    \csname keywordsname\csname\languagename ABBR\endcsname\endcsname.}%
+    ~\PL@keywords}%
+    \fi}{}{\FAIL}
 % Add abstract to maketitle
 \apptocmd{\maketitle}{%
     \ifx\abstractContent\@empty\else%
@@ -1057,7 +1076,7 @@
     }{%
         \expandafter\let\expandafter\subjclassname\csname subjclassname@#1\endcsname
     }%
-    \thanks{{\itshape\subjclassname.}\enspace\@subjclass{}.}
+    \PL@prethanks{{\itshape\subjclassname.}\enspace\@subjclass{}.}
 }
 \@namedef{subjclassname@1991}{%
   \textup{1991} Mathematics Subject Classification}
