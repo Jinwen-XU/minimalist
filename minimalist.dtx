@@ -56,6 +56,12 @@
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
 \DeclareBoolOption[false]{classical}
+
+\newif\if@minimclass@bfivepaper\@minimclass@bfivepaperfalse
+\DeclareVoidOption{b5paper}{\@minimclass@bfivepapertrue}
+\newif\if@minimclass@afourpaper\@minimclass@afourpaperfalse
+\DeclareVoidOption{a4paper}{\@minimclass@afourpapertrue}
+
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{\minimclass@baseclass}}
 \ProcessKeyvalOptions*\relax
 \LoadClass{\minimclass@baseclass}
@@ -76,6 +82,24 @@
     vmarginratio=1:1,
     footnotesep=2em plus 2pt minus 2pt,
 }
+\if@minimclass@bfivepaper
+\geometry{
+    b5paper,
+    total={40em,59em},
+    hmarginratio=1:1,
+    vmarginratio=1:1,
+    footnotesep=2em plus 2pt minus 2pt,
+}
+\fi
+\if@minimclass@afourpaper
+\geometry{
+    a4paper,
+    total={47em,70em},
+    hmarginratio=1:1,
+    vmarginratio=1:1,
+    footnotesep=2em plus 2pt minus 2pt,
+}
+\fi
 
 \if@minimclass@fast
     \PassOptionsToPackage{fast}{minimalist}
@@ -98,6 +122,7 @@
 \fi
 \RequirePackage{mathpazo}
 \RequirePackage{newpxtext}
+\RequirePackage{amssymb}
 %</minimart|minimbook>
 %
 %<*einfart|simplivre>
@@ -925,7 +950,7 @@
 }{%
         \end{minipage}%
     \end{flushright}%
-    \medskip%
+    \bigskip%
     \ResumeLineNumbers%
 }
 \fi
