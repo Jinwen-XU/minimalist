@@ -417,8 +417,10 @@
 %%================================
 %% Line spacing
 %%================================
-\RequirePackage{setspace}
-\setstretch{1.07}
+% \RequirePackage{setspace}
+\RequirePackage{PLlang}
+\PLsetlinespacing{\setstretch{1.07}}
+\PLsetCJKlinespacing{\onehalfspacing}
 % To avoid `Underfull \vbox (badness 10000)`
 \raggedbottom
 
@@ -483,7 +485,6 @@
 \RequirePackage[explicit,newparttoc]{titlesec}
 \PassOptionsToPackage{normalem}{ulem}
 \RequirePackage{ulem}
-\RequirePackage{PLlang}
 
 \newcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}
 \gappto{\PLlang@langconfig@common}{%
@@ -700,6 +701,7 @@
 \RequirePackage{enumitem}
 \setlist{noitemsep,leftmargin=2em}
 \renewcommand\labelitemi{\color{gray!50}$\bullet$} 
+\renewcommand\labelitemii{\color{gray!55}--}
 
 %%================================
 %% Blank page
@@ -799,13 +801,19 @@
 \def\lemmanameEN{\textsc{Lemma}}
 \def\propositionnameEN{\textsc{Proposition}}
 \def\corollarynameEN{\textsc{Corollary}}
+\def\propertynameEN{\textsc{Property}}
 \def\factnameEN{\textsc{Fact}}
 \def\conjecturenameEN{\textsc{Conjecture}}
 \def\definitionnameEN{\textsc{Definition}}
 \def\axiomnameEN{\textsc{Axiom}}
 \def\assumptionnameEN{\textsc{Assumption}}
+\def\conventionnameEN{\textsc{Convention}}
+\def\hypothesisnameEN{\textsc{Hypothesis}}
+\def\notationnameEN{\textsc{Notation}}
 \def\examplenameEN{\textsc{Example}}
 \def\problemnameEN{\textsc{Problem}}
+\def\questionnameEN{\textsc{Question}}
+\def\exercisenameEN{\textsc{Exercise}}
 \def\remarknameEN{\textsc{Remark}}
 
 %% Redefine French theorems names
@@ -813,13 +821,19 @@
 \def\lemmanameFR{\textsc{Lemme}}
 \def\propositionnameFR{\textsc{Proposition}}
 \def\corollarynameFR{\textsc{Corollaire}}
+\def\propertynameFR{\textsc{Propriété}}
 \def\factnameFR{\textsc{Fait}}
 \def\conjecturenameFR{\textsc{Conjecture}}
 \def\definitionnameFR{\textsc{Définition}}
 \def\axiomnameFR{\textsc{Axiome}}
 \def\assumptionnameFR{\textsc{Supposition}}
+\def\conventionnameFR{\textsc{Convention}}
+\def\hypothesisnameFR{\textsc{Hypothèse}}
+\def\notationnameFR{\textsc{Notation}}
 \def\examplenameFR{\textsc{Exemple}}
 \def\problemnameFR{\textsc{Problème}}
+\def\questionnameFR{\textsc{Question}}
+\def\exercisenameFR{\textsc{Exercice}}
 \def\remarknameFR{\textsc{Remarque}}
 
 %% Redefine German theorems names
@@ -827,13 +841,19 @@
 \def\lemmanameDE{\textsc{Lemma}}
 \def\propositionnameDE{\textsc{Proposition}}
 \def\corollarynameDE{\textsc{Korollar}}
+\def\propertynameDE{\textsc{Eigenschaft}}
 \def\factnameDE{\textsc{Fakt}}
 \def\conjecturenameDE{\textsc{Vermutung}}
 \def\definitionnameDE{\textsc{Definition}}
 \def\axiomnameDE{\textsc{Axiom}}
 \def\assumptionnameDE{\textsc{Annahme}}
+\def\conventionnameDE{\textsc{Konvention}}
+\def\hypothesisnameDE{\textsc{Hypothese}}
+\def\notationnameDE{\textsc{Notation}}
 \def\examplenameDE{\textsc{Beispiel}}
 \def\problemnameDE{\textsc{Problem}}
+\def\questionnameDE{\textsc{Frage}}
+\def\exercisenameDE{\textsc{Übung}}
 \def\remarknameDE{\textsc{Bemerkung}}
 
 %% Theorem environments
@@ -847,28 +867,42 @@
 \CreateTheorem{lemma}[theorem]
 \CreateTheorem{proposition}[theorem]
 \CreateTheorem{corollary}[theorem]
+\CreateTheorem{definition-proposition}[theorem]
+\CreateTheorem{definition-theorem}[theorem]
+\CreateTheorem{property}[theorem]
 \CreateTheorem{fact}[theorem]
-\CreateTheorem{conjecture}<highest>
+\CreateTheorem{conjecture}[theorem]
 \CreateTheorem*{theorem*}
 \CreateTheorem*{lemma*}
 \CreateTheorem*{proposition*}
 \CreateTheorem*{corollary*}
-\CreateTheorem*{fact*}
-\CreateTheorem*{conjecture*}
-\CreateTheorem{definition}[theorem]
-\CreateTheorem{definition-proposition}[theorem]
-\CreateTheorem{definition-theorem}[theorem]
-\CreateTheorem{axiom}[theorem]
-\CreateTheorem{assumption}[theorem]
-\CreateTheorem{example}<highest>
-\CreateTheorem{problem}<highest>
-\CreateTheorem*{definition*}
 \CreateTheorem*{definition-proposition*}
 \CreateTheorem*{definition-theorem*}
+\CreateTheorem*{property*}
+\CreateTheorem*{fact*}
+\CreateTheorem*{conjecture*}
+%
+\CreateTheorem{definition}[theorem]
+\CreateTheorem{axiom}[theorem]
+\CreateTheorem{assumption}[theorem]
+\CreateTheorem{convention}[theorem]
+\CreateTheorem{hypothesis}[theorem]
+\CreateTheorem{notation}[theorem]
+\CreateTheorem{example}[theorem]
+\CreateTheorem{problem}[theorem]
+\CreateTheorem{question}[theorem]
+\CreateTheorem{exercise}[theorem]
+\CreateTheorem*{definition*}
 \CreateTheorem*{axiom*}
 \CreateTheorem*{assumption*}
+\CreateTheorem*{convention*}
+\CreateTheorem*{hypothesis*}
+\CreateTheorem*{notation*}
 \CreateTheorem*{example*}
 \CreateTheorem*{problem*}
+\CreateTheorem*{question*}
+\CreateTheorem*{exercise*}
+%
 \CreateTheorem{remark}<highest>
 \CreateTheorem*{remark*}
 
