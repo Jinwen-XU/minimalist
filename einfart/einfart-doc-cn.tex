@@ -1,25 +1,28 @@
 %! TEX program = xelatex
-\PassOptionsToPackage{dvipsnames}{xcolor}
 \documentclass{einfart}
 
 \linenumbers % 开启行号
-\UseLanguage{Chinese}
 
 %%================================
-%% TeX logo 与 网址
+%% 引入工具集
 %%================================
-\usepackage{hologo}
-\usepackage{url}
+\usepackage{PJLtoolkit}
+\usepackage{longtable}  % breakable tables
+\usepackage{hologo}     % more TeX logo
+
+\UseLanguage{Chinese}
 
 %%================================
 %% 排版代码
 %%================================
 \usepackage{listings}
+\definecolor{maintheme}{RGB}{70,130,180}
+\definecolor{forestgreen}{RGB}{21,122,81}
 \definecolor{lightergray}{gray}{0.99}
 \lstset{language=[LaTeX]TeX,
-    keywordstyle=\color{RoyalBlue},
+    keywordstyle=\color{maintheme},
     basicstyle=\ttfamily,
-    commentstyle=\color{ForestGreen}\ttfamily,
+    commentstyle=\color{forestgreen}\ttfamily,
     stringstyle=\rmfamily,
     showstringspaces=false,
     breaklines=true,
@@ -32,9 +35,9 @@
     firstnumber=last,
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
-\lstset{morekeywords=%
-    {CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,
-    linenumbers,nolinenumbers,subsection,maketitle
+\lstset{moretexcs=%
+    {linenumbers,nolinenumbers,subsection,
+    color,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
 \lstnewenvironment{code}% 
@@ -43,6 +46,31 @@
 }
 {\ResumeLineNumbers}
 
+%%================================
+%% remind
+%%================================
+\usepackage[many]{tcolorbox}
+\newenvironment{remind}[1][提示]{%
+    \LocallyStopLineNumbers%
+    \begin{tcolorbox}[breakable,
+        enhanced,
+        width = \textwidth,
+        colback = white, colbacktitle = paper,
+        colframe = gray!50, boxrule=0.2mm,
+        coltitle = black,
+        fonttitle = \sffamily,
+        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/4},
+        boxed title style = {boxrule=0pt, colframe=paper},
+        before skip = 0.3cm,
+        after skip = 0.3cm,
+        top = 3mm,
+        bottom = 3mm,
+        title={\sffamily #1}]%
+}{\end{tcolorbox}\ResumeLineNumbers}
+
+%%================================
+%% 名称
+%%================================
 \providecommand{\minimalist}{\textsf{minimalist}}
 \providecommand{\minimart}{\textsf{minimart}}
 \providecommand{\minimbook}{\textsf{minimbook}}
@@ -54,114 +82,298 @@
 %%================================
 \begin{document}
 
-\title{\einfart{}，以极简主义风格排版你的文章\thanks{对应版本. \texttt{\einfart{} 2021/04/05}}}
-\author{锦文}
-\date{2021年4月，北京}
+\title{\einfart{}，以极简主义风格排版你的文章}
+\author{许锦文}
+\thanks{对应版本. \texttt{\einfart{} 2021/05/23}}
+\date{2021年5月，北京}
 
 \maketitle
 
 \begin{abstract}
-    \einfart{}是\minimalist{}文档类系列的成员之一，整个系列包含用于排版文章的\minimart{}、\einfart{}以及用于排版书的\minimbook{}、\simplivre{}。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴而不简陋。
+    \einfart{} 是 \minimalist{} 文档类系列的成员之一，其名称取自于德文的 einfach (``简约'')，并取了 artikel (``文章'') 的前三个字母组合而成。整个 \minimalist{} 系列包含用于排版文章的 \minimart{}、\einfart{} 以及用于排版书的 \minimbook{}、\simplivre{}。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴而不简陋。
 
-    其中，\einfart{}与\simplivre{}支持英文、法文、中文三种语言，并且同一篇文档中三种语言可以很好地协调。由于采用了自定义字体，需要采用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 进行编译。
+    \einfart{} 支持英文、法文、德文、中文、日文、俄文六种语言，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
     
-    这篇说明文档是用\einfart{}排版的，你可以把它看作一份简短的说明与演示。
+    这篇说明文档即是用 \einfart{} 排版的，你可以把它看作一份简短的说明与演示。
 \end{abstract}
 
 \tableofcontents
 
-\section{关于文档类的名称与选项}
+\bigskip
+\begin{remind}
+    多语言支持、定理类环境、未完成标记等功能是由 \ProjLib{} 工具箱提供的，这里只给出了将其与本文档类搭配使用的要点。如需获取更详细的信息，可以参阅 \ProjLib{} 的说明文档。
+\end{remind}
 
-\einfart{}取自于德文的einfach (“简约”)，并取了artikel (“文章”)的前三个字母组合而成。
+\clearpage
+\section{初始化}
 
-\simplivre{}取自于法文的simple (“简约”)，以及livre (“书”)，由二者组合而成。
+\subsection{如何载入}
 
-你可以使用选项 \verb|fast| 来启用快速但略微粗糙的样式，主要区别是：
+只需要在第一行写：
+
+\begin{code}
+  \documentclass{einfart}
+\end{code}
+
+即可使用 \einfart{} 文档类。请注意，要使用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎才能编译。
+
+\subsection{选项}
+
+\einfart{} 文档类有下面几个选项：
+
 \begin{itemize}
-    \item 使用较为简单的数学字体设置；
-    \item 不使用hyperref；
-    \item 不使用tikz；
-    \item 使用polyglossia而不是babel来支持多语言。(使用polyglossia编译速度会略有提高，但目前对于中文的兼容不太完善，在它更加稳定后，将会考虑全面切换到polyglossia)
+    \item \texttt{draft} 或 \texttt{fast}
+        \begin{itemize}
+            \item 你可以使用选项 \verb|fast| 来启用快速但略微粗糙的样式，主要区别是：
+            \begin{itemize}
+                \item 使用较为简单的数学字体设置；
+                \item 不启用超链接；
+                \item 启用 \ProjLib{} 工具箱的快速模式。
+            \end{itemize}
+        \end{itemize}
+    \item \texttt{a4paper} 或 \texttt{b5paper}
+        \begin{itemize}
+            \item 可选的纸张大小。默认的纸张大小为 7in $\times$ 10in。
+        \end{itemize}
+    \item \texttt{allowbf}
+        \begin{itemize}
+            \item 允许加粗。启用这一选项时，题目、各级标题、定理类环境名称会被加粗。
+        \end{itemize}
+    \item \texttt{classical}
+        \begin{itemize}
+            \item 经典模式。启用这一选项时，样式会变得更加中规中矩：段落呈首行缩进样式、各类下划线减少、标题样式改变、定理类环境的样式也会更贴近常见的设置。
+        \end{itemize}
 \end{itemize}
 
-在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。
+\begin{remind}
+    \begin{itemize}
+        \item 在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
+        \item 如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
+    \end{itemize}
+\end{remind}
 
-\section{一些使用说明}
+\section{关于文档类中使用的字体}
+\einfart{} 默认使用 Palatino Linotype 作为英文字体，方正悠宋、悠黑GBK作为中文字体，并部分使用了 Neo Euler 作为数学字体。其中，Neo Euler可以在 \url{https://github.com/khaledhosny/euler-otf} 下载。其他字体不是免费字体，需要自行购买使用。可以在方正字库网站查询详细资料：\url{https://www.foundertype.com}。
 
-正文部分每段的开头没有缩进，但每两段之间会有半行左右的间距。就像这样——
+% \begin{itemize}
+%     \item English main font. \textsf{English sans serif font}.
+%     \item 中文主要字体，\textsf{中文无衬线字体}
+%     \item 数学示例： \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
+% \end{itemize}
 
-这里是下一个自然段。
+在没有安装相应的字体时，将采用TeX Live中自带的字体来代替，效果可能会有所折扣。
 
-\subsection{定理，以及引用}
 
-定义、定理等环境已经被预定义，可以直接使用，例如：
+\section{使用说明}
 
+接下来介绍的许多功能是由 \ProjLib{} 工具箱提供的。这里只介绍了基本使用方法，更多细节可以直接参阅其用户文档。
+
+\subsection{语言设置}
+
+\einfart{} 提供了多语言支持，包括简体中文、繁体中文、英文、法文、德文、日文、俄文。可以通过下列命令来选定语言：
+\begin{itemize}
+    \item \lstinline|\UseLanguage{|\meta{language name}\lstinline|}|，用于指定语言，在其后将使用对应的语言设定。
+    \begin{itemize}
+        \item 既可以用于导言部分，也可以用于正文部分。在不指定语言时，默认选定 “English”。
+    \end{itemize}
+    \item \lstinline|\UseOtherLanguage{|\meta{language name}\lstinline|}{|\meta{content}\lstinline|}|，用指定的语言的设定排版 \meta{content}。
+    \begin{itemize}
+        \item 相比较 \lstinline|\UseLanguage|，它不会对行距进行修改，因此中西文字混排时能够保持行距稳定。
+    \end{itemize}
+\end{itemize}
+
+\meta{language name} 有下列选择：
+\begin{itemize}
+    \item 简体中文：\texttt{Chinese}、\texttt{chinese}、\texttt{SChinese}、\texttt{schinese}、\texttt{SimplifiedChinese} \\\hspace*{5em}或 \texttt{simplifiedchinese}
+    \item 繁体中文：\texttt{TChinese}、\texttt{tchinese}、\texttt{TraditionalChinese} 或 \texttt{traditionalchinese}
+    \item 英文：\texttt{English} 或 \texttt{english}
+    \item 法文：\texttt{French} 或 \texttt{french}
+    \item 德文：\texttt{German}、\texttt{german} 或 \texttt{ngerman}
+    \item 日文：\texttt{Japanese} 或 \texttt{japanese}
+    \item 俄文：\texttt{Russian} 或 \texttt{russian}
+\end{itemize}
+
+另外，还可以通过下面的方式来填加相应语言的设置：
+\begin{itemize}
+    \item \lstinline|\AddLanguageSetting{|\meta{settings}\lstinline|}|
+    \begin{itemize}
+        \item 向所有支持的语言增加设置 \meta{settings}。
+    \end{itemize}
+    \item \lstinline|\AddLanguageSetting(|\meta{language name}\lstinline|){|\meta{settings}\lstinline|}|
+    \begin{itemize}
+        \item 向指定的语言 \meta{language name} 增加设置 \meta{settings}。
+    \end{itemize}
+\end{itemize}
+例如，\lstinline|\AddLanguageSetting(German){\color{orange}}| 可以让所有德语以橙色显示（当然，还需要再加上 \lstinline|\AddLanguageSetting{\color{black}}| 来修正其他语言的颜色）。
+
+
+\subsection{定理类环境及其引用}
+
+定义、定理等环境已经被预定义，可以直接使用。
+
+具体来说，预设的定理类环境包括：
+\texttt{assumption}、\texttt{axiom}、\texttt{conjecture}、\texttt{convention}、\texttt{corollary}、\texttt{definition}、\texttt{definition-proposition}、\texttt{definition-theorem}、\texttt{example}、\texttt{exercise}、\texttt{fact}、\texttt{hypothesis}、\texttt{lemma}、\texttt{notation}、\texttt{problem}、\texttt{property}、\texttt{proposition}、\texttt{question}、\texttt{remark}、\texttt{theorem}，以及相应的带有星号 \lstinline|*| 的无编号版本。
+
+在引用定理类环境时，建议使用智能引用 \lstinline|\cref{|\meta{label}\lstinline|}|。这样就不必每次都写上相应环境的名称了。
+
+\begin{remind}[例子]
 \begin{code}
   \begin{definition}[奇异物品] \label{def: strange} ...
 \end{code}
-
 将会生成
 \begin{definition}[奇异物品]\label{def: strange}
-    这是奇异物品的定义。
+    这是奇异物品的定义。定理类环境的前后有一行左右的间距。在定义结束的时候会有一个符号来标记。
 \end{definition}
 
-定理类环境的前后有一行左右的间距。在定义结束的时候会有一个符号来标记。
+\lstinline|\cref{def: strange}| 会显示为：\cref{def: strange}。
 
-引用时，可以直接使用智能引用 \lstinline|\cref{标签名称}|，例如：\lstinline|\cref{def: strange}| 会显示为：\cref{def: strange}。
+使用 \lstinline|\UseLanguage{English}| 后，定理会显示为：
+
+\UseLanguage{English}
+\begin{theorem}[Useless]\label{thm}
+    A theorem in English.
+\end{theorem}
+
+默认情况下，引用时，定理的名称总是与定理所在区域的语言匹配，例如，上面的定义在现在的英文模式下依然显示为中文：\cref{def: strange} 和 \cref{thm}。如果在引用时想让定理的名称与当前语境相匹配，可以在全局选项中加入 \texttt{regionalref}。
+\end{remind}
+
+\UseLanguage{Chinese}
+
 
 \subsection{定义新的定理型环境}
 
-首先定义这个环境在所用语言下的名称 \lstinline|\(name of environment)(language name)|，其中 \\\lstinline|(language name)| 是 \lstinline|EN|、\lstinline|FR|、\lstinline|CN| 等，然后用下面四种方式之一定义这一环境：
+若需要定义新的定理类环境，首先要定义这个环境在所用语言下的名称 \lstinline|\|\meta{name of environment}\meta{language abbr}，其中 \meta{language abbr} 是语言的简写，分别为：
+\begin{longtable}{ll|ll}
+    \texttt{CN} & 简体中文  & \texttt{DE} & 德文\\
+    \texttt{TC} & 繁体中文  & \texttt{JP} & 日文\\
+    \texttt{EN} & 英文  & \texttt{RU} & 俄文\\
+    \texttt{FR} & 法文  & &\\
+\end{longtable}
+
+\vspace{-0.3\baselineskip}
+\begin{remind}
+    如果要定义名称后带有星号 \lstinline|*| 的环境，那么在上面的 \meta{name of environment} 中不用写星号。
+\end{remind}
+
+然后用下面五种方式之一定义这一环境：
 \begin{itemize}
-    \item \lstinline|\CreateTheorem*{(name of environment)}|
-    \item \lstinline|\CreateTheorem{(name of environment)}[(numbered like)]|
-    \item \lstinline|\CreateTheorem{(name of environment)}<(numbered within)>|
-    \item \lstinline|\CreateTheorem{(name of environment)}|
+    \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
+        \begin{itemize}
+            \item 定义不编号的环境 \meta{name of environment}
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}|
+        \begin{itemize}
+            \item 定义编号环境 \meta{name of environment}，按顺序编号
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}[|\meta{numbered like}\lstinline|]|
+        \begin{itemize}
+            \item 定义编号环境 \meta{name of environment}，与 \meta{numbered like} 计数器共用编号
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
+        \begin{itemize}
+            \item 定义编号环境 \meta{name of environment}，在 \meta{numbered within} 计数器内编号
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|\\
+    \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|
+        \begin{itemize}
+            \item 将 \meta{name of environment} 与 \meta{existed environment} 或 \meta{existed environment}\lstinline|*| 等同。
+            \item 这种方式通常在两种情况下比较有用：
+                \begin{enumerate}
+                    \item 希望定义更简洁的名称。例如，使用 \lstinline|\CreateTheorem{thm}(theorem)|，便可以直接用名称 \texttt{thm} 来撰写定理。
+                    \item 希望去除某些环境的编号。例如，使用 \lstinline|\CreateTheorem{remark}(remark*)|，便可以去除 \texttt{remark} 环境的编号。
+                \end{enumerate}
+        \end{itemize}
 \end{itemize}
 
-\def\proofideanameCN{思路}
-\CreateTheorem*{proofidea}
+\begin{remind}
+    其内部使用了 \textsf{amsthm}，因此传统的 \texttt{theoremstyle} 对其也是适用的，只需在相关定义前标明即可。
+\end{remind}
 
-例如，
+\def\proofideanameCN{思路}
+\CreateTheorem*{proofidea*}
+\CreateTheorem{proofidea}<subsection>
+
+\bigskip
+下面提供一个例子。这三行代码：
 
 \begin{code}
   \def\proofideanameCN{思路}
-  \CreateTheorem*{proofidea}
+  \CreateTheorem*{proofidea*}
+  \CreateTheorem{proofidea}<subsection>
 \end{code}
 
-可以定义不编号的环境 \lstinline|proofidea|，它支持在中文环境中使用，效果如下所示：
+可以分别定义不编号的环境 \lstinline|proofidea*| 和编号的环境 \lstinline|proofidea| (在 subsection 内编号)，它们支持在简体中文语境中使用，效果如下所示:
+
+\begin{proofidea*}
+    \lstinline|proofidea*| 环境。
+\end{proofidea*}
 
 \begin{proofidea}
-    ...
+    \lstinline|proofidea| 环境。
 \end{proofidea}
 
 \subsection{未完成标记}
 
 你可以通过 \lstinline|\dnf| 来标记尚未完成的部分。例如：
 \begin{itemize}
-    \item \lstinline|\dnf|: \quad \dnf
-    \item \lstinline|\dnf<还需加入…>|: \quad \dnf<还需加入…>
+    \item \lstinline|\dnf| 或 \lstinline|\dnf<...>|。效果为：\dnf~或 \dnf<...>。\\其提示文字与当前语言相对应，例如，在法语模式下将会显示为 \UseOtherLanguage{French}{\dnf}。
 \end{itemize}
 
 类似的，还有 \lstinline|\needgraph| ：
 \begin{itemize}
-    \item \lstinline|\needgraph|: \needgraph
-    \item \lstinline|\needgraph<关于…>|: \needgraph<关于…>
+    \item \lstinline|\needgraph| 或 \lstinline|\needgraph<...>|。效果为：\needgraph~或 \needgraph<...>其提示文字与当前语言相对应，例如，在法语模式下将会显示为 \UseOtherLanguage{French}{\needgraph}
 \end{itemize}
 
-\subsection{语言设置}
-可以随时使用 \lstinline|\UseLanguage{语言名称}| 更改语言，语言名称包括Chinese、English、French（首字母大小写随意，例如chinese亦可）。这样，各种指令和环境的效果也会随之变动。
 
-例如，使用 \lstinline|\UseLanguage{English}| 后，定理与未完成标记会显示为：
+\subsection{关于文章标题、摘要与关键词}
 
-\UseLanguage{English}
-\begin{theorem}[Useless]\label{thm}
-    Some theorem in English. \dnf
-\end{theorem}
+% 由于引入了 \ProjLib{} 工具箱的 \textsf{PJLamssim} 组件，
+\einfart{} 同时具有标准文档类与\AmS{} 文档类的一些特性。
 
-引用时，定理的名称总是与定理所在区域的语言匹配，例如，开头的定义在现在的英文模式下依然显示为中文：\cref{def: strange} 和 \cref{thm}。
+因此，文章的标题部分既可以按照标准文档类 \textsf{article} 的写法来写：
 
-\UseLanguage{Chinese}
+\begin{code}
+  \title{(*\meta{title}*)}
+  \author{(*\meta{author}*)}
+  \date{(*\meta{date}*)}
+  \maketitle
+  \begin{abstract}
+      (*\meta{abstract}*)
+  \end{abstract}
+  \begin{keyword}
+      (*\meta{keywords}*)
+  \end{keyword}
+\end{code}
+
+也可以按照 \AmS{} 文档类的方式来写：
+
+\begin{code}
+  \title{(*\meta{title}*)}
+  \author{(*\meta{author}*)}
+  \address{(*\meta{address}*)}
+  \email{(*\meta{email}*)}
+  \date{(*\meta{date}*)}
+  \keywords{(*\meta{keywords}*)}
+  \subjclass{(*\meta{subjclass}*)}
+  \begin{abstract}
+      (*\meta{abstract}*)
+  \end{abstract}
+  \maketitle
+\end{code}
+
+作者信息可以包含多组，输入方式为：
+
+\begin{code}
+  \author{(*\meta{author 1}*)}
+  \address{(*\meta{address 1}*)}
+  \email{(*\meta{email 1}*)}
+  \author{(*\meta{author 2}*)}
+  \address{(*\meta{address 2}*)}
+  \email{(*\meta{email 2}*)}
+  ...
+\end{code}
+
+其中 \lstinline|\address|、\lstinline|\curraddr|、\lstinline|\email| 的相互顺序是不重要的。
 
 \subsection{关于行号}
 行号可以随时开启和关闭。\lstinline|\linenumbers| 用来开启行号，\lstinline|\nolinenumbers| 用来关闭行号。标题、目录、索引等位置为了美观，不进行编号。
@@ -174,74 +386,121 @@
 \end{itemize}
 这是标题使用下划线装饰之后带来的一个缺点。
 
-\subsection{关于字体}
-\einfart{}与\simplivre{}使用Palatino Linotype作为英文字体，方正悠宋、悠黑简体作为中文字体，并部分使用了Neo Euler作为数学字体：
-\begin{itemize}
-    \item English main font. \textsf{English sans serif font}.
-    \item 中文主要字体，\textsf{中文无衬线字体}
-    \item 数学示例： \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
+
+\section{目前存在的问题}
+
+\begin{itemize}[itemsep=.6em]
+    \item 对于字体的设置仍然不够完善。
+    \item 由于很多核心功能建立在 \ProjLib{} 工具箱的基础上，因此 \einfart{} 自然继承了其所有问题。详情可以参阅 \ProjLib{} 用户文档的“目前存在的问题”这一小节。
+    \item 错误处理功能不完善，在出现一些问题时没有相应的错误提示。
+    \item 代码中仍有许多可优化之处。
 \end{itemize}
 
-其中，Neo Euler可以在 \url{https://github.com/khaledhosny/euler-otf} 下载。
 
-其他字体不是免费字体，需要自行购买使用（你可以在方正字库网站查询详细资料：\url{https://www.foundertype.com}）。
 
-在没有安装相应的字体时，将采用TeX Live中自带的字体来代替，效果可能会有所折扣。
+\UseLanguage{English}
 
+\clearpage
 \section{文档示例}
 
-\singlespacing
+\subsection{标准文档类写法}
 
-\LocallyStopLineNumbers
-\begin{minipage}{0.45\textwidth}
+如果想采用标准文档类中的写法，可以参考下面的例子：
+
 \begin{code}
-%! TEX program = xelatex
-\documentclass[fast]{einfart}
+\documentclass{einfart}
+\usepackage{PJLtoolkit} % Load ProjLib toolkit
 
-\linenumbers
-\UseLanguage{French}
+\UseLanguage{French} % Use French from here
 
 \begin{document}
 
-\title{Titre}
-\author{Nom}
-\date{03 / 2021, Lieu}
+\title{Le Titre}
+\author{Auteur}
+\date{\PJLdate{2022-04-01}}
 
 \maketitle
 
-%% Texte ici
+\begin{abstract}
+    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
+\end{abstract}
+\begin{keyword}
+    AAA, BBB, CCC, DDD, EEE
+\end{keyword}
+
+\section{Un théorème}
+
+%% Theorem-like environments can be used directly
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+
+Référence du théorème: \cref{thm:abc} 
+    % It is recommended to use clever reference
 
 \end{document}
 \end{code}
-\end{minipage}
-%
-\hfill
-%
-\begin{minipage}{0.45\textwidth}
-\begin{code}
-%! TEX program = xelatex
-\documentclass[fast]{einfart}
 
-\linenumbers
-\UseLanguage{Chinese}
+如果以后想切换到标准文档类，只需要将前两行换为：
+
+\begin{code}
+\documentclass{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\end{code}
+
+
+\clearpage
+\subsection{\texorpdfstring{\AmS{}}{AMS} 文档类写法}
+
+如果日后有意切换到期刊模版，想采用 \AmS{} 文档类中的写法，可以参考下面的例子：
+
+\begin{code}
+\documentclass{einfart}
+\usepackage{PJLtoolkit} % Load ProjLib toolkit
+
+\UseLanguage{French} % Use French from here
 
 \begin{document}
 
-\title{标题}
-\author{姓名}
-\date{2021年3月，地点}
+\title{Le Titre}
+\author{Auteur 1}
+\address{Adresse 1}
+\email{\href{Courriel 1}{Courriel 1}}
+\author{Auteur 1}
+\address{Adresse 1}
+\email{\href{Courriel 2}{Courriel 2}}
+\date{\PJLdate{2022-04-01}}
+\subjclass{*****}
+\keywords{...}
+
+\begin{abstract}
+    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
+\end{abstract}
 
 \maketitle
 
-%% 正文部分
+\section{Première section}
+
+%% Theorem-like environments can be used directly
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+
+Référence du théorème: \cref{thm:abc} 
+    % It is recommended to use clever reference
 
 \end{document}
 \end{code}
-\end{minipage}
-\par
-\ResumeLineNumbers
 
-\bigskip
-(\lstinline|\UseLanguage| 既可以放在导言中，也可以放在正文部分，并且可以按照需要反复使用)
+这样，若想切换到 \AmS{} 文档类，只需要将前两行换为：
+
+\begin{code}
+\documentclass{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\end{code}
 
 \end{document}

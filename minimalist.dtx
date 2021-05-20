@@ -103,6 +103,8 @@
 
 \if@minimclass@fast
     \PassOptionsToPackage{fast}{minimalist}
+    \RequirePackage{draftwatermark}
+    \DraftwatermarkOptions{text={DRAFT},colorspec=0.9}
 \fi
 \if@minimclass@classical
     \RequirePackage{indentfirst}
@@ -700,8 +702,9 @@
 %%================================
 \RequirePackage{enumitem}
 \setlist{noitemsep,leftmargin=2em}
-\renewcommand\labelitemi{\color{gray!50}$\bullet$} 
+\renewcommand\labelitemi{\color{gray!50}$\bullet$}
 \renewcommand\labelitemii{\color{gray!55}--}
+\renewcommand\labelitemiii{\color{gray!55}\texttt{*}}
 
 %%================================
 %% Blank page
@@ -786,6 +789,7 @@
 \if@minimalist@fast
     \providecommand{\phantomsection}{}
     \RequirePackage{url}
+    \newcommand{\href}[2]{#2}
 \else
     \PassOptionsToPackage{hidelinks,linktoc=all}{hyperref}
 % To solve `Difference between bookmark levels is greater than one`
@@ -1027,7 +1031,7 @@
 \else
 \newenvironment{keyword}{%
     \LocallyStopLineNumbers%
-    \vspace{-.25\baselineskip}%
+    \vspace{-.5\baselineskip}%
     \begin{flushright}%
         {\conditionalbfseries\small\csname keywordname\csname\languagename ABBR\endcsname\endcsname}\par%
         \vspace{-\parskip}%

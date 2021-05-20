@@ -1,24 +1,26 @@
 %! TEX program = xelatex
-\PassOptionsToPackage{dvipsnames}{xcolor}
 \documentclass{einfart}
 
 \linenumbers % Enable line numbers
 
 %%================================
-%% TeX logo and URL
+%% Import toolkit
 %%================================
-\usepackage{hologo}
-\usepackage{url}
+\usepackage{PJLtoolkit}
+\usepackage{longtable}  % breakable tables
+\usepackage{hologo}     % more TeX logo
 
 %%================================
 %% For typestting code
 %%================================
 \usepackage{listings}
+\definecolor{maintheme}{RGB}{70,130,180}
+\definecolor{forestgreen}{RGB}{21,122,81}
 \definecolor{lightergray}{gray}{0.99}
 \lstset{language=[LaTeX]TeX,
-    keywordstyle=\color{RoyalBlue},
+    keywordstyle=\color{maintheme},
     basicstyle=\ttfamily,
-    commentstyle=\color{ForestGreen}\ttfamily,
+    commentstyle=\color{forestgreen}\ttfamily,
     stringstyle=\rmfamily,
     showstringspaces=false,
     breaklines=true,
@@ -31,9 +33,9 @@
     firstnumber=last,
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
-\lstset{morekeywords=%
-    {CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,
-    linenumbers,nolinenumbers,subsection,maketitle
+\lstset{moretexcs=%
+    {linenumbers,nolinenumbers,subsection,
+    color,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
 \lstnewenvironment{code}% 
@@ -42,6 +44,31 @@
 }
 {\ResumeLineNumbers}
 
+%%================================
+%% remind
+%%================================
+\usepackage[many]{tcolorbox}
+\newenvironment{remind}[1][Remind]{%
+    \LocallyStopLineNumbers%
+    \begin{tcolorbox}[breakable,
+        enhanced,
+        width = \textwidth,
+        colback = white, colbacktitle = paper,
+        colframe = gray!50, boxrule=0.2mm,
+        coltitle = black,
+        fonttitle = \sffamily,
+        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/4},
+        boxed title style = {boxrule=0pt, colframe=paper},
+        before skip = 0.3cm,
+        after skip = 0.3cm,
+        top = 3mm,
+        bottom = 3mm,
+        title={\sffamily #1}]%
+}{\end{tcolorbox}\ResumeLineNumbers}
+
+%%================================
+%% 名称
+%%================================
 \providecommand{\minimalist}{\textsf{minimalist}}
 \providecommand{\minimart}{\textsf{minimart}}
 \providecommand{\minimbook}{\textsf{minimbook}}
@@ -53,114 +80,292 @@
 %%================================
 \begin{document}
 
-\title{\einfart{}, write your articles in a simple and clear way\thanks{Corresponding to: \texttt{\einfart{} 2021/04/05}}}
-\author{Jinwen}
-\date{April 2021, Beijing}
+\title{\einfart{}, write your articles in a simple and clear way}
+\author{Jinwen XU}
+\thanks{Corresponding to: \texttt{\einfart{} 2021/05/23}}
+\date{May 2021, Beijing}
 
 \maketitle
 
 \begin{abstract}
-    \einfart{} is a member of the \minimalist{} class series. The entire collection includes \minimart{} and \einfart{} for typesetting articles and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing this series was to write drafts and notes that look simple but not shabby.
+    \einfart{} is part of the \minimalist{} class series. The entire collection includes \minimart{} and \einfart{} for typesetting articles, and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing them was to write drafts and notes that look simple but not shabby.
 
-    Among them, \einfart{} and \simplivre{} support three languages: English, French, and Chinese, and these three languages can be switched seamlessly in a single document. Due to the usage of custom fonts, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
+    \einfart{} supports six languages: English, French, German, Chinese, Japanese and Russian. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
     
     This documentation is typeset using \einfart{}. You can think of it as a short introduction and demonstration.
 \end{abstract}
 
 \tableofcontents
 
-\section{On the naming and options}
-\einfart{} is taken from German word ``einfach'' (``simple''), combined with the first three letters of ``artikel'' (``article'').
+\bigskip
+\begin{remind}
+    Multi-language support, theorem-like environments, draft marks and some other features are provided by the \ProjLib{} toolkit. Here we only briefly discuss how to use it with this document class. For more detailed information, you can refer to the documentation of \ProjLib{}.
+\end{remind}
 
-\simplivre{} is taken from French words ``simple'' and ``livre'' (for ``book'').
+\clearpage
+\section{Initialization}
 
-You can use the option \verb|fast| to enable a fast but slightly rough version. The main differences are:
+\subsection{How to load}
+
+One only needs to put
+\begin{code}
+  \documentclass{einfart}
+\end{code}
+as the first line to use the \einfart{} class. Please note that you need to use either \hologo{XeLaTeX} or \hologo{LuaLaTeX} engine to compile.
+
+\subsection{Options}
+
+\einfart{} offers the following options：
+
 \begin{itemize}
-    \item Use simpler math font configuration; 
-    \item Do not use hyperref; 
-    \item Do not use tikz; 
-    \item Use polyglossia instead of babel to support multiple languages. (Using polyglossia will increase the compilation speed slightly, but the current compatibility with Chinese is not perfect. When it becomes more stable, I will consider fully switching to polyglossia)
+    \item \texttt{draft} or \texttt{fast}
+        \begin{itemize}
+            \item The option \verb|fast| enables a faster but slightly rougher style, main differences are:
+            \begin{itemize}
+                \item Use simpler math font configuration; 
+                \item Do not use hyperref; 
+                \item Enable the fast mode of \ProjLib{} toolkit.
+            \end{itemize}
+        \end{itemize}
+    \item \texttt{a4paper} or \texttt{b5paper}
+        \begin{itemize}
+            \item Optional paper size. The default paper size is 7in $\times$ 10in.
+        \end{itemize}
+    \item \texttt{allowbf}
+        \begin{itemize}
+            \item Allow boldface. When this option is enabled, the title, titles of all levels and names of theorem-like environments will be bolded.
+        \end{itemize}
+    \item \texttt{classical}
+        \begin{itemize}
+            \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
+        \end{itemize}
 \end{itemize}
 
-During the writing stage of your document, it is recommended to use the \verb|fast| option to speed up compilation and improve the smoothness of your writing experience. At the end, you can remove the ``fast'' mark to get the final version.
+\begin{remind}
+    \begin{itemize}
+        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark "DRAFT" to indicate that you are currently in the draft mode.
+        \item \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
+    \end{itemize}
+\end{remind}
+
+\section{On the fonts}
+By default, \einfart{} uses Palatino Linotype as the English font, FounderType's YouSong and YouHei GBK as the Chinese fonts, and partially uses Neo Euler as the math font. Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. The other fonts are not free, you need to purchase and use them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
+
+% \begin{itemize}
+%     \item English main font. \textsf{English sans serif font}.
+%     \item 中文主要字体, \textsf{中文无衬线字体}
+%     \item Math demonstration: \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
+% \end{itemize}
+
+When the corresponding font is not installed, fonts that comes with TeX Live will be used instead. In this case, the experience might be reduced.
 
 \section{Some instructions}
 
-There is no indentation at the beginning of each paragraph, but there will be a half-line space between each two paragraphs. like this ---
+Many of the features described next are provided by the \ProjLib{} toolkit. Only the basic usage is mentioned here. For more details, please refer to its user documentation.
 
-Here is the next paragraph.
+\subsection{Language configuration}
+
+\einfart{} has multi-language support, including simplified Chinese, traditional Chinese, English, French, German, Japanese, and Russian. The language can be selected by the following macros:
+
+\begin{itemize}
+    \item \lstinline|\UseLanguage{|\meta{language name}\lstinline|}| is used to specify the language. The corresponding setting of the language will be applied after it. It can be used either in the preamble or in the main body. When no language is specified, ``English" is selected by default.
+    \item \lstinline|\UseOtherLanguage{|\meta{language name}\lstinline|}{|\meta{content}\lstinline|}|, which uses the specified language settings to typeset \meta{content}. Compared with \lstinline|\UseLanguage|, it will not modify the line spacing, so line spacing would remain stable when CJK and Western texts are mixed.
+\end{itemize}
+
+\meta{language name} can be:
+\begin{itemize}
+    \item Simplified Chinese: \texttt{Chinese}, \texttt{chinese}, \texttt{SChinese}, \texttt{schinese}, \texttt{SimplifiedChinese} or \texttt{simplifiedchinese}
+    \item Traditional Chinese: \texttt{TChinese}, \texttt{tchinese}, \texttt{TraditionalChinese} or \texttt{traditionalchinese}
+    \item English: \texttt{English} or \texttt{english}
+    \item French: \texttt{French} or \texttt{french}
+    \item German: \texttt{German}, \texttt{german} or \texttt{ngerman}
+    \item Japanese: \texttt{Japanese} or \texttt{japanese}
+    \item Russian: \texttt{Russian} or \texttt{russian}
+\end{itemize}
+
+\medskip
+In addition, you can also add new settings to selected language:
+\begin{itemize}
+    \item \lstinline|\AddLanguageSetting{|\meta{settings}\lstinline|}|
+    \begin{itemize}
+        \item Add \meta{settings} to all supported languages.
+    \end{itemize}
+    \item \lstinline|\AddLanguageSetting(|\meta{language name}\lstinline|){|\meta{settings}\lstinline|}|
+    \begin{itemize}
+        \item Add \meta{settings} to the selected language \meta{language name}.
+    \end{itemize}
+\end{itemize}
+For example, \lstinline|\AddLanguageSetting(German){\color{orange}}| can make all German text displayed in orange (of course, one then need to add \lstinline|\AddLanguageSetting{\color{black}}| in order to correct the color of the text in other languages).
+
 
 \subsection{Theorems and how to reference them}
 
-Environments such as definitions and theorems have been pre-defined and can be used directly, for example:
+Environments such as definitions and theorems have been pre-defined and can be used directly. 
 
+More specifically, preset environments include: 
+\texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, and the corresponding unnumbered version with an asterisk \lstinline|*| in the name. The display of these environments will change according to the current language.
+
+When referencing a theorem-like environment, it is recommended to use smart reference \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
+
+\begin{remind}[Example]
 \begin{code}
   \begin{definition}[Strange things] \label{def: strange} ...
 \end{code}
 
 will produce
 \begin{definition}[Strange things]\label{def: strange}
-    This is the definition of some strange objects.
+    This is the definition of some strange objects. There is approximately an one-line space before and after the theorem environment, and there will be a symbol to mark the end of the environment.
 \end{definition}
 
-There is approximately an one-line space before and after the theorem environment. There will be a symbol to mark the end of the environment.
+\lstinline|\cref{def: strange}| will be displayed as: \cref{def: strange}.
 
-When referencing, you can directly use clever reference \lstinline|\cref{(label name)}|. For example, \lstinline|\cref{def: strange}| will be displayed as: \cref{def: strange}.
+After using \lstinline|\UseLanguage{French}|, a theorem will be displayed as:
+
+\UseLanguage{French}
+\begin{theorem}[Inutile]\label{thm}
+    Un théorème en français.
+\end{theorem}
+
+By default, when referenced, the name of the theorem always matches the language of the context in which the theorem is located. For example, the definition above is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. If you want the name of the theorem to match the current context when referencing, you can add \texttt{regionalref} to the global options.
+\end{remind}
+
+\UseLanguage{English}
+
 
 \subsection{Define a new theorem-like environment}
 
-First define the name of this environment in the language used: \lstinline|\(name of environment)(language name)|. Where \lstinline|(language name)| can be \lstinline|EN|, \lstinline|FR|, \lstinline|CN|, etc., and then define this environment in one of the following four ways:
+If you need to define a new theorem-like environment, you must first define the name of the environment in the language used: \lstinline|\|\meta{name of environment}\meta{language abbr}, where \meta{language abbr} is the abbreviation of language, which can be:
+% \vspace{-.5\baselineskip}
+\begin{longtable}{ll|ll}
+    \texttt{CN} & Simplified Chinese & \texttt{DE} & German\\
+    \texttt{TC} & Traditional Chinese & \texttt{JP} & Japanese\\
+    \texttt{EN} & English & \texttt{RU} & Russian\\
+    \texttt{FR} & French & &\\
+\end{longtable}
+
+\vspace{-.5\baselineskip}
+\begin{remind}
+    If you want to define an environment with an asterisk \lstinline|*| after the name, you don't need to write an asterisk in the \meta{name of environment} above. See the example below.
+\end{remind}
+
+And then define this environment in one of following five ways:
 \begin{itemize}
-    \item \lstinline|\CreateTheorem*{(name of environment)}|
-    \item \lstinline|\CreateTheorem{(name of environment)}[(numbered like)]|
-    \item \lstinline|\CreateTheorem{(name of environment)}<(numbered within)>|
-    \item \lstinline|\CreateTheorem{(name of environment)}|
+    \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
+        \begin{itemize}
+            \item Define an unnumbered environment \meta{name of environment}
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}|
+        \begin{itemize}
+            \item Define a numbered environment \meta{name of environment}, numbered in order 1,2,3,\dots
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}[|\meta{numbered like}\lstinline|]|
+        \begin{itemize}
+            \item Define a numbered environment \meta{name of environment}, which shares the counter \meta{numbered like}
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
+        \begin{itemize}
+            \item Define a numbered environment \meta{name of environment}, numbered within the \\counter \meta{numbered within}
+        \end{itemize}
+    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|\\
+    \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|
+        \begin{itemize}
+            \item Identify \meta{name of environment} with \meta{existed environment} or \meta{existed environment}\lstinline|*|.
+            \item This method is usually useful in the following two situations:
+                \begin{enumerate}
+                    \item To use a more concise name. For example, with \lstinline|\CreateTheorem{thm}|\\\lstinline|(theorem)|, one can then use the name \texttt{thm} to write theorem.
+                    \item To remove the numbering. For example, one can remove the numbering of the \texttt{remark} environment with \lstinline|\CreateTheorem{remark}(remark*)|.
+                \end{enumerate}
+        \end{itemize}
 \end{itemize}
 
+\begin{remind}
+    It uses \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
+\end{remind}
+
 \def\proofideanameEN{Idea}
-\CreateTheorem*{proofidea}
+\CreateTheorem*{proofidea*}
+\CreateTheorem{proofidea}<subsection>
 
-For example,
-
+\bigskip
+Here is an example. The following code:
 \begin{code}
   \def\proofideanameEN{Idea}
-  \CreateTheorem*{proofidea}
+  \CreateTheorem*{proofidea*}
+  \CreateTheorem{proofidea}<subsection>
 \end{code}
+defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within subsection) respectively. They can be used in English context. The effect is as follows:
 
-defines an unnumbered environment \lstinline|proofidea|, which supports using in the English context, and the effect is as follows:
+\begin{proofidea*}
+    The \lstinline|proofidea*| environment.
+\end{proofidea*}
 
 \begin{proofidea}
-    ...
+    The \lstinline|proofidea| environment.
 \end{proofidea}
 
 \subsection{Draft mark}
 
 You can use \lstinline|\dnf| to mark the unfinished part. For example:
 \begin{itemize}
-    \item \lstinline|\dnf|: \quad \dnf
-    \item \lstinline|\dnf<Still need ...>|: \quad \dnf<Still need ...>
+    \item \lstinline|\dnf| or \lstinline|\dnf<...>|. The effect is: \dnf~ or \dnf<...>. \\The prompt text changes according to the current language. For example, it will be displayed as \UseOtherLanguage{French}{\dnf} in French mode.
 \end{itemize}
 
 Similarly, there is \lstinline|\needgraph| ：
 \begin{itemize}
-    \item \lstinline|\needgraph|: \needgraph
-    \item \lstinline|\needgraph<About ...>|: \needgraph<About ...>
+    \item \lstinline|\needgraph| or \lstinline|\needgraph<...>|. The effect is: \needgraph or \needgraph<...>The prompt text changes according to the current language. For example, in French mode, it will be displayed as \UseOtherLanguage{French}{\needgraph}
 \end{itemize}
 
-\subsection{Language configuration}
-You can use \lstinline|\UseLanguage{(name of language))}| at any time to change the language, Language names include Chinese, English, French (the case of the first letter is arbitrary, for example, ``chinese'' is also acceptable). With this, the effects of various commands and environments will also change accordingly.
+\subsection{On the title, abstract and keywords}
 
-For example, after using \lstinline|\UseLanguage{French}|, the theorem and the draft mark will be displayed as:
+\einfart{} has some features of both the standard classes and the \AmS{} classes.
 
-\UseLanguage{French}
-\begin{theorem}[Inutile]\label{thm}
-    Un théorème en français. \dnf
-\end{theorem}
+Therefore, the title part can either be written in the usual way, in accordance with the standard class \textsf{article}:
 
-When referenced, the name of the theorem always matches the language of the region in which the theorem is located, for example, the definition of the beginning is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. 
+\begin{code}
+  \title{(*\meta{title}*)}
+  \author{(*\meta{author}*)}
+  \date{(*\meta{date}*)}
+  \maketitle
+  \begin{abstract}
+      (*\meta{abstract}*)
+  \end{abstract}
+  \begin{keyword}
+      (*\meta{keywords}*)
+  \end{keyword}
+\end{code}
 
-\UseLanguage{English}
+or written in the way of \AmS{} classes:
 
+\begin{code}
+  \title{(*\meta{title}*)}
+  \author{(*\meta{author}*)}
+  \address{(*\meta{address}*)}
+  \email{(*\meta{email}*)}
+  \date{(*\meta{date}*)}
+  \keywords{(*\meta{keywords}*)}
+  \subjclass{(*\meta{subjclass}*)}
+  \begin{abstract}
+      (*\meta{abstract}*)
+  \end{abstract}
+  \maketitle
+\end{code}
+
+\medskip
+The author information can contain multiple groups, written as:
+
+\begin{code}
+  \author{(*\meta{author 1}*)}
+  \address{(*\meta{address 1}*)}
+  \email{(*\meta{email 1}*)}
+  \author{(*\meta{author 2}*)}
+  \address{(*\meta{address 2}*)}
+  \email{(*\meta{email 2}*)}
+  ...
+\end{code}
+
+Among them, the mutual order of \lstinline|\address|, \lstinline|\curraddr|, \lstinline|\email| is not important.
+
+\clearpage
 \subsection{On the line numbers}
 Line numbers can be turned on and off at any time. \lstinline|\linenumbers| is used to enable the line numbers, and \lstinline|\nolinenumbers| is used to disable them. For the sake of beauty, the title, table of contents, index and some other elements are not numbered.
 
@@ -172,72 +377,117 @@ In \lstinline|\section| or \lstinline|\subsection| , if you wish to add footnote
 \end{itemize}
 This is a disadvantage brought about by the underline decoration of the title.
 
-\subsection{On the fonts}
-\einfart{} and \simplivre{} use Palatino Linotype as the English font, FounderType's YouSong and YouHei Simplified as the Chinese fonts, and partially use Neo Euler as the mathematical font:
-\begin{itemize}
-    \item English main font. \textsf{English sans serif font}.
-    \item 中文主要字体, \textsf{中文无衬线字体}
-    \item Math demonstration: \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
+
+\section{Known issues}
+
+\begin{itemize}[itemsep=.6em]
+    \item The font settings are still not perfect.
+    \item Since many features are based on the \ProjLib{} toolkit, \einfart{} inherits all its problems. For details, please refer to the "Known Issues" section of the \ProjLib{} documentation.
+    \item The error handling mechanism is incomplete: there is no corresponding error prompt when some problems occur.
+    \item There are still many things that can be optimized in the code.
 \end{itemize}
 
-Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. Other fonts are not free, you need to purchase and use them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
-
-When the corresponding font is not installed, the font that comes with TeX Live will be used instead, and the experience might be reduced.
-
+\clearpage
 \section{Document templates}
 
-\singlespacing
+\subsection{The standard way}
 
-\LocallyStopLineNumbers
-\begin{minipage}{0.45\textwidth}
+If you want to write in the standard way, you can refer to the following example:
+
 \begin{code}
-%! TEX program = xelatex
-\documentclass[fast]{einfart}
+\documentclass{einfart}
+\usepackage{PJLtoolkit} % Load ProjLib toolkit
 
-\linenumbers
-\UseLanguage{French}
+\UseLanguage{French} % Use French from here
 
 \begin{document}
 
-\title{Titre}
-\author{Nom}
-\date{03 / 2021, Lieu}
+\title{Le Titre}
+\author{Auteur}
+\date{\PJLdate{2022-04-01}}
 
 \maketitle
 
-%% Texte ici
+\begin{abstract}
+    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
+\end{abstract}
+\begin{keyword}
+    AAA, BBB, CCC, DDD, EEE
+\end{keyword}
+
+\section{Un théorème}
+
+%% Theorem-like environments can be used directly
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+
+Référence du théorème: \cref{thm:abc} 
+    % It is recommended to use clever reference
 
 \end{document}
 \end{code}
-\end{minipage}
-%
-\hfill
-%
-\begin{minipage}{0.45\textwidth}
-\begin{code}
-%! TEX program = xelatex
-\documentclass[fast]{einfart}
 
-\linenumbers
-\UseLanguage{Chinese}
+If you wish to switch to the standard class later, just replace the first two lines with:
+
+\begin{code}
+\documentclass{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\end{code}
+
+
+\clearpage
+\subsection{The \texorpdfstring{\AmS{}}{AMS} way}
+
+If you intend to switch to the journal template in the future and thus want to use the writing style as in the \AmS{} classes, you can refer to the following example:
+
+\begin{code}
+\documentclass{einfart}
+\usepackage{PJLtoolkit} % Load ProjLib toolkit
+
+\UseLanguage{French} % Use French from here
 
 \begin{document}
 
-\title{标题}
-\author{姓名}
-\date{2021年3月，地点}
+\title{Le Titre}
+\author{Auteur 1}
+\address{Adresse 1}
+\email{\href{Courriel 1}{Courriel 1}}
+\author{Auteur 1}
+\address{Adresse 1}
+\email{\href{Courriel 2}{Courriel 2}}
+\date{\PJLdate{2022-04-01}}
+\subjclass{*****}
+\keywords{...}
+
+\begin{abstract}
+    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
+\end{abstract}
 
 \maketitle
 
-%% 正文部分
+\section{Première section}
+
+%% Theorem-like environments can be used directly
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+
+Référence du théorème: \cref{thm:abc} 
+    % It is recommended to use clever reference
 
 \end{document}
 \end{code}
-\end{minipage}
-\par
-\ResumeLineNumbers
 
-\bigskip
-(\lstinline|\UseLanguage| can be placed either in the preamble or in the body part, and can be used repeatedly as needed)
+In this way, if you wish to switch to \AmS{} class later, just replace the first two lines with:
+
+\begin{code}
+\documentclass{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\end{code}
 
 \end{document}
