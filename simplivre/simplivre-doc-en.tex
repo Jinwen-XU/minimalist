@@ -106,7 +106,7 @@
 
 \chapter*{Preface}
 
-\simplivre{} is part of the \minimalist{} class series. The entire collection includes \minimart{} and \einfart{} for typesetting articles, and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing them was to write drafts and notes that look simple but not shabby.
+\simplivre{} is part of the \minimalist{} class series. Its name is taken from French words ``simple'' and ``livre'' (for ``book''). The entire collection includes \minimart{} and \einfart{} for typesetting articles, and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing them was to write drafts and notes that look simple but not shabby.
 
 \simplivre{} supports six languages: English, French, German, Chinese, Japanese and Russian. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
 
@@ -349,55 +349,57 @@ Similarly, there is \lstinline|\needgraph| ：
     \item \lstinline|\needgraph| or \lstinline|\needgraph<...>|. The effect is: \needgraph or \needgraph<...>The prompt text changes according to the current language. For example, in French mode, it will be displayed as \UseOtherLanguage{French}{\needgraph}
 \end{itemize}
 
-\section{On the title, abstract and keywords}
+% \vspace{-.5\baselineskip}
+% \section{On the title, abstract and keywords}
 
-\simplivre{} has some features of both the standard classes and the \AmS{} classes.
+% \simplivre{} has both the features of standard classes and that of the \AmS{} classes.
 
-Therefore, the title part can either be written in the usual way, in accordance with the standard class \textsf{article}:
+% Therefore, the title part can either be written in the usual way, in accordance with the standard class \textsf{article}:
 
-\begin{code}
-  \title{(*\meta{title}*)}
-  \author{(*\meta{author}*)}
-  \date{(*\meta{date}*)}
-  \maketitle
-  \begin{abstract}
-      (*\meta{abstract}*)
-  \end{abstract}
-  \begin{keyword}
-      (*\meta{keywords}*)
-  \end{keyword}
-\end{code}
+% \begin{code}
+%   \title{(*\meta{title}*)}
+%   \author{(*\meta{author}*)}
+%   \date{(*\meta{date}*)}
+%   \maketitle
+%   \begin{abstract}
+%       (*\meta{abstract}*)
+%   \end{abstract}
+%   \begin{keyword}
+%       (*\meta{keywords}*)
+%   \end{keyword}
+% \end{code}
 
-or written in the way of \AmS{} classes:
+% \vspace{-.5\baselineskip}
+% or written in the way of \AmS{} classes:
 
-\begin{code}
-  \title{(*\meta{title}*)}
-  \author{(*\meta{author}*)}
-  \address{(*\meta{address}*)}
-  \email{(*\meta{email}*)}
-  \date{(*\meta{date}*)}
-  \keywords{(*\meta{keywords}*)}
-  \subjclass{(*\meta{subjclass}*)}
-  \begin{abstract}
-      (*\meta{abstract}*)
-  \end{abstract}
-  \maketitle
-\end{code}
+% \begin{code}
+%   \title{(*\meta{title}*)}
+%   \author{(*\meta{author}*)}
+%   \address{(*\meta{address}*)}
+%   \email{(*\meta{email}*)}
+%   \date{(*\meta{date}*)}
+%   \keywords{(*\meta{keywords}*)}
+%   \subjclass{(*\meta{subjclass}*)}
+%   \begin{abstract}
+%       (*\meta{abstract}*)
+%   \end{abstract}
+%   \maketitle
+% \end{code}
 
-\medskip
-The author information can contain multiple groups, written as:
+% \medskip
+% The author information can contain multiple groups, written as:
 
-\begin{code}
-  \author{(*\meta{author 1}*)}
-  \address{(*\meta{address 1}*)}
-  \email{(*\meta{email 1}*)}
-  \author{(*\meta{author 2}*)}
-  \address{(*\meta{address 2}*)}
-  \email{(*\meta{email 2}*)}
-  ...
-\end{code}
+% \begin{code}
+%   \author{(*\meta{author 1}*)}
+%   \address{(*\meta{address 1}*)}
+%   \email{(*\meta{email 1}*)}
+%   \author{(*\meta{author 2}*)}
+%   \address{(*\meta{address 2}*)}
+%   \email{(*\meta{email 2}*)}
+%   ...
+% \end{code}
 
-Among them, the mutual order of \lstinline|\address|, \lstinline|\curraddr|, \lstinline|\email| is not important.
+% Among them, the mutual order of \lstinline|\address|, \lstinline|\curraddr|, \lstinline|\email| is not important.
 
 \section{On the line numbers}
 Line numbers can be turned on and off at any time. \lstinline|\linenumbers| is used to enable the line numbers, and \lstinline|\nolinenumbers| is used to disable them. For the sake of beauty, the title, table of contents, index and some other elements are not numbered.
@@ -491,10 +493,6 @@ If you intend to switch to the journal template in the future and thus want to u
 \date{\PJLdate{2022-04-01}}
 \subjclass{*****}
 \keywords{...}
-
-\begin{abstract}
-    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
-\end{abstract}
 
 \maketitle
 

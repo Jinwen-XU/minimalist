@@ -104,7 +104,7 @@
 \if@minimclass@fast
     \PassOptionsToPackage{fast}{minimalist}
     \RequirePackage{draftwatermark}
-    \DraftwatermarkOptions{text={DRAFT},colorspec=0.9}
+    \DraftwatermarkOptions{text={\normalfont DRAFT},colorspec=0.9}
 \fi
 \if@minimclass@classical
     \RequirePackage{indentfirst}
@@ -258,6 +258,8 @@
 }{}
 \fi
 %</einfart|simplivre>
+
+\def\PJL@font@alreadyset{}
 
 \RequirePackage[verbose=silent]{microtype}
 

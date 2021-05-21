@@ -355,55 +355,55 @@
 \end{itemize}
 
 
-\section{关于文章标题、摘要与关键词}
+% \section{关于文章标题、摘要与关键词}
 
-% 由于引入了 \ProjLib{} 工具箱的 \textsf{PJLamssim} 组件，
-\simplivre{} 同时具有标准文档类与\AmS{} 文档类的一些特性。
+% % 由于引入了 \ProjLib{} 工具箱的 \textsf{PJLamssim} 组件，
+% \simplivre{} 同时具有标准文档类与\AmS{} 文档类的一些特性。
 
-因此，文章的标题部分既可以按照标准文档类 \textsf{article} 的写法来写：
+% 因此，文章的标题部分既可以按照标准文档类 \textsf{article} 的写法来写：
 
-\begin{code}
-  \title{(*\meta{title}*)}
-  \author{(*\meta{author}*)}
-  \date{(*\meta{date}*)}
-  \maketitle
-  \begin{abstract}
-      (*\meta{abstract}*)
-  \end{abstract}
-  \begin{keyword}
-      (*\meta{keywords}*)
-  \end{keyword}
-\end{code}
+% \begin{code}
+%   \title{(*\meta{title}*)}
+%   \author{(*\meta{author}*)}
+%   \date{(*\meta{date}*)}
+%   \maketitle
+%   \begin{abstract}
+%       (*\meta{abstract}*)
+%   \end{abstract}
+%   \begin{keyword}
+%       (*\meta{keywords}*)
+%   \end{keyword}
+% \end{code}
 
-也可以按照 \AmS{} 文档类的方式来写：
+% 也可以按照 \AmS{} 文档类的方式来写：
 
-\begin{code}
-  \title{(*\meta{title}*)}
-  \author{(*\meta{author}*)}
-  \address{(*\meta{address}*)}
-  \email{(*\meta{email}*)}
-  \date{(*\meta{date}*)}
-  \keywords{(*\meta{keywords}*)}
-  \subjclass{(*\meta{subjclass}*)}
-  \begin{abstract}
-      (*\meta{abstract}*)
-  \end{abstract}
-  \maketitle
-\end{code}
+% \begin{code}
+%   \title{(*\meta{title}*)}
+%   \author{(*\meta{author}*)}
+%   \address{(*\meta{address}*)}
+%   \email{(*\meta{email}*)}
+%   \date{(*\meta{date}*)}
+%   \keywords{(*\meta{keywords}*)}
+%   \subjclass{(*\meta{subjclass}*)}
+%   \begin{abstract}
+%       (*\meta{abstract}*)
+%   \end{abstract}
+%   \maketitle
+% \end{code}
 
-作者信息可以包含多组，输入方式为：
+% 作者信息可以包含多组，输入方式为：
 
-\begin{code}
-  \author{(*\meta{author 1}*)}
-  \address{(*\meta{address 1}*)}
-  \email{(*\meta{email 1}*)}
-  \author{(*\meta{author 2}*)}
-  \address{(*\meta{address 2}*)}
-  \email{(*\meta{email 2}*)}
-  ...
-\end{code}
+% \begin{code}
+%   \author{(*\meta{author 1}*)}
+%   \address{(*\meta{address 1}*)}
+%   \email{(*\meta{email 1}*)}
+%   \author{(*\meta{author 2}*)}
+%   \address{(*\meta{address 2}*)}
+%   \email{(*\meta{email 2}*)}
+%   ...
+% \end{code}
 
-其中 \lstinline|\address|、\lstinline|\curraddr|、\lstinline|\email| 的相互顺序是不重要的。
+% 其中 \lstinline|\address|、\lstinline|\curraddr|、\lstinline|\email| 的相互顺序是不重要的。
 
 \section{关于行号}
 行号可以随时开启和关闭。\lstinline|\linenumbers| 用来开启行号，\lstinline|\nolinenumbers| 用来关闭行号。标题、目录、索引等位置为了美观，不进行编号。
