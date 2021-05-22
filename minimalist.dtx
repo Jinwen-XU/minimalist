@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/05/05 A simple and clear article style]
+    [2021/05/23 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/05/05 A simple and clear book style]
+    [2021/05/23 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/05/05 A simple and clear article style]
+    [2021/05/23 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/05/05 A simple and clear book style]
+    [2021/05/23 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/05/05 A simple and clear style for articles and books]
+    [2021/05/23 A simple and clear style for articles and books]
 %</minimalist>
 %
 \RequirePackage{kvoptions}
@@ -104,7 +104,7 @@
 \if@minimclass@fast
     \PassOptionsToPackage{fast}{minimalist}
     \RequirePackage{draftwatermark}
-    \DraftwatermarkOptions{text={\normalfont DRAFT},colorspec=0.9}
+    \DraftwatermarkOptions{text={\normalfont DRAFT},colorspec=0.95}
 \fi
 \if@minimclass@classical
     \RequirePackage{indentfirst}
@@ -670,7 +670,7 @@
         {\addvspace{.5pc}\normalfont}
         {\contentslabel{2em}}
         {\hspace*{-2em}}
-        {\normalfont\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+        {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
     \titlecontents{section}
         [4em] % i.e., 2em (chapter) + 2em
         {\normalfont}

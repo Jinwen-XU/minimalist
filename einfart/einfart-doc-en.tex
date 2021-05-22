@@ -88,7 +88,7 @@
 \maketitle
 
 \begin{abstract}
-    \einfart{} is part of the \minimalist{} class series, whose name is taken from German word ``einfach'' (``simple''), combined with the first three letters of ``artikel'' (``article''). The entire collection includes \minimart{} and \einfart{} for typesetting articles, and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing them was to write drafts and notes that look simple but not shabby.
+    \einfart{} is part of the \minimalist{} class series, whose name is taken from German word ``einfach'' (``simple''), combined with the first three letters of ``artikel'' (``article''). The entire collection includes \minimart{} and \einfart{} for typesetting articles, and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing them was to write drafts and notes that look simple yet not shabby.
 
     \einfart{} supports six languages: English, French, German, Chinese, Japanese and Russian. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
     
@@ -115,7 +115,7 @@ as the first line to use the \einfart{} class. Please note that you need to use 
 
 \subsection{Options}
 
-\einfart{} offers the following options：
+\einfart{} offers the following options: 
 
 \begin{itemize}
     \item \texttt{draft} or \texttt{fast}
@@ -205,7 +205,7 @@ Environments such as definitions and theorems have been pre-defined and can be u
 More specifically, preset environments include: 
 \texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, and the corresponding unnumbered version with an asterisk \lstinline|*| in the name. The display of these environments will change according to the current language.
 
-When referencing a theorem-like environment, it is recommended to use smart reference \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
+When referencing a theorem-like environment, it is recommended to use clever reference \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
 
 \begin{remind}[Example]
 \begin{code}
@@ -288,11 +288,13 @@ And then define this environment in one of following five ways:
 
 \bigskip
 Here is an example. The following code:
+
 \begin{code}
   \def\proofideanameEN{Idea}
   \CreateTheorem*{proofidea*}
   \CreateTheorem{proofidea}<subsection>
 \end{code}
+
 defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within subsection) respectively. They can be used in English context. The effect is as follows:
 
 \begin{proofidea*}
@@ -310,7 +312,7 @@ You can use \lstinline|\dnf| to mark the unfinished part. For example:
     \item \lstinline|\dnf| or \lstinline|\dnf<...>|. The effect is: \dnf~ or \dnf<...>. \\The prompt text changes according to the current language. For example, it will be displayed as \UseOtherLanguage{French}{\dnf} in French mode.
 \end{itemize}
 
-Similarly, there is \lstinline|\needgraph| ：
+Similarly, there is \lstinline|\needgraph| : 
 \begin{itemize}
     \item \lstinline|\needgraph| or \lstinline|\needgraph<...>|. The effect is: \needgraph or \needgraph<...>The prompt text changes according to the current language. For example, in French mode, it will be displayed as \UseOtherLanguage{French}{\needgraph}
 \end{itemize}
