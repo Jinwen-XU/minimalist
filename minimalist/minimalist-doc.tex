@@ -35,7 +35,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,subsection,
-    color,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
+    color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
 \lstnewenvironment{code}% 
@@ -185,15 +185,15 @@ Many of the features described next are provided by the \ProjLib{} toolkit. Only
     \item \lstinline|\UseOtherLanguage{|\meta{language name}\lstinline|}{|\meta{content}\lstinline|}|, which uses the specified language settings to typeset \meta{content}. Compared with \lstinline|\UseLanguage|, it will not modify the line spacing, so line spacing would remain stable when CJK and Western texts are mixed.
 \end{itemize}
 
-\meta{language name} can be:
+\meta{language name} can be (it is not case sensitive, for example, \texttt{French} and \texttt{french} have the same effect):
 \begin{itemize}
-    \item Simplified Chinese: \texttt{Chinese}, \texttt{chinese}, \texttt{SChinese}, \texttt{schinese}, \texttt{SimplifiedChinese} or \texttt{simplifiedchinese}
-    \item Traditional Chinese: \texttt{TChinese}, \texttt{tchinese}, \texttt{TraditionalChinese} or \texttt{traditionalchinese}
-    \item English: \texttt{English} or \texttt{english}
-    \item French: \texttt{French} or \texttt{french}
-    \item German: \texttt{German}, \texttt{german} or \texttt{ngerman}
-    \item Japanese: \texttt{Japanese} or \texttt{japanese}
-    \item Russian: \texttt{Russian} or \texttt{russian}
+    \item Simplified Chinese: \texttt{CN}, \texttt{Chinese}, \texttt{SChinese} or \texttt{SimplifiedChinese}
+    \item Traditional Chinese: \texttt{TC}, \texttt{TChinese} or \texttt{TraditionalChinese}
+    \item English: \texttt{EN} or \texttt{English}
+    \item French: \texttt{FR} or \texttt{French}
+    \item German: \texttt{DE}, \texttt{German} or \texttt{ngerman}
+    \item Japanese: \texttt{JP} or \texttt{Japanese}
+    \item Russian: \texttt{RU} or \texttt{Russian}
 \end{itemize}
 
 \medskip
@@ -247,20 +247,13 @@ By default, when referenced, the name of the theorem always matches the language
 
 \subsection{Define a new theorem-like environment}
 
-If you need to define a new theorem-like environment, you must first define the name of the environment in the language used: \lstinline|\|\meta{name of environment}\meta{language abbr}, where \meta{language abbr} is the abbreviation of language, which can be:
-% \vspace{-.5\baselineskip}
-\begin{longtable}{ll|ll}
-    \texttt{CN} & Simplified Chinese & \texttt{DE} & German\\
-    \texttt{TC} & Traditional Chinese & \texttt{JP} & Japanese\\
-    \texttt{EN} & English & \texttt{RU} & Russian\\
-    \texttt{FR} & French & &\\
-\end{longtable}
+If you need to define a new theorem-like environment, you must first define the name of the environment in the language to use:
+\begin{itemize}
+    \item \lstinline|\NameTheorem[|\meta{language name}\lstinline|]{|\meta{name of environment}\lstinline|}{|\meta{name string}\lstinline|}|
+\end{itemize}
+For \meta{language name}, please refer to the section on language configuration. When \meta{language name} is not specified, the name will be set for all supported languages. In addition, environments with or without asterisk share the same name, therefore, \lstinline|\NameTheorem{envname*}{...}| has the same effect as \lstinline|\NameTheorem{envname}{...}| .
 
-\vspace{-.5\baselineskip}
-\begin{remind}
-    If you want to define an environment with an asterisk \lstinline|*| after the name, you don't need to write an asterisk in the \meta{name of environment} above. See the example below.
-\end{remind}
-
+\medskip
 And then define this environment in one of following five ways:
 \begin{itemize}
     \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
@@ -277,16 +270,17 @@ And then define this environment in one of following five ways:
         \end{itemize}
     \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
         \begin{itemize}
-            \item Define a numbered environment \meta{name of environment}, numbered within the \\counter \meta{numbered within}
+            \item Define a numbered environment \meta{name of environment}, numbered within the counter \meta{numbered within}
         \end{itemize}
+    \clearpage
     \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|\\
     \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|
         \begin{itemize}
             \item Identify \meta{name of environment} with \meta{existed environment} or \meta{existed environment}\lstinline|*|.
             \item This method is usually useful in the following two situations:
                 \begin{enumerate}
-                    \item To use a more concise name. For example, with \lstinline|\CreateTheorem{thm}|\\\lstinline|(theorem)|, one can then use the name \texttt{thm} to write theorem.
-                    \item To remove the numbering. For example, one can remove the numbering of the \texttt{remark} environment with \lstinline|\CreateTheorem{remark}(remark*)|.
+                    \item To use a more concise name. For example, with \lstinline|\CreateTheorem{thm}(theorem)|, one can then use the name \texttt{thm} to write theorem.
+                    \item To remove the numbering of some environments. For example, one can remove the numbering of the \texttt{remark} environment with \lstinline|\CreateTheorem{remark}(remark*)|.
                 \end{enumerate}
         \end{itemize}
 \end{itemize}
@@ -295,7 +289,8 @@ And then define this environment in one of following five ways:
     It uses \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
 \end{remind}
 
-\def\proofideanameEN{Idea}
+% \def\proofideanameEN{Idea}
+\NameTheorem[EN]{proofidea}{Idea}
 \CreateTheorem*{proofidea*}
 \CreateTheorem{proofidea}<subsection>
 
@@ -303,7 +298,7 @@ And then define this environment in one of following five ways:
 Here is an example. The following code:
 
 \begin{code}
-  \def\proofideanameEN{Idea}
+  \NameTheorem[EN]{proofidea}{Idea}
   \CreateTheorem*{proofidea*}
   \CreateTheorem{proofidea}<subsection>
 \end{code}
@@ -338,7 +333,7 @@ Therefore, the title part can either be written in the usual way, in accordance 
 
 \begin{code}
   \title{(*\meta{title}*)}
-  \author{(*\meta{author}*)}
+  \author{(*\meta{author}*)\thanks{(*\meta{text}*)}}
   \date{(*\meta{date}*)}
   \maketitle
   \begin{abstract}
@@ -354,6 +349,7 @@ or written in the way of \AmS{} classes:
 \begin{code}
   \title{(*\meta{title}*)}
   \author{(*\meta{author}*)}
+  \thanks{(*\meta{text}*)}
   \address{(*\meta{address}*)}
   \email{(*\meta{email}*)}
   \date{(*\meta{date}*)}

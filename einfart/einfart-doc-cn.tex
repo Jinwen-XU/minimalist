@@ -37,7 +37,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,subsection,
-    color,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
+    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
 \lstnewenvironment{code}% 
@@ -182,15 +182,15 @@
     \end{itemize}
 \end{itemize}
 
-\meta{language name} 有下列选择：
+\meta{language name} 有下列选择 (不区分大小写，如 \texttt{French} 或 \texttt{french} 均可)：
 \begin{itemize}
-    \item 简体中文：\texttt{Chinese}、\texttt{chinese}、\texttt{SChinese}、\texttt{schinese}、\texttt{SimplifiedChinese} \\\hspace*{5em}或 \texttt{simplifiedchinese}
-    \item 繁体中文：\texttt{TChinese}、\texttt{tchinese}、\texttt{TraditionalChinese} 或 \texttt{traditionalchinese}
-    \item 英文：\texttt{English} 或 \texttt{english}
-    \item 法文：\texttt{French} 或 \texttt{french}
-    \item 德文：\texttt{German}、\texttt{german} 或 \texttt{ngerman}
-    \item 日文：\texttt{Japanese} 或 \texttt{japanese}
-    \item 俄文：\texttt{Russian} 或 \texttt{russian}
+    \item 简体中文：\texttt{CN}、\texttt{Chinese}、\texttt{SChinese} 或 \texttt{SimplifiedChinese}
+    \item 繁体中文：\texttt{TC}、\texttt{TChinese} 或 \texttt{TraditionalChinese}
+    \item 英文：\texttt{EN} 或 \texttt{English}
+    \item 法文：\texttt{FR} 或 \texttt{French}
+    \item 德文：\texttt{DE}、\texttt{German} 或 \texttt{ngerman}
+    \item 日文：\texttt{JP} 或 \texttt{Japanese}
+    \item 俄文：\texttt{RU} 或 \texttt{Russian}
 \end{itemize}
 
 另外，还可以通过下面的方式来填加相应语言的设置：
@@ -214,6 +214,7 @@
 具体来说，预设的定理类环境包括：
 \texttt{assumption}、\texttt{axiom}、\texttt{conjecture}、\texttt{convention}、\texttt{corollary}、\texttt{definition}、\texttt{definition-proposition}、\texttt{definition-theorem}、\texttt{example}、\texttt{exercise}、\texttt{fact}、\texttt{hypothesis}、\texttt{lemma}、\texttt{notation}、\texttt{problem}、\texttt{property}、\texttt{proposition}、\texttt{question}、\texttt{remark}、\texttt{theorem}，以及相应的带有星号 \lstinline|*| 的无编号版本。
 
+\clearpage
 在引用定理类环境时，建议使用智能引用 \lstinline|\cref{|\meta{label}\lstinline|}|。这样就不必每次都写上相应环境的名称了。
 
 \begin{remind}[例子]
@@ -242,18 +243,13 @@
 
 \subsection{定义新的定理型环境}
 
-若需要定义新的定理类环境，首先要定义这个环境在所用语言下的名称 \lstinline|\|\meta{name of environment}\meta{language abbr}，其中 \meta{language abbr} 是语言的简写，分别为：
-\begin{longtable}{ll|ll}
-    \texttt{CN} & 简体中文  & \texttt{DE} & 德文\\
-    \texttt{TC} & 繁体中文  & \texttt{JP} & 日文\\
-    \texttt{EN} & 英文  & \texttt{RU} & 俄文\\
-    \texttt{FR} & 法文  & &\\
-\end{longtable}
-
-\vspace{-0.3\baselineskip}
-\begin{remind}
-    如果要定义名称后带有星号 \lstinline|*| 的环境，那么在上面的 \meta{name of environment} 中不用写星号。
-\end{remind}
+若需要定义新的定理类环境，首先要定义这个环境在所用语言下的名称：
+% \vspace{-.15\baselineskip}%
+\begin{itemize}
+    \item \lstinline|\NameTheorem[|\meta{language name}\lstinline|]{|\meta{name of environment}\lstinline|}{|\meta{name string}\lstinline|}|
+\end{itemize}
+% \vspace{-.15\baselineskip}%
+其中，\meta{language name} 可参阅关于语言设置的小节。当不指定 \meta{language name}时，则会将该名称设置为所有支持语言下的名称。另外，带星号与不带星号的同名环境共用一个名称，因此 \lstinline|\NameTheorem{envname*}{...}| 与 \lstinline|\NameTheorem{envname}{...}| 效果相同。
 
 然后用下面五种方式之一定义这一环境：
 \begin{itemize}
@@ -289,7 +285,8 @@
     其内部使用了 \textsf{amsthm}，因此传统的 \texttt{theoremstyle} 对其也是适用的，只需在相关定义前标明即可。
 \end{remind}
 
-\def\proofideanameCN{思路}
+% \def\proofideanameCN{思路}
+\NameTheorem[CN]{proofidea}{思路}
 \CreateTheorem*{proofidea*}
 \CreateTheorem{proofidea}<subsection>
 
@@ -297,7 +294,7 @@
 下面提供一个例子。这三行代码：
 
 \begin{code}
-  \def\proofideanameCN{思路}
+  \NameTheorem[CN]{proofidea}{思路}
   \CreateTheorem*{proofidea*}
   \CreateTheorem{proofidea}<subsection>
 \end{code}
@@ -334,7 +331,7 @@
 
 \begin{code}
   \title{(*\meta{title}*)}
-  \author{(*\meta{author}*)}
+  \author{(*\meta{author}*)\thanks{(*\meta{text}*)}}
   \date{(*\meta{date}*)}
   \maketitle
   \begin{abstract}
@@ -350,6 +347,7 @@
 \begin{code}
   \title{(*\meta{title}*)}
   \author{(*\meta{author}*)}
+  \thanks{(*\meta{text}*)}
   \address{(*\meta{address}*)}
   \email{(*\meta{email}*)}
   \date{(*\meta{date}*)}
@@ -378,6 +376,7 @@
 \subsection{关于行号}
 行号可以随时开启和关闭。\lstinline|\linenumbers| 用来开启行号，\lstinline|\nolinenumbers| 用来关闭行号。标题、目录、索引等位置为了美观，不进行编号。
 
+\clearpage
 \subsection{关于标题中的脚注}
 在 \lstinline|\section| 或 \lstinline|\subsection| 中，如果想使用脚注，只能：
 \begin{itemize}
