@@ -11,8 +11,8 @@ with a simple and clear design. It mainly consists of two parts.
     - `minimbook.cls` : class for typesetting books
 
     They can be used with any major TeX engine. Currently they have native
-    support to English, French and German typesetting (more language to be
-    added).
+    support to English, French, German, Italian, Portuguese
+    (European and Brazilian) and Spanish typesetting.
 
 
 - Derivative part (they have separate pages on CTAN):
@@ -21,9 +21,9 @@ with a simple and clear design. It mainly consists of two parts.
 
     They are similar to the main classes, but have unicode support, thus can
     only be used with either XeLaTeX or LuaLaTeX. Currently they have native
-    support to Chinese (both simplified and traditional), English, French,
-    German, Japanese and Russian typesetting (more language to be added), and
-    also use more beautiful fonts.
+    support to Chinese (simplified and traditional), English, French, German,
+    Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish
+    typesetting, and also use more beautiful fonts.
 
 # License
 

@@ -158,6 +158,7 @@
 %% Chinese fonts
 \PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
 \RequirePackage{ctex}
+\WarningFilter{everysel}{Everysel is no longer required}
 \IfFontExistsTF{FZYOUSK_507R--GBK1-0}{%
     \setCJKmainfont{FZYOUSK_507R--GBK1-0}[
         BoldFont       = FZYOUSK_509R--GBK1-0 ,
@@ -305,7 +306,7 @@
 \fi
 
 \newif\ifIsBook
-\ifdefined\chapter\IsBooktrue\else\IsBookfalse\fi
+\ifdefined\c@chapter\IsBooktrue\else\IsBookfalse\fi
 
 %%================================
 %% Title fonts
@@ -774,6 +775,7 @@
             {\color{gray}\thmnote{\ensuremath{(\text{#3})}~~}}}
     \fi
 \else
+\def\simpleqed{\null\nobreak\hfill\makebox[1em]{\rlap{\textcolor{gray!55!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
 \newtheoremstyle{simple}%
     {}{}%
     {\normalfont}{}%
@@ -781,7 +783,7 @@
     {0pt}%
     {{\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
         \textcolor{gray!55!paper}{$|$}\hspace{.4em}%
-        \color{gray}\thmnote{\ensuremath{(\text{#3})}~~}\pushQED{\qed}}
+        \color{gray}\thmnote{\ensuremath{(\text{#3})}~~}\pushQED{\simpleqed}}
 \def\@endtheorem{\popQED\endtrivlist\@endpefalse }
 \fi
 
@@ -802,65 +804,152 @@
 % Should be placed after "hyperref"
 \RequirePackage[nothms]{PJLthm}
 
-%% Redefine English theorems names
-\def\theoremnameEN{\textsc{Theorem}}
-\def\lemmanameEN{\textsc{Lemma}}
-\def\propositionnameEN{\textsc{Proposition}}
-\def\corollarynameEN{\textsc{Corollary}}
-\def\propertynameEN{\textsc{Property}}
-\def\factnameEN{\textsc{Fact}}
-\def\conjecturenameEN{\textsc{Conjecture}}
-\def\definitionnameEN{\textsc{Definition}}
-\def\axiomnameEN{\textsc{Axiom}}
-\def\assumptionnameEN{\textsc{Assumption}}
-\def\conventionnameEN{\textsc{Convention}}
-\def\hypothesisnameEN{\textsc{Hypothesis}}
-\def\notationnameEN{\textsc{Notation}}
-\def\examplenameEN{\textsc{Example}}
-\def\problemnameEN{\textsc{Problem}}
-\def\questionnameEN{\textsc{Question}}
-\def\exercisenameEN{\textsc{Exercise}}
-\def\remarknameEN{\textsc{Remark}}
+%% Adjust English theorems names
+\pretocmd{\theoremnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\lemmanameEN}{\textsc}{}{\FAIL}
+\pretocmd{\propositionnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\corollarynameEN}{\textsc}{}{\FAIL}
+\pretocmd{\propertynameEN}{\textsc}{}{\FAIL}
+\pretocmd{\factnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\conjecturenameEN}{\textsc}{}{\FAIL}
+\pretocmd{\definitionnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\axiomnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\assumptionnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\conventionnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\hypothesisnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\notationnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\examplenameEN}{\textsc}{}{\FAIL}
+\pretocmd{\problemnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\questionnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\exercisenameEN}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameEN}{\textsc}{}{\FAIL}
+\pretocmd{\observationnameEN}{\textsc}{}{\FAIL}
 
-%% Redefine French theorems names
-\def\theoremnameFR{\textsc{Théorème}}
-\def\lemmanameFR{\textsc{Lemme}}
-\def\propositionnameFR{\textsc{Proposition}}
-\def\corollarynameFR{\textsc{Corollaire}}
-\def\propertynameFR{\textsc{Propriété}}
-\def\factnameFR{\textsc{Fait}}
-\def\conjecturenameFR{\textsc{Conjecture}}
-\def\definitionnameFR{\textsc{Définition}}
-\def\axiomnameFR{\textsc{Axiome}}
-\def\assumptionnameFR{\textsc{Supposition}}
-\def\conventionnameFR{\textsc{Convention}}
-\def\hypothesisnameFR{\textsc{Hypothèse}}
-\def\notationnameFR{\textsc{Notation}}
-\def\examplenameFR{\textsc{Exemple}}
-\def\problemnameFR{\textsc{Problème}}
-\def\questionnameFR{\textsc{Question}}
-\def\exercisenameFR{\textsc{Exercice}}
-\def\remarknameFR{\textsc{Remarque}}
+%% Adjust French theorems names
+\pretocmd{\theoremnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\lemmanameFR}{\textsc}{}{\FAIL}
+\pretocmd{\propositionnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\corollarynameFR}{\textsc}{}{\FAIL}
+\pretocmd{\propertynameFR}{\textsc}{}{\FAIL}
+\pretocmd{\factnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\conjecturenameFR}{\textsc}{}{\FAIL}
+\pretocmd{\definitionnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\axiomnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\assumptionnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\conventionnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\hypothesisnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\notationnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\examplenameFR}{\textsc}{}{\FAIL}
+\pretocmd{\problemnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\questionnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\exercisenameFR}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameFR}{\textsc}{}{\FAIL}
+\pretocmd{\observationnameFR}{\textsc}{}{\FAIL}
 
-%% Redefine German theorems names
-\def\theoremnameDE{\textsc{Satz}}
-\def\lemmanameDE{\textsc{Lemma}}
-\def\propositionnameDE{\textsc{Proposition}}
-\def\corollarynameDE{\textsc{Korollar}}
-\def\propertynameDE{\textsc{Eigenschaft}}
-\def\factnameDE{\textsc{Fakt}}
-\def\conjecturenameDE{\textsc{Vermutung}}
-\def\definitionnameDE{\textsc{Definition}}
-\def\axiomnameDE{\textsc{Axiom}}
-\def\assumptionnameDE{\textsc{Annahme}}
-\def\conventionnameDE{\textsc{Konvention}}
-\def\hypothesisnameDE{\textsc{Hypothese}}
-\def\notationnameDE{\textsc{Notation}}
-\def\examplenameDE{\textsc{Beispiel}}
-\def\problemnameDE{\textsc{Problem}}
-\def\questionnameDE{\textsc{Frage}}
-\def\exercisenameDE{\textsc{Übung}}
-\def\remarknameDE{\textsc{Bemerkung}}
+%% Adjust German theorems names
+\pretocmd{\theoremnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\lemmanameDE}{\textsc}{}{\FAIL}
+\pretocmd{\propositionnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\corollarynameDE}{\textsc}{}{\FAIL}
+\pretocmd{\propertynameDE}{\textsc}{}{\FAIL}
+\pretocmd{\factnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\conjecturenameDE}{\textsc}{}{\FAIL}
+\pretocmd{\definitionnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\axiomnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\assumptionnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\conventionnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\hypothesisnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\notationnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\examplenameDE}{\textsc}{}{\FAIL}
+\pretocmd{\problemnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\questionnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\exercisenameDE}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameDE}{\textsc}{}{\FAIL}
+\pretocmd{\observationnameDE}{\textsc}{}{\FAIL}
+
+%% Adjust Italian theorems names
+\pretocmd{\theoremnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\lemmanameIT}{\textsc}{}{\FAIL}
+\pretocmd{\propositionnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\corollarynameIT}{\textsc}{}{\FAIL}
+\pretocmd{\propertynameIT}{\textsc}{}{\FAIL}
+\pretocmd{\factnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\conjecturenameIT}{\textsc}{}{\FAIL}
+\pretocmd{\definitionnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\axiomnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\assumptionnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\conventionnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\hypothesisnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\notationnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\examplenameIT}{\textsc}{}{\FAIL}
+\pretocmd{\problemnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\questionnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\exercisenameIT}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameIT}{\textsc}{}{\FAIL}
+\pretocmd{\observationnameIT}{\textsc}{}{\FAIL}
+
+%% Adjust Portuguese theorems names
+\pretocmd{\theoremnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\lemmanamePT}{\textsc}{}{\FAIL}
+\pretocmd{\propositionnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\corollarynamePT}{\textsc}{}{\FAIL}
+\pretocmd{\propertynamePT}{\textsc}{}{\FAIL}
+\pretocmd{\factnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\conjecturenamePT}{\textsc}{}{\FAIL}
+\pretocmd{\definitionnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\axiomnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\assumptionnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\conventionnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\hypothesisnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\notationnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\examplenamePT}{\textsc}{}{\FAIL}
+\pretocmd{\problemnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\questionnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\exercisenamePT}{\textsc}{}{\FAIL}
+\pretocmd{\remarknamePT}{\textsc}{}{\FAIL}
+\pretocmd{\observationnamePT}{\textsc}{}{\FAIL}
+
+%% Adjust Brazilian theorems names
+\pretocmd{\theoremnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\lemmanameBR}{\textsc}{}{\FAIL}
+\pretocmd{\propositionnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\corollarynameBR}{\textsc}{}{\FAIL}
+\pretocmd{\propertynameBR}{\textsc}{}{\FAIL}
+\pretocmd{\factnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\conjecturenameBR}{\textsc}{}{\FAIL}
+\pretocmd{\definitionnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\axiomnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\assumptionnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\conventionnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\hypothesisnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\notationnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\examplenameBR}{\textsc}{}{\FAIL}
+\pretocmd{\problemnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\questionnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\exercisenameBR}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameBR}{\textsc}{}{\FAIL}
+\pretocmd{\observationnameBR}{\textsc}{}{\FAIL}
+
+%% Adjust Spanish theorems names
+\pretocmd{\theoremnameES}{\textsc}{}{\FAIL}
+\pretocmd{\lemmanameES}{\textsc}{}{\FAIL}
+\pretocmd{\propositionnameES}{\textsc}{}{\FAIL}
+\pretocmd{\corollarynameES}{\textsc}{}{\FAIL}
+\pretocmd{\propertynameES}{\textsc}{}{\FAIL}
+\pretocmd{\factnameES}{\textsc}{}{\FAIL}
+\pretocmd{\conjecturenameES}{\textsc}{}{\FAIL}
+\pretocmd{\definitionnameES}{\textsc}{}{\FAIL}
+\pretocmd{\axiomnameES}{\textsc}{}{\FAIL}
+\pretocmd{\assumptionnameES}{\textsc}{}{\FAIL}
+\pretocmd{\conventionnameES}{\textsc}{}{\FAIL}
+\pretocmd{\hypothesisnameES}{\textsc}{}{\FAIL}
+\pretocmd{\notationnameES}{\textsc}{}{\FAIL}
+\pretocmd{\examplenameES}{\textsc}{}{\FAIL}
+\pretocmd{\problemnameES}{\textsc}{}{\FAIL}
+\pretocmd{\questionnameES}{\textsc}{}{\FAIL}
+\pretocmd{\exercisenameES}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameES}{\textsc}{}{\FAIL}
+\pretocmd{\observationnameES}{\textsc}{}{\FAIL}
 
 %% Theorem environments
 \theoremstyle{simple}

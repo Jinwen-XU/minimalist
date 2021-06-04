@@ -6,8 +6,9 @@
 clear design.
 
 Currently, it has native support to Chinese (simplified and traditional),
-English, French, German, Japanese and Russian typesetting. And it may compile
-with either XeLaTeX or LuaLaTeX.
+English, French, German, Italian, Japanese, Portuguese (European and Brazilian),
+Russian and Spanish typesetting. And it may compile with either XeLaTeX or
+LuaLaTeX.
 
 This is part of the `minimalist` class series.
 
