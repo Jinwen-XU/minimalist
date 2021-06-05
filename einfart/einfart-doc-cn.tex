@@ -36,7 +36,7 @@
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,subsection,
+    {linenumbers,nolinenumbers,subsection,href,
     color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
@@ -47,19 +47,19 @@
 {\ResumeLineNumbers}
 
 %%================================
-%% remind
+%% tip
 %%================================
 \usepackage[many]{tcolorbox}
-\newenvironment{remind}[1][提示]{%
+\newenvironment{tip}[1][提示]{%
     \LocallyStopLineNumbers%
     \begin{tcolorbox}[breakable,
         enhanced,
         width = \textwidth,
-        colback = white, colbacktitle = paper,
+        colback = paper, colbacktitle = paper,
         colframe = gray!50, boxrule=0.2mm,
         coltitle = black,
         fonttitle = \sffamily,
-        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/4},
+        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2, xshift=.5cm},
         boxed title style = {boxrule=0pt, colframe=paper},
         before skip = 0.3cm,
         after skip = 0.3cm,
@@ -84,15 +84,15 @@
 
 \title{\einfart{}，以极简主义风格排版你的文章}
 \author{许锦文}
-\thanks{对应版本. \texttt{\einfart{} 2021/05/23}}
-\date{2021年5月，北京}
+\thanks{对应版本. \texttt{\einfart{} 2021/06/07}}
+\date{2021年6月，北京}
 
 \maketitle
 
 \begin{abstract}
     \einfart{} 是 \minimalist{} 文档类系列的成员之一，其名称取自于德文的 einfach (``简约'')，并取了 artikel (``文章'') 的前三个字母组合而成。整个 \minimalist{} 系列包含用于排版文章的 \minimart{}、\einfart{} 以及用于排版书的 \minimbook{}、\simplivre{}。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴而不简陋。
 
-    \einfart{} 支持英文、法文、德文、中文、日文、俄文六种语言，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
+    \einfart{} 支持英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
     
     这篇说明文档即是用 \einfart{} 排版的，你可以把它看作一份简短的说明与演示。
 \end{abstract}
@@ -100,9 +100,9 @@
 \tableofcontents
 
 \bigskip
-\begin{remind}
+\begin{tip}
     多语言支持、定理类环境、未完成标记等功能是由 \ProjLib{} 工具箱提供的，这里只给出了将其与本文档类搭配使用的要点。如需获取更详细的信息，可以参阅 \ProjLib{} 的说明文档。
-\end{remind}
+\end{tip}
 
 \clearpage
 \section{初始化}
@@ -135,6 +135,10 @@
         \begin{itemize}
             \item 可选的纸张大小。默认的纸张大小为 7in $\times$ 10in。
         \end{itemize}
+        \item \texttt{palatino}、\texttt{times}、\texttt{garamond}、\texttt{biolinum}
+            \begin{itemize}
+                \item 字体选项。顾名思义，会加载相应名称的字体。
+            \end{itemize}
     \item \texttt{allowbf}
         \begin{itemize}
             \item 允许加粗。启用这一选项时，题目、各级标题、定理类环境名称会被加粗。
@@ -145,12 +149,12 @@
         \end{itemize}
 \end{itemize}
 
-\begin{remind}
+\begin{tip}
     \begin{itemize}
         \item 在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
         \item 如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
     \end{itemize}
-\end{remind}
+\end{tip}
 
 \section{关于文档类中使用的字体}
 \einfart{} 默认使用 Palatino Linotype 作为英文字体，方正悠宋、悠黑GBK作为中文字体，并部分使用了 Neo Euler 作为数学字体。其中，Neo Euler可以在 \url{https://github.com/khaledhosny/euler-otf} 下载。其他字体不是免费字体，需要自行购买使用。可以在方正字库网站查询详细资料：\url{https://www.foundertype.com}。
@@ -170,7 +174,7 @@
 
 \subsection{语言设置}
 
-\einfart{} 提供了多语言支持，包括简体中文、繁体中文、英文、法文、德文、日文、俄文。可以通过下列命令来选定语言：
+\einfart{} 提供了多语言支持，包括英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文。可以通过下列命令来选定语言：
 \begin{itemize}
     \item \lstinline|\UseLanguage{|\meta{language name}\lstinline|}|，用于指定语言，在其后将使用对应的语言设定。
     \begin{itemize}
@@ -189,6 +193,10 @@
     \item 英文：\texttt{EN} 或 \texttt{English}
     \item 法文：\texttt{FR} 或 \texttt{French}
     \item 德文：\texttt{DE}、\texttt{German} 或 \texttt{ngerman}
+    \item 意大利语：\texttt{IT} 或 \texttt{Italian}
+    \item 葡萄牙语：\texttt{PT} 或 \texttt{Portuguese}
+    \item 巴西葡萄牙语：\texttt{BR} 或 \texttt{Brazilian}
+    \item 西班牙语：\texttt{ES} 或 \texttt{Spanish}
     \item 日文：\texttt{JP} 或 \texttt{Japanese}
     \item 俄文：\texttt{RU} 或 \texttt{Russian}
 \end{itemize}
@@ -212,12 +220,11 @@
 定义、定理等环境已经被预定义，可以直接使用。
 
 具体来说，预设的定理类环境包括：
-\texttt{assumption}、\texttt{axiom}、\texttt{conjecture}、\texttt{convention}、\texttt{corollary}、\texttt{definition}、\texttt{definition-proposition}、\texttt{definition-theorem}、\texttt{example}、\texttt{exercise}、\texttt{fact}、\texttt{hypothesis}、\texttt{lemma}、\texttt{notation}、\texttt{problem}、\texttt{property}、\texttt{proposition}、\texttt{question}、\texttt{remark}、\texttt{theorem}，以及相应的带有星号 \lstinline|*| 的无编号版本。
+\texttt{assumption}、\texttt{axiom}、\texttt{conjecture}、\texttt{convention}、\texttt{corollary}、\texttt{definition}、\texttt{definition-proposition}、\texttt{definition-theorem}、\texttt{example}、\texttt{exercise}、\texttt{fact}、\texttt{hypothesis}、\texttt{lemma}、\texttt{notation}、\texttt{observation}、\texttt{problem}、\texttt{property}、\texttt{proposition}、\texttt{question}、\texttt{remark}、\texttt{theorem}，以及相应的带有星号 \lstinline|*| 的无编号版本。
 
-\clearpage
 在引用定理类环境时，建议使用智能引用 \lstinline|\cref{|\meta{label}\lstinline|}|。这样就不必每次都写上相应环境的名称了。
 
-\begin{remind}[例子]
+\begin{tip}[例子]
 \begin{code}
   \begin{definition}[奇异物品] \label{def: strange} ...
 \end{code}
@@ -236,7 +243,7 @@
 \end{theorem}
 
 默认情况下，引用时，定理的名称总是与定理所在区域的语言匹配，例如，上面的定义在现在的英文模式下依然显示为中文：\cref{def: strange} 和 \cref{thm}。如果在引用时想让定理的名称与当前语境相匹配，可以在全局选项中加入 \texttt{regionalref}。
-\end{remind}
+\end{tip}
 
 \UseLanguage{Chinese}
 
@@ -281,9 +288,9 @@
         \end{itemize}
 \end{itemize}
 
-\begin{remind}
+\begin{tip}
     其内部使用了 \textsf{amsthm}，因此传统的 \texttt{theoremstyle} 对其也是适用的，只需在相关定义前标明即可。
-\end{remind}
+\end{tip}
 
 % \def\proofideanameCN{思路}
 \NameTheorem[CN]{proofidea}{思路}
@@ -376,7 +383,6 @@
 \subsection{关于行号}
 行号可以随时开启和关闭。\lstinline|\linenumbers| 用来开启行号，\lstinline|\nolinenumbers| 用来关闭行号。标题、目录、索引等位置为了美观，不进行编号。
 
-\clearpage
 \subsection{关于标题中的脚注}
 在 \lstinline|\section| 或 \lstinline|\subsection| 中，如果想使用脚注，只能：
 \begin{itemize}

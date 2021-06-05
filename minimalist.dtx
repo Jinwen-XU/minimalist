@@ -56,6 +56,11 @@
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
 \DeclareBoolOption[false]{classical}
+\DeclareBoolOption[false]{palatino}
+\DeclareBoolOption[false]{times}
+\DeclareBoolOption[false]{garamond}
+\DeclareBoolOption[false]{biolinum}
+\DeclareBoolOption[false]{customfont}
 
 \newif\if@minimclass@bfivepaper\@minimclass@bfivepaperfalse
 \DeclareVoidOption{b5paper}{\@minimclass@bfivepapertrue}
@@ -67,6 +72,18 @@
 \LoadClass{\minimclass@baseclass}
 \if@minimclass@draft
     \@minimclass@fasttrue
+\fi
+\if@minimclass@palatino
+    \@minimclass@customfonttrue
+\fi
+\if@minimclass@times
+    \@minimclass@customfonttrue
+\fi
+\if@minimclass@garamond
+    \@minimclass@customfonttrue
+\fi
+\if@minimclass@biolinum
+    \@minimclass@customfonttrue
 \fi
 
 %%================================
@@ -122,15 +139,19 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{inputenc}
 \fi
+\if@minimclass@customfont\else
 \RequirePackage{mathpazo}
 \RequirePackage{newpxtext}
+\fi
 \RequirePackage{amssymb}
 %</minimart|minimbook>
 %
 %<*einfart|simplivre>
 %% Math fonts in fast mode
-\if@minimclass@fast
-    \RequirePackage{mathpazo}
+\if@minimclass@customfont\else
+    \if@minimclass@fast
+        \RequirePackage{mathpazo}
+    \fi
 \fi
 
 %% English fonts
@@ -208,6 +229,7 @@
 }
 
 %% Math font
+\if@minimclass@customfont\else
 \if@minimclass@fast
 \RequirePackage{amssymb}
 \else
@@ -258,7 +280,55 @@
 \setmathfont[range=bfcal, Scale=MatchUppercase, Alternate]{Asana-Math.otf}
 }{}
 \fi
+\fi
 %</einfart|simplivre>
+
+\if@minimclass@palatino
+    \RequirePackage{amssymb}
+    \RequirePackage{mathpazo}
+    \PassOptionsToPackage{defaultsups}{newpxtext}
+    \RequirePackage{newpxtext}
+    \RequirePackage{newpxmath}
+    \let\openbox\relax
+    \PJLsetlinespacing{\setstretch{1.07}}
+\fi
+
+\if@minimclass@times
+    \RequirePackage{amssymb}
+    \PassOptionsToPackage{defaultsups}{newtxtext}
+    \RequirePackage{newtxtext}
+    \RequirePackage{newtxmath}
+    \let\openbox\relax
+    \PJLsetlinespacing{\setstretch{1.00}}
+\fi
+
+\if@minimclass@garamond
+    \RequirePackage{amssymb}
+    \PassOptionsToPackage{lining}{ebgaramond}
+    \RequirePackage{ebgaramond-maths}
+    \RequirePackage{ebgaramond}
+    % \RequirePackage{garamondlibre}
+    \PJLsetlinespacing{\setstretch{1.00}}
+\fi
+
+\if@minimclass@biolinum
+    \RequirePackage{amssymb}
+    % \RequirePackage{mathpazo}
+    % \RequirePackage[sansmath]{libertinust1math}
+    \ifPDFTeX
+        \RequirePackage{biolinum}
+        \renewcommand*\familydefault{\biolinum@family}
+    \else
+        \PassOptionsToPackage{no-math}{fontspec}
+        \RequirePackage{fontspec}
+        \setmainfont{LinBiolinum_R.otf}[
+            BoldFont       = LinBiolinum_RB.otf ,
+            ItalicFont     = LinBiolinum_RI.otf ,
+            BoldItalicFont = LinBiolinum_RBO.otf ]
+    \fi
+    \PJLsetlinespacing{\setstretch{1.05}}
+    \RequirePackage[italic,defaultmathsizes]{mathastext}
+\fi
 
 \def\PJL@font@alreadyset{}
 
@@ -775,7 +845,7 @@
             {\color{gray}\thmnote{\ensuremath{(\text{#3})}~~}}}
     \fi
 \else
-\def\simpleqed{\null\nobreak\hfill\makebox[1em]{\rlap{\textcolor{gray!55!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+\def\simpleqed{\hfill\makebox[1em]{\rlap{\textcolor{gray!25!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
 \newtheoremstyle{simple}%
     {}{}%
     {\normalfont}{}%

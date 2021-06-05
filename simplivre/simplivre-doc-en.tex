@@ -34,7 +34,7 @@
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,part,chapter,section,subsection,
+    {linenumbers,nolinenumbers,part,chapter,section,subsection,href,
     color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib,parttext
     }
 }
@@ -45,25 +45,25 @@
 {\ResumeLineNumbers}
 
 %%================================
-%% remind
+%% tip
 %%================================
 \usepackage[many]{tcolorbox}
-\newenvironment{remind}[1][Remind]{%
+\newenvironment{tip}[1][Tip]{%
     \LocallyStopLineNumbers%
     \begin{tcolorbox}[breakable,
         enhanced,
         width = \textwidth,
-        colback = white, colbacktitle = paper,
+        colback = paper, colbacktitle = paper,
         colframe = gray!50, boxrule=0.2mm,
         coltitle = black,
         fonttitle = \sffamily,
-        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/4},
+        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2, xshift=.5cm},
         boxed title style = {boxrule=0pt, colframe=paper},
         before skip = 0.3cm,
         after skip = 0.3cm,
         top = 3mm,
         bottom = 3mm,
-        title={\sffamily #1}]%
+        title={\scshape\sffamily #1}]%
 }{\end{tcolorbox}\ResumeLineNumbers}
 
 %%================================
@@ -98,9 +98,9 @@
     \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
     \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
-    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\\textsc{Write your books in \\a simple and clear way}\\[10pt]\tiny Corresponding to: \texttt{\simplivre{} 2021/05/23}}};
-    \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{Jinwen XU}};
-    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{May 2021, Beijing}};
+    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\\textsc{Write your books in \\a simple and clear way}\\[10pt]\tiny Corresponding to: \texttt{\simplivre{} 2021/06/07}}};
+    \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{\scshape Jinwen XU}};
+    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{June 2021, Beijing}};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
@@ -109,14 +109,14 @@
 
 \simplivre{} is part of the \minimalist{} class series. Its name is taken from French words ``simple'' and ``livre'' (for ``book''). The entire collection includes \minimart{} and \einfart{} for typesetting articles, and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing them was to write drafts and notes that look simple yet not shabby.
 
-\simplivre{} supports six languages: English, French, German, Chinese, Japanese and Russian. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
+\simplivre{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
 
 This documentation is typeset using \simplivre{}. You can think of it as a short introduction and demonstration.
 
 \bigskip
-\begin{remind}
+\begin{tip}
     Multi-language support, theorem-like environments, draft marks and some other features are provided by the \ProjLib{} toolkit. Here we only briefly discuss how to use it with this document class. For more detailed information, you can refer to the documentation of \ProjLib{}.
-\end{remind}
+\end{tip}
 
 \tableofcontents
 
@@ -135,9 +135,9 @@ One only needs to put
 \end{code}
 as the first line to use the \simplivre{} class.
 
-\begin{remind}[Attention]
+\begin{tip}[Attention]
     You need to use either \hologo{XeLaTeX} or \hologo{LuaLaTeX} engine to compile.
-\end{remind}
+\end{tip}
 
 \section{Options}
 
@@ -157,6 +157,10 @@ as the first line to use the \simplivre{} class.
         \begin{itemize}
             \item Optional paper size. The default paper size is 7in $\times$ 10in.
         \end{itemize}
+        \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum}
+            \begin{itemize}
+                \item Font options. As the name suggest, font with corresponding name will be loaded.
+            \end{itemize}
     \item \texttt{allowbf}
         \begin{itemize}
             \item Allow boldface. When this option is enabled, the title, titles of all levels and names of theorem-like environments will be bolded.
@@ -167,26 +171,26 @@ as the first line to use the \simplivre{} class.
         \end{itemize}
 \end{itemize}
 
-\begin{remind}
+\begin{tip}
     \begin{itemize}
-        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark "DRAFT" to indicate that you are currently in the draft mode.
+        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
         \item \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
     \end{itemize}
-\end{remind}
+\end{tip}
 
 \bigskip
 In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are also available. Two-page layout is used by default.
 
 \chapter{On the fonts}
-By default, \simplivre{} uses Palatino Linotype as the English font, FounderType's YouSong and YouHei GBK as the Chinese fonts, and partially uses Neo Euler as the math font. Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. The other fonts are not free, you need to purchase and use them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
+By default, \simplivre{} uses Palatino Linotype as the English font, FounderType's YouSong and YouHei GBK as the Chinese fonts, and partially uses Neo Euler as the math font. Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. The other fonts are not free, you need to purchase and install them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
 
-\begin{remind}[Font demonstration]
+\begin{tip}[Font demonstration]
     \begin{itemize}
         \item English main font. \textsf{English sans serif font}. \texttt{English typewriter font}.
         \item 中文主要字体，\textsf{中文无衬线字体}
         \item 数学示例:  \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
     \end{itemize}
-\end{remind}
+\end{tip}
 
 \bigskip
 When the corresponding font is not installed, fonts that comes with TeX Live will be used instead. In this case, the experience might be reduced.
@@ -194,15 +198,14 @@ When the corresponding font is not installed, fonts that comes with TeX Live wil
 
 \chapter{Some instructions}
 
-\vspace{-1.5\baselineskip}
 Many of the features described next are provided by the \ProjLib{} toolkit. Only the basic usage is mentioned here. For more details, please refer to its user documentation.
 
 \section{Language configuration}
 
-\simplivre{} has multi-language support, including simplified Chinese, traditional Chinese, English, French, German, Japanese, and Russian. The language can be selected by the following macros:
+\simplivre{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. The language can be selected by the following macros:
 
 \begin{itemize}
-    \item \lstinline|\UseLanguage{|\meta{language name}\lstinline|}| is used to specify the language. The corresponding setting of the language will be applied after it. It can be used either in the preamble or in the main body. When no language is specified, ``English" is selected by default.
+    \item \lstinline|\UseLanguage{|\meta{language name}\lstinline|}| is used to specify the language. The corresponding setting of the language will be applied after it. It can be used either in the preamble or in the main body. When no language is specified, ``English'' is selected by default.
     \item \lstinline|\UseOtherLanguage{|\meta{language name}\lstinline|}{|\meta{content}\lstinline|}|, which uses the specified language settings to typeset \meta{content}. Compared with \lstinline|\UseLanguage|, it will not modify the line spacing, so line spacing would remain stable when CJK and Western texts are mixed.
 \end{itemize}
 
@@ -213,6 +216,10 @@ Many of the features described next are provided by the \ProjLib{} toolkit. Only
     \item English: \texttt{EN} or \texttt{English}
     \item French: \texttt{FR} or \texttt{French}
     \item German: \texttt{DE}, \texttt{German} or \texttt{ngerman}
+    \item Italian: \texttt{IT} or \texttt{Italian}
+    \item Portuguese: \texttt{PT} or \texttt{Portuguese}
+    \item Portuguese (Brazilian): \texttt{BR} or \texttt{Brazilian}
+    \item Spanish: \texttt{ES} or \texttt{Spanish}
     \item Japanese: \texttt{JP} or \texttt{Japanese}
     \item Russian: \texttt{RU} or \texttt{Russian}
 \end{itemize}
@@ -234,14 +241,14 @@ For example, \lstinline|\AddLanguageSetting(German){\color{orange}}| can make al
 
 \section{Theorems and how to reference them}
 
-Environments such as definitions and theorems have been pre-defined and can be used directly. 
+Environments such as \texttt{definition} and \texttt{theorem} have been pre-defined and can be used directly.  
 
 More specifically, preset environments include: 
-\texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, and the corresponding unnumbered version with an asterisk \lstinline|*| in the name. The display of these environments will change according to the current language.
+\texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, and the corresponding unnumbered version with an asterisk \lstinline|*| in the name. The titles will change with the current language. For example, \texttt{theorem} will be displayed as ``Theorem" in English mode and ``Théorème" in French mode.
 
-When referencing a theorem-like environment, it is recommended to use clever reference \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
+When referencing a theorem-like environment, it is recommended to use \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
 
-\begin{remind}[Example]
+\begin{tip}[Example]
 \begin{code}
   \begin{definition}[Strange things] \label{def: strange} ...
 \end{code}
@@ -261,7 +268,7 @@ After using \lstinline|\UseLanguage{French}|, a theorem will be displayed as:
 \end{theorem}
 
 By default, when referenced, the name of the theorem always matches the language of the context in which the theorem is located. For example, the definition above is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. If you want the name of the theorem to match the current context when referencing, you can add \texttt{regionalref} to the global options.
-\end{remind}
+\end{tip}
 
 \UseLanguage{English}
 
@@ -274,7 +281,7 @@ If you need to define a new theorem-like environment, you must first define the 
 \end{itemize}
 For \meta{language name}, please refer to the section on language configuration. When \meta{language name} is not specified, the name will be set for all supported languages. In addition, environments with or without asterisk share the same name, therefore, \lstinline|\NameTheorem{envname*}{...}| has the same effect as \lstinline|\NameTheorem{envname}{...}| .
 
-\clearpage % \medskip
+\medskip
 And then define this environment in one of following five ways:
 \begin{itemize}
     \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
@@ -305,9 +312,9 @@ And then define this environment in one of following five ways:
         \end{itemize}
 \end{itemize}
 
-\begin{remind}
-    It uses \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
-\end{remind}
+\begin{tip}
+    This macro utilizes the feature of \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
+\end{tip}
 
 % \def\proofideanameEN{Idea}
 \NameTheorem[EN]{proofidea}{Idea}

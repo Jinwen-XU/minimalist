@@ -34,7 +34,7 @@
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,subsection,
+    {linenumbers,nolinenumbers,subsection,href,
     color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
@@ -45,25 +45,25 @@
 {\ResumeLineNumbers}
 
 %%================================
-%% remind
+%% tip
 %%================================
 \usepackage[many]{tcolorbox}
-\newenvironment{remind}[1][Remind]{%
+\newenvironment{tip}[1][Tip]{%
     \LocallyStopLineNumbers%
     \begin{tcolorbox}[breakable,
         enhanced,
         width = \textwidth,
-        colback = white, colbacktitle = paper,
+        colback = paper, colbacktitle = paper,
         colframe = gray!50, boxrule=0.2mm,
         coltitle = black,
         fonttitle = \sffamily,
-        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/4},
+        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2, xshift=.5cm},
         boxed title style = {boxrule=0pt, colframe=paper},
         before skip = 0.3cm,
         after skip = 0.3cm,
         top = 3mm,
         bottom = 3mm,
-        title={\sffamily #1}]%
+        title={\scshape\sffamily #1}]%
 }{\end{tcolorbox}\ResumeLineNumbers}
 
 %%================================
@@ -82,15 +82,15 @@
 
 \title{\minimalist{}, write your articles or books in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\minimalist{} 2021/05/23}}
-\date{May 2021, Beijing}
+\thanks{Corresponding to: \texttt{\minimalist{} 2021/06/07}}
+\date{June 2021, Beijing}
 
 \maketitle
 
 \begin{abstract}
     \minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. My original intention in designing this series was to write drafts and notes that look simple yet not shabby.
     
-    The entire collection includes \verb|minimalist.sty|, which is the main style shared by all of the following classes; \verb|minimart.cls| for typesetting articles and \verb|minimbook.cls| for typesetting books. They compile with any major \TeX{} engine, with native support to English, French and German typesetting via \lstinline|\UseLanguage| (see the instruction below for detail).
+    The entire collection includes \verb|minimalist.sty|, which is the main style shared by all of the following classes; \verb|minimart.cls| for typesetting articles and \verb|minimbook.cls| for typesetting books. They compile with any major \TeX{} engine, with native support to English, French, German, Italian, Portuguese (European and Brazilian) and Spanish typesetting via \lstinline|\UseLanguage| (see the instruction below for detail).
 
     You can also found \einfart{} and \simplivre{} on CTAN. They are the enhanced version of \minimart{} and \minimbook{} with unicode support. With this, they can access to more beautiful fonts, and also have native support for Chinese, Japanese and Russian typesetting. On the other hand, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX} (not pdf\LaTeX).
     
@@ -100,10 +100,10 @@
 \tableofcontents
 
 
-\bigskip
-\begin{remind}
+\medskip
+\begin{tip}
     Multi-language support, theorem-like environments, draft marks and some other features are provided by the \ProjLib{} toolkit. Here we only briefly discuss how to use it with this document class. For more detailed information, you can refer to the documentation of \ProjLib{}.
-\end{remind}
+\end{tip}
 
 \clearpage
 \section{Initialization}
@@ -145,12 +145,12 @@ And of course, you can also use the default classes \textsf{article} or \textsf{
         \end{itemize}
 \end{itemize}
 
-\begin{remind}
+\begin{tip}
     \begin{itemize}
-        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark "DRAFT" to indicate that you are currently in the draft mode.
+        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
         \item \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
     \end{itemize}
-\end{remind}
+\end{tip}
 
 \bigskip
 Additionally, \minimart{} and \minimbook{} offers the following options: 
@@ -159,29 +159,23 @@ Additionally, \minimart{} and \minimbook{} offers the following options:
         \begin{itemize}
             \item Optional paper size. The default paper size is 7in $\times$ 10in.
         \end{itemize}
+    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum}
+        \begin{itemize}
+            \item Font options. As the name suggest, font with corresponding name will be loaded.
+        \end{itemize}
 \end{itemize}
 
-% \section{On the fonts}
-% By default, \minimart{} and \minimbook{} uses Palatino Linotype as the English font, FounderType's YouSong and YouHei GBK as the Chinese fonts, and partially uses Neo Euler as the math font. Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. The other fonts are not free, you need to purchase and use them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
 
-% % \begin{itemize}
-% %     \item English main font. \textsf{English sans serif font}.
-% %     \item 中文主要字体, \textsf{中文无衬线字体}
-% %     \item Math demonstration: \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
-% % \end{itemize}
-
-% When the corresponding font is not installed, fonts that comes with TeX Live will be used instead. In this case, the experience might be reduced.
-
-\section{Some instructions}
+\section{Instructions}
 
 Many of the features described next are provided by the \ProjLib{} toolkit. Only the basic usage is mentioned here. For more details, please refer to its user documentation.
 
 \subsection{Language configuration}
 
-\minimart{} has multi-language support, including simplified Chinese, traditional Chinese, English, French, German, Japanese, and Russian. The language can be selected by the following macros:
+\minimart{} has multi-language support, including English, French, German, Italian, Portuguese (European and Brazilian) and Spanish. The language can be selected by the following macros:
 
 \begin{itemize}
-    \item \lstinline|\UseLanguage{|\meta{language name}\lstinline|}| is used to specify the language. The corresponding setting of the language will be applied after it. It can be used either in the preamble or in the main body. When no language is specified, ``English" is selected by default.
+    \item \lstinline|\UseLanguage{|\meta{language name}\lstinline|}| is used to specify the language. The corresponding setting of the language will be applied after it. It can be used either in the preamble or in the main body. When no language is specified, ``English'' is selected by default.
     \item \lstinline|\UseOtherLanguage{|\meta{language name}\lstinline|}{|\meta{content}\lstinline|}|, which uses the specified language settings to typeset \meta{content}. Compared with \lstinline|\UseLanguage|, it will not modify the line spacing, so line spacing would remain stable when CJK and Western texts are mixed.
 \end{itemize}
 
@@ -192,6 +186,10 @@ Many of the features described next are provided by the \ProjLib{} toolkit. Only
     \item English: \texttt{EN} or \texttt{English}
     \item French: \texttt{FR} or \texttt{French}
     \item German: \texttt{DE}, \texttt{German} or \texttt{ngerman}
+    \item Italian: \texttt{IT} or \texttt{Italian}
+    \item Portuguese: \texttt{PT} or \texttt{Portuguese}
+    \item Portuguese (Brazilian): \texttt{BR} or \texttt{Brazilian}
+    \item Spanish: \texttt{ES} or \texttt{Spanish}
     \item Japanese: \texttt{JP} or \texttt{Japanese}
     \item Russian: \texttt{RU} or \texttt{Russian}
 \end{itemize}
@@ -213,14 +211,14 @@ For example, \lstinline|\AddLanguageSetting(German){\color{orange}}| can make al
 
 \subsection{Theorems and how to reference them}
 
-Environments such as definitions and theorems have been pre-defined and can be used directly. 
+Environments such as \texttt{definition} and \texttt{theorem} have been pre-defined and can be used directly. 
 
 More specifically, preset environments include: 
-\texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, and the corresponding unnumbered version with an asterisk \lstinline|*| in the name. The display of these environments will change according to the current language.
+\texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{observation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, and the corresponding unnumbered version with an asterisk \lstinline|*| in the name. The titles will change with the current language. For example, \texttt{theorem} will be displayed as ``Theorem" in English mode and ``Théorème" in French mode.
 
-When referencing a theorem-like environment, it is recommended to use clever reference \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
+When referencing a theorem-like environment, it is recommended to use \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
 
-\begin{remind}[Example]
+\begin{tip}[Example]
 \begin{code}
   \begin{definition}[Strange things] \label{def: strange} ...
 \end{code}
@@ -240,7 +238,7 @@ After using \lstinline|\UseLanguage{French}|, a theorem will be displayed as:
 \end{theorem}
 
 By default, when referenced, the name of the theorem always matches the language of the context in which the theorem is located. For example, the definition above is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. If you want the name of the theorem to match the current context when referencing, you can add \texttt{regionalref} to the global options.
-\end{remind}
+\end{tip}
 
 \UseLanguage{English}
 
@@ -268,11 +266,11 @@ And then define this environment in one of following five ways:
         \begin{itemize}
             \item Define a numbered environment \meta{name of environment}, which shares the counter \meta{numbered like}
         \end{itemize}
+    \clearpage
     \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
         \begin{itemize}
             \item Define a numbered environment \meta{name of environment}, numbered within the counter \meta{numbered within}
         \end{itemize}
-    \clearpage
     \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|\\
     \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|
         \begin{itemize}
@@ -285,9 +283,9 @@ And then define this environment in one of following five ways:
         \end{itemize}
 \end{itemize}
 
-\begin{remind}
-    It uses \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
-\end{remind}
+\begin{tip}
+    This macro utilizes the feature of \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
+\end{tip}
 
 % \def\proofideanameEN{Idea}
 \NameTheorem[EN]{proofidea}{Idea}
@@ -393,7 +391,7 @@ This is a disadvantage brought about by the underline decoration of the title.
 
 \begin{itemize}[itemsep=.6em]
     \item The font settings are still not perfect.
-    \item Since many features are based on the \ProjLib{} toolkit, \minimalist{} (and hence \minimart{} and \minimbook{}) inherits all its problems. For details, please refer to the "Known Issues" section of the \ProjLib{} documentation.
+    \item Since many features are based on the \ProjLib{} toolkit, \minimalist{} (and hence \minimart{} and \minimbook{}) inherits all its problems. For details, please refer to the ``Known Issues'' section of the \ProjLib{} documentation.
     \item The error handling mechanism is incomplete: there is no corresponding error prompt when some problems occur.
     \item There are still many things that can be optimized in the code.
 \end{itemize}
