@@ -1098,6 +1098,7 @@
         {\small\scshape\@author}\\[2pt]%
         {\small\@date}%
     \end{center}%
+    \ifx\@date\@empty\bigskip\fi%
     \bigskip\par%
     \ResumeLineNumbers%
 }
@@ -1118,7 +1119,7 @@
     % \vspace{-\parskip}%
     \vspace{-.5\baselineskip}%
     \ifx\@date\@empty%
-        \vspace{-.2\baselineskip}%
+        \vspace{1.6\baselineskip}%
     \else%
         \vspace{-.5\baselineskip}%
     \fi%
