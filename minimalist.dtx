@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/05/23 A simple and clear article style]
+    [2021/06/07 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/05/23 A simple and clear book style]
+    [2021/06/07 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/05/23 A simple and clear article style]
+    [2021/06/07 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/05/23 A simple and clear book style]
+    [2021/06/07 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/05/23 A simple and clear style for articles and books]
+    [2021/06/07 A simple and clear style for articles and books]
 %</minimalist>
 %
 \RequirePackage{kvoptions}
@@ -332,7 +332,8 @@
 
 \def\PJL@font@alreadyset{}
 
-\RequirePackage[verbose=silent]{microtype}
+\PassOptionsToPackage{verbose=silent}{microtype}
+\RequirePackage{microtype}
 
 %%================================
 %% Graphics
@@ -361,12 +362,17 @@
 }
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
+\DeclareBoolOption[false]{puretext}
+\DeclareBoolOption[false]{nothms}
 \DeclareBoolOption[false]{allowbf}
 \DeclareBoolOption[false]{classical}
 \ProcessKeyvalOptions*\relax
 
 \if@minimalist@draft
   \@minimalist@fasttrue
+\fi
+\if@minimalist@puretext
+  \@minimalist@nothmstrue
 \fi
 
 \if@minimalist@allowbf
@@ -872,7 +878,8 @@
 \fi
 
 % Should be placed after "hyperref"
-\RequirePackage[nothms]{PJLthm}
+\PassOptionsToPackage{nothms}{PJLthm}
+\RequirePackage{PJLthm}
 
 %% Adjust English theorems names
 \pretocmd{\theoremnameEN}{\textsc}{}{\FAIL}
@@ -1028,6 +1035,7 @@
 }{
     \newaliascnt{highest}{section}
 }
+\if@minimalist@nothms\else
 \CreateTheorem{theorem}<highest>
 \CreateTheorem{lemma}[theorem]
 \CreateTheorem{proposition}[theorem]
@@ -1070,6 +1078,9 @@
 %
 \CreateTheorem{remark}<highest>
 \CreateTheorem*{remark*}
+\CreateTheorem{observation}<highest>
+\CreateTheorem*{observation*}
+\fi
 
 \setlength{\parindent}{2em}
 
