@@ -721,7 +721,7 @@
 %% Subsubsection
 \titleformat{\subsubsection}
     {\LocallyStopLineNumbers%
-    \color{paper!30!-paper}\subsubsecfont}{\thesubsubsection}{1em}
+    \color{paper!30!-paper}\subsubsecfont}{\thesubsubsection}{.6em}
     {#1}
     [\ResumeLineNumbers]
 
@@ -760,6 +760,12 @@
         {\contentslabel{2.75em}}
         {\hspace*{-2.75em}}
         {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+    \titlecontents{subsubsection}
+        [9em] % i.e., 7em (subsection) + 2em
+        {\normalfont}
+        {\contentslabel{2.75em}}
+        {\hspace*{-2.75em}}
+        {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
 }{
 % For article
     \titlecontents{section}
@@ -770,6 +776,12 @@
         {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
     \titlecontents{subsection}
         [5em] % i.e., 2em (section) + 3em
+        {\normalfont}
+        {\contentslabel{2.75em}}
+        {\hspace*{-2.75em}}
+        {\titlerule*[1em]{\textcolor{gray!30!paper}{.}}\contentspage}
+    \titlecontents{subsubsection}
+        [7em] % i.e., 5em (subsection) + 2em
         {\normalfont}
         {\contentslabel{2.75em}}
         {\hspace*{-2.75em}}
@@ -851,20 +863,26 @@
             {\color{gray}\thmnote{\ensuremath{(\text{#3})}~~}}}
     \fi
 \else
-\def\simpleqed{\hfill\makebox[1em]{\rlap{\textcolor{gray!25!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+\def\simpleqedsymbol{%
+    \makebox[1em]{\rlap{\textcolor{gray!25!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
 \newtheoremstyle{simple}%
     {}{}%
     {\normalfont}{}%
     {\normalfont}{}%
     {0pt}%
-    {{\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
+    {\global\let\qedsymbol\simpleqedsymbol%
+        {\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
         \textcolor{gray!55!paper}{$|$}\hspace{.4em}%
-        \color{gray}\thmnote{\ensuremath{(\text{#3})}~~}\pushQED{\simpleqed}}
-\def\@endtheorem{\popQED\endtrivlist\@endpefalse }
+        \color{gray}\thmnote{\ensuremath{(\text{#3})}~~}%
+        \pushQED{\qed}%
+    }
+\def\@endtheorem{\popQED\endtrivlist\@endpefalse
+\global\let\qedsymbol\qedsymbolOriginal}
 \fi
 
 \renewcommand{\qedsymbol}{%
     \makebox[1em]{\color{gray!55!paper}\rule[-0.1em]{.95em}{.95em}}}
+\let\qedsymbolOriginal\qedsymbol
 
 \if@minimalist@fast
     \providecommand{\phantomsection}{}
