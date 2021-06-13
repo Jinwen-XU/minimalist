@@ -1132,8 +1132,6 @@
 \CreateTheorem*{observation*}
 \fi
 
-\setlength{\parindent}{2em}
-
 \ifbool{IsBook}{}{%
 
 %%================================
@@ -1169,7 +1167,8 @@
     % \vspace{-\parskip}%
     \vspace{-.5\baselineskip}%
     \ifx\@date\@empty%
-        \vspace{1.6\baselineskip}%
+        \vspace{\baselineskip}%
+        \vspace{1.2\parskip}%
     \else%
         \vspace{-.5\baselineskip}%
     \fi%
