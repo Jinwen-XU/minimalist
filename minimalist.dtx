@@ -56,6 +56,8 @@
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
 \DeclareBoolOption[false]{classical}
+\DeclareBoolOption[false]{useindent}
+\DeclareBoolOption[false]{useosf}
 \DeclareBoolOption[false]{palatino}
 \DeclareBoolOption[false]{times}
 \DeclareBoolOption[false]{garamond}
@@ -72,6 +74,9 @@
 \LoadClass{\minimclass@baseclass}
 \if@minimclass@draft
     \@minimclass@fasttrue
+\fi
+\if@minimclass@classical
+    \@minimclass@useindenttrue
 \fi
 \if@minimclass@palatino
     \@minimclass@customfonttrue
@@ -123,7 +128,7 @@
     \RequirePackage{draftwatermark}
     \DraftwatermarkOptions{text={\normalfont DRAFT},color=paper!95!-paper}
 \fi
-\if@minimclass@classical
+\if@minimclass@useindent
     \RequirePackage{indentfirst}
 \else
     \AtEndPreamble{\RequirePackage{parskip}}
@@ -159,11 +164,13 @@
 \RequirePackage{fontspec}
 \IfFontExistsTF{Palatino Linotype}{%
     \setmainfont{Palatino Linotype}
+        [\if@minimclass@useosf Numbers = OldStyle\fi]
 }{
     \setmainfont{TeXGyrePagellaX-Regular.otf}[
         BoldFont       = TeXGyrePagellaX-Bold.otf ,
         ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ]
+        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
+        \if@minimclass@useosf Numbers = OldStyle\fi ]
 }
     \setsansfont{SourceSansPro-Regular.otf}[
         Scale          = MatchLowercase ,
@@ -291,6 +298,7 @@
     \RequirePackage{newpxmath}
     \let\openbox\relax
     \PJLsetlinespacing{\setstretch{1.07}}
+    \if@minimclass@useosf\useosf\fi
 \fi
 
 \if@minimclass@times
@@ -300,11 +308,14 @@
     \RequirePackage{newtxmath}
     \let\openbox\relax
     \PJLsetlinespacing{\setstretch{1.00}}
+    \if@minimclass@useosf\useosf\fi
 \fi
 
 \if@minimclass@garamond
     \RequirePackage{amssymb}
-    \PassOptionsToPackage{lining}{ebgaramond}
+    \if@minimclass@useosf\else
+        \PassOptionsToPackage{lining}{ebgaramond}
+    \fi
     \RequirePackage{ebgaramond-maths}
     \RequirePackage{ebgaramond}
     % \RequirePackage{garamondlibre}
@@ -316,6 +327,9 @@
     % \RequirePackage{mathpazo}
     % \RequirePackage[sansmath]{libertinust1math}
     \ifPDFTeX
+        \if@minimclass@useosf
+            \PassOptionsToPackage{osf}{biolinum}
+        \fi
         \RequirePackage{biolinum}
         \renewcommand*\familydefault{\biolinum@family}
     \else
@@ -324,7 +338,8 @@
         \setmainfont{LinBiolinum_R.otf}[
             BoldFont       = LinBiolinum_RB.otf ,
             ItalicFont     = LinBiolinum_RI.otf ,
-            BoldItalicFont = LinBiolinum_RBO.otf ]
+            BoldItalicFont = LinBiolinum_RBO.otf,
+            \if@minimclass@useosf Numbers = OldStyle\fi ]
     \fi
     \PJLsetlinespacing{\setstretch{1.05}}
     \RequirePackage[italic,defaultmathsizes]{mathastext}
