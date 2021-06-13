@@ -372,6 +372,7 @@
 \DeclareBoolOption[false]{nothms}
 \DeclareBoolOption[false]{allowbf}
 \DeclareBoolOption[false]{classical}
+\DeclareBoolOption[false]{runin}
 \ProcessKeyvalOptions*\relax
 
 \if@minimalist@draft
@@ -405,7 +406,7 @@
 \newcommand{\chapfont}{\conditionalbfseries\sffamily}
 \newcommand{\secfont}{\conditionalbfseries}
 \newcommand{\subsecfont}{\conditionalbfseries}
-\newcommand{\subsubsecfont}{\conditionalbfseries}
+\newcommand{\subsubsecfont}{\conditionalbfseries\itshape}
 \fi
 
 %%================================
@@ -725,11 +726,21 @@
 \fi
 
 %% Subsubsection
+\if@minimalist@runin
+\titleformat{\subsubsection}[runin]
+    {\color{maintext!70!paper}\subsubsecfont}{\thesubsubsection}{.5em}
+    {#1.}[\hspace*{.3em}]
+\else
 \titleformat{\subsubsection}
     {\LocallyStopLineNumbers%
-    \color{paper!30!-paper}\subsubsecfont}{\thesubsubsection}{.6em}
+    \color{maintext!70!paper}\subsubsecfont}{\thesubsubsection}{.5em}
     {#1}
     [\ResumeLineNumbers]
+\fi
+
+%% Paragraph
+\titleformat{\paragraph}[runin]
+    {\scshape}{\theparagraph}{1em}{#1}
 
 \titlespacing{\section}{0pt}{\baselineskip}{.6\baselineskip}
 \titlespacing{\subsection}{0pt}{.75\baselineskip}{.4\baselineskip}
