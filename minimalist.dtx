@@ -414,19 +414,22 @@
 \newif\ifIsBook
 \ifdefined\c@chapter\IsBooktrue\else\IsBookfalse\fi
 
+\def\minimalist@titlefontshape{}
+% \def\minimalist@titlefontshape{\sffamily}
+
 %%================================
 %% Title fonts
 %%================================
 \RequirePackage{anyfontsize}
 \if@minimalist@classical
-\newcommand{\partfont}{\conditionalbfseries\sffamily}
-\newcommand{\chapfont}{\conditionalbfseries\sffamily}
-\newcommand{\secfont}{\conditionalbfseries\sffamily}
-\newcommand{\subsecfont}{\conditionalbfseries\sffamily}
-\newcommand{\subsubsecfont}{\conditionalbfseries\sffamily}
+\newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\secfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\subsecfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\subsubsecfont}{\conditionalbfseries\minimalist@titlefontshape\itshape}
 \else
-\newcommand{\partfont}{\conditionalbfseries\sffamily}
-\newcommand{\chapfont}{\conditionalbfseries\sffamily}
+\newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
 \newcommand{\secfont}{\conditionalbfseries}
 \newcommand{\subsecfont}{\conditionalbfseries}
 \newcommand{\subsubsecfont}{\conditionalbfseries\itshape}
@@ -833,9 +836,10 @@
 %%================================
 \RequirePackage{enumitem}
 \setlist{noitemsep,leftmargin=2em}
-\renewcommand\labelitemi{\color{maintext!25}$\bullet$}
-\renewcommand\labelitemii{\color{maintext!27}--}
-\renewcommand\labelitemiii{\color{maintext!27}\texttt{*}}
+\renewcommand\labelitemi{\textcolor{maintext!25}{$\bullet$}}
+% \renewcommand\labelitemi{\textcolor{maintext!50}{---}}
+\renewcommand\labelitemii{\textcolor{maintext!27}{--}}
+\renewcommand\labelitemiii{\textcolor{maintext!27}{\texttt{*}}}
 
 %%================================
 %% Blank page
@@ -883,41 +887,29 @@
 %         {\color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}}}
 %
 % Style #3
-    \if@minimalist@allowbf
     \newtheoremstyle{simple}%
         {}{}%
         {\normalfont}{}%
         {\normalfont}{}%
         {0pt}%
-        {{\conditionalbfseries\sffamily\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
-            {\color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}}}
-    \else
-    \newcommand\thmuline{\bgroup\markoverwith{\color{maintext!27!paper}%
-        \rule[-.6ex]{2pt}{.5pt}}\ULon}
-    \newtheoremstyle{simple}%
-        {}{}%
-        {\normalfont}{}%
-        {\normalfont}{}%
-        {0pt}%
-        {{\sffamily\thmuline{\thmname{\textsc{#1}}\thmnumber{ #2}}}\hspace{.4em}%
-            {\color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}}}
-    \fi
+        {{\conditionalbfseries\minimalist@titlefontshape\thmname{#1}\thmnumber{ #2}}%
+            {\color{maintext!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}~~{\normalfont---}~~}
 \else
-\def\simpleqedsymbol{%
-    \makebox[1em]{\rlap{\textcolor{maintext!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
-\newtheoremstyle{simple}%
-    {}{}%
-    {\normalfont}{}%
-    {\normalfont}{}%
-    {0pt}%
-    {\global\let\qedsymbol\simpleqedsymbol%
-        {\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
-        \textcolor{maintext!27!paper}{$|$}\hspace{.4em}%
-        \color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}%
-        \pushQED{\qed}%
-    }
-\def\@endtheorem{\popQED\endtrivlist\@endpefalse
-\global\let\qedsymbol\qedsymbolOriginal}
+    \def\simpleqedsymbol{%
+        \makebox[1em]{\rlap{\textcolor{maintext!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+    \newtheoremstyle{simple}%
+        {}{}%
+        {\normalfont}{}%
+        {\normalfont}{}%
+        {0pt}%
+        {\global\let\qedsymbol\simpleqedsymbol%
+            {\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
+            \textcolor{maintext!27!paper}{$|$}\hspace{.4em}%
+            \color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}%
+            \pushQED{\qed}%
+        }
+    \def\@endtheorem{\popQED\endtrivlist\@endpefalse
+    \global\let\qedsymbol\qedsymbolOriginal}
 \fi
 
 \renewcommand{\qedsymbol}{%
@@ -1149,7 +1141,7 @@
 \renewcommand{\@maketitle}{%
     \LocallyStopLineNumbers%
     \begin{center}%
-        {\conditionalbfseries\sffamily\large\@title}\\\bigskip%
+        {\conditionalbfseries\minimalist@titlefontshape\large\@title}\\\bigskip%
         \color{maintext!80!paper}%
         {\small\scshape\@author}\\[2pt]%
         {\small\@date}%
