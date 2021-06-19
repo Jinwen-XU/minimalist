@@ -220,8 +220,14 @@
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }
-\IfFontExistsTF{FZYOUHK_506L--GBK1-0}{%
-    \setCJKsansfont{FZYOUHK_506L--GBK1-0}[
+\IfFontExistsTF{FZYOUHK_508R--GBK1-0}{%
+    \setCJKsansfont{FZYOUHK_508R--GBK1-0}[
+        BoldFont       = FZYOUHK_509R--GBK1-0 ,
+        BoldFeatures   = {FakeBold=4} ,
+        ItalicFont     = * ,
+        BoldItalicFont = FZYOUHK_509R--GBK1-0 ,
+        SmallCapsFont  = * ]
+    \setCJKfamilyfont{zhhei}{FZYOUHK_508R--GBK1-0}[
         BoldFont       = FZYOUHK_509R--GBK1-0 ,
         BoldFeatures   = {FakeBold=4} ,
         ItalicFont     = * ,
@@ -233,7 +239,14 @@
         ItalicFont     = * ,
         BoldItalicFont = FandolHei-Bold.otf ,
         SmallCapsFont  = * ]
+    \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[
+        BoldFont       = FandolHei-Bold.otf ,
+        ItalicFont     = * ,
+        BoldItalicFont = FandolHei-Bold.otf ,
+        SmallCapsFont  = * ]
 }
+
+\def\minimalist@titlefontshape{\CJKfamily{zhhei}}
 
 %% Math font
 \if@minimclass@customfont\else
