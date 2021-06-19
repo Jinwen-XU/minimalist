@@ -294,7 +294,9 @@
 \setmathfont[range={up/{Latin,latin,Greek,greek},
                     bfup/{Latin,latin,Greek,greek},
                     cal, bfcal, frak, bffrak,
-                    `(,`),`[,`],`\{,`\},`:,`=,
+                    `(,`),`[,`],`\{,`\},`:,`=,`/,\backslash,
+                    \in,\notin,\ni,\subset,\supset,\subseteq,\supseteq,
+                    \rightarrow,\mapsto,
                     \sum,\prod,\coprod,
                     \sqrt,\int,\iint,\iiint,\oint},
               script-features={},
@@ -850,8 +852,8 @@
 %%================================
 \RequirePackage{enumitem}
 \setlist{noitemsep,leftmargin=2em}
-\renewcommand\labelitemi{\textcolor{maintext!25}{$\bullet$}}
-% \renewcommand\labelitemi{\textcolor{maintext!50}{---}}
+\gappto{\PJLlang@langconfig@common}{\renewcommand\labelitemi{\textcolor{maintext!25}{$\bullet$}}}
+\gappto{\PJLlang@langconfig@french}{\renewcommand\labelitemi{\textcolor{maintext!50}{---}}}
 \renewcommand\labelitemii{\textcolor{maintext!27}{--}}
 \renewcommand\labelitemiii{\textcolor{maintext!27}{\texttt{*}}}
 
