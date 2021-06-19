@@ -406,6 +406,7 @@
 \DeclareBoolOption[false]{fast}
 \DeclareBoolOption[false]{puretext}
 \DeclareBoolOption[false]{nothms}
+\DeclareBoolOption[false]{nothmnum}
 \DeclareBoolOption[false]{allowbf}
 \DeclareBoolOption[false]{classical}
 \DeclareBoolOption[false]{runin}
@@ -962,8 +963,8 @@
 \pretocmd{\problemnameEN}{\textsc}{}{\FAIL}
 \pretocmd{\questionnameEN}{\textsc}{}{\FAIL}
 \pretocmd{\exercisenameEN}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameEN}{\textsc}{}{\FAIL}
-\pretocmd{\observationnameEN}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameEN}{\itshape}{}{\FAIL}
+\pretocmd{\observationnameEN}{\itshape}{}{\FAIL}
 
 %% Adjust French theorems names
 \pretocmd{\theoremnameFR}{\textsc}{}{\FAIL}
@@ -983,8 +984,8 @@
 \pretocmd{\problemnameFR}{\textsc}{}{\FAIL}
 \pretocmd{\questionnameFR}{\textsc}{}{\FAIL}
 \pretocmd{\exercisenameFR}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameFR}{\textsc}{}{\FAIL}
-\pretocmd{\observationnameFR}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameFR}{\itshape}{}{\FAIL}
+\pretocmd{\observationnameFR}{\itshape}{}{\FAIL}
 
 %% Adjust German theorems names
 \pretocmd{\theoremnameDE}{\textsc}{}{\FAIL}
@@ -1004,8 +1005,8 @@
 \pretocmd{\problemnameDE}{\textsc}{}{\FAIL}
 \pretocmd{\questionnameDE}{\textsc}{}{\FAIL}
 \pretocmd{\exercisenameDE}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameDE}{\textsc}{}{\FAIL}
-\pretocmd{\observationnameDE}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameDE}{\itshape}{}{\FAIL}
+\pretocmd{\observationnameDE}{\itshape}{}{\FAIL}
 
 %% Adjust Italian theorems names
 \pretocmd{\theoremnameIT}{\textsc}{}{\FAIL}
@@ -1025,8 +1026,8 @@
 \pretocmd{\problemnameIT}{\textsc}{}{\FAIL}
 \pretocmd{\questionnameIT}{\textsc}{}{\FAIL}
 \pretocmd{\exercisenameIT}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameIT}{\textsc}{}{\FAIL}
-\pretocmd{\observationnameIT}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameIT}{\itshape}{}{\FAIL}
+\pretocmd{\observationnameIT}{\itshape}{}{\FAIL}
 
 %% Adjust Portuguese theorems names
 \pretocmd{\theoremnamePT}{\textsc}{}{\FAIL}
@@ -1046,8 +1047,8 @@
 \pretocmd{\problemnamePT}{\textsc}{}{\FAIL}
 \pretocmd{\questionnamePT}{\textsc}{}{\FAIL}
 \pretocmd{\exercisenamePT}{\textsc}{}{\FAIL}
-\pretocmd{\remarknamePT}{\textsc}{}{\FAIL}
-\pretocmd{\observationnamePT}{\textsc}{}{\FAIL}
+\pretocmd{\remarknamePT}{\itshape}{}{\FAIL}
+\pretocmd{\observationnamePT}{\itshape}{}{\FAIL}
 
 %% Adjust Brazilian theorems names
 \pretocmd{\theoremnameBR}{\textsc}{}{\FAIL}
@@ -1067,8 +1068,8 @@
 \pretocmd{\problemnameBR}{\textsc}{}{\FAIL}
 \pretocmd{\questionnameBR}{\textsc}{}{\FAIL}
 \pretocmd{\exercisenameBR}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameBR}{\textsc}{}{\FAIL}
-\pretocmd{\observationnameBR}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameBR}{\itshape}{}{\FAIL}
+\pretocmd{\observationnameBR}{\itshape}{}{\FAIL}
 
 %% Adjust Spanish theorems names
 \pretocmd{\theoremnameES}{\textsc}{}{\FAIL}
@@ -1088,8 +1089,8 @@
 \pretocmd{\problemnameES}{\textsc}{}{\FAIL}
 \pretocmd{\questionnameES}{\textsc}{}{\FAIL}
 \pretocmd{\exercisenameES}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameES}{\textsc}{}{\FAIL}
-\pretocmd{\observationnameES}{\textsc}{}{\FAIL}
+\pretocmd{\remarknameES}{\itshape}{}{\FAIL}
+\pretocmd{\observationnameES}{\itshape}{}{\FAIL}
 
 %% Theorem environments
 \theoremstyle{simple}
@@ -1099,6 +1100,17 @@
     \newaliascnt{highest}{section}
 }
 \if@minimalist@nothms\else
+\if@minimalist@nothmnum
+\CreateTheorem*{theorem}
+\CreateTheorem*{lemma}
+\CreateTheorem*{proposition}
+\CreateTheorem*{corollary}
+\CreateTheorem*{definition-proposition}
+\CreateTheorem*{definition-theorem}
+\CreateTheorem*{property}
+\CreateTheorem*{fact}
+\CreateTheorem*{conjecture}
+\else
 \CreateTheorem{theorem}<highest>
 \CreateTheorem{lemma}[theorem]
 \CreateTheorem{proposition}[theorem]
@@ -1108,6 +1120,7 @@
 \CreateTheorem{property}[theorem]
 \CreateTheorem{fact}[theorem]
 \CreateTheorem{conjecture}[theorem]
+\fi
 \CreateTheorem*{theorem*}
 \CreateTheorem*{lemma*}
 \CreateTheorem*{proposition*}
@@ -1118,6 +1131,18 @@
 \CreateTheorem*{fact*}
 \CreateTheorem*{conjecture*}
 %
+\if@minimalist@nothmnum
+\CreateTheorem*{definition}
+\CreateTheorem*{axiom}
+\CreateTheorem*{assumption}
+\CreateTheorem*{convention}
+\CreateTheorem*{hypothesis}
+\CreateTheorem*{notation}
+\CreateTheorem*{example}
+\CreateTheorem*{problem}
+\CreateTheorem*{question}
+\CreateTheorem*{exercise}
+\else
 \CreateTheorem{definition}[theorem]
 \CreateTheorem{axiom}[theorem]
 \CreateTheorem{assumption}[theorem]
@@ -1128,6 +1153,7 @@
 \CreateTheorem{problem}[theorem]
 \CreateTheorem{question}[theorem]
 \CreateTheorem{exercise}[theorem]
+\fi
 \CreateTheorem*{definition*}
 \CreateTheorem*{axiom*}
 \CreateTheorem*{assumption*}
@@ -1139,9 +1165,14 @@
 \CreateTheorem*{question*}
 \CreateTheorem*{exercise*}
 %
+\if@minimalist@nothmnum
+\CreateTheorem*{remark}
+\CreateTheorem*{observation}
+\else
 \CreateTheorem{remark}<highest>
-\CreateTheorem*{remark*}
 \CreateTheorem{observation}<highest>
+\fi
+\CreateTheorem*{remark*}
 \CreateTheorem*{observation*}
 \fi
 
