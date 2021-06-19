@@ -1,5 +1,5 @@
 %! TEX program = xelatex
-\documentclass[puretext]{einfart}
+\documentclass[Chinese,English,puretext]{einfart}
 
 \CreateTheorem{definition}<highest>
 \CreateTheorem{theorem}<highest>
@@ -9,7 +9,7 @@
 %%================================
 %% 引入工具集
 %%================================
-\usepackage{PJLtoolkit}
+\usepackage{ProjLib}
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
 
@@ -39,12 +39,12 @@
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,subsection,href,
+    {linenumbers,nolinenumbers,subsection,subsubsection,href,
     color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
 \lstnewenvironment{code}% 
-{\LocallyStopLineNumbers%
+{\setstretch{1.07}\LocallyStopLineNumbers%
 \setkeys{lst}{columns=fullflexible,keepspaces=true}%
 }
 {\ResumeLineNumbers}
@@ -87,7 +87,7 @@
 
 \title{\einfart{}，以极简主义风格排版你的文章}
 \author{许锦文}
-\thanks{对应版本. \texttt{\einfart{} 2021/06/07}}
+\thanks{对应版本. \texttt{\einfart{} 2021/06/23}}
 \date{2021年6月，北京}
 
 \maketitle
@@ -134,14 +134,18 @@
                 \item 启用 \ProjLib{} 工具箱的快速模式。
             \end{itemize}
         \end{itemize}
+\begin{tip}
+    在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
+\end{tip}
     \item \texttt{a4paper} 或 \texttt{b5paper}
         \begin{itemize}
             \item 可选的纸张大小。默认的纸张大小为 7in $\times$ 10in。
         \end{itemize}
-        \item \texttt{palatino}、\texttt{times}、\texttt{garamond}、\texttt{biolinum}
-            \begin{itemize}
-                \item 字体选项。顾名思义，会加载相应名称的字体。
-            \end{itemize}
+    \item \texttt{palatino}、\texttt{times}、\texttt{garamond}、\texttt{biolinum} ~$|$~ \texttt{useosf}
+        \begin{itemize}
+            \item 字体选项。顾名思义，会加载相应名称的字体。
+            \item \texttt{useosf} 选项用来启用“旧式”数字。
+        \end{itemize}
     \item \texttt{allowbf}
         \begin{itemize}
             \item 允许加粗。启用这一选项时，题目、各级标题、定理类环境名称会被加粗。
@@ -150,16 +154,33 @@
         \begin{itemize}
             \item 经典模式。启用这一选项时，样式会变得更加中规中矩：段落呈首行缩进样式、各类下划线减少、标题样式改变、定理类环境的样式也会更贴近常见的设置。
         \end{itemize}
+\begin{tip}
+    如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
+\end{tip}
+        \item \texttt{useindent}
+        \begin{itemize}
+            \item 采用段首缩进而不是段间间距。
+        \end{itemize}
+    \item \texttt{runin}
+        \begin{itemize}
+            \item \lstinline|\subsubsection| 采用 ``runin'' 风格。
+        \end{itemize}
+    \item \texttt{puretext} or \texttt{nothms}
+        \begin{itemize}
+            \item 纯文本模式，不加载定理类环境。
+        \end{itemize}
+    \item \texttt{nothmnum}
+        \begin{itemize}
+            \item 定理类环境不编号。
+        \end{itemize}
+    \item 语言选项 \texttt{EN} / \texttt{english} / \texttt{English}、\texttt{FR} / \texttt{french} / \texttt{French}，等等
+        \begin{itemize}
+            \item 具体选项名称可参见下一节的 \meta{language name}。第一个指定的语言将作为默认语言。
+        \end{itemize}
 \end{itemize}
 
-\begin{tip}
-    \begin{itemize}
-        \item 在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
-        \item 如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
-    \end{itemize}
-\end{tip}
 
-\section{关于文档类中使用的字体}
+\section{关于默认字体}
 \einfart{} 默认使用 Palatino Linotype 作为英文字体，方正悠宋、悠黑GBK作为中文字体，并部分使用了 Neo Euler 作为数学字体。其中，Neo Euler可以在 \url{https://github.com/khaledhosny/euler-otf} 下载。其他字体不是免费字体，需要自行购买使用。可以在方正字库网站查询详细资料：\url{https://www.foundertype.com}。
 
 % \begin{itemize}
@@ -227,6 +248,7 @@
 
 在引用定理类环境时，建议使用智能引用 \lstinline|\cref{|\meta{label}\lstinline|}|。这样就不必每次都写上相应环境的名称了。
 
+\medskip
 \begin{tip}[例子]
 \begin{code}
   \begin{definition}[奇异物品] \label{def: strange} ...
@@ -250,7 +272,7 @@
 
 \UseLanguage{Chinese}
 
-
+\clearpage
 \subsection{定义新的定理型环境}
 
 若需要定义新的定理类环境，首先要定义这个环境在所用语言下的名称：
@@ -311,10 +333,11 @@
 
 可以分别定义不编号的环境 \lstinline|proofidea*| 和编号的环境 \lstinline|proofidea| (在 subsection 内编号)，它们支持在简体中文语境中使用，效果如下所示:
 
+\vspace{-.3\baselineskip}
 \begin{proofidea*}
     \lstinline|proofidea*| 环境。
 \end{proofidea*}
-
+\vspace{-.5\baselineskip}
 \begin{proofidea}
     \lstinline|proofidea| 环境。
 \end{proofidea}
@@ -417,7 +440,7 @@
 
 \begin{code}
 \documentclass{einfart}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -455,7 +478,7 @@ Référence du théorème: \cref{thm:abc}
 \documentclass{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 
@@ -466,7 +489,7 @@ Référence du théorème: \cref{thm:abc}
 
 \begin{code}
 \documentclass{einfart}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -508,7 +531,7 @@ Référence du théorème: \cref{thm:abc}
 \documentclass{amsart}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 \end{document}

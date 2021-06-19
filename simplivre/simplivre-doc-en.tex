@@ -1,5 +1,5 @@
 %! TEX program = xelatex
-\documentclass[puretext]{simplivre}
+\documentclass[English,French,puretext]{simplivre}
 
 \CreateTheorem{definition}<highest>
 \CreateTheorem{theorem}<highest>
@@ -9,7 +9,7 @@
 %%================================
 %% Import toolkit
 %%================================
-\usepackage{PJLtoolkit}
+\usepackage{ProjLib}
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
 
@@ -37,7 +37,7 @@
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,part,chapter,section,subsection,href,
+    {linenumbers,nolinenumbers,part,chapter,section,subsection,subsubsection,href,
     color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib,parttext
     }
 }
@@ -101,7 +101,7 @@
     \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
     \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
-    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\\textsc{Write your books in \\a simple and clear way}\\[10pt]\tiny Corresponding to: \texttt{\simplivre{} 2021/06/07}}};
+    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\\textsc{Write your books in \\a simple and clear way}\\[10pt]\tiny Corresponding to: \texttt{\simplivre{} 2021/06/23}}};
     \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{\scshape Jinwen XU}};
     \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{June 2021, Beijing}};
 \end{tikzpicture}%
@@ -156,14 +156,18 @@ as the first line to use the \simplivre{} class.
                 \item Enable the fast mode of \ProjLib{} toolkit.
             \end{itemize}
         \end{itemize}
+\begin{tip}
+    During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
+\end{tip}
     \item \texttt{a4paper} or \texttt{b5paper}
         \begin{itemize}
             \item Optional paper size. The default paper size is 7in $\times$ 10in.
         \end{itemize}
-        \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum}
-            \begin{itemize}
-                \item Font options. As the name suggest, font with corresponding name will be loaded.
-            \end{itemize}
+    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum} ~$|$~ \texttt{useosf}
+        \begin{itemize}
+            \item Font options. As the name suggest, font with corresponding name will be loaded. 
+            \item The \texttt{useosf} option is used to enable the old-style figures.
+        \end{itemize}
     \item \texttt{allowbf}
         \begin{itemize}
             \item Allow boldface. When this option is enabled, the title, titles of all levels and names of theorem-like environments will be bolded.
@@ -172,19 +176,35 @@ as the first line to use the \simplivre{} class.
         \begin{itemize}
             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
         \end{itemize}
-\end{itemize}
-
 \begin{tip}
-    \begin{itemize}
-        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
-        \item \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
-    \end{itemize}
+    \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
 \end{tip}
+    \item \texttt{useindent}
+        \begin{itemize}
+            \item Use paragraph indentation instead of inter-paragraph spacing.
+        \end{itemize}
+    \item \texttt{runin}
+        \begin{itemize}
+            \item Use the ``runin'' style for \lstinline|\subsubsection|
+        \end{itemize}
+    \item \texttt{puretext} or \texttt{nothms}
+        \begin{itemize}
+            \item Pure text mode. Does not load theorem-like environments.
+        \end{itemize}
+    \item \texttt{nothmnum}
+        \begin{itemize}
+            \item Theorem-like environments will not be numbered.
+        \end{itemize}
+    \item The language options \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
+        \begin{itemize}
+            \item For the option names of a specific language, please refer to \meta{language name} in the next section. The first specified language will be used as the default language.
+        \end{itemize}
+\end{itemize}
 
 \bigskip
 In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are also available. Two-page layout is used by default.
 
-\chapter{On the fonts}
+\chapter{On the default fonts}
 By default, \simplivre{} uses Palatino Linotype as the English font, FounderType's YouSong and YouHei GBK as the Chinese fonts, and partially uses Neo Euler as the math font. Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. The other fonts are not free, you need to purchase and install them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
 
 \begin{tip}[Font demonstration]
@@ -442,7 +462,7 @@ If you want to write in the standard way, you can refer to the following example
 
 \begin{code}
 \documentclass{simplivre}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -473,7 +493,7 @@ If you wish to switch to the standard class later, just replace the first two li
 \documentclass{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 
@@ -484,7 +504,7 @@ If you intend to switch to the journal template in the future and thus want to u
 
 \begin{code}
 \documentclass{simplivre}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -523,7 +543,7 @@ In this way, if you wish to switch to \AmS{} class later, just replace the first
 \documentclass{amsart}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 \blinddocument

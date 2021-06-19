@@ -1,5 +1,5 @@
 %! TEX program = xelatex
-\documentclass[puretext]{minimart}
+\documentclass[English,French,puretext]{minimart}
 
 \CreateTheorem{definition}<highest>
 \CreateTheorem{theorem}<highest>
@@ -9,7 +9,7 @@
 %%================================
 %% Import toolkit
 %%================================
-\usepackage{PJLtoolkit}
+\usepackage{ProjLib}
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
 
@@ -37,7 +37,7 @@
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,subsection,href,
+    {linenumbers,nolinenumbers,subsection,subsubsection,href,
     color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
@@ -85,7 +85,7 @@
 
 \title{\minimalist{}, write your articles or books in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\minimalist{} 2021/06/07a}}
+\thanks{Corresponding to: \texttt{\minimalist{} 2021/06/23}}
 \date{June 2021, Beijing}
 
 \maketitle
@@ -146,8 +146,25 @@ And of course, you can also use the default classes \textsf{article} or \textsf{
         \begin{itemize}
             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
         \end{itemize}
+    \item \texttt{runin}
+        \begin{itemize}
+            \item Use the ``runin'' style for \lstinline|\subsubsection|
+        \end{itemize}
+    \item \texttt{puretext} or \texttt{nothms}
+        \begin{itemize}
+            \item Pure text mode. Does not load theorem-like environments.
+        \end{itemize}
+    \item \texttt{nothmnum}
+        \begin{itemize}
+            \item Theorem-like environments will not be numbered.
+        \end{itemize}
+    \item The language options \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
+        \begin{itemize}
+            \item For the option names of a specific language, please refer to \meta{language name} in the next section. The first specified language will be used as the default language.
+        \end{itemize}
 \end{itemize}
 
+\medskip
 \begin{tip}
     \begin{itemize}
         \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
@@ -155,16 +172,21 @@ And of course, you can also use the default classes \textsf{article} or \textsf{
     \end{itemize}
 \end{tip}
 
-\bigskip
+\clearpage
 Additionally, \minimart{} and \minimbook{} offers the following options: 
 \begin{itemize}
     \item \texttt{a4paper} or \texttt{b5paper}
         \begin{itemize}
             \item Optional paper size. The default paper size is 7in $\times$ 10in.
         \end{itemize}
-    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum}
+    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum} ~$|$~ \texttt{useosf}
         \begin{itemize}
-            \item Font options. As the name suggest, font with corresponding name will be loaded.
+            \item Font options. As the name suggest, font with corresponding name will be loaded. 
+            \item The \texttt{useosf} option is used to enable the old-style figures.
+        \end{itemize}
+    \item \texttt{useindent}
+        \begin{itemize}
+            \item Use paragraph indentation instead of inter-paragraph spacing.
         \end{itemize}
 \end{itemize}
 
@@ -269,7 +291,6 @@ And then define this environment in one of following five ways:
         \begin{itemize}
             \item Define a numbered environment \meta{name of environment}, which shares the counter \meta{numbered like}
         \end{itemize}
-    \clearpage
     \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
         \begin{itemize}
             \item Define a numbered environment \meta{name of environment}, numbered within the counter \meta{numbered within}
@@ -408,7 +429,7 @@ If you want to write in the standard way, you can refer to the following example
 
 \begin{code}
 \documentclass{minimart}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -446,7 +467,7 @@ If you wish to switch to the standard class later, just replace the first two li
 \documentclass{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 
@@ -457,7 +478,7 @@ If you intend to switch to the journal template in the future and thus want to u
 
 \begin{code}
 \documentclass{minimart}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -499,7 +520,7 @@ In this way, if you wish to switch to \AmS{} class later, just replace the first
 \documentclass{amsart}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 \end{document}

@@ -1,5 +1,5 @@
 %! TEX program = xelatex
-\documentclass[puretext]{einfart}
+\documentclass[English,French,puretext]{einfart}
 
 \CreateTheorem{definition}<highest>
 \CreateTheorem{theorem}<highest>
@@ -9,7 +9,7 @@
 %%================================
 %% Import toolkit
 %%================================
-\usepackage{PJLtoolkit}
+\usepackage{ProjLib}
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
 
@@ -37,7 +37,7 @@
 } 
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,subsection,href,
+    {linenumbers,nolinenumbers,subsection,subsubsection,href,
     color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
     }
 }
@@ -85,7 +85,7 @@
 
 \title{\einfart{}, write your articles in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\einfart{} 2021/06/07}}
+\thanks{Corresponding to: \texttt{\einfart{} 2021/06/23}}
 \date{June 2021, Beijing}
 
 \maketitle
@@ -130,14 +130,18 @@ as the first line to use the \einfart{} class. Please note that you need to use 
                 \item Enable the fast mode of \ProjLib{} toolkit.
             \end{itemize}
         \end{itemize}
+\begin{tip}
+    During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
+\end{tip}
     \item \texttt{a4paper} or \texttt{b5paper}
         \begin{itemize}
             \item Optional paper size. The default paper size is 7in $\times$ 10in.
         \end{itemize}
-        \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum}
-            \begin{itemize}
-                \item Font options. As the name suggest, font with corresponding name will be loaded.
-            \end{itemize}
+    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum} ~$|$~ \texttt{useosf}
+        \begin{itemize}
+            \item Font options. As the name suggest, font with corresponding name will be loaded. 
+            \item The \texttt{useosf} option is used to enable the old-style figures.
+        \end{itemize}
     \item \texttt{allowbf}
         \begin{itemize}
             \item Allow boldface. When this option is enabled, the title, titles of all levels and names of theorem-like environments will be bolded.
@@ -146,16 +150,33 @@ as the first line to use the \einfart{} class. Please note that you need to use 
         \begin{itemize}
             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
         \end{itemize}
+\begin{tip}
+    \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
+\end{tip}
+    \item \texttt{useindent}
+        \begin{itemize}
+            \item Use paragraph indentation instead of inter-paragraph spacing.
+        \end{itemize}
+    \item \texttt{runin}
+        \begin{itemize}
+            \item Use the ``runin'' style for \lstinline|\subsubsection|
+        \end{itemize}
+    \clearpage
+    \item \texttt{puretext} or \texttt{nothms}
+        \begin{itemize}
+            \item Pure text mode. Does not load theorem-like environments.
+        \end{itemize}
+    \item \texttt{nothmnum}
+        \begin{itemize}
+            \item Theorem-like environments will not be numbered.
+        \end{itemize}
+    \item The language options \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
+        \begin{itemize}
+            \item For the option names of a specific language, please refer to \meta{language name} in the next section. The first specified language will be used as the default language.
+        \end{itemize}
 \end{itemize}
 
-\begin{tip}
-    \begin{itemize}
-        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
-        \item \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
-    \end{itemize}
-\end{tip}
-
-\section{On the fonts}
+\section{On the default fonts}
 By default, \einfart{} uses Palatino Linotype as the English font, FounderType's YouSong and YouHei GBK as the Chinese fonts, and partially uses Neo Euler as the math font. Among them, Neo Euler can be downloaded at \url{https://github.com/khaledhosny/euler-otf}. The other fonts are not free, you need to purchase and install them on your own. (For the Chinese fonts, visit FounderType's website for detail: \url{https://www.foundertype.com} ).
 
 % \begin{itemize}
@@ -242,7 +263,7 @@ By default, when referenced, the name of the theorem always matches the language
 
 \UseLanguage{English}
 
-
+\clearpage
 \subsection{Define a new theorem-like environment}
 
 If you need to define a new theorem-like environment, you must first define the name of the environment in the language to use:
@@ -407,7 +428,7 @@ If you want to write in the standard way, you can refer to the following example
 
 \begin{code}
 \documentclass{einfart}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -445,7 +466,7 @@ If you wish to switch to the standard class later, just replace the first two li
 \documentclass{article}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 
@@ -456,7 +477,7 @@ If you intend to switch to the journal template in the future and thus want to u
 
 \begin{code}
 \documentclass{einfart}
-\usepackage{PJLtoolkit} % Load ProjLib toolkit
+\usepackage{ProjLib} % Load ProjLib toolkit
 
 \UseLanguage{French} % Use French from here
 
@@ -498,7 +519,7 @@ In this way, if you wish to switch to \AmS{} class later, just replace the first
 \documentclass{amsart}
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{PJLtoolkit} % Load ProjLib toolkit
+\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
 \end{code}
 
 \end{document}
