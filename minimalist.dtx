@@ -296,7 +296,7 @@
                     cal, bfcal, frak, bffrak,
                     `(,`),`[,`],`\{,`\},`:,`=,`/,\backslash,
                     \in,\notin,\ni,\subset,\supset,\subseteq,\supseteq,
-                    \rightarrow,\mapsto,
+                    \rightarrow,\leftarrow,\mapsto,\hookrightarrow,\hookleftarrow,
                     \sum,\prod,\coprod,
                     \sqrt,\int,\iint,\iiint,\oint},
               script-features={},
@@ -318,7 +318,7 @@
     \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
     \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
     \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [->, baseline=-.75ex, every node/.style={inner sep=0pt}]
+    \mathrel{\tikz [->, baseline=-.6ex, every node/.style={inner sep=0pt}]
         \draw (0,0) -- node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
@@ -327,7 +327,7 @@
     \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
     \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
     \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [<-, baseline=-.75ex, every node/.style={inner sep=0pt}]
+    \mathrel{\tikz [<-, baseline=-.6ex, every node/.style={inner sep=0pt}]
         \draw (0,0) -- node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
@@ -336,7 +336,7 @@
     \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
     \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
     \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [<->, baseline=-.75ex, every node/.style={inner sep=0pt}]
+    \mathrel{\tikz [<->, baseline=-.6ex, every node/.style={inner sep=0pt}]
         \draw (0,0) -- node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
@@ -345,7 +345,7 @@
     \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
     \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
     \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.75ex, every node/.style={inner sep=0pt}]
+    \mathrel{\tikz [baseline=-.6ex, every node/.style={inner sep=0pt}]
         \draw (0,0) edge[commutative diagrams/hookrightarrow] node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
@@ -354,7 +354,7 @@
     \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
     \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
     \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.75ex, every node/.style={inner sep=0pt}]
+    \mathrel{\tikz [baseline=-.6ex, every node/.style={inner sep=0pt}]
         \draw (0,0) edge[commutative diagrams/hookleftarrow] node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
@@ -363,7 +363,7 @@
     \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
     \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
     \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.75ex, every node/.style={inner sep=0pt}]
+    \mathrel{\tikz [baseline=-.6ex, every node/.style={inner sep=0pt}]
         \draw (0,0) edge[commutative diagrams/mapsto] node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
@@ -372,7 +372,7 @@
     \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
     \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
     \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.75ex, every node/.style={inner sep=0pt}]
+    \mathrel{\tikz [baseline=-.6ex, every node/.style={inner sep=0pt}]
         \draw (0,0) edge[commutative diagrams/equal] node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
@@ -385,7 +385,7 @@
     \RequirePackage{mathpazo}
     \PassOptionsToPackage{defaultsups}{newpxtext}
     \RequirePackage{newpxtext}
-    \RequirePackage{newpxmath}
+    % \RequirePackage{newpxmath}
     \let\openbox\relax
     \PJLsetlinespacing{\setstretch{1.07}}
     \if@minimclass@useosf\useosf\fi
