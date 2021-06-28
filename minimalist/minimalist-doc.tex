@@ -38,7 +38,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,subsection,subsubsection,href,
-    color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
+    color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib
     }
 }
 \lstnewenvironment{code}% 
@@ -85,7 +85,7 @@
 
 \title{\minimalist{}, write your articles or books in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\minimalist{} 2021/06/23}}
+\thanks{Corresponding to: \texttt{\minimalist{} 2021/06/30}}
 \date{June 2021, Beijing}
 
 \maketitle
@@ -129,23 +129,33 @@ And of course, you can also use the default classes \textsf{article} or \textsf{
 \minimalist{} offers the following options: 
 
 \begin{itemize}
+    \item The language options \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
+        \begin{itemize}
+            \item For the option names of a specific language, please refer to \meta{language name} in the next section. The first specified language will be used as the default language.
+        \end{itemize}
     \item \texttt{draft} or \texttt{fast}
         \begin{itemize}
             \item The option \verb|fast| enables a faster but slightly rougher style, main differences are:
             \begin{itemize}
                 \item Use simpler math font configuration; 
-                \item Do not use hyperref; 
+                \item Do not use \textsf{hyperref}; 
                 \item Enable the fast mode of \ProjLib{} toolkit.
             \end{itemize}
         \end{itemize}
+        \begin{tip}
+            During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
+        \end{tip}
     \item \texttt{allowbf}
         \begin{itemize}
-            \item Allow boldface. When this option is enabled, the title, titles of all levels and names of theorem-like environments will be bolded.
+            \item Allow boldface. When this option is enabled, the main title, the titles of all levels and the names of theorem-like environments will be bolded.
         \end{itemize}
     \item \texttt{classical}
         \begin{itemize}
             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
         \end{itemize}
+        \begin{tip}
+            \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
+        \end{tip}
     \item \texttt{runin}
         \begin{itemize}
             \item Use the ``runin'' style for \lstinline|\subsubsection|
@@ -158,21 +168,9 @@ And of course, you can also use the default classes \textsf{article} or \textsf{
         \begin{itemize}
             \item Theorem-like environments will not be numbered.
         \end{itemize}
-    \item The language options \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
-        \begin{itemize}
-            \item For the option names of a specific language, please refer to \meta{language name} in the next section. The first specified language will be used as the default language.
-        \end{itemize}
 \end{itemize}
 
-\medskip
-\begin{tip}
-    \begin{itemize}
-        \item During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. At the end, one should remove the ``fast'' option to get the final version. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
-        \item \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
-    \end{itemize}
-\end{tip}
-
-\clearpage
+% \clearpage
 Additionally, \minimart{} and \minimbook{} offers the following options: 
 \begin{itemize}
     \item \texttt{a4paper} or \texttt{b5paper}
@@ -325,7 +323,8 @@ Here is an example. The following code:
   \CreateTheorem{proofidea}<subsection>
 \end{code}
 
-defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within subsection) respectively. They can be used in English context. The effect is as follows:
+defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within subsection) respectively. They can be used in English context. 
+The effect is as follows:
 
 \begin{proofidea*}
     The \lstinline|proofidea*| environment.
@@ -437,7 +436,7 @@ If you want to write in the standard way, you can refer to the following example
 
 \title{Le Titre}
 \author{Auteur}
-\date{\PJLdate{2022-04-01}}
+\date{\PLdate{2022-04-01}}
 
 \maketitle
 
@@ -491,7 +490,7 @@ If you intend to switch to the journal template in the future and thus want to u
 \author{Auteur 1}
 \address{Adresse 1}
 \email{\href{Courriel 2}{Courriel 2}}
-\date{\PJLdate{2022-04-01}}
+\date{\PLdate{2022-04-01}}
 \subjclass{*****}
 \keywords{...}
 

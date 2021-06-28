@@ -1,5 +1,5 @@
 %! TEX program = xelatex
-\documentclass[puretext]{simplivre}
+\documentclass[Chinese,English,French,puretext]{simplivre}
 
 \CreateTheorem{definition}<highest>
 \CreateTheorem{theorem}<highest>
@@ -40,7 +40,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,part,chapter,section,subsection,subsubsection,href,
-    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib,parttext
+    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib,parttext
     }
 }
 \lstnewenvironment{code}% 
@@ -102,7 +102,7 @@
     \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
     \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
-    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\\hspace*{-.05em}以极简主义风格排版你的图书\\[10pt]\tiny 对应版本. \texttt{\simplivre{} 2021/06/23}}};
+    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\hspace*{-.05em}以极简主义风格排版你的图书\\[10pt]\tiny 对应版本. \texttt{\simplivre{} 2021/06/30}}};
     \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{许锦文}};
     \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{2021年6月，北京}};
 \end{tikzpicture}%
@@ -150,6 +150,10 @@
 \simplivre{} 文档类有下面几个选项：
 
 \begin{itemize}
+    \item 语言选项 \texttt{EN} / \texttt{english} / \texttt{English}、\texttt{FR} / \texttt{french} / \texttt{French}，等等
+        \begin{itemize}
+            \item 具体选项名称可参见下一节的 \meta{language name}。第一个指定的语言将作为默认语言。
+        \end{itemize}
     \item \texttt{draft} 或 \texttt{fast}
         \begin{itemize}
             \item 你可以使用选项 \verb|fast| 来启用快速但略微粗糙的样式，主要区别是：
@@ -160,7 +164,7 @@
             \end{itemize}
         \end{itemize}
 \begin{tip}
-    在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
+    在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅度。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
 \end{tip}
     \item \texttt{a4paper} 或 \texttt{b5paper}
         \begin{itemize}
@@ -198,10 +202,6 @@
     \item \texttt{nothmnum}
         \begin{itemize}
             \item 定理类环境不编号。
-        \end{itemize}
-    \item 语言选项 \texttt{EN} / \texttt{english} / \texttt{English}、\texttt{FR} / \texttt{french} / \texttt{French}，等等
-        \begin{itemize}
-            \item 具体选项名称可参见下一节的 \meta{language name}。第一个指定的语言将作为默认语言。
         \end{itemize}
 \end{itemize}
 
@@ -481,7 +481,7 @@
 
 \title{Le Titre}
 \author{Auteur}
-\date{\PJLdate{2022-04-01}}
+\date{\PLdate{2022-04-01}}
 
 \maketitle
 
@@ -528,7 +528,7 @@ Référence du théorème: \cref{thm:abc}
 \author{Auteur 1}
 \address{Adresse 1}
 \email{\href{Courriel 2}{Courriel 2}}
-\date{\PJLdate{2022-04-01}}
+\date{\PLdate{2022-04-01}}
 \subjclass{*****}
 \keywords{...}
 

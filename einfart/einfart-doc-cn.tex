@@ -1,5 +1,5 @@
 %! TEX program = xelatex
-\documentclass[Chinese,English,puretext]{einfart}
+\documentclass[Chinese,English,French,puretext]{einfart}
 
 \CreateTheorem{definition}<highest>
 \CreateTheorem{theorem}<highest>
@@ -40,7 +40,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,subsection,subsubsection,href,
-    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PJLdate,ProjLib
+    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib
     }
 }
 \lstnewenvironment{code}% 
@@ -87,7 +87,7 @@
 
 \title{\einfart{}，以极简主义风格排版你的文章}
 \author{许锦文}
-\thanks{对应版本. \texttt{\einfart{} 2021/06/23}}
+\thanks{对应版本. \texttt{\einfart{} 2021/06/30}}
 \date{2021年6月，北京}
 
 \maketitle
@@ -125,6 +125,10 @@
 \einfart{} 文档类有下面几个选项：
 
 \begin{itemize}
+    \item 语言选项 \texttt{EN} / \texttt{english} / \texttt{English}、\texttt{FR} / \texttt{french} / \texttt{French}，等等
+        \begin{itemize}
+            \item 具体选项名称可参见下一节的 \meta{language name}。第一个指定的语言将作为默认语言。
+        \end{itemize}
     \item \texttt{draft} 或 \texttt{fast}
         \begin{itemize}
             \item 你可以使用选项 \verb|fast| 来启用快速但略微粗糙的样式，主要区别是：
@@ -135,7 +139,7 @@
             \end{itemize}
         \end{itemize}
 \begin{tip}
-    在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅程度。在最后，可以把 \verb|fast| 标记去除，从而得到正式的版本。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
+    在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅度。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
 \end{tip}
     \item \texttt{a4paper} 或 \texttt{b5paper}
         \begin{itemize}
@@ -157,10 +161,11 @@
 \begin{tip}
     如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
 \end{tip}
-        \item \texttt{useindent}
+    \item \texttt{useindent}
         \begin{itemize}
             \item 采用段首缩进而不是段间间距。
         \end{itemize}
+    \clearpage
     \item \texttt{runin}
         \begin{itemize}
             \item \lstinline|\subsubsection| 采用 ``runin'' 风格。
@@ -172,10 +177,6 @@
     \item \texttt{nothmnum}
         \begin{itemize}
             \item 定理类环境不编号。
-        \end{itemize}
-    \item 语言选项 \texttt{EN} / \texttt{english} / \texttt{English}、\texttt{FR} / \texttt{french} / \texttt{French}，等等
-        \begin{itemize}
-            \item 具体选项名称可参见下一节的 \meta{language name}。第一个指定的语言将作为默认语言。
         \end{itemize}
 \end{itemize}
 
@@ -260,6 +261,7 @@
 
 \lstinline|\cref{def: strange}| 会显示为：\cref{def: strange}。
 
+\medskip
 使用 \lstinline|\UseLanguage{English}| 后，定理会显示为：
 
 \UseLanguage{English}
@@ -448,7 +450,7 @@
 
 \title{Le Titre}
 \author{Auteur}
-\date{\PJLdate{2022-04-01}}
+\date{\PLdate{2022-04-01}}
 
 \maketitle
 
@@ -502,7 +504,7 @@ Référence du théorème: \cref{thm:abc}
 \author{Auteur 1}
 \address{Adresse 1}
 \email{\href{Courriel 2}{Courriel 2}}
-\date{\PJLdate{2022-04-01}}
+\date{\PLdate{2022-04-01}}
 \subjclass{*****}
 \keywords{...}
 
