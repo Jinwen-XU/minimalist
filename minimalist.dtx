@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/06/23 A simple and clear article style]
+    [2021/06/30 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/06/23 A simple and clear book style]
+    [2021/06/30 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/06/23 A simple and clear article style]
+    [2021/06/30 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/06/23 A simple and clear book style]
+    [2021/06/30 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/06/23 A simple and clear style for articles and books]
+    [2021/06/30 A simple and clear style for articles and books]
 %</minimalist>
 %
 \RequirePackage{kvoptions}
@@ -294,7 +294,7 @@
 \setmathfont[range={up/{Latin,latin,Greek,greek},
                     bfup/{Latin,latin,Greek,greek},
                     cal, bfcal, frak, bffrak,
-                    `(,`),`[,`],`\{,`\},`:,`=,`/,\backslash,
+                    `(,`),`[,`],`\{,`\},`:,`=,\ne,\equiv,`/,\backslash,
                     \in,\notin,\ni,\subset,\supset,\subseteq,\supseteq,
                     \rightarrow,\leftarrow,\mapsto,\hookrightarrow,\hookleftarrow,
                     \sum,\prod,\coprod,
@@ -304,6 +304,9 @@
               Scale = 1.05,
             ]{Neo Euler}
 }{}
+\setmathfont[range={\leq,\geq,\ll,\gg,\lll,\ggg,\leqslant,\geqslant},
+              Scale = 0.95,
+            ]{latinmodern-math.otf}
 % \setmathfont[range={bfup/num, it, bfit, scr, bfscr,
 %                     sfup, sfit, bfsfup, bfsfit, tt, bfcal}
 %             ]{Asana-Math.otf}
