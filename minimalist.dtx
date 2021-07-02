@@ -313,6 +313,14 @@
 \setmathfont[range={up/num, bfup/num}
             ]{texgyrepagella-math.otf}
 
+% Reduce the spacing before and after \mid and \nmid.
+\AtBeginDocument{
+\let\mid@original\mid
+\renewcommand{\mid}{\hspace{-.15em}\mid@original\hspace{-.15em}}
+\let\nmid@original\nmid
+\renewcommand{\nmid}{\hspace{-.15em}\nmid@original\hspace{-.15em}}
+}
+
 % The following uses tikz to define retractable arrows to avoid problems with unicode-math.
 \newbox\xratbelow
 \newbox\xratabove
@@ -931,11 +939,22 @@
 %% Lists
 %%================================
 \RequirePackage{enumitem}
-\setlist{noitemsep,leftmargin=2em}
-\gappto{\PJLlang@langconfig@common}{\renewcommand\labelitemi{\textcolor{maintext!25}{$\bullet$}}}
-\gappto{\PJLlang@langconfig@french}{\renewcommand\labelitemi{\textcolor{maintext!50}{---}}}
-\renewcommand\labelitemii{\textcolor{maintext!27}{--}}
-\renewcommand\labelitemiii{\textcolor{maintext!27}{\texttt{*}}}
+\setlist{noitemsep}
+% \setlist[1]{labelindent=\parindent} % < Usually a good idea
+\setlist[enumerate]{labelsep=*, leftmargin=*}
+\setlist[enumerate,1]{label = \arabic*.,
+    ref = \arabic*}
+\setlist[enumerate,2]{label = \emph{\alph*}),
+    ref = \theenumi.\emph{\alph*}}
+\setlist[enumerate,3]{label = (\roman*),
+    ref = \theenumii.\roman*}
+\setlist[description]{font=\normalfont\conditionalbfseries}
+
+\setlist[itemize]{leftmargin=*}
+\gappto{\PJLlang@langconfig@common}{\setlist[itemize,1]{label=\textcolor{maintext!25}{$\bullet$}}}
+\gappto{\PJLlang@langconfig@french}{\setlist[itemize,1]{label=\textcolor{maintext!50}{---}}}
+\setlist[itemize,2]{label=\textcolor{maintext!27}{--}}
+\setlist[itemize,3]{label=\textcolor{maintext!27}{\texttt{*}}}
 
 %%================================
 %% Blank page
