@@ -316,9 +316,9 @@
 % Reduce the spacing before and after \mid and \nmid.
 \AtBeginDocument{
 \let\mid@original\mid
-\renewcommand{\mid}{\hspace{-.15em}\mid@original\hspace{-.15em}}
+\renewcommand{\mid}{\hspace{-.2em}\mid@original\hspace{-.2em}}
 \let\nmid@original\nmid
-\renewcommand{\nmid}{\hspace{-.15em}\nmid@original\hspace{-.15em}}
+\renewcommand{\nmid}{\hspace{-.2em}\nmid@original\hspace{-.2em}}
 }
 
 % The following uses tikz to define retractable arrows to avoid problems with unicode-math.
@@ -1023,8 +1023,9 @@
             \color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}%
             \pushQED{\qed}%
         }
-    \def\@endtheorem{\popQED\endtrivlist\@endpefalse
-    \global\let\qedsymbol\qedsymbolOriginal}
+    \def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol%
+        \popQED\endtrivlist\@endpefalse
+        \global\let\qedsymbol\qedsymbolOriginal}
 \fi
 
 \renewcommand{\qedsymbol}{%
