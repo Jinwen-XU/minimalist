@@ -45,33 +45,56 @@
     [2021/06/30 A simple and clear style for articles and books]
 %</minimalist>
 %
+%# 下面两行引入宏包的代码是所有文件共用的。
+%# The following two lines are common to all files.
 \RequirePackage{kvoptions}
 \RequirePackage{etoolbox}
 %
 %<*class>
+%# 这段代码定义了文档类中的选项。
+%# This code defines the options in the document class.
 \SetupKeyvalOptions{
     family = @minimclass,
     prefix = @minimclass@,
 }
+%# 草稿模式或快速模式
+%# Draft mode or fast mode
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
+%# 经典样式
+%# Classic style
 \DeclareBoolOption[false]{classical}
+%# 启用首行缩进而不是默认的段间空行
+%# Enable paragraph indentation instead of the default parskip
 \DeclareBoolOption[false]{useindent}
+%# 启用 old-style 数字
+%# Enable old-style figures
 \DeclareBoolOption[false]{useosf}
+%# 几个字体选项
+%# Several font options
 \DeclareBoolOption[false]{palatino}
 \DeclareBoolOption[false]{times}
 \DeclareBoolOption[false]{garamond}
 \DeclareBoolOption[false]{biolinum}
+%# 这一个选项用于表明要采用自定义的字体而不是默认字体
+%# This option is used to indicate that one uses a custom font instead of the default font
 \DeclareBoolOption[false]{customfont}
 
+%# 纸张尺寸选项 a4paper 和 b5paper
+%# Paper size options a4paper and b5paper
 \newif\if@minimclass@bfivepaper\@minimclass@bfivepaperfalse
 \DeclareVoidOption{b5paper}{\@minimclass@bfivepapertrue}
 \newif\if@minimclass@afourpaper\@minimclass@afourpaperfalse
 \DeclareVoidOption{a4paper}{\@minimclass@afourpapertrue}
 
+%# 处理选项并载入文档类
+%# Process options and load the base document class
 \DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{\minimclass@baseclass}}
 \ProcessKeyvalOptions*\relax
 \LoadClass{\minimclass@baseclass}
+
+%# 下面的代码设定了一些选项之间的关系
+%# The following code sets the relationship between some options
 \if@minimclass@draft
     \@minimclass@fasttrue
 \fi
@@ -94,9 +117,15 @@
 %%================================
 %% Page layout
 %%================================
+%# 使用 silence 去除一些警告，主要是这里采用了 total 而不是 margin 的设置方法，因此用户要自行设置页面尺寸时可能会导致此类冲突
+%# Use silence to remove some warnings. The main reason is that `total` instead of `margin` is used for setting, so conflict may occur when the user wants to reset the page size
 \RequirePackage{silence}
 \WarningFilter{geometry}{Over-specification in}
+%# 设定页面尺寸
+%# Set page size
 \RequirePackage[heightrounded]{geometry}
+%# 这是默认的尺寸
+%# This is the default page size
 \geometry{
     papersize={7in,10in},
     total={40em,60em},
@@ -104,6 +133,8 @@
     vmarginratio=1:1,
     footnotesep=2em plus 2pt minus 2pt,
 }
+%# B5 的尺寸
+%# B5 paper size
 \if@minimclass@bfivepaper
 \geometry{
     b5paper,
@@ -113,6 +144,8 @@
     footnotesep=2em plus 2pt minus 2pt,
 }
 \fi
+%# A4 的尺寸
+%# A4 paper size
 \if@minimclass@afourpaper
 \geometry{
     a4paper,
@@ -123,27 +156,39 @@
 }
 \fi
 
+%# 这几行代码用于生成快速模式下的 DRAFT 水印
+%# To generate DRAFT watermark in fast mode
 \if@minimclass@fast
     \PassOptionsToPackage{fast}{minimalist}
     \RequirePackage{draftwatermark}
     \DraftwatermarkOptions{text={\normalfont DRAFT},color=paper!95!-paper}
 \fi
+%# 这几行代码决定段落的样式
+%# To determine the style of the paragraph
 \if@minimclass@useindent
     \RequirePackage{indentfirst}
 \else
     \AtEndPreamble{\RequirePackage{parskip}}
 \fi
+%# 载入主样式
+%# Load the main style
 \RequirePackage{minimalist}
 
 %%================================
 %% Fonts
 %%================================
+%# 下面的字体设置代码用于 minimart 和 minimbook
+%# The font setting below is for `minimart` and `minimbook`
 %<*minimart|minimbook>
+%# 这几行代码在 pdfLaTeX 编译时载入编码设置
+%# Load the encoding settings when pdfLaTeX is used
 \RequirePackage{iftex}
 \ifPDFTeX
 \RequirePackage[T1]{fontenc}
 \RequirePackage{inputenc}
 \fi
+%# 这几行代码载入默认字体
+%# Load the default font
 \if@minimclass@customfont\else
 \RequirePackage{mathpazo}
 \RequirePackage{newpxtext}
@@ -151,15 +196,19 @@
 \RequirePackage{amssymb}
 %</minimart|minimbook>
 %
+%# 下面的字体设置代码用于 einfart 和 simplivre
+%# The font setting below is for `einfart` and `simplivre`
 %<*einfart|simplivre>
-%% Math fonts in fast mode
+%# 快速模式下的默认数学字体采用 mathpazo，为了让其生效，要放在 fontspec 的前面
+%# The default math font in fast mode uses `mathpazo`, in order to make it effective, it must be placed in front of `fontspec`
 \if@minimclass@customfont\else
     \if@minimclass@fast
         \RequirePackage{mathpazo}
     \fi
 \fi
 
-%% English fonts
+%# 默认英文字体
+%# The default English main font
 \PassOptionsToPackage{no-math}{fontspec}
 \RequirePackage{fontspec}
 \IfFontExistsTF{Palatino Linotype}{%
@@ -172,18 +221,23 @@
         BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
         \if@minimclass@useosf Numbers = OldStyle\fi ]
 }
+%# 默认英文无衬线字体
+%# The default English sans font
     \setsansfont{SourceSansPro-Regular.otf}[
         Scale          = MatchLowercase ,
         BoldFont       = SourceSansPro-Bold.otf ,
         ItalicFont     = SourceSansPro-RegularIt.otf ,
         BoldItalicFont = SourceSansPro-BoldIt.otf ]
+%# 默认英文等宽字体
+%# The default English mono font
     \setmonofont{cmuntt.otf}[
         Scale          = 1.05 ,
         BoldFont       = cmuntb.otf ,
         ItalicFont     = cmunst.otf ,
         BoldItalicFont = cmuntb.otf ]
 
-%% Chinese fonts
+%# 默认中文字体
+%# The default CJK main font
 \PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
 \RequirePackage{ctex}
 \WarningFilter{everysel}{Everysel is no longer required}
@@ -203,6 +257,8 @@
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }
+%# 默认中文等宽字体
+%# The default CJK mono font
 \IfFontExistsTF{FZYOUSK_507R--GBK1-0}{%
     \setCJKmonofont{FZYOUSK_507R--GBK1-0}[
         BoldFont       = FZYOUSK_509R--GBK1-0 ,
@@ -220,6 +276,8 @@
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }
+%# 默认中文无衬线字体
+%# The default CJK sans font
 \IfFontExistsTF{FZYOUHK_508R--GBK1-0}{%
     \setCJKsansfont{FZYOUHK_508R--GBK1-0}[
         BoldFont       = FZYOUHK_509R--GBK1-0 ,
@@ -246,19 +304,30 @@
         SmallCapsFont  = * ]
 }
 
+%# 标题字体：英文时为普通字体，中文时为无衬线字体
+%# Titles' font: normal font for English, sans serif font for CJK
 \def\minimalist@titlefontshape{\CJKfamily{zhhei}}
 
-%% Math font
+%# 默认数学字体
+%# The default math font
 \if@minimclass@customfont\else
+%## 快速模式下只引用 amssymb 以提供 \mathbb 等字形的定义
+%## In fast mode, only load `amssymb` to provide definitions of \mathbb and other shapes
 \if@minimclass@fast
 \RequirePackage{amssymb}
 \else
+%## 正常模式下使用 unicode-math
+%## Use `unicode-math` in normal mode
 \PassOptionsToPackage
     {warnings-off={mathtools-colon,mathtools-overbracket}}{unicode-math}
 \RequirePackage{unicode-math}
 \unimathsetup{math-style=ISO, partial=upright, nabla=upright}
+%### 主字体采用 Asana Math，与 Palatino 字体搭配
+%### The base font is Asana Math, which matches with the Palatino font
 \setmathfont{Asana-Math.otf}
 \IfFontExistsTF{Neo Euler}{%
+%###- 下面这段未被采用的代码记录了 Neo Euler 字体的全部支持范围，以供参考
+%###- The following unused code records the full range of Neo Euler for reference
 % See https://tex.stackexchange.com/a/425887
 % \setmathfont{Neo Euler}
 %     [range={"0000-"0001,"0020-"007E,
@@ -291,6 +360,8 @@
 %                     bfup/{latin, Latin, greek, Greek}, 
 %                     frak, bffrak, cal}
 %             ]{Neo Euler}
+%### 在主字体的基础上替换一些来自 Neo Euler 的符号和字母
+%### Replace some symbols and letters from Neo Euler on the basis of the base font
 \setmathfont[range={up/{Latin,latin,Greek,greek},
                     bfup/{Latin,latin,Greek,greek},
                     cal, bfcal, frak, bffrak,
@@ -304,16 +375,21 @@
               Scale = 1.05,
             ]{Neo Euler}
 }{}
+%### 再替换一些来自 Latin Modern 的符号，默认符号有些过粗
+%### Replace some symbols from Latin Modern, the default symbols are a bit too thick
 \setmathfont[range={\leq,\geq,\ll,\gg,\lll,\ggg,\leqslant,\geqslant},
               Scale = 0.95,
             ]{latinmodern-math.otf}
 % \setmathfont[range={bfup/num, it, bfit, scr, bfscr,
 %                     sfup, sfit, bfsfup, bfsfit, tt, bfcal}
 %             ]{Asana-Math.otf}
+%### 最后，使用 TeX Gyre Pagella 的数字，这样能得到更好看的分数线
+%### Finally, use numbers from TeX Gyre Pagella to get better fraction line
 \setmathfont[range={up/num, bfup/num}
             ]{texgyrepagella-math.otf}
 
-% Reduce the spacing before and after \mid and \nmid.
+%# 下面这段代码缩减 \mid 和 \nmid 前后的水平距离，默认距离过大
+%# The following code reduces the horizontal space before and after \mid and \nmid, the default space is too large
 \AtBeginDocument{
 \let\mid@original\mid
 \renewcommand{\mid}{\hspace{-.2em}\mid@original\hspace{-.2em}}
@@ -321,7 +397,8 @@
 \renewcommand{\nmid}{\hspace{-.2em}\nmid@original\hspace{-.2em}}
 }
 
-% The following uses tikz to define retractable arrows to avoid problems with unicode-math.
+%# 接下来使用 tikz-cd 重定义可伸缩箭头，默认的箭头有些粗细不均
+%# The following uses tikz-cd to define retractable arrows to avoid problems with unicode-math.
 \newbox\xratbelow
 \newbox\xratabove
 % Redefine \xrightarrow[below]{above}
@@ -387,12 +464,12 @@
         \draw (0,0) edge[commutative diagrams/equal] node[below=3pt] {\box\xratbelow}
         node[above=2pt] {\box\xratabove}
         (\xratlen,0) ;}}
-% Redefine \twoheadrightarrow and \twoheadleftarrow, using those from tikz-cd
+%# 使用 tikz-cd 重新定义一些箭头，默认箭头过粗
+%# Redefine \twoheadrightarrow and \twoheadleftarrow, using those from tikz-cd
 \AtBeginDocument{
 \renewcommand{\twoheadrightarrow}{%
     \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
         \draw (0,0) edge[commutative diagrams/twoheadrightarrow] (.8em,0) ;}}
-
 \renewcommand{\twoheadleftarrow}{%
     \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
         \draw (0,0) edge[commutative diagrams/twoheadleftarrow] (.8em,0) ;}}
@@ -401,6 +478,8 @@
 \fi
 %</einfart|simplivre>
 
+%# 下面配置字体选项
+%# Configure the font options below
 \if@minimclass@palatino
     \RequirePackage{amssymb}
     \RequirePackage{mathpazo}
@@ -456,18 +535,27 @@
     \RequirePackage[italic,defaultmathsizes]{mathastext}
 \fi
 
+%# 这一行代码会让 ProjLib 中的字体选项失效
+%# The following line will invalidate the font options of ProjLib
 \def\PJL@font@alreadyset{}
 
-%% Minor improvements
+%# 使用 microtype 优化排版细节
+%# Use `microtype` to get details better
 \PassOptionsToPackage{verbose=silent}{microtype}
 \RequirePackage{microtype}
+%# 使用 nowidow 以减少换页时的单行
+%# Use `nowidow` to reduce single line near the edge
 \PassOptionsToPackage{all}{nowidow}
 \RequirePackage{nowidow}
+%# 使用 embrac 以在 \emph 中获得直立的括号
+%# Use `embrac` to get upright brackets in \emph
 \RequirePackage{embrac}
 
 %%================================
 %% Graphics
 %%================================
+%# 下面的代码提供了基本的图像和浮动体配置功能
+%# The code below provides basic graphic and float configuration
 \RequirePackage{graphicx}
 \graphicspath{{images/}}
 \RequirePackage{wrapfig}
@@ -479,7 +567,8 @@
 %% Index
 %%================================
 % \RequirePackage{imakeidx}
-% switch off the line numbers of index
+%# 下面的代码用于去除索引中的行号
+%# Switch off the line numbers in the index
 \AtEndPreamble{
 \pretocmd{\printindex}{\LocallyStopLineNumbers}{}{}
 \apptocmd{\printindex}{\ResumeLineNumbers}{}{}
@@ -488,20 +577,36 @@
 %
 %
 %<*minimalist>
+%# 这段代码定义了宏包中的选项。
+%# This code defines the options in the package.
 \SetupKeyvalOptions{%
     family = @minimalist,
     prefix = @minimalist@
 }
+%# 草稿模式或快速模式
+%# Draft mode or fast mode
 \DeclareBoolOption[false]{draft}
 \DeclareBoolOption[false]{fast}
+%# 纯文本模式 （不加载定理类环境）
+%# Pure text mode (no theorem-like environments loaded)
 \DeclareBoolOption[false]{puretext}
 \DeclareBoolOption[false]{nothms}
+%# 定理类环境不编号
+%# No numbering for theorem-like environments
 \DeclareBoolOption[false]{nothmnum}
+%# 允许标题中的粗体
+%# Allow bold faces in the titles
 \DeclareBoolOption[false]{allowbf}
+%# 经典样式
+%# Classic style
 \DeclareBoolOption[false]{classical}
 \DeclareBoolOption[false]{runin}
+%# 处理选项
+%# Process options
 \ProcessKeyvalOptions*\relax
 
+%# 下面的代码设定了一些选项之间的关系
+%# The following code sets the relationship between some options
 \if@minimalist@draft
   \@minimalist@fasttrue
 \fi
@@ -509,22 +614,31 @@
   \@minimalist@nothmstrue
 \fi
 
+%# 设定带条件的加粗
+%# Set the conditional bold face
 \if@minimalist@allowbf
     \newcommand{\conditionalbfseries}{\bfseries\colorlet{PJLtempcolor}{.}\color{PJLtempcolor!83!paper}}
 \else
     \newcommand{\conditionalbfseries}{}
 \fi
 
+%# 判断是文章还是书
+%# Article or Book?
 \newif\ifIsBook
 \ifdefined\c@chapter\IsBooktrue\else\IsBookfalse\fi
-
-\def\minimalist@titlefontshape{}
-% \def\minimalist@titlefontshape{\sffamily}
 
 %%================================
 %% Title fonts
 %%================================
 \RequirePackage{anyfontsize}
+
+%# 标题共用的字形（在文档类中设置，默认为空）
+%# The common font shape of the titles (set in the document class, default is none)
+\def\minimalist@titlefontshape{}
+% \def\minimalist@titlefontshape{\sffamily}
+
+%# 各级标题的字形
+%# The font shape of the titles
 \if@minimalist@classical
 \newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
 \newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
@@ -542,6 +656,8 @@
 %%================================
 %% Paper configuration
 %%================================
+%# 引入 ProjLib 中用于设置页面颜色等参数的模块
+%# Introduce the module of ProjLib used to set page color etc.
 \RequirePackage{PJLpaper}
 
 %%================================
@@ -550,7 +666,11 @@
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
 \RequirePackage{extramarks}
+%# 下面这一行用来修复页面参数被修改时错误的页眉页脚位置
+%# The following line is used to fix the wrong header and footer position when the page parameters are modified
 \AtEndPreamble{\fancyhfoffset{0pt}}
+%# 默认的页眉页脚设置
+%# Default header and footer settings
 \fancypagestyle{fancy}{
     \fancyhf{}
     \if@twoside
@@ -566,6 +686,8 @@
     \renewcommand{\headrulewidth}{0pt}
 }
 \pagestyle{fancy}
+%# 第一页的页眉页脚设置
+%# First page's header and footer settings
 \fancypagestyle{plain}{
     \fancyhf{}
     \if@twoside
@@ -580,7 +702,10 @@
     \renewcommand{\headrulewidth}{0pt}
 }
 \ifbool{IsBook}{
-% For book
+%# 针对书的设定
+%# Configure for books
+%## part 页的页面及页眉页脚设置
+%## Part pages' style and their header and footer settings
     \if@minimalist@fast
     \newcommand{\drawHelpLine}{}
     \else
@@ -616,6 +741,8 @@
     }
     \addtolength{\headheight}{20pt}
     \addtolength{\topmargin}{-20pt}
+%## mark 的设置
+%## Configure the marks
     \if@twoside
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
     \else
@@ -624,7 +751,10 @@
     \renewcommand*{\sectionmark}[1]{%
         \markright{\sec@decochar~\thesection~\sec@decochar~~~#1}}
 }{
-% For article
+%# 针对文章的设定
+%# Configure for articles
+%## mark 的设置
+%## Configure the marks
     \if@twoside
         \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{}}
     \else
@@ -635,6 +765,8 @@
 %%================================
 %% Line spacing
 %%================================
+%# 行距设置，中文大约是 1.5 倍行距，英文大约是单倍行距，根据字体变化
+%# Line spacing configuration, CJK uses about one-half spacing, and English is single line spacing, depending on the font
 % \RequirePackage{setspace}
 \RequirePackage{PJLlang}
 \PJLsetlinespacing{\setstretch{1.07}}
@@ -645,6 +777,8 @@
 %%================================
 %% Line numbers
 %%================================
+%# 设置行号
+%# Line numbers' configuration
 \PassOptionsToPackage{pagewise,mathlines}{lineno}
 \RequirePackage{lineno}
 \renewcommand\linenumberfont{\ttfamily\color{maintext!7!paper}\footnotesize}
@@ -652,6 +786,8 @@
 
 \RequirePackage{mathtools}
 
+%# 对 lineno 的补丁，使得数学公式能够被正确编上行号
+%# Patch to lineno, so that equations can be correctly numbered
 % From https://tex.stackexchange.com/a/461192
 \ifdefined\linenomathpatch\else
 % Patch 'normal' math environments:
@@ -685,15 +821,19 @@
 \linenomathpatchAMS{flalign}
 \fi
 
-% record whether linenumber has turned on
+%# 用于记录是否计量行号的 bool 变量
+%# Record whether linenumber has turned on
 \newif\ifLNturnsON
 \def\LocallyStopLineNumbers{\LNturnsONfalse%
     \ifLineNumbers\LNturnsONtrue\fi\nolinenumbers}
 \def\ResumeLineNumbers{\ifLNturnsON\linenumbers\fi}
-% switch off the line numbers of TOC
+
+%# 下面的代码用于去除目录中的行号
+%# Switch off the line numbers in the TOC
 \pretocmd{\tableofcontents}{\LocallyStopLineNumbers}{}{\FAIL}
 \apptocmd{\tableofcontents}{\ResumeLineNumbers}{}{\FAIL}
-% switch off the line numbers of bibliography
+%# 下面的代码用于去除参考文献中的行号
+%# Switch off the line numbers in the bibliography
 \pretocmd{\thebibliography}{\LocallyStopLineNumbers}{}{\FAIL}
 \apptocmd{\endthebibliography}{\ResumeLineNumbers}{}{\FAIL}
 
@@ -704,6 +844,8 @@
 \PassOptionsToPackage{normalem}{ulem}
 \RequirePackage{ulem}
 
+%# 设定 CJK 的 part 标题本地化（babel 目前不包含这个设置）
+%# Set CJK's part title localization (`babel` currently does not include this setting)
 \newcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}
 \gappto{\PJLlang@langconfig@common}{%
 \renewcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}%
@@ -719,7 +861,8 @@
 }
 
 \ifbool{IsBook}{
-% For book
+%# 针对书的标题样式设定
+%# Configure the title formats for books
     %% Part
     \titleclass{\part}{top} % make part like a chapter
     \titleformat{\part}[display]
@@ -771,7 +914,8 @@
             \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
         [\ResumeLineNumbers]
 }{
-% For article
+%# 针对文章的标题样式设定
+%# Configure the title formats for articles
     %% Part
     \titleformat{\part}[display]
         {\LocallyStopLineNumbers%
@@ -888,7 +1032,8 @@
     {} % without page number
     [\addvspace{.5pc}]
 \ifbool{IsBook}{
-% For book
+%# 针对书的目录样式设定
+%# Configure the TOC style for books
     \titlecontents{chapter}
         [2em] % i.e., 0em (part) + 2em
         {\addvspace{.5pc}\normalfont}
@@ -914,7 +1059,8 @@
         {\hspace*{-2.75em}}
         {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
 }{
-% For article
+%# 针对文章的目录样式设定
+%# Configure the TOC style for articles
     \titlecontents{section}
         [2em] % i.e., 0em (part) + 2em
         {\normalfont}
@@ -938,6 +1084,8 @@
 %%================================
 %% Lists
 %%================================
+%# 列表样式设定
+%# Configure the style of lists
 \RequirePackage{enumitem}
 \setlist{noitemsep}
 % \setlist[1]{labelindent=\parindent} % < Usually a good idea
@@ -959,6 +1107,8 @@
 %%================================
 %% Blank page
 %%================================
+%# 空白页样式
+%# The blank page style
 \newcommand{\blinkpagetext}{This page is intentionally left blank}
 \renewcommand{\cleardoublepage}{\relax
     \clearpage
@@ -973,6 +1123,8 @@
 %%================================
 %% Draft mark
 %%================================
+%# 引入 ProjLib 中用于提供草稿阶段指令的模块
+%# Introduce the module of ProjLib that offers macros for draft stage
 \RequirePackage{PJLdraft}
 
 %%================================
@@ -980,6 +1132,8 @@
 %%================================
 \RequirePackage{amsthm}
 \if@minimalist@classical
+%# 经典模式的定理样式
+%# The theorem style for classical mode
 % Style #1
 % \newtheoremstyle{simple}%
 %     {}{}%
@@ -1010,6 +1164,8 @@
         {{\conditionalbfseries\minimalist@titlefontshape\thmname{#1}\thmnumber{ #2}}%
             {\color{maintext!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}~~{\normalfont---}~~}
 \else
+%# 正常模式的定理样式
+%# The theorem style for normal mode
     \def\simpleqedsymbol{%
         \makebox[1em]{\rlap{\textcolor{maintext!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
     \newtheoremstyle{simple}%
@@ -1028,10 +1184,14 @@
         \global\let\qedsymbol\qedsymbolOriginal}
 \fi
 
+%# QED 符号
+%# The QED symbol
 \renewcommand{\qedsymbol}{%
     \makebox[1em]{\color{maintext!27!paper}\rule[-0.1em]{.95em}{.95em}}}
 \let\qedsymbolOriginal\qedsymbol
 
+%# 超链接的设置
+%# The configuration of hyperlinks
 \if@minimalist@fast
     \providecommand{\phantomsection}{}
     \RequirePackage{url}
@@ -1043,11 +1203,14 @@
     \RequirePackage{hyperref}
 \fi
 
+%# 引入 ProjLib 中用于设置定理类环境的模块
+%# Introduce the module of ProjLib that offers the configuration of theorem-like environments
 % Should be placed after "hyperref"
 \PassOptionsToPackage{nothms}{PJLthm}
 \RequirePackage{PJLthm}
 
-%% Adjust English theorems names
+%# 英文定理标题的样式
+%# Adjust English theorems names
 \pretocmd{\theoremnameEN}{\textsc}{}{\FAIL}
 \pretocmd{\lemmanameEN}{\textsc}{}{\FAIL}
 \pretocmd{\propositionnameEN}{\textsc}{}{\FAIL}
@@ -1068,7 +1231,8 @@
 \pretocmd{\remarknameEN}{\itshape}{}{\FAIL}
 \pretocmd{\observationnameEN}{\itshape}{}{\FAIL}
 
-%% Adjust French theorems names
+%# 法语定理标题的样式
+%# Adjust French theorems names
 \pretocmd{\theoremnameFR}{\textsc}{}{\FAIL}
 \pretocmd{\lemmanameFR}{\textsc}{}{\FAIL}
 \pretocmd{\propositionnameFR}{\textsc}{}{\FAIL}
@@ -1089,7 +1253,8 @@
 \pretocmd{\remarknameFR}{\itshape}{}{\FAIL}
 \pretocmd{\observationnameFR}{\itshape}{}{\FAIL}
 
-%% Adjust German theorems names
+%# 德语定理标题的样式
+%# Adjust German theorems names
 \pretocmd{\theoremnameDE}{\textsc}{}{\FAIL}
 \pretocmd{\lemmanameDE}{\textsc}{}{\FAIL}
 \pretocmd{\propositionnameDE}{\textsc}{}{\FAIL}
@@ -1110,7 +1275,8 @@
 \pretocmd{\remarknameDE}{\itshape}{}{\FAIL}
 \pretocmd{\observationnameDE}{\itshape}{}{\FAIL}
 
-%% Adjust Italian theorems names
+%# 意大利语定理标题的样式
+%# Adjust Italian theorems names
 \pretocmd{\theoremnameIT}{\textsc}{}{\FAIL}
 \pretocmd{\lemmanameIT}{\textsc}{}{\FAIL}
 \pretocmd{\propositionnameIT}{\textsc}{}{\FAIL}
@@ -1131,7 +1297,8 @@
 \pretocmd{\remarknameIT}{\itshape}{}{\FAIL}
 \pretocmd{\observationnameIT}{\itshape}{}{\FAIL}
 
-%% Adjust Portuguese theorems names
+%# 葡萄牙语定理标题的样式
+%# Adjust Portuguese theorems names
 \pretocmd{\theoremnamePT}{\textsc}{}{\FAIL}
 \pretocmd{\lemmanamePT}{\textsc}{}{\FAIL}
 \pretocmd{\propositionnamePT}{\textsc}{}{\FAIL}
@@ -1152,7 +1319,8 @@
 \pretocmd{\remarknamePT}{\itshape}{}{\FAIL}
 \pretocmd{\observationnamePT}{\itshape}{}{\FAIL}
 
-%% Adjust Brazilian theorems names
+%# 巴西葡萄牙语定理标题的样式
+%# Adjust Brazilian theorems names
 \pretocmd{\theoremnameBR}{\textsc}{}{\FAIL}
 \pretocmd{\lemmanameBR}{\textsc}{}{\FAIL}
 \pretocmd{\propositionnameBR}{\textsc}{}{\FAIL}
@@ -1173,7 +1341,8 @@
 \pretocmd{\remarknameBR}{\itshape}{}{\FAIL}
 \pretocmd{\observationnameBR}{\itshape}{}{\FAIL}
 
-%% Adjust Spanish theorems names
+%# 西班牙语定理标题的样式
+%# Adjust Spanish theorems names
 \pretocmd{\theoremnameES}{\textsc}{}{\FAIL}
 \pretocmd{\lemmanameES}{\textsc}{}{\FAIL}
 \pretocmd{\propositionnameES}{\textsc}{}{\FAIL}
@@ -1194,7 +1363,8 @@
 \pretocmd{\remarknameES}{\itshape}{}{\FAIL}
 \pretocmd{\observationnameES}{\itshape}{}{\FAIL}
 
-%% Theorem environments
+%# 建立定理类环境
+%# Set-up theorem-like environments
 \theoremstyle{simple}
 \ifbool{IsBook}{
     \newaliascnt{highest}{chapter}
@@ -1279,6 +1449,8 @@
 \fi
 
 \ifbool{IsBook}{}{%
+%# 针对文章的一些设定
+%# Some configurations for articles
 
 %%================================
 %% Title block style
