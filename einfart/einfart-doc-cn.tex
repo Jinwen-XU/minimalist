@@ -40,7 +40,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,subsection,subsubsection,href,
-    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib
+    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib,qedhere
     }
 }
 \lstnewenvironment{code}% 
@@ -87,8 +87,8 @@
 
 \title{\einfart{}，以极简主义风格排版你的文章}
 \author{许锦文}
-\thanks{对应版本. \texttt{\einfart{} 2021/06/30}}
-\date{2021年6月，北京}
+\thanks{对应版本. \texttt{\einfart{} 2021/07/05}}
+\date{2021年7月，北京}
 
 \maketitle
 
@@ -102,7 +102,8 @@
 
 \tableofcontents
 
-\bigskip
+% \bigskip
+\vspace{-.3\baselineskip}
 \begin{tip}
     多语言支持、定理类环境、未完成标记等功能是由 \ProjLib{} 工具箱提供的，这里只给出了将其与本文档类搭配使用的要点。如需获取更详细的信息，可以参阅 \ProjLib{} 的说明文档。
 \end{tip}
@@ -418,6 +419,9 @@
     \item 再在后面用 \lstinline|\footnotetext{...}|。
 \end{itemize}
 这是标题使用下划线装饰之后带来的一个缺点。
+
+\subsection{关于QED符号}
+由于定理类环境中的字体和正文字体是一样的，为了方便看出定理类环境在哪里结束，在其结尾处放置了一个空心的QED符号。然而，如果你的定理是由公式或者列表结尾的，这个符号就无法自动地放在正确的位置。这时，你需要手动在公式或列表最后一个条目的后面加上 \lstinline|\qedhere|，以让QED符号显示到这一行的最后。
 
 
 \section{目前存在的问题}

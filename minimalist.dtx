@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/06/30 A simple and clear article style]
+    [2021/07/05 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/06/30 A simple and clear book style]
+    [2021/07/05 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/06/30 A simple and clear article style]
+    [2021/07/05 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/06/30 A simple and clear book style]
+    [2021/07/05 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/06/30 A simple and clear style for articles and books]
+    [2021/07/05 A simple and clear style for articles and books]
 %</minimalist>
 %
 %# 下面两行引入宏包的代码是所有文件共用的。
@@ -600,6 +600,8 @@
 %# 经典样式
 %# Classic style
 \DeclareBoolOption[false]{classical}
+%# subsubsection 标题采用 runin 样式
+%# Use `runin` style for subsubsection
 \DeclareBoolOption[false]{runin}
 %# 处理选项
 %# Process options
@@ -666,9 +668,11 @@
 \RequirePackage{geometry}
 \RequirePackage{fancyhdr}
 \RequirePackage{extramarks}
+
 %# 下面这一行用来修复页面参数被修改时错误的页眉页脚位置
 %# The following line is used to fix the wrong header and footer position when the page parameters are modified
 \AtEndPreamble{\fancyhfoffset{0pt}}
+
 %# 默认的页眉页脚设置
 %# Default header and footer settings
 \fancypagestyle{fancy}{
@@ -686,6 +690,7 @@
     \renewcommand{\headrulewidth}{0pt}
 }
 \pagestyle{fancy}
+
 %# 第一页的页眉页脚设置
 %# First page's header and footer settings
 \fancypagestyle{plain}{
@@ -763,12 +768,14 @@
 }
 %
 %%================================
-%% Line spacing
+%% Languages and line spacing
 %%================================
+%# 引入 ProjLib 中用于提供多语言设置的模块
+%# Introduce the module of ProjLib that offers language-specific configurations
+\RequirePackage{PJLlang}
 %# 行距设置，中文大约是 1.5 倍行距，英文大约是单倍行距，根据字体变化
 %# Line spacing configuration, CJK uses about one-half spacing, and English is single line spacing, depending on the font
 % \RequirePackage{setspace}
-\RequirePackage{PJLlang}
 \PJLsetlinespacing{\setstretch{1.07}}
 \PJLsetCJKlinespacing{\onehalfspacing}
 % To avoid `Underfull \vbox (badness 10000)`
@@ -1184,8 +1191,8 @@
         \global\let\qedsymbol\qedsymbolOriginal}
 \fi
 
-%# QED 符号
-%# The QED symbol
+%# 灰色实心的 QED 符号
+%# A grey solid QED symbol
 \renewcommand{\qedsymbol}{%
     \makebox[1em]{\color{maintext!27!paper}\rule[-0.1em]{.95em}{.95em}}}
 \let\qedsymbolOriginal\qedsymbol
@@ -1593,6 +1600,8 @@
 %%================================
 %% Simulate features of amsart
 %%================================
+%# 引入 ProjLib 中用于模拟 AMS 文档类写法的模块
+%# Introduce the module of ProjLib that emulates the writing style in AMS classes
 \RequirePackage{PJLamssim}
 
 }

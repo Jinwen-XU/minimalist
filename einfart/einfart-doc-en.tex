@@ -41,7 +41,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,subsection,subsubsection,href,
-    color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib
+    color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib,qedhere
     }
 }
 \lstnewenvironment{code}% 
@@ -88,8 +88,8 @@
 
 \title{\einfart{}, write your articles in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\einfart{} 2021/06/30}}
-\date{June 2021, Beijing}
+\thanks{Corresponding to: \texttt{\einfart{} 2021/07/05}}
+\date{July 2021, Beijing}
 
 \maketitle
 
@@ -114,6 +114,7 @@
 \subsection{How to load it}
 
 One only needs to put
+
 \begin{code}
   \documentclass{einfart}
 \end{code}
@@ -410,6 +411,9 @@ In \lstinline|\section| or \lstinline|\subsection| , if you wish to add footnote
     \item then add \lstinline|\footnotetext{...}| afterwards. 
 \end{itemize}
 This is a disadvantage brought about by the underline decoration of the title.
+
+\subsection{On the QED symbols}
+Since the font in the theorem-like environments is the same as that of the main text, in order to indicate where the environments end, a hollow QED symbol \simpleqedsymbol{} is placed at the end of the theorem-like environments. However, if your theorem ends with an equation or list (itemize, enumerate, description, etc.), this symbol cannot be automatically placed in the correct position. In this case, you need to manually add a \lstinline|\qedhere| at the end of your equation or the last entry of your list to make the QED symbol appear at the end of the line.
 
 
 \section{Known issues}
