@@ -1,8 +1,7 @@
-%! TEX program = xelatex
-\documentclass[English,French,puretext]{minimart}
+\documentclass[English,Chinese,French,puretext]{minimart}
 
 \CreateTheorem{definition}<highest>
-\CreateTheorem{theorem}<highest>
+\CreateTheorem{theorem}[definition]
 
 \linenumbers % Enable line numbers
 
@@ -12,9 +11,14 @@
 \usepackage{ProjLib}
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
+\usetikzlibrary{calc}
+
+\usepackage{blindtext}
+
+\UseLanguage{English}
 
 %%================================
-%% For typestting code
+%% For typesetting code
 %%================================
 \usepackage{listings}
 \definecolor{maintheme}{RGB}{70,130,180}
@@ -33,17 +37,22 @@
     escapeinside={(*}{*)},
     % numbers=left,
     numberstyle=\scriptsize, stepnumber=1, numbersep=5pt,
-    firstnumber=last,
-} 
+    % firstnumber=last,
+}
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,subsection,subsubsection,href,
+    {linenumbers,nolinenumbers,part,parttext,chapter,section,subsection,subsubsection,frontmatter,mainmatter,backmatter,tableofcontents,href,
     color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib,qedhere
     }
 }
-\lstnewenvironment{code}% 
-{\LocallyStopLineNumbers%
+\lstnewenvironment{code}%
+{\setstretch{1.07}\LocallyStopLineNumbers%
 \setkeys{lst}{columns=fullflexible,keepspaces=true}%
+}
+{\ResumeLineNumbers}
+\lstnewenvironment{code*}%
+{\setstretch{1.07}\LocallyStopLineNumbers%
+\setkeys{lst}{numbers=left,columns=fullflexible,keepspaces=true}%
 }
 {\ResumeLineNumbers}
 
@@ -79,72 +88,304 @@
 \providecommand{\simplivre}{\textsf{simplivre}}
 
 %%================================
+%% Titles
+%%================================
+\let\LevelOneTitle\section
+\let\LevelTwoTitle\subsection
+\let\LevelThreeTitle\subsubsection
+
+%%================================
 %% Main text
 %%================================
 \begin{document}
 
 \title{\minimalist{}, write your articles or books in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\minimalist{} 2021/07/05}}
+\thanks{Corresponding to: \texttt{\minimalist{} 2021/07/13}}
+\email{\href{mailto:ProjLib@outlook.com}{ProjLib@outlook.com}}
 \date{July 2021, Beijing}
 
 \maketitle
 
 \begin{abstract}
-    \minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. My original intention in designing this series was to write drafts and notes that look simple yet not shabby.
-    
-    The entire collection includes \verb|minimalist.sty|, which is the main style shared by all of the following classes; \verb|minimart.cls| for typesetting articles and \verb|minimbook.cls| for typesetting books. They compile with any major \TeX{} engine, with native support to English, French, German, Italian, Portuguese (European and Brazilian) and Spanish typesetting via \lstinline|\UseLanguage| (see the instruction below for detail).
+    \minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. The original intention in designing this series was to write drafts and notes that look simple yet not shabby. With the help of the \ProjLib{} toolkit, also developed by the author, the classes provided here have multi-language support, preset theorem-like environments with clever reference support, and many other functionalities. Notably, using these classes, one can organize the author information in the \AmS{} fashion, makes it easy to switch to journal classes later for publication.
 
-    You can also found \einfart{} and \simplivre{} on CTAN. They are the enhanced version of \minimart{} and \minimbook{} with unicode support. With this, they can access to more beautiful fonts, and also have native support for Chinese, Japanese and Russian typesetting. On the other hand, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX} (not pdf\LaTeX).
-    
-    This documentation is typeset using \minimart{}. You can think of it as a short introduction and demonstration.
+    Finally, this documentation is typeset using the \minimart{} class. You can think of it as a short introduction and demonstration.
 \end{abstract}
 
+
+\setcounter{tocdepth}{2}
 \tableofcontents
 
 
 \medskip
-\begin{tip}
-    Multi-language support, theorem-like environments, draft marks and some other features are provided by the \ProjLib{} toolkit. Here we only briefly discuss how to use it with this document class. For more detailed information, you can refer to the documentation of \ProjLib{}.
-\end{tip}
+\LevelOneTitle*{Before you start}
+\addcontentsline{toc}{section}{Before you start}
+In order to use the package or classes described here, you need to:
+\begin{itemize}
+    \item install TeX Live or MikTeX of the latest possible version, and make sure that \texttt{minimalist} and \texttt{projlib} are correctly installed in your \TeX{} system.
+    \item be familiar with the basic usage of \LaTeX{}, and knows how to compile your document with \hologo{pdfLaTeX}, \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
+\end{itemize}
 
-\clearpage
-\section{Initialization}
+\LevelOneTitle{Introduction}
 
-\subsection{How to load it}
+\minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. The original intention in designing this series was to write drafts and notes that look simple yet not shabby.
+
+The entire collection includes \verb|minimalist.sty|, which is the main style shared by all of the following classes; \verb|minimart.cls| for typesetting articles and \verb|minimbook.cls| for typesetting books. They compile with any major \TeX{} engine, with native support to English, French, German, Italian, Portuguese (European and Brazilian) and Spanish typesetting via \lstinline|\UseLanguage| (see the instruction below for detail).
+
+You can also found \einfart{} and \simplivre{} on CTAN. They are the enhanced version of \minimart{} and \minimbook{} with unicode support. With this, they can access to more beautiful fonts, and additionally have native support for Chinese, Japanese and Russian typesetting. On the other hand, they need to be compiled with \hologo{XeLaTeX} or \hologo{LuaLaTeX} (not \hologo{pdfLaTeX}).
+
+With the help of the \ProjLib{} toolkit, also developed by the author, the classes provided here have multi-language support, preset theorem-like environments with clever reference support, and many other functionalities such as draft marks, enhanced author information block, mathematical symbols and shortcuts, etc. Notably, using these classes, one can organize the author information in the \AmS{} fashion, makes it easy to switch to journal classes later for publication. For more detailed information, you can refer to the documentation of \ProjLib{} by running \lstinline|texdoc projlib| in the command line.
+
+\LevelOneTitle{Usage and examples}
+
+\LevelTwoTitle{How to load it}
 You can directly use \minimart{} or \minimbook{} as your document class. In this way, you can directly begin writing your document, without having to worry about the configurations.
 
 \begin{code}
   \documentclass{minimart} (*{\normalfont or}*) \documentclass{minimbook}
 \end{code}
 
-And of course, you can also use the default classes \textsf{article} or \textsf{book}, and load the \minimalist{} package. This way, only the basic styles are set, and you can thus use your preferred fonts and page layout. All the features mentioned in this article are provided.
+\begin{tip}
+    You may wish to use \einfart{} or \simplivre{} instead, which should produce better result. All the examples later using \minimart{} or \minimbook{} can be adopted to \einfart{} and \simplivre{} respectively, without further modification.
+\end{tip}
+
+You can also use the default classes \textsf{article} or \textsf{book}, and load the \minimalist{} package. This way, only the basic styles are set, and you can thus use your preferred fonts and page layout. All the features mentioned in this article are provided.
 
 \begin{code}
+  \documentclass{article} (*{\normalfont or}*) \documentclass{book}
   \usepackage{minimalist}
 \end{code}
 
-\subsection{Options}
+\LevelTwoTitle{Example - \minimart}
 
-\minimalist{} offers the following options: 
+Let's first look at a complete example of \minimart{} (the same works for \einfart{}).
+
+\begin{code*}
+\documentclass{minimart}
+\usepackage{ProjLib}
+
+\UseLanguage{French}
+
+\begin{document}
+
+\title{(*\meta{title}*)}
+\author{(*\meta{author}*)}
+\date{\PLdate{2022-04-01}}
+
+\maketitle
+
+\begin{abstract}
+    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
+\end{abstract}
+\begin{keyword}
+    AAA, BBB, CCC, DDD, EEE
+\end{keyword}
+
+\section{Un théorème}
+
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+Référence du théorème: \cref{thm:abc}
+
+\end{document}
+\end{code*}
+
+
+If you find this example a little complicated, don't worry. Let's now look at this example piece by piece.
+
+\LevelThreeTitle{Initialization}
+
+\medskip
+\begin{code}
+\documentclass{minimart}
+\usepackage{ProjLib}
+\end{code}
+
+Initialization is straightforward. The first line loads the document class \minimart{}, and the second line loads the \ProjLib{} toolkit to obtain some additional functionalities.
+
+\LevelThreeTitle{Set the language}
+
+\medskip
+\begin{code}
+\UseLanguage{French}
+\end{code}
+
+This line indicates that French will be used in the document (by the way, if only English appears in your article, then there is no need to set the language). You can also switch the language in the same way later in the middle of the text. Supported languages include Simplified Chinese, Traditional Chinese, Japanese, English, French, German, Spanish, Portuguese, Brazilian Portuguese and Russian%
+\footnote{The language Simplified Chinese, Traditional Chinese, Japanese and Russian requires Unicode support, thus the classes \einfart{} or \simplivre{}.}%
+.%
+
+For detailed description of this command and more related commands, please refer to the section on the multi-language support.
+
+\LevelThreeTitle{Title, author information, abstract and keywords}
+
+\medskip
+\begin{code}
+\title{(*\meta{title}*)}
+\author{(*\meta{author}*)}
+\date{\PLdate{2022-04-01}}
+\maketitle
+
+\begin{abstract}
+    (*\meta{abstract}*)
+\end{abstract}
+\begin{keyword}
+    (*\meta{keywords}*)
+\end{keyword}
+\end{code}
+
+This part begins with the title and author information block. The example shows the basic usage, but in fact, you can also write:
+
+\begin{code}
+\author{(*\meta{author 1}*)}
+\address{(*\meta{address 1}*)}
+\email{(*\meta{email 1}*)}
+\author{(*\meta{author 2}*)}
+\address{(*\meta{address 2}*)}
+\email{(*\meta{email 2}*)}
+...
+\end{code}
+
+In addition, you may also write in the \AmS{} fashion, i.e.:
+
+\begin{code}
+\title{(*\meta{title}*)}
+\author{(*\meta{author 1}*)}
+\address{(*\meta{address 1}*)}
+\email{(*\meta{email 1}*)}
+\author{(*\meta{author 2}*)}
+\address{(*\meta{address 2}*)}
+\email{(*\meta{email 2}*)}
+\date{\PLdate{2022-04-01}}
+\subjclass{*****}
+\keywords{(*\meta{keywords}*)}
+
+\begin{abstract}
+    (*\meta{abstract}*)
+\end{abstract}
+
+\maketitle
+\end{code}
+
+\LevelThreeTitle{Draft marks}
+
+\medskip
+\begin{code}
+\dnf<(*\meta{some hint}*)>
+\end{code}
+
+When you have some places that have not yet been finished yet, you can mark them with this command, which is especially useful during the draft stage.
+
+\LevelThreeTitle{Theorem-like environments}
+
+\medskip
+\begin{code}
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+Référence du théorème: \cref{thm:abc}
+\end{code}
+
+Commonly used theorem-like environments have been pre-defined. Also, when referencing a theorem-like environment, it is recommended to use \lstinline|\cref{|\meta{label}\texttt{\}} --- in this way, there is no need to explicitly write down the name of the corresponding environment every time.
+
+\begin{tip}
+If you wish to switch to the standard class later, just replace the first two lines with:
+
+\begin{code}
+\documentclass{article}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[palatino,amsfashion]{ProjLib}
+\end{code}
+
+or to use the \AmS{} class:
+
+\begin{code}
+\documentclass{amsart}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[palatino]{ProjLib}
+\end{code}
+
+\end{tip}
+
+\begin{tip}
+If you like the current document class, but want a more ``plain'' style, then you can use the option \texttt{classical}, like this:
+
+\begin{code}
+\documentclass[classical]{minimart}
+\end{code}
+\end{tip}
+
+\clearpage
+\LevelTwoTitle{Example - \minimbook}
+
+Now let's look at an example of \minimbook{} (the same works for \simplivre{}).
+
+\begin{code*}
+\documentclass{minimbook}
+\usepackage{ProjLib}
+
+\UseLanguage{French}
+
+\begin{document}
+
+\frontmatter
+
+\begin{titlepage}
+    (*\meta{code for titlepage}*)
+\end{titlepage}
+
+\tableofcontents
+
+\mainmatter
+
+\part{(*\meta{part title}*)}
+\parttext{(*\meta{text after part title}*)}
+
+\chapter{(*\meta{chapter title}*)}
+
+\section{(*\meta{section title}*)}
+
+...
+
+\backmatter
+
+...
+
+\end{document}
+\end{code*}
+
+There is no much differences with \minimart{}, only that the title and author information should be typeset within the \texttt{titlepage} environment. Currently no default titlepage style is given, since the design of the title page is a highly personalized thing, and it is difficult to achieve a result that satisfies everyone.
+
+\bigskip
+In the next section, we will go through the options available.
+\clearpage
+
+
+\LevelOneTitle{The options}
+
+\minimalist{} offers the following options:
 
 \begin{itemize}
     \item The language options \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
         \begin{itemize}
             \item For the option names of a specific language, please refer to \meta{language name} in the next section. The first specified language will be used as the default language.
+            \item The language options are optional, mainly for increasing the compilation speed. Without them the result would be the same, only slower.
         \end{itemize}
     \item \texttt{draft} or \texttt{fast}
         \begin{itemize}
             \item The option \verb|fast| enables a faster but slightly rougher style, main differences are:
             \begin{itemize}
-                \item Use simpler math font configuration; 
-                \item Do not use \textsf{hyperref}; 
+                \item Use simpler math font configuration;
+                \item Do not use \textsf{hyperref};
                 \item Enable the fast mode of \ProjLib{} toolkit.
             \end{itemize}
         \end{itemize}
-        \begin{tip}
-            During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
-        \end{tip}
+    \begin{tip}
+        During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
+    \end{tip}
     \item \texttt{allowbf}
         \begin{itemize}
             \item Allow boldface. When this option is enabled, the main title, the titles of all levels and the names of theorem-like environments will be bolded.
@@ -153,9 +394,9 @@ And of course, you can also use the default classes \textsf{article} or \textsf{
         \begin{itemize}
             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
         \end{itemize}
-        \begin{tip}
-            \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
-        \end{tip}
+    \begin{tip}
+        \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
+    \end{tip}
     \item \texttt{runin}
         \begin{itemize}
             \item Use the ``runin'' style for \lstinline|\subsubsection|
@@ -170,8 +411,7 @@ And of course, you can also use the default classes \textsf{article} or \textsf{
         \end{itemize}
 \end{itemize}
 
-% \clearpage
-Additionally, \minimart{} and \minimbook{} offers the following options: 
+Additionally, \minimart{} and \minimbook{} offers the following options:
 \begin{itemize}
     \item \texttt{a4paper} or \texttt{b5paper}
         \begin{itemize}
@@ -179,7 +419,7 @@ Additionally, \minimart{} and \minimbook{} offers the following options:
         \end{itemize}
     \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{biolinum} ~$|$~ \texttt{useosf}
         \begin{itemize}
-            \item Font options. As the name suggest, font with corresponding name will be loaded. 
+            \item Font options. As the name suggest, font with corresponding name will be loaded.
             \item The \texttt{useosf} option is used to enable the old-style figures.
         \end{itemize}
     \item \texttt{useindent}
@@ -188,12 +428,10 @@ Additionally, \minimart{} and \minimbook{} offers the following options:
         \end{itemize}
 \end{itemize}
 
+\clearpage
+\LevelOneTitle{Instructions by topic}
 
-\section{Instructions}
-
-Many of the features described next are provided by the \ProjLib{} toolkit. Only the basic usage is mentioned here. For more details, please refer to its user documentation.
-
-\subsection{Language configuration}
+\LevelTwoTitle{Language configuration}
 
 \minimart{} has multi-language support, including English, French, German, Italian, Portuguese (European and Brazilian) and Spanish. The language can be selected by the following macros:
 
@@ -231,12 +469,11 @@ In addition, you can also add new settings to selected language:
 \end{itemize}
 For example, \lstinline|\AddLanguageSetting(German){\color{orange}}| can make all German text displayed in orange (of course, one then need to add \lstinline|\AddLanguageSetting{\color{black}}| in order to correct the color of the text in other languages).
 
+\LevelTwoTitle{Theorems and how to reference them}
 
-\subsection{Theorems and how to reference them}
+Environments such as \texttt{definition} and \texttt{theorem} have been preset and can be used directly.
 
-Environments such as \texttt{definition} and \texttt{theorem} have been pre-defined and can be used directly. 
-
-More specifically, preset environments include: 
+More specifically, preset environments include:
 \texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{observation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, and the corresponding unnumbered version with an asterisk \lstinline|*| in the name. The titles will change with the current language. For example, \texttt{theorem} will be displayed as ``Theorem" in English mode and ``Théorème" in French mode.
 
 When referencing a theorem-like environment, it is recommended to use \lstinline|\cref{|\meta{label}\texttt{\}}. In this way, there is no need to explicitly write down the name of the corresponding environment every time.
@@ -265,8 +502,7 @@ By default, when referenced, the name of the theorem always matches the language
 
 \UseLanguage{English}
 
-
-\subsection{Define a new theorem-like environment}
+\LevelTwoTitle{Define a new theorem-like environment}
 
 If you need to define a new theorem-like environment, you must first define the name of the environment in the language to use:
 \begin{itemize}
@@ -289,6 +525,7 @@ And then define this environment in one of following five ways:
         \begin{itemize}
             \item Define a numbered environment \meta{name of environment}, which shares the counter \meta{numbered like}
         \end{itemize}
+\clearpage
     \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
         \begin{itemize}
             \item Define a numbered environment \meta{name of environment}, numbered within the counter \meta{numbered within}
@@ -309,7 +546,6 @@ And then define this environment in one of following five ways:
     This macro utilizes the feature of \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
 \end{tip}
 
-% \def\proofideanameEN{Idea}
 \NameTheorem[EN]{proofidea}{Idea}
 \CreateTheorem*{proofidea*}
 \CreateTheorem{proofidea}<subsection>
@@ -323,31 +559,33 @@ Here is an example. The following code:
   \CreateTheorem{proofidea}<subsection>
 \end{code}
 
-defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within subsection) respectively. They can be used in English context. 
+defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within subsection) respectively. They can be used in English context.
 The effect is as follows:
 
+\vspace{-0.3\baselineskip}
 \begin{proofidea*}
     The \lstinline|proofidea*| environment.
 \end{proofidea*}
 
+\vspace{-\baselineskip}
 \begin{proofidea}
     The \lstinline|proofidea| environment.
 \end{proofidea}
 
-\clearpage
-\subsection{Draft mark}
+\LevelTwoTitle{Draft mark}
 
 You can use \lstinline|\dnf| to mark the unfinished part. For example:
 \begin{itemize}
     \item \lstinline|\dnf| or \lstinline|\dnf<...>|. The effect is: \dnf~ or \dnf<...>. \\The prompt text changes according to the current language. For example, it will be displayed as \UseOtherLanguage{French}{\dnf} in French mode.
 \end{itemize}
 
-Similarly, there is \lstinline|\needgraph| : 
+Similarly, there is \lstinline|\needgraph| :
 \begin{itemize}
     \item \lstinline|\needgraph| or \lstinline|\needgraph<...>|. The effect is: \needgraph or \needgraph<...>The prompt text changes according to the current language. For example, in French mode, it will be displayed as \UseOtherLanguage{French}{\needgraph}
 \end{itemize}
 
-\subsection{On the title, abstract and keywords}
+\clearpage
+\LevelTwoTitle{Title, abstract and keywords}
 
 \minimart{} has both the features of standard classes and that of the \AmS{} classes.
 
@@ -383,7 +621,6 @@ or written in the way of \AmS{} classes:
   \maketitle
 \end{code}
 
-\clearpage
 The author information can contain multiple groups, written as:
 
 \begin{code}
@@ -398,132 +635,34 @@ The author information can contain multiple groups, written as:
 
 Among them, the mutual order of \lstinline|\address|, \lstinline|\curraddr|, \lstinline|\email| is not important.
 
+\clearpage
+\LevelTwoTitle{Miscellaneous}
 
-\subsection{On the line numbers}
+\LevelThreeTitle{On the line numbers}
 Line numbers can be turned on and off at any time. \lstinline|\linenumbers| is used to enable the line numbers, and \lstinline|\nolinenumbers| is used to disable them. For the sake of beauty, the title, table of contents, index and some other elements are not numbered.
 
-\subsection{On the footnotes in the title}
+\LevelThreeTitle{On the footnotes in the title}
 In \lstinline|\section| or \lstinline|\subsection| , if you wish to add footnotes, you can only:
 \begin{itemize}
-    \item first write \lstinline|\mbox{\protect\footnotemark}|, 
-    \item then add \lstinline|\footnotetext{...}| afterwards. 
+    \item first write \lstinline|\mbox{\protect\footnotemark}|,
+    \item then add \lstinline|\footnotetext{...}| afterwards.
 \end{itemize}
 This is a disadvantage brought about by the underline decoration of the title.
 
-\subsection{On the QED symbols}
+\LevelThreeTitle{On the QED symbols}
 Since the font in the theorem-like environments is the same as that of the main text, in order to indicate where the environments end, a hollow QED symbol \simpleqedsymbol{} is placed at the end of the theorem-like environments. However, if your theorem ends with an equation or list (itemize, enumerate, description, etc.), this symbol cannot be automatically placed in the correct position. In this case, you need to manually add a \lstinline|\qedhere| at the end of your equation or the last entry of your list to make the QED symbol appear at the end of the line.
 
-
-\section{Known issues}
+\LevelOneTitle{Known issues}
 
 \begin{itemize}[itemsep=.6em]
     \item The font settings are still not perfect.
-    \item Since many features are based on the \ProjLib{} toolkit, \minimalist{} (and hence \minimart{} and \minimbook{}) inherits all its problems. For details, please refer to the ``Known Issues'' section of the \ProjLib{} documentation.
+    \item Since many features are based on the \ProjLib{} toolkit, \minimalist{} (and hence \minimart{}, \einfart{} and \minimbook{}, \simplivre{}) inherits all its problems. For details, please refer to the ``Known Issues'' section of the \ProjLib{} documentation.
     \item The error handling mechanism is incomplete: there is no corresponding error prompt when some problems occur.
     \item There are still many things that can be optimized in the code.
 \end{itemize}
 
-\clearpage
-\section{Document templates}
-
-\subsection{The standard way}
-
-If you want to write in the standard way, you can refer to the following example:
-
-\begin{code}
-\documentclass{minimart}
-\usepackage{ProjLib} % Load ProjLib toolkit
-
-\UseLanguage{French} % Use French from here
-
-\begin{document}
-
-\title{Le Titre}
-\author{Auteur}
-\date{\PLdate{2022-04-01}}
-
-\maketitle
-
-\begin{abstract}
-    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
-\end{abstract}
-\begin{keyword}
-    AAA, BBB, CCC, DDD, EEE
-\end{keyword}
-
-\section{Un théorème}
-
-%% Theorem-like environments can be used directly
-\begin{theorem}\label{thm:abc}
-    Ceci est un théorème.
-\end{theorem}
-
-Référence du théorème: \cref{thm:abc} 
-    % It is recommended to use clever reference
 
 \end{document}
-\end{code}
-
-If you wish to switch to the standard class later, just replace the first two lines with:
-
-\begin{code}
-\documentclass{article}
-\usepackage[a4paper,margin=1in]{geometry}
-\usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
-\end{code}
-
-
-\clearpage
-\subsection{The \texorpdfstring{\AmS{}}{AMS} way}
-
-If you intend to switch to the journal template in the future and thus want to use the writing style as in the \AmS{} classes, you can refer to the following example:
-
-\begin{code}
-\documentclass{minimart}
-\usepackage{ProjLib} % Load ProjLib toolkit
-
-\UseLanguage{French} % Use French from here
-
-\begin{document}
-
-\title{Le Titre}
-\author{Auteur 1}
-\address{Adresse 1}
-\email{\href{Courriel 1}{Courriel 1}}
-\author{Auteur 1}
-\address{Adresse 1}
-\email{\href{Courriel 2}{Courriel 2}}
-\date{\PLdate{2022-04-01}}
-\subjclass{*****}
-\keywords{...}
-
-\begin{abstract}
-    Ceci est un résumé. \dnf<Plus de contenu est nécessaire.>
-\end{abstract}
-
-\maketitle
-
-\section{Première section}
-
-%% Theorem-like environments can be used directly
-\begin{theorem}\label{thm:abc}
-    Ceci est un théorème.
-\end{theorem}
-
-Référence du théorème: \cref{thm:abc} 
-    % It is recommended to use clever reference
-
-\end{document}
-\end{code}
-
-In this way, if you wish to switch to \AmS{} class later, just replace the first two lines with:
-
-\begin{code}
-\documentclass{amsart}
-\usepackage[a4paper,margin=1in]{geometry}
-\usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
-\end{code}
-
-\end{document}
+\endinput
+%%
+%% End of file `minimalist/minimalist-doc.tex'.

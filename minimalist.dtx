@@ -399,6 +399,7 @@
 
 %# 接下来使用 tikz-cd 重定义可伸缩箭头，默认的箭头有些粗细不均
 %# The following uses tikz-cd to define retractable arrows to avoid problems with unicode-math.
+\RequirePackage{tikz-cd}
 \newbox\xratbelow
 \newbox\xratabove
 % Redefine \xrightarrow[below]{above}
@@ -754,7 +755,7 @@
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
     \renewcommand*{\sectionmark}[1]{%
-        \markright{\sec@decochar~\thesection~\sec@decochar~~~#1}}
+        \markright{\sec@decochar~\arabic{section}~\sec@decochar~~~#1}}
 }{
 %# 针对文章的设定
 %# Configure for articles
@@ -952,7 +953,6 @@
 }
 
 %% Section
-\renewcommand\thesection{\arabic{section}}
 \if@minimalist@classical
 \newcommand\sec@decochar{}
 \titleformat{\section}
@@ -962,15 +962,16 @@
     {#1}
     [\ResumeLineNumbers]
 \else
+\renewcommand\thesection{\arabic{section}}
 \newcommand\seculine{\bgroup\markoverwith{\color{maintext!27!paper}%
     \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
-\newcommand\sec@decochar{\raisebox{.03em}{\normalfont\footnotesize/}}
+\newcommand\sec@decochar{\raisebox{.03em}{\normalfont/}}
 \titleformat{\section}
     {\LocallyStopLineNumbers%
     \secfont\centering}{}{0em}
-    {{\small\textcolor{maintext!27!paper}{\sec@decochar}%
+    {{\small\textcolor{maintext!27!paper}{\footnotesize\sec@decochar}%
         \,\,\textcolor{maintext!90!paper}{\conditionalbfseries\arabic{section}}%
-        \,\,\textcolor{maintext!27!paper}{\sec@decochar}}\\
+        \,\,\textcolor{maintext!27!paper}{\footnotesize\sec@decochar}}\\
         \seculine{#1}}
     [\ResumeLineNumbers]
 \titleformat{name=\section,numberless}
@@ -982,8 +983,6 @@
 \fi
 
 %% Subsection
-\renewcommand\thesubsection{%
-    \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
 \if@minimalist@classical
 \titleformat{\subsection}
     {\LocallyStopLineNumbers%
@@ -992,6 +991,8 @@
     {#1}
     [\ResumeLineNumbers]
 \else
+\renewcommand\thesubsection{%
+    \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
 \newcommand\subseculine{\bgroup\markoverwith{\color{maintext!27!paper}%
     \rule[-1ex]{2pt}{.75pt}}\ULon}
 \titleformat{\subsection}
@@ -1034,7 +1035,7 @@
 \titlecontents{part}
     [0em]
     {\addvspace{1.5pc}\filcenter\normalfont}
-    {\thecontentslabel\\\uppercase}
+    {\thecontentslabel\nopagebreak\\\nopagebreak\uppercase}
     {}
     {} % without page number
     [\addvspace{.5pc}]
@@ -1050,8 +1051,8 @@
     \titlecontents{section}
         [4em] % i.e., 2em (chapter) + 2em
         {\normalfont}
-        {\contentslabel{1.75em}}
-        {\hspace*{-1.75em}}
+        {\contentslabel[\textcolor{maintext!27!paper}{\small\sec@decochar}\,\textcolor{maintext!90!paper}{\thecontentslabel}\,\textcolor{maintext!27!paper}{\small\sec@decochar}]{2em}}
+        {\hspace*{-2em}}
         {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
     \titlecontents{subsection}
         [6.5em] % i.e., 4em (section) + 2.5em

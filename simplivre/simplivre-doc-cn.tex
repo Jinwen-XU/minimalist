@@ -1,22 +1,24 @@
-%! TEX program = xelatex
-\documentclass[Chinese,English,French,puretext]{simplivre}
+\documentclass[English,Chinese,French,puretext]{simplivre}
 
 \CreateTheorem{definition}<highest>
-\CreateTheorem{theorem}<highest>
+\CreateTheorem{theorem}[definition]
 
-\linenumbers % 开启行号
+\linenumbers % Enable line numbers
 
 %%================================
-%% 引入工具集
+%% Import toolkit
 %%================================
 \usepackage{ProjLib}
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
+\usetikzlibrary{calc}
+
+\usepackage{blindtext}
 
 \UseLanguage{Chinese}
 
 %%================================
-%% 排版代码
+%% For typesetting code
 %%================================
 \usepackage{listings}
 \definecolor{maintheme}{RGB}{70,130,180}
@@ -35,17 +37,22 @@
     escapeinside={(*}{*)},
     % numbers=left,
     numberstyle=\scriptsize, stepnumber=1, numbersep=5pt,
-    firstnumber=last,
-} 
+    % firstnumber=last,
+}
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
-    {linenumbers,nolinenumbers,part,chapter,section,subsection,subsubsection,href,
-    color,NameTheorem,CreateTheorem,proofideanameCN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib,parttext,qedhere
+    {linenumbers,nolinenumbers,part,parttext,chapter,section,subsection,subsubsection,frontmatter,mainmatter,backmatter,tableofcontents,href,
+    color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib,qedhere
     }
 }
-\lstnewenvironment{code}% 
-{\LocallyStopLineNumbers%
+\lstnewenvironment{code}%
+{\setstretch{1.07}\LocallyStopLineNumbers%
 \setkeys{lst}{columns=fullflexible,keepspaces=true}%
+}
+{\ResumeLineNumbers}
+\lstnewenvironment{code*}%
+{\setstretch{1.07}\LocallyStopLineNumbers%
+\setkeys{lst}{numbers=left,columns=fullflexible,keepspaces=true}%
 }
 {\ResumeLineNumbers}
 
@@ -58,21 +65,21 @@
     \begin{tcolorbox}[breakable,
         enhanced,
         width = \textwidth,
-        colback = white, colbacktitle = paper,
+        colback = paper, colbacktitle = paper,
         colframe = gray!50, boxrule=0.2mm,
         coltitle = black,
         fonttitle = \sffamily,
-        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2,  xshift=\tcboxedtitlewidth/4},
+        attach boxed title to top left = {yshift=-\tcboxedtitleheight/2, xshift=.5cm},
         boxed title style = {boxrule=0pt, colframe=paper},
         before skip = 0.3cm,
         after skip = 0.3cm,
         top = 3mm,
         bottom = 3mm,
-        title={\sffamily #1}]%
+        title={\scshape\sffamily #1}]%
 }{\end{tcolorbox}\ResumeLineNumbers}
 
 %%================================
-%% 名称
+%% Names
 %%================================
 \providecommand{\minimalist}{\textsf{minimalist}}
 \providecommand{\minimart}{\textsf{minimart}}
@@ -80,20 +87,17 @@
 \providecommand{\einfart}{\textsf{einfart}}
 \providecommand{\simplivre}{\textsf{simplivre}}
 
-\usetikzlibrary{calc}
-
-\usepackage{blindtext}
+%%================================
+%% Titles
+%%================================
+\let\LevelOneTitle\chapter
+\let\LevelTwoTitle\section
+\let\LevelThreeTitle\subsection
 
 %%================================
-%% 正文
+%% Main text
 %%================================
 \begin{document}
-
-% \title{\simplivre{}，以极简主义风格排版你的图书\thanks{对应版本. \texttt{\simplivre{} 2021/06/07}}}
-% \author{许锦文}
-% \date{2021年6月，北京}
-
-% \maketitle
 
 \frontmatter
 
@@ -102,12 +106,13 @@
     \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
     \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
-    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\hspace*{-.05em}以极简主义风格排版你的图书\\[10pt]\tiny 对应版本. \texttt{\simplivre{} 2021/07/05}}};
+    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\hspace*{-.05em}以极简主义风格排版你的图书\\[10pt]\tiny 对应版本. \texttt{\simplivre{} 2021/07/13}}};
     \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{许锦文}};
     \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{2021年7月，北京}};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
+
 
 \chapter*{前言}
 
@@ -129,9 +134,18 @@
 \part{说明}
 \parttext{可以通过 \lstinline|\\parttext|\meta{text} 在这里添加一些说明}
 
-\chapter{初始化}
+\medskip
+\LevelOneTitle*{开始之前}
+为了使用这篇文档中提到的文档类，你需要：
+\begin{itemize}
+    \item 安装一个尽可能新版本的 TeX Live 或 MikTeX 套装，并确保 \texttt{minimalist} 和 \texttt{projlib} 被正确安装在你的 \TeX 封装中。
+    \item 熟悉 \LaTeX{} 的基本使用方式，并且知道如何用 \hologo{pdfLaTeX}、\hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 编译你的文档。
+\end{itemize}
 
-\section{如何载入}
+
+\LevelOneTitle{使用示例}
+
+\LevelTwoTitle{如何加载}
 
 只需要在第一行写：
 
@@ -145,7 +159,109 @@
     要使用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎才能编译。
 \end{tip}
 
-\section{选项}
+\LevelTwoTitle{一篇完整的文档示例}
+
+首先来看一段完整的示例。
+
+
+\begin{code*}
+\documentclass{minimbook}
+\usepackage{ProjLib}
+
+\UseLanguage{French}
+
+\begin{document}
+
+\frontmatter
+
+\begin{titlepage}
+    (*\meta{code for titlepage}*)
+\end{titlepage}
+
+\tableofcontents
+
+\mainmatter
+
+\part{(*\meta{part title}*)}
+\parttext{(*\meta{text after part title}*)}
+
+\chapter{(*\meta{chapter title}*)}
+
+\section{(*\meta{section title}*)}
+
+\dnf<Plus de contenu est nécessaire.>
+
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+Référence du théorème: \cref{thm:abc}
+
+\backmatter
+
+...
+
+\end{document}
+\end{code*}
+
+
+\LevelThreeTitle{初始化部分}
+
+\medskip
+\begin{code}
+\documentclass{simplivre}
+\usepackage{ProjLib}
+\end{code}
+
+初始化部分很简单：第一行加载文档类 \simplivre{}，第二行加载 \ProjLib{} 工具箱，以便使用一些附加功能。
+
+\LevelThreeTitle{设定语言}
+
+\medskip
+\begin{code}
+\UseLanguage{French}
+\end{code}
+
+这一行表明文档中将使用法语（如果你的文章中只出现英语，那么可以不需要设定语言）。你也可以在文章中间用同样的方式再次切换语言。支持的语言包括简体中文、繁体中文、日文、英语、法语、德语、西班牙语、葡萄牙语、巴西葡萄牙语、俄语。
+
+对于这一命令的详细说明以及更多相关命令，可以参考后面关于多语言支持的小节。
+
+
+\LevelThreeTitle{未完成标记}
+
+\medskip
+\begin{code}
+\dnf<(*\meta{some hint}*)>
+\end{code}
+当你有一些地方尚未完成的时候，可以用这条指令标记出来，它在草稿阶段格外有用。
+
+\LevelThreeTitle{定理类环境}
+
+\medskip
+\begin{code}
+\begin{theorem}\label{thm:abc}
+    Ceci est un théorème.
+\end{theorem}
+Référence du théorème: \cref{thm:abc}
+\end{code}
+
+常见的定理类环境可以直接使用。在引用的时候，建议采用智能引用 \lstinline|\cref{|\meta{label}\lstinline|}|——这样就不必每次都写上相应环境的名称了。
+
+
+
+
+\LevelOneTitle{关于默认字体}
+\einfart{} 默认使用 Palatino Linotype 作为英文字体，方正悠宋、悠黑GBK作为中文字体，并部分使用了 Neo Euler 作为数学字体。其中，Neo Euler可以在 \url{https://github.com/khaledhosny/euler-otf} 下载。其他字体不是免费字体，需要自行购买使用。可以在方正字库网站查询详细资料：\url{https://www.foundertype.com}。
+
+\begin{itemize}
+    \item English main font. \textsf{English sans serif font}.
+    \item 中文主要字体，\textsf{中文无衬线字体}
+    \item 数学示例： \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
+\end{itemize}
+
+在没有安装相应的字体时，将采用TeX Live中自带的字体来代替，效果可能会有所折扣。
+
+
+\LevelOneTitle{选项}
 
 \simplivre{} 文档类有下面几个选项：
 
@@ -153,6 +269,7 @@
     \item 语言选项 \texttt{EN} / \texttt{english} / \texttt{English}、\texttt{FR} / \texttt{french} / \texttt{French}，等等
         \begin{itemize}
             \item 具体选项名称可参见下一节的 \meta{language name}。第一个指定的语言将作为默认语言。
+            \item 语言选项不是必需的，其主要用途是提高编译速度。不添加语言选项时效果是一样的，只是会更慢一些。
         \end{itemize}
     \item \texttt{draft} 或 \texttt{fast}
         \begin{itemize}
@@ -163,14 +280,13 @@
                 \item 启用 \ProjLib{} 工具箱的快速模式。
             \end{itemize}
         \end{itemize}
-\begin{tip}
-    在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅度。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
-\end{tip}
+    \begin{tip}
+        在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅度。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
+    \end{tip}
     \item \texttt{a4paper} 或 \texttt{b5paper}
         \begin{itemize}
             \item 可选的纸张大小。默认的纸张大小为 7in $\times$ 10in。
         \end{itemize}
-    \clearpage
     \item \texttt{palatino}、\texttt{times}、\texttt{garamond}、\texttt{biolinum} ~$|$~ \texttt{useosf}
         \begin{itemize}
             \item 字体选项。顾名思义，会加载相应名称的字体。
@@ -184,10 +300,10 @@
         \begin{itemize}
             \item 经典模式。启用这一选项时，样式会变得更加中规中矩：段落呈首行缩进样式、各类下划线减少、标题样式改变、定理类环境的样式也会更贴近常见的设置。
         \end{itemize}
-\begin{tip}
-    如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
-\end{tip}
-        \item \texttt{useindent}
+    \begin{tip}
+        如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
+    \end{tip}
+    \item \texttt{useindent}
         \begin{itemize}
             \item 采用段首缩进而不是段间间距。
         \end{itemize}
@@ -195,7 +311,7 @@
         \begin{itemize}
             \item \lstinline|\subsubsection| 采用 ``runin'' 风格。
         \end{itemize}
-    \item \texttt{puretext} or \texttt{nothms}
+    \item \texttt{puretext} 或 \texttt{nothms}
         \begin{itemize}
             \item 纯文本模式，不加载定理类环境。
         \end{itemize}
@@ -204,32 +320,12 @@
             \item 定理类环境不编号。
         \end{itemize}
 \end{itemize}
-
 \bigskip
 另外，排版图书时常用的 \texttt{oneside}、\texttt{twoside} 选项也是可以使用的。默认采用双页排版。
 
-\chapter{关于默认字体}
-\simplivre{} 默认使用 Palatino Linotype 作为英文字体，方正悠宋、悠黑GBK作为中文字体，并部分使用了 Neo Euler 作为数学字体。其中，Neo Euler可以在 \url{https://github.com/khaledhosny/euler-otf} 下载。其他字体不是免费字体，需要自行购买使用。可以在方正字库网站查询详细资料：\url{https://www.foundertype.com}。
+\LevelOneTitle{具体说明}
 
-\begin{tip}[字体演示]
-    \begin{itemize}
-        \item English main font. \textsf{English sans serif font}. \texttt{English typewriter font}.
-        \item 中文主要字体，\textsf{中文无衬线字体}
-        \item 数学示例： \( \alpha, \beta, \gamma, \delta, 1,2,3,4, a,b,c,d \), \[\mathrm{li}(x)\coloneqq \int_2^{\infty} \frac{1}{\log t}\,\mathrm{d}t \]
-    \end{itemize}
-\end{tip}
-
-\bigskip
-在没有安装相应的字体时，将采用TeX Live中自带的字体来代替，效果可能会有所折扣。
-
-
-\chapter{使用说明}
-
-\vspace{-\baselineskip}
-
-接下来介绍的许多功能是由 \ProjLib{} 工具箱提供的。这里只介绍了基本使用方法，更多细节可以直接参阅其用户文档。
-
-\section{语言设置}
+\LevelTwoTitle{语言设置}
 
 \simplivre{} 提供了多语言支持，包括英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文。可以通过下列命令来选定语言：
 \begin{itemize}
@@ -271,8 +367,7 @@
 \end{itemize}
 例如，\lstinline|\AddLanguageSetting(German){\color{orange}}| 可以让所有德语以橙色显示（当然，还需要再加上 \lstinline|\AddLanguageSetting{\color{black}}| 来修正其他语言的颜色）。
 
-
-\section{定理类环境及其引用}
+\LevelTwoTitle{定理类环境及其引用}
 
 定义、定理等环境已经被预定义，可以直接使用。
 
@@ -281,6 +376,7 @@
 
 在引用定理类环境时，建议使用智能引用 \lstinline|\cref{|\meta{label}\lstinline|}|。这样就不必每次都写上相应环境的名称了。
 
+\medskip
 \begin{tip}[例子]
 \begin{code}
   \begin{definition}[奇异物品] \label{def: strange} ...
@@ -292,6 +388,7 @@
 
 \lstinline|\cref{def: strange}| 会显示为：\cref{def: strange}。
 
+\medskip
 使用 \lstinline|\UseLanguage{English}| 后，定理会显示为：
 
 \UseLanguage{English}
@@ -304,17 +401,15 @@
 
 \UseLanguage{Chinese}
 
-
-\section{定义新的定理型环境}
+\LevelTwoTitle{定义新的定理型环境}
 
 若需要定义新的定理类环境，首先要定义这个环境在所用语言下的名称：
-% \vspace{-.15\baselineskip}%
 \begin{itemize}
     \item \lstinline|\NameTheorem[|\meta{language name}\lstinline|]{|\meta{name of environment}\lstinline|}{|\meta{name string}\lstinline|}|
 \end{itemize}
-% \vspace{-.15\baselineskip}%
 其中，\meta{language name} 可参阅关于语言设置的小节。当不指定 \meta{language name}时，则会将该名称设置为所有支持语言下的名称。另外，带星号与不带星号的同名环境共用一个名称，因此 \lstinline|\NameTheorem{envname*}{...}| 与 \lstinline|\NameTheorem{envname}{...}| 效果相同。
 
+\clearpage
 然后用下面五种方式之一定义这一环境：
 \begin{itemize}
     \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
@@ -349,7 +444,6 @@
     其内部使用了 \textsf{amsthm}，因此传统的 \texttt{theoremstyle} 对其也是适用的，只需在相关定义前标明即可。
 \end{tip}
 
-% \def\proofideanameCN{思路}
 \NameTheorem[CN]{proofidea}{思路}
 \CreateTheorem*{proofidea*}
 \CreateTheorem{proofidea}<section>
@@ -365,15 +459,16 @@
 
 可以分别定义不编号的环境 \lstinline|proofidea*| 和编号的环境 \lstinline|proofidea| (在 section 内编号)，它们支持在简体中文语境中使用，效果如下所示:
 
+\vspace{-.3\baselineskip}
 \begin{proofidea*}
     \lstinline|proofidea*| 环境。
 \end{proofidea*}
-
+\vspace{-.5\baselineskip}
 \begin{proofidea}
     \lstinline|proofidea| 环境。
 \end{proofidea}
 
-\section{未完成标记}
+\LevelTwoTitle{未完成标记}
 
 你可以通过 \lstinline|\dnf| 来标记尚未完成的部分。例如：
 \begin{itemize}
@@ -386,60 +481,12 @@
 \end{itemize}
 
 
-% \section{关于文章标题、摘要与关键词}
+\LevelTwoTitle{其他}
 
-% % 由于引入了 \ProjLib{} 工具箱的 \textsf{PJLamssim} 组件，
-% \simplivre{} 同时具有标准文档类与\AmS{} 文档类的一些特性。
-
-% 因此，文章的标题部分既可以按照标准文档类 \textsf{article} 的写法来写：
-
-% \begin{code}
-%   \title{(*\meta{title}*)}
-%   \author{(*\meta{author}*)}
-%   \date{(*\meta{date}*)}
-%   \maketitle
-%   \begin{abstract}
-%       (*\meta{abstract}*)
-%   \end{abstract}
-%   \begin{keyword}
-%       (*\meta{keywords}*)
-%   \end{keyword}
-% \end{code}
-
-% 也可以按照 \AmS{} 文档类的方式来写：
-
-% \begin{code}
-%   \title{(*\meta{title}*)}
-%   \author{(*\meta{author}*)}
-%   \address{(*\meta{address}*)}
-%   \email{(*\meta{email}*)}
-%   \date{(*\meta{date}*)}
-%   \keywords{(*\meta{keywords}*)}
-%   \subjclass{(*\meta{subjclass}*)}
-%   \begin{abstract}
-%       (*\meta{abstract}*)
-%   \end{abstract}
-%   \maketitle
-% \end{code}
-
-% 作者信息可以包含多组，输入方式为：
-
-% \begin{code}
-%   \author{(*\meta{author 1}*)}
-%   \address{(*\meta{address 1}*)}
-%   \email{(*\meta{email 1}*)}
-%   \author{(*\meta{author 2}*)}
-%   \address{(*\meta{address 2}*)}
-%   \email{(*\meta{email 2}*)}
-%   ...
-% \end{code}
-
-% 其中 \lstinline|\address|、\lstinline|\curraddr|、\lstinline|\email| 的相互顺序是不重要的。
-
-\section{关于行号}
+\LevelThreeTitle{关于行号}
 行号可以随时开启和关闭。\lstinline|\linenumbers| 用来开启行号，\lstinline|\nolinenumbers| 用来关闭行号。标题、目录、索引等位置为了美观，不进行编号。
 
-\section{关于标题中的脚注}
+\LevelThreeTitle{关于标题中的脚注}
 在 \lstinline|\section| 或 \lstinline|\subsection| 中，如果想使用脚注，只能：
 \begin{itemize}
     \item 先写 \lstinline|\mbox{\protect\footnotemark}|，
@@ -447,118 +494,22 @@
 \end{itemize}
 这是标题使用下划线装饰之后带来的一个缺点。
 
-\section{关于QED符号}
+\LevelThreeTitle{关于QED符号}
 由于定理类环境中的字体和正文字体是一样的，为了方便看出定理类环境在哪里结束，在其结尾处放置了一个空心的QED符号。然而，如果你的定理是由公式或者列表结尾的，这个符号就无法自动地放在正确的位置。这时，你需要手动在公式或列表最后一个条目的后面加上 \lstinline|\qedhere|，以让QED符号显示到这一行的最后。
 
-
-\section{目前存在的问题}
+\LevelOneTitle{目前存在的问题}
 
 \begin{itemize}[itemsep=.6em]
     \item 对于字体的设置仍然不够完善。
-    \item 由于很多核心功能建立在 \ProjLib{} 工具箱的基础上，因此 \simplivre{} 自然继承了其所有问题。详情可以参阅 \ProjLib{} 用户文档的“目前存在的问题”这一小节。
+    \item 由于很多核心功能建立在 \ProjLib{} 工具箱的基础上，因此 \einfart{} 自然继承了其所有问题。详情可以参阅 \ProjLib{} 用户文档的“目前存在的问题”这一小节。
     \item 错误处理功能不完善，在出现一些问题时没有相应的错误提示。
     \item 代码中仍有许多可优化之处。
 \end{itemize}
 
-
-
-\UseLanguage{English}
-
 \part{演示}
-
-\chapter{文档示例}
-
-\vspace*{-1.5\baselineskip}
-
-\section{标准文档类写法}
-
-如果想采用标准文档类中的写法，可以参考下面的例子：
-
-\begin{code}
-\documentclass{simplivre}
-\usepackage{ProjLib} % Load ProjLib toolkit
-
-\UseLanguage{French} % Use French from here
-
-\begin{document}
-
-\title{Le Titre}
-\author{Auteur}
-\date{\PLdate{2022-04-01}}
-
-\maketitle
-
-\chapter{Un théorème}
-
-%% Theorem-like environments can be used directly
-\begin{theorem}\label{thm:abc}
-    Ceci est un théorème.
-\end{theorem}
-
-Référence du théorème: \cref{thm:abc} 
-    % It is recommended to use clever reference
-
-\end{document}
-\end{code}
-
-如果以后想切换到标准文档类，只需要将前两行换为：
-
-\begin{code}
-\documentclass{book}
-\usepackage[a4paper,margin=1in]{geometry}
-\usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
-\end{code}
-
-
-% \clearpage
-\section{\texorpdfstring{\AmS{}}{AMS} 文档类写法}
-
-如果日后有意切换到期刊模版，想采用 \AmS{} 文档类中的写法，可以参考下面的例子：
-
-\begin{code}
-\documentclass{simplivre}
-\usepackage{ProjLib} % Load ProjLib toolkit
-
-\UseLanguage{French} % Use French from here
-
-\begin{document}
-
-\title{Le Titre}
-\author{Auteur 1}
-\address{Adresse 1}
-\email{\href{Courriel 1}{Courriel 1}}
-\author{Auteur 1}
-\address{Adresse 1}
-\email{\href{Courriel 2}{Courriel 2}}
-\date{\PLdate{2022-04-01}}
-\subjclass{*****}
-\keywords{...}
-
-\maketitle
-
-\section{Première section}
-
-%% Theorem-like environments can be used directly
-\begin{theorem}\label{thm:abc}
-    Ceci est un théorème.
-\end{theorem}
-
-Référence du théorème: \cref{thm:abc} 
-    % It is recommended to use clever reference
-
-\end{document}
-\end{code}
-
-这样，若想切换到 \AmS{} 文档类，只需要将前两行换为：
-
-\begin{code}
-\documentclass{amsbook}
-\usepackage[a4paper,margin=1in]{geometry}
-\usepackage[hidelinks]{hyperref}
-\usepackage[palatino]{ProjLib} % Load ProjLib toolkit
-\end{code}
-
 \blinddocument
 
 \end{document}
+\endinput
+%%
+%% End of file `simplivre/simplivre-doc-cn.tex'.

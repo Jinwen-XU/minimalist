@@ -1,0 +1,31 @@
+%%
+%% Copyright (C) 2021 by Jinwen XU
+%%
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.3c of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%%
+
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+
+\nopreamble
+
+\generate{\file{minimalist/minimalist-doc.tex}{\from{minimalist-doc.dtx}{minimalist-doc}}}
+\generate{\file{einfart/einfart-doc-cn.tex}{\from{minimalist-doc.dtx}{einfart-doc-cn}}}
+\generate{\file{einfart/einfart-doc-en.tex}{\from{minimalist-doc.dtx}{einfart-doc-en}}}
+\generate{\file{einfart/einfart-doc-fr.tex}{\from{minimalist-doc.dtx}{einfart-doc-fr}}}
+\generate{\file{simplivre/simplivre-doc-cn.tex}{\from{minimalist-doc.dtx}{simplivre-doc-cn}}}
+\generate{\file{simplivre/simplivre-doc-en.tex}{\from{minimalist-doc.dtx}{simplivre-doc-en}}}
+\generate{\file{simplivre/simplivre-doc-fr.tex}{\from{minimalist-doc.dtx}{simplivre-doc-fr}}}
+
+\obeyspaces
+\Msg{*************************************************************}
+\Msg{* Done!                                                     *}
+\Msg{*************************************************************}
+
+\endbatchfile
