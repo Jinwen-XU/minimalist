@@ -1,3 +1,10 @@
 .DS_Store
 *.cls
 *.sty
+minimalist/minimalist-doc.tex
+einfart/einfart-doc-cn.tex
+simplivre/simplivre-doc-cn.tex
+einfart/einfart-doc-en.tex
+simplivre/simplivre-doc-en.tex
+einfart/einfart-doc-fr.tex
+simplivre/simplivre-doc-fr.tex
