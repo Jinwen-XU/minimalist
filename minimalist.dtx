@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/07/13 A simple and clear article style]
+    [2021/07/27 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/07/13 A simple and clear book style]
+    [2021/07/27 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/07/13 A simple and clear article style]
+    [2021/07/27 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/07/13 A simple and clear book style]
+    [2021/07/27 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/07/13 A simple and clear style for articles and books]
+    [2021/07/27 A simple and clear style for articles and books]
 %</minimalist>
 %
 %# 下面两行引入宏包的代码是所有文件共用的。
@@ -1603,7 +1603,8 @@
 %%================================
 %# 引入 ProjLib 中用于模拟 AMS 文档类写法的模块
 %# Introduce the module of ProjLib that emulates the writing style in AMS classes
-\RequirePackage{PJLamssim}
+\PassOptionsToPackage{amsfashion}{PJLauthor}
+\RequirePackage{PJLauthor}
 
 }
 %</minimalist>
