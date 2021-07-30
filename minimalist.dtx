@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/07/27 A simple and clear article style]
+    [2021/07/30 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/07/27 A simple and clear book style]
+    [2021/07/30 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/07/27 A simple and clear article style]
+    [2021/07/30 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/07/27 A simple and clear book style]
+    [2021/07/30 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/07/27 A simple and clear style for articles and books]
+    [2021/07/30 A simple and clear style for articles and books]
 %</minimalist>
 %
 %# 下面两行引入宏包的代码是所有文件共用的。
@@ -75,6 +75,7 @@
 \DeclareBoolOption[false]{palatino}
 \DeclareBoolOption[false]{times}
 \DeclareBoolOption[false]{garamond}
+\DeclareBoolOption[false]{noto}
 \DeclareBoolOption[false]{biolinum}
 %# 这一个选项用于表明要采用自定义的字体而不是默认字体
 %# This option is used to indicate that one uses a custom font instead of the default font
@@ -108,6 +109,9 @@
     \@minimclass@customfonttrue
 \fi
 \if@minimclass@garamond
+    \@minimclass@customfonttrue
+\fi
+\if@minimclass@noto
     \@minimclass@customfonttrue
 \fi
 \if@minimclass@biolinum
@@ -510,6 +514,16 @@
     \RequirePackage{ebgaramond-maths}
     \RequirePackage{ebgaramond}
     % \RequirePackage{garamondlibre}
+    \PJLsetlinespacing{\setstretch{1.00}}
+\fi
+
+\if@minimclass@noto
+    \RequirePackage{amssymb}
+    \if@minimclass@useosf
+        \PassOptionsToPackage{oldstyle}{notomath}
+    \fi
+    \RequirePackage{anyfontsize}
+    \RequirePackage{notomath}
     \PJLsetlinespacing{\setstretch{1.00}}
 \fi
 
