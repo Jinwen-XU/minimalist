@@ -612,6 +612,10 @@
 %# 指定如何编号定理类环境
 %# Number theorem-like environments With ...
 \DeclareStringOption{thmnum}[minimalist@thmnum@default]
+%# 引用的名称是否将随当前语言的不同而改变
+%# Whether reference name will change with the current language
+\DeclareBoolOption[true]{regionalref}
+\DeclareBoolOption[false]{originalref}
 %# 允许标题中的粗体
 %# Allow bold faces in the titles
 \DeclareBoolOption[false]{allowbf}
@@ -627,11 +631,31 @@
 
 %# 下面的代码设定了一些选项之间的关系
 %# The following code sets the relationship between some options
+\if@minimalist@originalref
+    \@minimalist@regionalreffalse
+\fi
 \if@minimalist@draft
   \@minimalist@fasttrue
 \fi
 \if@minimalist@puretext
   \@minimalist@nothmstrue
+\fi
+
+%# 向组件传递一些参数
+%# Pass some options to the components
+\if@minimalist@fast
+    \PassOptionsToPackage{fast}{PJLdraft}
+    \PassOptionsToPackage{fast}{PJLthm}
+\fi
+\expandafter\ifstrempty\expandafter{\@minimalist@thmnum}{}{
+    \expandafter\ifstrequal\expandafter{\@minimalist@thmnum}{minimalist@thmnum@default}{
+        \PassOptionsToPackage{thmnum}{PJLthm}
+    }{
+        \PassOptionsToPackage{thmnum=\@minimalist@thmnum}{PJLthm}
+    }
+}
+\if@minimalist@regionalref\else
+    \PassOptionsToPackage{originalref}{PJLthm}
 \fi
 
 %# 设定带条件的加粗
@@ -1410,6 +1434,7 @@
 % }
 %# 建立定理类环境
 %# Set-up theorem-like environments
+\AtEndPreamble{
 \theoremstyle{simple}
 \if@minimalist@nothms\else
 \if@minimalist@nothmnum
@@ -1487,6 +1512,7 @@
 \CreateTheorem*{remark*}
 \CreateTheorem*{observation*}
 \fi
+}
 
 \ifbool{IsBook}{}{%
 %# 针对文章的一些设定
