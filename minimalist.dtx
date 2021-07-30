@@ -609,6 +609,9 @@
 %# 定理类环境不编号
 %# No numbering for theorem-like environments
 \DeclareBoolOption[false]{nothmnum}
+%# 指定如何编号定理类环境
+%# Number theorem-like environments With ...
+\DeclareStringOption{thmnum}[minimalist@thmnum@default]
 %# 允许标题中的粗体
 %# Allow bold faces in the titles
 \DeclareBoolOption[false]{allowbf}
@@ -1385,14 +1388,29 @@
 \pretocmd{\remarknameES}{\itshape}{}{\FAIL}
 \pretocmd{\observationnameES}{\itshape}{}{\FAIL}
 
+%# 判断最高级别的标题是 section 还是 chapter
+%# Detect the highest level of title: section or chapter?
+% \ifbool{IsBook}{
+%     \newaliascnt{highest}{chapter}
+% }{
+%     \newaliascnt{highest}{section}
+% }
+%# 按照 thmnum 决定定理类环境如何编号
+%# Number the theorem-like environment with respect to thmnum
+% \RenewDocumentCommand{\CreateTheorem@thmnum}{m}{
+%     \expandafter\ifstrempty\expandafter{\@minimalist@thmnum}{
+%         \CreateTheorem{#1}<highest>
+%     }{
+%         \expandafter\ifstrequal\expandafter{\@minimalist@thmnum}{minimalist@thmnum@default}{
+%             \CreateTheorem{#1}
+%         }{
+%             \CreateTheorem{#1}<\@minimalist@thmnum>
+%         }
+%     }
+% }
 %# 建立定理类环境
 %# Set-up theorem-like environments
 \theoremstyle{simple}
-\ifbool{IsBook}{
-    \newaliascnt{highest}{chapter}
-}{
-    \newaliascnt{highest}{section}
-}
 \if@minimalist@nothms\else
 \if@minimalist@nothmnum
 \CreateTheorem*{theorem}
@@ -1405,7 +1423,7 @@
 \CreateTheorem*{fact}
 \CreateTheorem*{conjecture}
 \else
-\CreateTheorem{theorem}<highest>
+\CreateTheorem@thmnum{theorem}
 \CreateTheorem{lemma}[theorem]
 \CreateTheorem{proposition}[theorem]
 \CreateTheorem{corollary}[theorem]
@@ -1463,8 +1481,8 @@
 \CreateTheorem*{remark}
 \CreateTheorem*{observation}
 \else
-\CreateTheorem{remark}<highest>
-\CreateTheorem{observation}<highest>
+\CreateTheorem@thmnum{remark}
+\CreateTheorem@thmnum{observation}
 \fi
 \CreateTheorem*{remark*}
 \CreateTheorem*{observation*}

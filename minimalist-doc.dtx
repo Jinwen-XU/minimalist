@@ -15,12 +15,9 @@
 \ProvidesFile{minimalist-doc.dtx}
 %</driver>
 %
-%<minimalist-doc>\documentclass[English,Chinese,French,puretext]{minimart}
-%<einfart-doc-cn,einfart-doc-en,einfart-doc-fr>\documentclass[English,Chinese,French,puretext]{einfart}
-%<simplivre-doc-cn,simplivre-doc-en,simplivre-doc-fr>\documentclass[English,Chinese,French,puretext]{simplivre}
-
-\CreateTheorem{definition}<highest>
-\CreateTheorem{theorem}[definition]
+%<minimalist-doc>\documentclass[English,Chinese,French]{minimart}
+%<einfart-doc-cn,einfart-doc-en,einfart-doc-fr>\documentclass[English,Chinese,French]{einfart}
+%<simplivre-doc-cn,simplivre-doc-en,simplivre-doc-fr>\documentclass[English,Chinese,French]{simplivre}
 
 \linenumbers % Enable line numbers
 
@@ -257,7 +254,7 @@
 %
 %<*einfart-doc-fr>
 \begin{abstract}
-    \einfart{} fait partie de la série de classes \minimalist{}, dont le nom est tiré du mot allemand « einfach » (simple), combiné avec les trois premières lettres de « artikel » (article) . L'ensemble de la collection comprend \minimart{} et \einfart{} pour la composition d'articles, et \minimbook{} et \simplivre{} pour celle des livres. Mon intention initiale en les concevant était d'écrire des brouillons et des notes qui semblent simples mais pas grossières.
+    \einfart{} fait partie de la série de classes \minimalist{}, dont le nom est tiré du mot allemand «~einfach~» (simple), combiné avec les trois premières lettres de «~artikel~» (article) . L'ensemble de la collection comprend \minimart{} et \einfart{} pour la composition d'articles, et \minimbook{} et \simplivre{} pour celle des livres. Mon intention initiale en les concevant était d'écrire des brouillons et des notes qui semblent simples mais pas grossières.
 
     \einfart{} prend en charge plusieurs langues, notamment le chinois (simplifié et traditionnel), l'anglais, le français, l'allemand, l'italien, le japonais, le portugais (européen et brésilien), le russe et l'espagnol. Ces langues peuvent être commutées de manière transparente dans un seul document. En raison de l'utilisation de polices personnalisées, \einfart{} demande soit \hologo{XeLaTeX} soit \hologo{LuaLaTeX} pour la compilation.
 
@@ -300,7 +297,7 @@ This documentation is typeset using \simplivre{}. You can think of it as a short
 %<*simplivre-doc-fr>
 \chapter*{Préface}
 
-\simplivre{} fait partie de la série de classes \minimalist{}, dont le nom est tiré des mots « simple » et « livre ». L'ensemble de la collection comprend \minimart{} et \einfart{} pour la composition d'articles, et \minimbook{} et \simplivre{} pour celle des livres. Mon intention initiale en les concevant était d'écrire des brouillons et des notes qui semblent simples mais pas grossières.
+\simplivre{} fait partie de la série de classes \minimalist{}, dont le nom est tiré des mots «~simple~» et «~livre~». L'ensemble de la collection comprend \minimart{} et \einfart{} pour la composition d'articles, et \minimbook{} et \simplivre{} pour celle des livres. Mon intention initiale en les concevant était d'écrire des brouillons et des notes qui semblent simples mais pas grossières.
 
 \simplivre{} prend en charge plusieurs langues, notamment le chinois (simplifié et traditionnel), l'anglais, le français, l'allemand, l'italien, le japonais, le portugais (européen et brésilien), le russe et l'espagnol. Ces langues peuvent être commutées de manière transparente dans un seul document. En raison de l'utilisation de polices personnalisées, \simplivre{} demande soit \hologo{XeLaTeX} soit \hologo{LuaLaTeX} pour la compilation.
 
@@ -1096,7 +1093,7 @@ If you like the current document class, but want a more ``plain'' style, then yo
 %
 %<*einfart-doc-fr>
 \begin{tip}
-Si vous aimez la classe de document actuelle, mais que vous souhaitez un style plus « simple », vous pouvez utiliser l'option \texttt{classical}, comme ceci :
+Si vous aimez la classe de document actuelle, mais que vous souhaitez un style plus «~simple~», vous pouvez utiliser l'option \texttt{classical}, comme ceci :
 
 \begin{code}
 %<minimalist-doc>\documentclass[classical]{minimart}
@@ -1266,9 +1263,14 @@ Lorsque la police correspondante n'est pas installée, les polices fournies avec
         \begin{itemize}
             \item Pure text mode. Does not load theorem-like environments.
         \end{itemize}
-    \item \texttt{nothmnum}
+    \item \texttt{nothmnum}, \texttt{thmnum} or \texttt{thmnum=}\meta{counter}
         \begin{itemize}
-            \item Theorem-like environments will not be numbered.
+            \item Theorem-like environments will not be numbered / numbered in order 1, 2, 3... / numbered within \meta{counter}. Here, \meta{counter} should be a built-in counter (such as \texttt{subsection}) or a custom counter defined in the preamble. If no option is used, they will be numbered within \texttt{chapter} (book) or \texttt{section} (article).
+        \end{itemize}
+    \item \texttt{regionalref}, \texttt{originalref}
+        \begin{itemize}
+            \item When referencing, whether the name of the theorem-like environment changes with the current language. The default is \texttt{regionalref}, \emph{i.e.}, the name corresponding to the current language is used; for example, when referencing a theorem-like environment in English context, the names "Theorem, Definition..." will be used no matter which language context the original environment is in. If \texttt{originalref} is enabled, then the name will always remain the same as the original place; for example, when referencing a theorem written in the French context, even if one is currently in the English context, it will still be displayed as ``Théorème''. 
+            \item In \texttt{fast} mode, the option \texttt{originalref} will have no effect.
         \end{itemize}
 \end{itemize}
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
@@ -1354,9 +1356,14 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
         \begin{itemize}
             \item 纯文本模式，不加载定理类环境。
         \end{itemize}
-    \item \texttt{nothmnum}
+    \item \texttt{nothmnum}、\texttt{thmnum} 或 \texttt{thmnum=}\meta{counter}
         \begin{itemize}
-            \item 定理类环境不编号。
+            \item 定理类环境均不编号 / 按照 1、2、3 顺序编号 / 在 \meta{counter} 内编号。其中 \meta{counter} 应该是自带的计数器 (如 \texttt{subsection}) 或在导言部分自定义的计数器。在没有使用任何选项的情况下将按照 \texttt{chapter} (书) 或 \texttt{section} (文章) 编号。
+        \end{itemize}
+    \item \texttt{regionalref}、\texttt{originalref}
+        \begin{itemize}
+            \item 在智能引用时，定理类环境的名称是否随当前语言而变化。默认为 \texttt{regionalref}，即引用时采用当前语言对应的名称；例如，在中文语境中引用定理类环境时，无论原环境处在什么语境中，都将使用名称“定理、定义……”。若启用 \texttt{originalref}，则引用时会始终采用定理类环境所处语境下的名称；例如，在英文语境中书写的定理，即使稍后在中文语境下引用时，仍将显示为 Theorem。
+            \item 在 \texttt{fast} 模式下，\texttt{originalref} 将不起作用。
         \end{itemize}
 \end{itemize}
 %</einfart-doc-cn,simplivre-doc-cn>
@@ -1416,15 +1423,20 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
         \end{itemize}
     \item \texttt{runin}
         \begin{itemize}
-            \item Utilisez le style « runin » pour \lstinline|\subsubsection|
+            \item Utilisez le style «~runin~» pour \lstinline|\subsubsection|
         \end{itemize}
     \item \texttt{puretext} ou \texttt{nothms}
         \begin{itemize}
             \item Mode texte pur. Ne pas définir les environnements de type théorème.
         \end{itemize}
-    \item \texttt{nothmnum}
+    \item \texttt{nothmnum}, \texttt{thmnum} ou \texttt{thmnum=}\meta{counter}
         \begin{itemize}
-            \item Ne pas numéroter les environnements de type théorème.
+            \item Les environnements de type théorème ne seront pas numérotés / numérotés dans l'ordre 1, 2, 3... / numérotés dans \meta{counter}. Ici, \meta{counter} doit être un compteur intégré (tel que \texttt{subsection}) ou un compteur défini dans le préambule. Si aucune option n'est utilisée, ils seront numérotés dans \texttt{chapter} (livre) ou \texttt{section} (article).
+        \end{itemize}
+    \item \texttt{regionalref}, \texttt{originalref}
+        \begin{itemize}
+            \item Lors du référencement, si le nom de l'environnement de type théorème change avec la langue actuelle. Par défaut \texttt{regionalref} est activé, c'est-à-dire que le nom correspondant à la langue courante est utilisé ; par exemple, lors du référencement d'un environnement de type théorème dans un contexte français, les noms «~Théorème, Définition ...~» seront utilisés quel que soit le contexte linguistique dans lequel se trouve l'environnement d'origine. Si \texttt{originalref} est activé, alors le nom restera toujours le même que l'environnement d'origine ; par exemple, lors du référencement d'un théorème écrit dans le contexte français, même si l'on est actuellement dans le contexte anglais, il sera toujours affiché comme «~Théorème~». 
+            \item En mode \texttt{fast}, l'option \texttt{originalref} n'aura aucun effet.
         \end{itemize}
 \end{itemize}
 %</einfart-doc-fr,simplivre-doc-fr>
@@ -1499,6 +1511,7 @@ For example, \lstinline|\AddLanguageSetting(German){\color{orange}}| can make al
     \end{itemize}
 \end{itemize}
 
+%<einfart-doc-cn>\clearpage
 \meta{language name} 有下列选择 (不区分大小写，如 \texttt{French} 或 \texttt{french} 均可)：
 \begin{itemize}
     \item 简体中文：\texttt{CN}、\texttt{Chinese}、\texttt{SChinese} 或 \texttt{SimplifiedChinese}
@@ -1541,7 +1554,6 @@ For example, \lstinline|\AddLanguageSetting(German){\color{orange}}| can make al
     \item \lstinline|\UseOtherLanguage{|\meta{language name}\lstinline|}{|\meta{content}\lstinline|}|, qui utilise les paramètres de langue spécifiés pour composer \meta{content}. Par rapport à \lstinline|\UseLanguage|, il ne modifiera pas l'interligne, donc l'interligne restera stable lorsque le texte CJK et occidental sont mélangés.
 \end{itemize}
 
-%<einfart-doc-fr>\clearpage
 \meta{language name} peut être (il n'est pas sensible à la casse, par exemple, \texttt{French} et \texttt{french} ont le même effet) :
 \begin{itemize}
     \item chinois simplifié : \texttt{CN}, \texttt{Chinese}, \texttt{SChinese} ou \texttt{SimplifiedChinese}
@@ -1603,7 +1615,8 @@ After using \lstinline|\UseLanguage{French}|, a theorem will be displayed as:
     Un théorème en français.
 \end{theorem}
 
-By default, when referenced, the name of the theorem always matches the language of the context in which the theorem is located. For example, the definition above is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. If you want the name of the theorem to match the current context when referencing, you can add \texttt{regionalref} to the global options.
+% By default, when referenced, the name of the theorem always matches the language of the context in which the theorem is located. For example, the definition above is still displayed in English in the current French mode: \cref{def: strange} and \cref{thm}. If you want the name of the theorem to match the current context when referencing, you can add \texttt{regionalref} to the global options.
+By default, when referenced, the name of the theorem matches the current context. For example, the definition above will be displayed in French in the current French context: \cref{def: strange,thm}. If you want the name of the theorem to always match the language of the context in which the theorem is located, you can add \texttt{originalref} to the global options.
 \end{tip}
 
 \UseLanguage{English}
@@ -1639,7 +1652,8 @@ By default, when referenced, the name of the theorem always matches the language
     A theorem in English.
 \end{theorem}
 
-默认情况下，引用时，定理的名称总是与定理所在区域的语言匹配，例如，上面的定义在现在的英文模式下依然显示为中文：\cref{def: strange} 和 \cref{thm}。如果在引用时想让定理的名称与当前语境相匹配，可以在全局选项中加入 \texttt{regionalref}。
+% 默认情况下，引用时，定理的名称总是与定理所在区域的语言匹配，例如，上面的定义在现在的英文模式下依然显示为中文：\cref{def: strange} 和 \cref{thm}。如果在引用时想让定理的名称与当前语境相匹配，可以在全局选项中加入 \texttt{regionalref}。
+默认情况下，引用时，定理类环境的名称总是与当前语言相匹配，例如，上面的定义在现在的英文模式下将显示为英文：\cref{def: strange,thm}。如果在引用时想让定理的名称总是与原定理所在区域的语言匹配，即总是显示原始名称，可以在全局选项中加入 \texttt{originalref}。
 \end{tip}
 
 \UseLanguage{Chinese}
@@ -1650,7 +1664,7 @@ By default, when referenced, the name of the theorem always matches the language
 
 Des environnements tels que \texttt{definition} et \texttt{theorem} ont été prédéfinis et peuvent être utilisés directement.
 
-Plus précisement, les environnements prédéfinis incluent : \texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{observation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, et la version non numérotée correspondante avec un astérisque \lstinline|*| dans le nom. Les titres changeront avec la langue actuelle. Par exemple, \texttt{theorem} sera affiché comme « Theorem » en mode anglais et « Théorème » en mode français.
+Plus précisement, les environnements prédéfinis incluent : \texttt{assumption}, \texttt{axiom}, \texttt{conjecture}, \texttt{convention}, \texttt{corollary}, \texttt{definition}, \texttt{definition-proposition}, \texttt{definition-theorem}, \texttt{example}, \texttt{exercise}, \texttt{fact}, \texttt{hypothesis}, \texttt{lemma}, \texttt{notation}, \texttt{observation}, \texttt{problem}, \texttt{property}, \texttt{proposition}, \texttt{question}, \texttt{remark}, \texttt{theorem}, et la version non numérotée correspondante avec un astérisque \lstinline|*| dans le nom. Les titres changeront avec la langue actuelle. Par exemple, \texttt{theorem} sera affiché comme «~Theorem~» en mode anglais et «~Théorème~» en mode français.
 
 Lors du référencement d'un environnement de type théorème, il est recommandé d'utiliser \lstinline|\cref{|\meta{label}\texttt{\}}. De cette façon, il n'est pas nécessaire d'écrire explicitement le nom de l'environnement correspondant à chaque fois.
 
@@ -1673,7 +1687,8 @@ Après avoir utilisé \lstinline|\UseLanguage{French}|, un théorème s'afficher
     A theorem in English.
 \end{theorem}
 
-Par défaut, lorsqu'il est référencé, le nom de l'environnement de type théorème correspond toujours à la langue du contexte dans lequel se trouve l'environnement. Par exemple, la définition ci-dessus est toujours affichée en français dans le mode anglais courant : \cref{def: strange} et \cref{thm}. Si vous voulez que le nom du théorème corresponde au contexte actuel lors du référencement, vous pouvez ajouter \texttt{regionalref} aux options globales.
+% Par défaut, lorsqu'il est référencé, le nom de l'environnement de type théorème correspond toujours à la langue du contexte dans lequel se trouve l'environnement. Par exemple, la définition ci-dessus est toujours affichée en français dans le mode anglais courant : \cref{def: strange} et \cref{thm}. Si vous voulez que le nom du théorème corresponde au contexte actuel lors du référencement, vous pouvez ajouter \texttt{regionalref} aux options globales.
+Par défaut, lors du référencement, le nom du théorème correspond au contexte courant. Par exemple, le nom de la définition ci-dessus sera en français dans le contexte français courant : \cref{def: strange,thm}. Si vous voulez que le nom du théorème corresponde toujours à la langue du contexte dans lequel se trouve le théorème, vous pouvez ajouter \texttt{originalref} aux options globales.
 \end{tip}
 
 \UseLanguage{French}
@@ -1809,7 +1824,8 @@ The effect is as follows:
 %<einfart-doc-cn>\CreateTheorem{proofidea}<subsection>
 %<simplivre-doc-cn>\CreateTheorem{proofidea}<section>
 
-\bigskip
+% \bigskip
+%<einfart-doc-cn>\clearpage
 下面提供一个例子。这三行代码：
 
 \begin{code}
@@ -1923,7 +1939,6 @@ Similarly, there is \lstinline|\needgraph| :
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 %
 %<*einfart-doc-cn,simplivre-doc-cn>
-%<einfart-doc-cn>\clearpage
 \LevelTwoTitle{未完成标记}
 
 你可以通过 \lstinline|\dnf| 来标记尚未完成的部分。例如：
@@ -2027,6 +2042,7 @@ Among them, the mutual order of \lstinline|\address|, \lstinline|\curraddr|, \ls
   \end{keyword}
 \end{code}
 
+%<einfart-doc-cn>\clearpage
 也可以按照 \AmS{} 文档类的方式来写：
 
 \begin{code}
@@ -2197,7 +2213,7 @@ Puisque la police dans les environnements de type théorème est la même que ce
 
 \begin{itemize}[itemsep=.6em]
     \item Les paramètres de police ne sont pas encore parfaits.
-    \item Comme de nombreuses fonctionnalités sont basées sur la boîte à outils \ProjLib{}, \minimalist{} (et donc \minimart{}, \einfart{} et \minimbook{}, \simplivre{}) hérite de tous ses problèmes. Pour plus de détails, veuillez vous référer à la section « Problèmes connus » de la documentation de \ProjLib{}.
+    \item Comme de nombreuses fonctionnalités sont basées sur la boîte à outils \ProjLib{}, \minimalist{} (et donc \minimart{}, \einfart{} et \minimbook{}, \simplivre{}) hérite de tous ses problèmes. Pour plus de détails, veuillez vous référer à la section «~Problèmes connus~» de la documentation de \ProjLib{}.
     \item Le mécanisme de gestion des erreurs est incomplet : pas de messages correspondants lorsque certains problèmes surviennent.
     \item Il y a encore beaucoup de choses qui peuvent être optimisées dans le code.
 \end{itemize}
