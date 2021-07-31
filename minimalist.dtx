@@ -244,14 +244,12 @@
 %# The default CJK main font
 \PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
 \RequirePackage{ctex}
-\WarningFilter{everysel}{Everysel is no longer required}
-\IfFontExistsTF{FZYOUSK_507R--GBK1-0}{%
-    \setCJKmainfont{FZYOUSK_507R--GBK1-0}[
-        BoldFont       = FZYOUSK_509R--GBK1-0 ,
-        BoldFeatures   = {FakeBold=4} ,
+
+\IfFontExistsTF{SourceHanSerifSC-Regular}{%
+    \setCJKmainfont{SourceHanSerifSC-Regular}[
+        BoldFont       = SourceHanSerifSC-Bold ,
         ItalicFont     = * ,
-        BoldItalicFont = FZYOUSK_509R--GBK1-0 ,
-        BoldItalicFeatures = {FakeBold=4} ,
+        BoldItalicFont = SourceHanSerifSC-Bold ,
         SmallCapsFont  = * ]
 }{
     \setCJKmainfont{FandolSong-Regular.otf}[
@@ -261,15 +259,30 @@
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }
+
+%# 默认中文无衬线字体
+%# The default CJK sans font
+\IfFontExistsTF{SourceHanSansSC-Regular}{%
+    \setCJKsansfont{SourceHanSansSC-Regular}[
+        BoldFont       = SourceHanSansSC-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanSansSC-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKsansfont{FandolHei-Regular.otf}[
+        BoldFont       = FandolHei-Bold.otf ,
+        ItalicFont     = * ,
+        BoldItalicFont = FandolHei-Bold.otf ,
+        SmallCapsFont  = * ]
+}
+
 %# 默认中文等宽字体
 %# The default CJK mono font
-\IfFontExistsTF{FZYOUSK_507R--GBK1-0}{%
-    \setCJKmonofont{FZYOUSK_507R--GBK1-0}[
-        BoldFont       = FZYOUSK_509R--GBK1-0 ,
-        BoldFeatures   = {FakeBold=4} ,
+\IfFontExistsTF{SourceHanMonoSC-Regular}{%
+    \setCJKmonofont{SourceHanMonoSC-Regular}[
+        BoldFont       = SourceHanMonoSC-Bold ,
         ItalicFont     = * ,
-        BoldItalicFont = FZYOUSK_509R--GBK1-0 ,
-        BoldItalicFeatures = {FakeBold=4} ,
+        BoldItalicFont = SourceHanMonoSC-Bold ,
         SmallCapsFont  = * ]
 }{
     \setCJKmonofont{FandolFang-Regular.otf}[
@@ -280,37 +293,183 @@
         BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
 }
-%# 默认中文无衬线字体
-%# The default CJK sans font
-\IfFontExistsTF{FZYOUHK_508R--GBK1-0}{%
-    \setCJKsansfont{FZYOUHK_508R--GBK1-0}[
-        BoldFont       = FZYOUHK_509R--GBK1-0 ,
-        BoldFeatures   = {FakeBold=4} ,
+
+%# 简体中文字体族
+%# SC font family
+\if@PJLlang@enable@CN
+\IfFontExistsTF{SourceHanSerifSC-Regular}{%
+    \setCJKfamilyfont{SCmain}{SourceHanSerifSC-Regular}[
+        BoldFont       = SourceHanSerifSC-Bold ,
         ItalicFont     = * ,
-        BoldItalicFont = FZYOUHK_509R--GBK1-0 ,
-        SmallCapsFont  = * ]
-    \setCJKfamilyfont{zhhei}{FZYOUHK_508R--GBK1-0}[
-        BoldFont       = FZYOUHK_509R--GBK1-0 ,
-        BoldFeatures   = {FakeBold=4} ,
-        ItalicFont     = * ,
-        BoldItalicFont = FZYOUHK_509R--GBK1-0 ,
+        BoldItalicFont = SourceHanSerifSC-Bold ,
         SmallCapsFont  = * ]
 }{
-    \setCJKsansfont{FandolHei-Regular.otf}[
-        BoldFont       = FandolHei-Bold.otf ,
-        ItalicFont     = * ,
-        BoldItalicFont = FandolHei-Bold.otf ,
+    \setCJKfamilyfont{SCmain}{FandolSong-Regular.otf}[
+        BoldFont       = FandolSong-Bold.otf ,
+        ItalicFont     = FandolKai-Regular.otf ,
+        BoldItalicFont = FandolKai-Regular.otf ,
+        BoldItalicFeatures = {FakeBold=4} ,
         SmallCapsFont  = * ]
-    \setCJKfamilyfont{zhhei}{FandolHei-Regular.otf}[
+}
+\IfFontExistsTF{SourceHanSansSC-Regular}{%
+    \setCJKfamilyfont{SCsans}{SourceHanSansSC-Regular}[
+        BoldFont       = SourceHanSansSC-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanSansSC-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{SCsans}{FandolHei-Regular.otf}[
         BoldFont       = FandolHei-Bold.otf ,
         ItalicFont     = * ,
         BoldItalicFont = FandolHei-Bold.otf ,
         SmallCapsFont  = * ]
 }
+\IfFontExistsTF{SourceHanMonoSC-Regular}{%
+    \setCJKfamilyfont{SCmono}{SourceHanMonoSC-Regular}[
+        BoldFont       = SourceHanMonoSC-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanMonoSC-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{SCmono}{FandolFang-Regular.otf}[
+        BoldFont       = * ,
+        BoldFeatures   = {FakeBold=4} ,
+        ItalicFont     = * ,
+        BoldItalicFont = * ,
+        BoldItalicFeatures = {FakeBold=4} ,
+        SmallCapsFont  = * ]
+}
+\fi
+
+%# 繁体中文字体族
+%# TC font family
+\if@PJLlang@enable@TC
+\IfFontExistsTF{SourceHanSerifTC-Regular}{%
+    \setCJKfamilyfont{TCmain}{SourceHanSerifTC-Regular}[
+        BoldFont       = SourceHanSerifTC-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanSerifTC-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{TCmain}{FandolSong-Regular.otf}[
+        BoldFont       = FandolSong-Bold.otf ,
+        ItalicFont     = FandolKai-Regular.otf ,
+        BoldItalicFont = FandolKai-Regular.otf ,
+        BoldItalicFeatures = {FakeBold=4} ,
+        SmallCapsFont  = * ]
+}
+\IfFontExistsTF{SourceHanSansTC-Regular}{%
+    \setCJKfamilyfont{TCsans}{SourceHanSansTC-Regular}[
+        BoldFont       = SourceHanSansTC-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanSansTC-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{TCsans}{FandolHei-Regular.otf}[
+        BoldFont       = FandolHei-Bold.otf ,
+        ItalicFont     = * ,
+        BoldItalicFont = FandolHei-Bold.otf ,
+        SmallCapsFont  = * ]
+}
+\IfFontExistsTF{SourceHanMonoTC-Regular}{%
+    \setCJKfamilyfont{TCmono}{SourceHanMonoTC-Regular}[
+        BoldFont       = SourceHanMonoTC-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanMonoTC-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{TCmono}{FandolFang-Regular.otf}[
+        BoldFont       = * ,
+        BoldFeatures   = {FakeBold=4} ,
+        ItalicFont     = * ,
+        BoldItalicFont = * ,
+        BoldItalicFeatures = {FakeBold=4} ,
+        SmallCapsFont  = * ]
+}
+\fi
+
+%# 日文字体族
+%# JP font family
+\if@PJLlang@enable@JP
+\IfFontExistsTF{SourceHanSerif-Regular}{%
+    \setCJKfamilyfont{JPmain}{SourceHanSerif-Regular}[
+        BoldFont       = SourceHanSerif-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanSerif-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{JPmain}{FandolSong-Regular.otf}[
+        BoldFont       = FandolSong-Bold.otf ,
+        ItalicFont     = FandolKai-Regular.otf ,
+        BoldItalicFont = FandolKai-Regular.otf ,
+        BoldItalicFeatures = {FakeBold=4} ,
+        SmallCapsFont  = * ]
+}
+\IfFontExistsTF{SourceHanSans-Regular}{%
+    \setCJKfamilyfont{JPsans}{SourceHanSans-Regular}[
+        BoldFont       = SourceHanSans-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanSans-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{JPsans}{FandolHei-Regular.otf}[
+        BoldFont       = FandolHei-Bold.otf ,
+        ItalicFont     = * ,
+        BoldItalicFont = FandolHei-Bold.otf ,
+        SmallCapsFont  = * ]
+}
+\IfFontExistsTF{SourceHanMono-Regular}{%
+    \setCJKfamilyfont{JPmono}{SourceHanMono-Regular}[
+        BoldFont       = SourceHanMono-Bold ,
+        ItalicFont     = * ,
+        BoldItalicFont = SourceHanMono-Bold ,
+        SmallCapsFont  = * ]
+}{
+    \setCJKfamilyfont{JPmono}{FandolFang-Regular.otf}[
+        BoldFont       = * ,
+        BoldFeatures   = {FakeBold=4} ,
+        ItalicFont     = * ,
+        BoldItalicFont = * ,
+        BoldItalicFeatures = {FakeBold=4} ,
+        SmallCapsFont  = * ]
+}
+\fi
+
+%# 选定对应语言的 CJK 字体族
+%# Select the CJK font family of the corresponding language
+\def\CJKsffamily{}
+\def\CJKttfamily{}
+
+\apptocmd{\sffamily}{\CJKsffamily}{}{\FAIL}
+\apptocmd{\ttfamily}{\CJKttfamily}{}{\FAIL}
+
+\if@PJLlang@enable@CN
+\gappto{\PJLlang@langconfig@chinese}{%
+    \def\CJKsffamily{\CJKfamily{SCsans}}%
+    \def\CJKttfamily{\CJKfamily{SCmono}}%
+    \CJKfamily{SCmain}%
+}
+\fi
+
+\if@PJLlang@enable@TC
+\gappto{\PJLlang@langconfig@tchinese}{%
+    \def\CJKsffamily{\CJKfamily{TCsans}}%
+    \def\CJKttfamily{\CJKfamily{TCmono}}%
+    \CJKfamily{TCmain}%
+}
+\fi
+
+\if@PJLlang@enable@JP
+\gappto{\PJLlang@langconfig@japanese}{%
+    \def\CJKsffamily{\CJKfamily{JPsans}}%
+    \def\CJKttfamily{\CJKfamily{JPmono}}%
+    \CJKfamily{JPmain}%
+}
+\fi
 
 %# 标题字体：英文时为普通字体，中文时为无衬线字体
 %# Titles' font: normal font for English, sans serif font for CJK
-\def\minimalist@titlefontshape{\CJKfamily{zhhei}}
+\def\minimalist@titlefontshape{\CJKsffamily}
 
 %# 默认数学字体
 %# The default math font
