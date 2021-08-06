@@ -2,7 +2,9 @@
 
 # `minimalist` bundle: write you documents in a simple and clear way
 
-A collection of styles and classes that helps you typesetting articles and books
+## Introduction
+
+`minimalist` is a collection of styles and classes that helps you typesetting articles and books
 with a simple and clear design. It mainly consists of two parts.
 
 - Main part:
@@ -15,7 +17,7 @@ with a simple and clear design. It mainly consists of two parts.
     (European and Brazilian) and Spanish typesetting.
 
 
-- Derivative part (they have separate pages on CTAN):
+- Derivative part:
     - `einfart.cls` : more advanced class for typesetting articles
     - `simplivre.cls` : more advanced class for typesetting books
 
@@ -24,6 +26,31 @@ with a simple and clear design. It mainly consists of two parts.
     support to Chinese (simplified and traditional), English, French, German,
     Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish
     typesetting, and also use more beautiful fonts.
+
+### How to get these files
+You can get the `.sty` and `.cls` files mentioned above simply by compiling
+`minimalist.ins`:
+```
+latex minimalist.ins
+```
+To get the `.tex` source files of the documentation, compile
+`minimalist-doc.ins`:
+```
+latex minimalist-doc.ins
+```
+
+## Features
+
+Compared with usual document classes, it has the following features:
+
+- Native multi-language support: Chinese (simplified and traditional), English,
+  French, German, Italian, Japanese, Portuguese (European and Brazilian),
+  Russian and Spanish
+    > In particular, for simplified Chinese, traditional Chinese and Japanese,
+    > the fonts of the corresponding glyphs can be automatically switched
+- Ready-to-use theorem-like environments, also with multi-language support
+- Support both the standard and the AMS writing fashion
+
 
 # License
 
