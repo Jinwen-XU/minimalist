@@ -349,7 +349,8 @@ Cette documentation est composée à l'aide de \simplivre{}. Vous pouvez le cons
 In order to use the package or classes described here, you need to:
 \begin{itemize}
     \item install TeX Live or MikTeX of the latest possible version, and make sure that \texttt{minimalist} and \texttt{projlib} are correctly installed in your \TeX{} system.
-    \item download and install the required fonts, see the section "On the default fonts".
+%<minimalist-doc>    \item download and install the required fonts if needed.
+%<!minimalist-doc>    \item download and install the required fonts, see the section "On the default fonts".
     \item be familiar with the basic usage of \LaTeX{}, and knows how to compile your document with \hologo{pdfLaTeX}, \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
 \end{itemize}
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
@@ -2208,7 +2209,7 @@ Puisque la police dans les environnements de type théorème est la même que ce
 
 \begin{itemize}[itemsep=.6em]
     \item 对于字体的设置仍然不够完善。
-    \item 由于很多核心功能建立在 \ProjLib{} 工具箱的基础上，因此 \einfart{} 自然继承了其所有问题。详情可以参阅 \ProjLib{} 用户文档的“目前存在的问题”这一小节。
+    \item 由于很多核心功能建立在 \ProjLib{} 工具箱的基础上，因此 \minimalist{} (进而 \minimart{}、\einfart{} 与 \minimbook{}、\simplivre{}) 自然继承了其所有问题。详情可以参阅 \ProjLib{} 用户文档的“目前存在的问题”这一小节。
     \item 错误处理功能不完善，在出现一些问题时没有相应的错误提示。
     \item 代码中仍有许多可优化之处。
 \end{itemize}
