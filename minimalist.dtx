@@ -215,6 +215,10 @@
 %# The default English main font
 \PassOptionsToPackage{no-math}{fontspec}
 \RequirePackage{fontspec}
+
+\IfFileExists{minimalist-font.tex}{
+    \input{minimalist-font.tex}
+}{
 \IfFontExistsTF{Palatino Linotype}{%
     \setmainfont{Palatino Linotype}
         [\if@minimclass@useosf Numbers = OldStyle\fi]
@@ -239,12 +243,16 @@
         BoldFont       = NewCMMono10-Bold.otf ,
         ItalicFont     = NewCMMono10-Italic.otf ,
         BoldItalicFont = NewCMMono10-BoldOblique.otf ]
+}
 
 %# 默认中文字体
 %# The default CJK main font
 \PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
 \RequirePackage{ctex}
 
+\IfFileExists{minimalist-font.cjk.tex}{
+    \input{minimalist-font.cjk.tex}
+}{
 \IfFontExistsTF{SourceHanSerifSC-Regular}{%
     \setCJKmainfont{SourceHanSerifSC-Regular}[
         BoldFont       = SourceHanSerifSC-Bold ,
@@ -449,6 +457,7 @@
 %# 标题字体：英文时为普通字体，中文时为无衬线字体
 %# Titles' font: normal font for English, sans serif font for CJK
 \def\minimalist@titlefontshape{\CJKsffamily}
+}
 
 %# 默认数学字体
 %# The default math font
