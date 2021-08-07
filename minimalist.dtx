@@ -99,7 +99,7 @@
 \if@minimclass@draft
     \@minimclass@fasttrue
 \fi
-\if@minimclass@classical
+\if@minimclass@classical\else
     \@minimclass@useindenttrue
 \fi
 \if@minimclass@palatino
@@ -833,15 +833,15 @@
 \if@minimalist@classical
 \newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
 \newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\secfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\subsecfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\subsubsecfont}{\conditionalbfseries\minimalist@titlefontshape\itshape}
-\else
-\newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
 \newcommand{\secfont}{\conditionalbfseries}
 \newcommand{\subsecfont}{\conditionalbfseries}
 \newcommand{\subsubsecfont}{\conditionalbfseries\itshape}
+\else
+\newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\secfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\subsecfont}{\conditionalbfseries\minimalist@titlefontshape}
+\newcommand{\subsubsecfont}{\conditionalbfseries\minimalist@titlefontshape\itshape}
 \fi
 
 %%================================
@@ -1142,14 +1142,6 @@
 
 %% Section
 \if@minimalist@classical
-\newcommand\sec@decochar{}
-\titleformat{\section}
-    {\LocallyStopLineNumbers%
-    \secfont\centering}
-    {\thesection}{.75em}
-    {#1}
-    [\ResumeLineNumbers]
-\else
 \renewcommand\thesection{\arabic{section}}
 \newcommand\seculine{\bgroup\markoverwith{\color{maintext!27!paper}%
     \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
@@ -1168,17 +1160,18 @@
     \secfont\centering}{}{0em}
     {\seculine{#1}}
     [\ResumeLineNumbers]
+\else
+\newcommand\sec@decochar{}
+\titleformat{\section}
+    {\LocallyStopLineNumbers%
+    \secfont\centering}
+    {\thesection}{.75em}
+    {#1}
+    [\ResumeLineNumbers]
 \fi
 
 %% Subsection
 \if@minimalist@classical
-\titleformat{\subsection}
-    {\LocallyStopLineNumbers%
-    \subsecfont}
-    {\thesubsection}{.75em}
-    {#1}
-    [\ResumeLineNumbers]
-\else
 \renewcommand\thesubsection{%
     \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
 \newcommand\subseculine{\bgroup\markoverwith{\color{maintext!27!paper}%
@@ -1192,6 +1185,13 @@
     {\LocallyStopLineNumbers%
     \subsecfont}{}{0em}
     {\subseculine{#1}}
+    [\ResumeLineNumbers]
+\else
+\titleformat{\subsection}
+    {\LocallyStopLineNumbers%
+    \subsecfont}
+    {\thesubsection}{.75em}
+    {#1}
     [\ResumeLineNumbers]
 \fi
 
@@ -1330,6 +1330,25 @@
 \if@minimalist@classical
 %# 经典模式的定理样式
 %# The theorem style for classical mode
+\def\simpleqedsymbol{%
+    \makebox[1em]{\rlap{\textcolor{maintext!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+\newtheoremstyle{simple}%
+    {}{}%
+    {\normalfont}{}%
+    {\normalfont}{}%
+    {0pt}%
+    {\global\let\qedsymbol\simpleqedsymbol%
+        {\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
+        \textcolor{maintext!27!paper}{$|$}\hspace{.4em}%
+        \color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}%
+        \pushQED{\qed}%
+    }
+\def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol%
+    \popQED\endtrivlist\@endpefalse
+    \global\let\qedsymbol\qedsymbolOriginal}
+\else
+%# 正常模式的定理样式
+%# The theorem style for normal mode
 % Style #1
 % \newtheoremstyle{simple}%
 %     {}{}%
@@ -1359,25 +1378,6 @@
         {0pt}%
         {{\conditionalbfseries\minimalist@titlefontshape\thmname{#1}\thmnumber{ #2}}%
             {\color{maintext!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}~~{\normalfont---}~~}
-\else
-%# 正常模式的定理样式
-%# The theorem style for normal mode
-    \def\simpleqedsymbol{%
-        \makebox[1em]{\rlap{\textcolor{maintext!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
-    \newtheoremstyle{simple}%
-        {}{}%
-        {\normalfont}{}%
-        {\normalfont}{}%
-        {0pt}%
-        {\global\let\qedsymbol\simpleqedsymbol%
-            {\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
-            \textcolor{maintext!27!paper}{$|$}\hspace{.4em}%
-            \color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}%
-            \pushQED{\qed}%
-        }
-    \def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol%
-        \popQED\endtrivlist\@endpefalse
-        \global\let\qedsymbol\qedsymbolOriginal}
 \fi
 
 %# 灰色实心的 QED 符号
@@ -1671,19 +1671,6 @@
 \if@minimalist@classical
 \renewcommand{\@maketitle}{%
     \LocallyStopLineNumbers%
-    \begin{center}%
-        {\conditionalbfseries\minimalist@titlefontshape\large\@title}\\\bigskip%
-        \color{maintext!80!paper}%
-        {\small\scshape\@author}\\[2pt]%
-        {\small\@date}%
-    \end{center}%
-    \ifx\@date\@empty\bigskip\fi%
-    \bigskip\par%
-    \ResumeLineNumbers%
-}
-\else
-\renewcommand{\@maketitle}{%
-    \LocallyStopLineNumbers%
     \noindent%
     {\textcolor{maintext!27!paper}{\rule{\textwidth}{0.75pt}}}%
     % \vspace{-\parskip}%
@@ -1706,6 +1693,19 @@
     {\textcolor{maintext!27!paper}{\rule{\textwidth}{0.75pt}}\par}%
     \ResumeLineNumbers%
 }
+\else
+\renewcommand{\@maketitle}{%
+    \LocallyStopLineNumbers%
+    \begin{center}%
+        {\conditionalbfseries\minimalist@titlefontshape\large\@title}\\\bigskip%
+        \color{maintext!80!paper}%
+        {\small\scshape\@author}\\[2pt]%
+        {\small\@date}%
+    \end{center}%
+    \ifx\@date\@empty\bigskip\fi%
+    \bigskip\par%
+    \ResumeLineNumbers%
+}
 \fi
 \apptocmd{\maketitle}{\thispagestyle{fancy}}{}{\FAIL}
 
@@ -1713,24 +1713,6 @@
 %% Abstract style
 %%================================
 \if@minimalist@classical
-\renewenvironment{abstract}{%
-    \LocallyStopLineNumbers%
-    \vspace{-\baselineskip}%
-    \begin{center}%
-        \textsc{\conditionalbfseries\small\abstractname}\\%
-        \vspace{-.3\baselineskip}%
-        \begin{minipage}[t]{.833\textwidth}%
-            \vspace{0pt}%
-            \color{maintext!80!paper}%
-            \footnotesize%
-            \parindent=2em
-}{%
-        \end{minipage}%
-    \end{center}%
-    \medskip%
-    \ResumeLineNumbers%
-}
-\else
 \renewenvironment{abstract}{%
     \LocallyStopLineNumbers%
     \begin{flushright}%
@@ -1746,6 +1728,24 @@
         \end{minipage}%
     \end{flushright}%
     \bigskip%
+    \ResumeLineNumbers%
+}
+\else
+\renewenvironment{abstract}{%
+    \LocallyStopLineNumbers%
+    \vspace{-\baselineskip}%
+    \begin{center}%
+        \textsc{\conditionalbfseries\small\abstractname}\\%
+        \vspace{-.3\baselineskip}%
+        \begin{minipage}[t]{.833\textwidth}%
+            \vspace{0pt}%
+            \color{maintext!80!paper}%
+            \footnotesize%
+            \parindent=2em
+}{%
+        \end{minipage}%
+    \end{center}%
+    \medskip%
     \ResumeLineNumbers%
 }
 \fi
@@ -1764,26 +1764,6 @@
 \if@minimalist@classical
 \newenvironment{keyword}{%
     \LocallyStopLineNumbers%
-    \vspace{-.75\baselineskip}%
-    \begin{center}%
-        {\conditionalbfseries\small\csname keywordname\csname\languagename ABBR\endcsname\endcsname}\\%
-        \vspace{-.3\baselineskip}%
-        \begin{minipage}[t]{.833\textwidth}%
-            \vspace{0pt}%
-            \color{maintext!80!paper}%
-            \footnotesize%
-            \parindent=2em
-            \begin{center}%
-}{%
-            \end{center}%
-        \end{minipage}%
-    \end{center}%
-    \medskip%
-    \ResumeLineNumbers%
-}
-\else
-\newenvironment{keyword}{%
-    \LocallyStopLineNumbers%
     \vspace{-.5\baselineskip}%
     \begin{flushright}%
         {\conditionalbfseries\small\csname keywordname\csname\languagename ABBR\endcsname\endcsname}\par%
@@ -1799,6 +1779,26 @@
         \end{minipage}%
     \end{flushright}%
     \bigskip%
+    \ResumeLineNumbers%
+}
+\else
+\newenvironment{keyword}{%
+    \LocallyStopLineNumbers%
+    \vspace{-.75\baselineskip}%
+    \begin{center}%
+        {\conditionalbfseries\small\csname keywordname\csname\languagename ABBR\endcsname\endcsname}\\%
+        \vspace{-.3\baselineskip}%
+        \begin{minipage}[t]{.833\textwidth}%
+            \vspace{0pt}%
+            \color{maintext!80!paper}%
+            \footnotesize%
+            \parindent=2em
+            \begin{center}%
+}{%
+            \end{center}%
+        \end{minipage}%
+    \end{center}%
+    \medskip%
     \ResumeLineNumbers%
 }
 \fi

@@ -15,9 +15,9 @@
 \ProvidesFile{minimalist-doc.dtx}
 %</driver>
 %
-%<minimalist-doc>\documentclass[English,Chinese,French]{minimart}
-%<einfart-doc-cn,einfart-doc-en,einfart-doc-fr>\documentclass[English,Chinese,French]{einfart}
-%<simplivre-doc-cn,simplivre-doc-en,simplivre-doc-fr>\documentclass[English,Chinese,French,JP,TC]{simplivre}
+%<minimalist-doc>\documentclass[English,Chinese,French,classical]{minimart}
+%<einfart-doc-cn,einfart-doc-en,einfart-doc-fr>\documentclass[English,Chinese,French,classical]{einfart}
+%<simplivre-doc-cn,simplivre-doc-en,simplivre-doc-fr>\documentclass[English,Chinese,French,JP,TC,classical]{simplivre}
 
 \linenumbers % Enable line numbers
 
@@ -228,7 +228,7 @@
 \begin{abstract}
     \minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. The original intention in designing this series was to write drafts and notes that look simple yet not shabby. With the help of the \ProjLib{} toolkit, also developed by the author, the classes provided here have multi-language support, preset theorem-like environments with clever reference support, and many other functionalities. Notably, using these classes, one can organize the author information in the \AmS{} fashion, makes it easy to switch to journal classes later for publication.
     
-    Finally, this documentation is typeset using the \minimart{} class. You can think of it as a short introduction and demonstration.
+    Finally, this documentation is typeset using the \minimart{} class (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
 \end{abstract}
 %</minimalist-doc>
 %
@@ -238,7 +238,7 @@
 
     \einfart{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
     
-    This documentation is typeset using \einfart{}. You can think of it as a short introduction and demonstration.
+    This documentation is typeset using \einfart{} (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
 \end{abstract}
 %</einfart-doc-en>
 %
@@ -248,7 +248,7 @@
 
     \einfart{} 支持英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
     
-    这篇说明文档即是用 \einfart{} 排版的，你可以把它看作一份简短的说明与演示。
+    这篇说明文档即是用 \einfart{} 排版的 (使用了参数 \texttt{classical})，你可以把它看作一份简短的说明与演示。
 \end{abstract}
 %</einfart-doc-cn>
 %
@@ -258,7 +258,7 @@
 
     \einfart{} prend en charge plusieurs langues, notamment le chinois (simplifié et traditionnel), l'anglais, le français, l'allemand, l'italien, le japonais, le portugais (européen et brésilien), le russe et l'espagnol. Ces langues peuvent être commutées de manière transparente dans un seul document. En raison de l'utilisation de polices personnalisées, \einfart{} demande soit \hologo{XeLaTeX} soit \hologo{LuaLaTeX} pour la compilation.
 
-    Cette documentation est composée à l'aide de \einfart{}. Vous pouvez le considérer comme une courte introduction et une démonstration.
+    Cette documentation est composée à l'aide de \einfart{} (avec l'option \texttt{classical}). Vous pouvez le considérer comme une courte introduction et une démonstration.
 \end{abstract}
 %</einfart-doc-fr>
 
@@ -271,7 +271,7 @@
 
 \simplivre{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
 
-This documentation is typeset using \simplivre{}. You can think of it as a short introduction and demonstration.
+This documentation is typeset using \simplivre{} (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
 
 \bigskip
 \begin{tip}
@@ -286,7 +286,7 @@ This documentation is typeset using \simplivre{}. You can think of it as a short
 
 \simplivre{} 支持英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
 
-这篇说明文档即是用 \simplivre{} 排版的，你可以把它看作一份简短的说明与演示。
+这篇说明文档即是用 \simplivre{} 排版的 (使用了参数 \texttt{classical})，你可以把它看作一份简短的说明与演示。
 
 \bigskip
 \begin{tip}
@@ -301,7 +301,7 @@ This documentation is typeset using \simplivre{}. You can think of it as a short
 
 \simplivre{} prend en charge plusieurs langues, notamment le chinois (simplifié et traditionnel), l'anglais, le français, l'allemand, l'italien, le japonais, le portugais (européen et brésilien), le russe et l'espagnol. Ces langues peuvent être commutées de manière transparente dans un seul document. En raison de l'utilisation de polices personnalisées, \simplivre{} demande soit \hologo{XeLaTeX} soit \hologo{LuaLaTeX} pour la compilation.
 
-Cette documentation est composée à l'aide de \simplivre{}. Vous pouvez le considérer comme une courte introduction et une démonstration.
+Cette documentation est composée à l'aide de \simplivre{} (avec l'option \texttt{classical}). Vous pouvez le considérer comme une courte introduction et une démonstration.
 
 \bigskip
 \begin{tip}
@@ -1072,6 +1072,7 @@ ou utilisez la classe \AmS{} :
 %</einfart-doc-fr>
 
 
+%<*unused>
 
 %<*minimalist-doc,einfart-doc-en>
 \begin{tip}
@@ -1107,6 +1108,7 @@ Si vous aimez la classe de document actuelle, mais que vous souhaitez un style p
 \end{tip}
 %</einfart-doc-fr>
 
+%</unused>
 
 
 %<*minimalist-doc>
@@ -1251,13 +1253,15 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
         \begin{itemize}
             \item Allow boldface. When this option is enabled, the main title, the titles of all levels and the names of theorem-like environments will be bolded.
         \end{itemize}
+%<einfart-doc-en>\clearpage
     \item \texttt{classical}
         \begin{itemize}
-            \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
+%             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
+            \item Classic mode. An antique-looking style will be used when this option is enabled, like in the current documentation.
         \end{itemize}
-    \begin{tip}
-        \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
-    \end{tip}
+%     \begin{tip}
+%         \texttt{allowbf} + \texttt{classical} is probably a good choice if you prefer traditional style.
+%     \end{tip}
 %<*einfart-doc-en,simplivre-doc-en>
     \item \texttt{useindent}
         \begin{itemize}
@@ -1268,6 +1272,7 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
         \begin{itemize}
             \item Use the ``runin'' style for \lstinline|\subsubsection|
         \end{itemize}
+%<simplivre-doc-en>\clearpage
     \item \texttt{puretext} or \texttt{nothms}
         \begin{itemize}
             \item Pure text mode. Does not load theorem-like environments.
@@ -1285,6 +1290,7 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 
 %<*minimalist-doc>
+\clearpage
 Additionally, \minimart{} and \minimbook{} offers the following options: 
 \begin{itemize}
     \item \texttt{a4paper} or \texttt{b5paper}
@@ -1345,17 +1351,20 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
         \begin{itemize}
             \item 允许加粗。启用这一选项时，题目、各级标题、定理类环境名称会被加粗。
         \end{itemize}
+%<einfart-doc-cn>\clearpage
     \item \texttt{classical}
         \begin{itemize}
-            \item 经典模式。启用这一选项时，样式会变得更加中规中矩：段落呈首行缩进样式、各类下划线减少、标题样式改变、定理类环境的样式也会更贴近常见的设置。
+%             \item 经典模式。启用这一选项时，样式会变得更加中规中矩：段落呈首行缩进样式、各类下划线减少、标题样式改变、定理类环境的样式也会更贴近常见的设置。
+            \item 经典模式。使用这一选项时，将会启用较为古色古香的风格，如同当前的这篇说明文档一样。
         \end{itemize}
-    \begin{tip}
-        如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
-    \end{tip}
+%     \begin{tip}
+%         如果你喜欢更加传统的样式，\texttt{allowbf} + \texttt{classical} 是一个不错的搭配。
+%     \end{tip}
     \item \texttt{useindent}
         \begin{itemize}
             \item 采用段首缩进而不是段间间距。
         \end{itemize}
+%<simplivre-doc-cn>\clearpage
     \item \texttt{runin}
         \begin{itemize}
             \item \lstinline|\subsubsection| 采用 ``runin'' 风格。
@@ -1420,15 +1429,17 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
         \end{itemize}
     \item \texttt{classical}
         \begin{itemize}
-            \item Mode classique. Lorsque cette option est utilisée, le style deviendra plus régulier : les paragraphes sont en retrait, l'utilisation de soulignements est réduite, les styles de titres sont modifiés et les styles de théorème seront beaucoup plus proches des styles par défaut.
+%             \item Mode classique. Lorsque cette option est utilisée, le style deviendra plus régulier : les paragraphes sont en retrait, l'utilisation de soulignements est réduite, les styles de titres sont modifiés et les styles de théorème seront beaucoup plus proches des styles par défaut.
+            \item Mode classique. Un style antique sera utilisé lorsque cette option est activée, comme dans la documentation actuelle.
         \end{itemize}
-    \begin{tip}
-        \texttt{allowbf} + \texttt{classical} est probablement un bon choix si vous préférez le style traditionnel.
-    \end{tip}
+%     \begin{tip}
+%         \texttt{allowbf} + \texttt{classical} est probablement un bon choix si vous préférez le style traditionnel.
+%     \end{tip}
     \item \texttt{useindent}
         \begin{itemize}
             \item Utilisez l'indentation des paragraphes au lieu de l'espacement entre les paragraphes.
         \end{itemize}
+%<simplivre-doc-fr>\clearpage
     \item \texttt{runin}
         \begin{itemize}
             \item Utilisez le style «~runin~» pour \lstinline|\subsubsection|
@@ -1832,7 +1843,6 @@ The effect is as follows:
 %<simplivre-doc-cn>\CreateTheorem{proofidea}<section>
 
 % \bigskip
-%<einfart-doc-cn>\clearpage
 下面提供一个例子。这三行代码：
 
 \begin{code}
@@ -2049,7 +2059,6 @@ Among them, the mutual order of \lstinline|\address|, \lstinline|\curraddr|, \ls
   \end{keyword}
 \end{code}
 
-%<einfart-doc-cn>\clearpage
 也可以按照 \AmS{} 文档类的方式来写：
 
 \begin{code}
