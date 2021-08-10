@@ -1579,10 +1579,12 @@
 %         }
 %     }
 % }
+
 %# 建立定理类环境
 %# Set-up theorem-like environments
-\AtEndPreamble{
 \theoremstyle{simple}
+
+\AtEndPreamble{
 \if@minimalist@nothms\else
 \if@minimalist@nothmnum
 \CreateTheorem*{theorem}
