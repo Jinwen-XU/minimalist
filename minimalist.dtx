@@ -431,7 +431,7 @@
 \apptocmd{\ttfamily}{\CJKttfamily}{}{\FAIL}
 
 \if@PJLlang@enable@CN
-\gappto{\PJLlang@langconfig@schinese}{%
+\gappto{\PJLlang@langconfig@SC}{%
     \def\CJKsffamily{\CJKfamily{SCsans}}%
     \def\CJKttfamily{\CJKfamily{SCmono}}%
     \CJKfamily{SCmain}%
@@ -439,7 +439,7 @@
 \fi
 
 \if@PJLlang@enable@TC
-\gappto{\PJLlang@langconfig@tchinese}{%
+\gappto{\PJLlang@langconfig@TC}{%
     \def\CJKsffamily{\CJKfamily{TCsans}}%
     \def\CJKttfamily{\CJKfamily{TCmono}}%
     \CJKfamily{TCmain}%
@@ -447,7 +447,7 @@
 \fi
 
 \if@PJLlang@enable@JP
-\gappto{\PJLlang@langconfig@japanese}{%
+\gappto{\PJLlang@langconfig@JP}{%
     \def\CJKsffamily{\CJKfamily{JPsans}}%
     \def\CJKttfamily{\CJKfamily{JPmono}}%
     \CJKfamily{JPmain}%
@@ -1046,13 +1046,13 @@
 \gappto{\PJLlang@langconfig@common}{%
 \renewcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}%
 }
-\gappto{\PJLlang@langconfig@schinese}{%
+\gappto{\PJLlang@langconfig@SC}{%
 \renewcommand{\partstring}{第~\thepart~部分}%
 }
-\gappto{\PJLlang@langconfig@tchinese}{%
+\gappto{\PJLlang@langconfig@TC}{%
 \renewcommand{\partstring}{第~\thepart~部分}%
 }
-\gappto{\PJLlang@langconfig@japanese}{%
+\gappto{\PJLlang@langconfig@JP}{%
 \renewcommand{\partstring}{第~\thepart~部}%
 }
 
@@ -1296,7 +1296,7 @@
 
 \setlist[itemize]{leftmargin=*}
 \gappto{\PJLlang@langconfig@common}{\setlist[itemize,1]{label=\textcolor{maintext!25}{$\bullet$}}}
-\gappto{\PJLlang@langconfig@french}{\setlist[itemize,1]{label=\textcolor{maintext!50}{---}}}
+\gappto{\PJLlang@langconfig@FR}{\setlist[itemize,1]{label=\textcolor{maintext!50}{---}}}
 \setlist[itemize,2]{label=\textcolor{maintext!27}{--}}
 \setlist[itemize,3]{label=\textcolor{maintext!27}{\texttt{*}}}
 
