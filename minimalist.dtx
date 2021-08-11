@@ -431,7 +431,7 @@
 \apptocmd{\ttfamily}{\CJKttfamily}{}{\FAIL}
 
 \if@PJLlang@enable@CN
-\gappto{\PJLlang@langconfig@SC}{%
+\gappto{\PJLlang@langconfig@CN}{%
     \def\CJKsffamily{\CJKfamily{SCsans}}%
     \def\CJKttfamily{\CJKfamily{SCmono}}%
     \CJKfamily{SCmain}%
@@ -841,7 +841,7 @@
 \newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
 \newcommand{\secfont}{\conditionalbfseries\minimalist@titlefontshape}
 \newcommand{\subsecfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\subsubsecfont}{\conditionalbfseries\minimalist@titlefontshape\itshape}
+\newcommand{\subsubsecfont}{\conditionalbfseries\minimalist@titlefontshape}
 \fi
 
 %%================================
@@ -1046,7 +1046,7 @@
 \gappto{\PJLlang@langconfig@common}{%
 \renewcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}%
 }
-\gappto{\PJLlang@langconfig@SC}{%
+\gappto{\PJLlang@langconfig@CN}{%
 \renewcommand{\partstring}{第~\thepart~部分}%
 }
 \gappto{\PJLlang@langconfig@TC}{%
@@ -1584,7 +1584,7 @@
 %# Set-up theorem-like environments
 \theoremstyle{simple}
 
-\AtEndPreamble{
+% \AtEndPreamble{
 \if@minimalist@nothms\else
 \if@minimalist@nothmnum
 \CreateTheorem*{theorem}
@@ -1661,7 +1661,7 @@
 \CreateTheorem*{remark*}
 \CreateTheorem*{observation*}
 \fi
-}
+% }
 
 \ifbool{IsBook}{}{%
 %# 针对文章的一些设定
