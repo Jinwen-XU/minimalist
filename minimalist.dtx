@@ -80,6 +80,9 @@
 %# 这一个选项用于表明要采用自定义的字体而不是默认字体
 %# This option is used to indicate that one uses a custom font instead of the default font
 \DeclareBoolOption[false]{customfont}
+%# 指定如何编号定理类环境
+%# Number theorem-like environments With ...
+\DeclareStringOption{thmnum}[PJL@thmnum@default]
 
 %# 纸张尺寸选项 a4paper 和 b5paper
 %# Paper size options a4paper and b5paper
@@ -753,6 +756,9 @@
 %# Pure text mode (no theorem-like environments loaded)
 \DeclareBoolOption[false]{puretext}
 \DeclareBoolOption[false]{nothms}
+%# 推迟建立定理类环境
+%# Delay the setup of theorem-like environments to the end of the preamble
+\DeclareBoolOption[false]{delaythms}
 %# 定理类环境不编号
 %# No numbering for theorem-like environments
 \DeclareBoolOption[false]{nothmnum}
@@ -1584,7 +1590,7 @@
 %# Set-up theorem-like environments
 \theoremstyle{simple}
 
-% \AtEndPreamble{
+\def\minimalist@definethms{
 \if@minimalist@nothms\else
 \if@minimalist@nothmnum
 \CreateTheorem*{theorem}
@@ -1661,7 +1667,13 @@
 \CreateTheorem*{remark*}
 \CreateTheorem*{observation*}
 \fi
-% }
+}
+
+\if@minimalist@delaythms
+    \AtEndPreamble{\minimalist@definethms}
+\else
+    \minimalist@definethms
+\fi
 
 \ifbool{IsBook}{}{%
 %# 针对文章的一些设定
