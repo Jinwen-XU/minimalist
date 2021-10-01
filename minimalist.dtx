@@ -542,13 +542,28 @@
 \setmathfont[range={up/num, bfup/num}
             ]{texgyrepagella-math.otf}
 
+\AtBeginDocument{
 %# 下面这段代码缩减 \mid 和 \nmid 前后的水平距离，默认距离过大
 %# The following code reduces the horizontal space before and after \mid and \nmid, the default space is too large
-\AtBeginDocument{
 \let\mid@original\mid
 \renewcommand{\mid}{\hspace{-.2em}\mid@original\hspace{-.2em}}
 \let\nmid@original\nmid
 \renewcommand{\nmid}{\hspace{-.2em}\nmid@original\hspace{-.2em}}
+%# 下面这段代码缩减 \frac 的竖直间距，默认距离过大
+%# The following code reduces the vertical space inside \frac, the default space is too large
+\renewcommand{\frac}[2]{\genfrac{}{}{}{}{
+    \mathchoice
+        {\raisebox{-.15em}{$\displaystyle #1$}}
+        {\raisebox{-.15em}{$\textstyle #1$}}
+        {\raisebox{-.08em}{$\scriptstyle #1$}}
+        {\scriptscriptstyle #1}
+}{
+    \mathchoice
+        {\raisebox{.08em}{$\displaystyle #2$}}
+        {\raisebox{.08em}{$\textstyle #2$}}
+        {\raisebox{.05em}{$\scriptstyle #2$}}
+        {\scriptscriptstyle #2}
+}}
 }
 
 %# 接下来使用 tikz-cd 重定义可伸缩箭头，默认的箭头有些粗细不均
