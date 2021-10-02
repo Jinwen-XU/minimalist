@@ -72,6 +72,7 @@
 \DeclareBoolOption[false]{useosf}
 %# 几个字体选项
 %# Several font options
+\DeclareBoolOption[false]{lmodern}
 \DeclareBoolOption[false]{palatino}
 \DeclareBoolOption[false]{times}
 \DeclareBoolOption[false]{garamond}
@@ -104,6 +105,9 @@
 \fi
 \if@minimclass@classical\else
     \@minimclass@useindenttrue
+\fi
+\if@minimclass@lmodern
+    \@minimclass@customfonttrue
 \fi
 \if@minimclass@palatino
     \@minimclass@customfonttrue
@@ -650,6 +654,16 @@
 
 %# 下面配置字体选项
 %# Configure the font options below
+\if@minimclass@lmodern
+    \RequirePackage{amssymb}
+    \if@minimclass@useosf
+        \RequirePackage{cfr-lm}
+    \else
+        \RequirePackage{lmodern}
+    \fi
+    \PJLsetlinespacing{\setstretch{1.00}}
+\fi
+
 \if@minimclass@palatino
     \RequirePackage{amssymb}
     \RequirePackage{mathpazo}
@@ -1314,6 +1328,13 @@
 \setlist[enumerate,3]{label = (\roman*),
     ref = \theenumii.\roman*}
 \setlist[description]{font=\normalfont\conditionalbfseries}
+\if@minimalist@classical
+\newcommand\desculine{\bgroup\markoverwith{\color{maintext!27!paper}%
+    \rule[-.45ex]{2pt}{.75pt}}\ULon}
+\renewcommand{\descriptionlabel}[1]{%
+  \hspace{\labelsep}\normalfont\desculine{#1}%
+}
+\fi
 
 \setlist[itemize]{leftmargin=*}
 \gappto{\PJLlang@langconfig@common}{\setlist[itemize,1]{label=\textcolor{maintext!25}{$\bullet$}}}
