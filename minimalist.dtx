@@ -1321,12 +1321,12 @@
 \setlist{noitemsep}
 % \setlist[1]{labelindent=\parindent} % < Usually a good idea
 \setlist[enumerate]{labelsep=*, leftmargin=*}
-\setlist[enumerate,1]{label = \arabic*.,
+\setlist[enumerate,1]{label=\arabic*$)$,
     ref = \arabic*}
-\setlist[enumerate,2]{label = \emph{\alph*}),
-    ref = \theenumi.\emph{\alph*}}
-\setlist[enumerate,3]{label = (\roman*),
-    ref = \theenumii.\roman*}
+\setlist[enumerate,2]{label=\emph{\roman*}$)$,
+    ref = \theenumi.\emph{\roman*}}
+\setlist[enumerate,3]{label=\emph{\alph*}$)$,
+    ref = \theenumii.\emph{\alph*}}
 \setlist[description]{font=\normalfont\conditionalbfseries}
 \if@minimalist@classical
 \newcommand\desculine{\bgroup\markoverwith{\color{maintext!27!paper}%
