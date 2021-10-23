@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/08/11 A simple and clear article style]
+    [2021/10/23 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/08/11 A simple and clear book style]
+    [2021/10/23 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/08/11 A simple and clear article style]
+    [2021/10/23 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/08/11 A simple and clear book style]
+    [2021/10/23 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/08/11 A simple and clear style for articles and books]
+    [2021/10/23 A simple and clear style for articles and books]
 %</minimalist>
 %
 %# 下面两行引入宏包的代码是所有文件共用的。
@@ -139,7 +139,8 @@
 %# This is the default page size
 \geometry{
     papersize={7in,10in},
-    total={40em,60em},
+    % total={40em,60em},
+    total={5.535in,8.300in},
     hmarginratio=1:1,
     vmarginratio=1:1,
     footnotesep=2em plus 2pt minus 2pt,
@@ -149,7 +150,8 @@
 \if@minimclass@bfivepaper
 \geometry{
     b5paper,
-    total={40em,59em},
+    % total={40em,59em},
+    total={5.535in,8.160in},
     hmarginratio=1:1,
     vmarginratio=1:1,
     footnotesep=2em plus 2pt minus 2pt,
@@ -160,7 +162,8 @@
 \if@minimclass@afourpaper
 \geometry{
     a4paper,
-    total={47em,70em},
+    % total={47em,70em},
+    total={6.500in,9.685in},
     hmarginratio=1:1,
     vmarginratio=1:1,
     footnotesep=2em plus 2pt minus 2pt,
