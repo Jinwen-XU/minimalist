@@ -740,6 +740,7 @@
 %# Use `microtype` to get details better
 \PassOptionsToPackage{verbose=silent}{microtype}
 \RequirePackage{microtype}
+\AtEndPreamble{\AtBeginDocument{\microtypesetup{disable}{\scshape}\microtypesetup{enable}}}
 %# 使用 nowidow 以减少换页时的单行
 %# Use `nowidow` to reduce single line near the edge
 \PassOptionsToPackage{all}{nowidow}
