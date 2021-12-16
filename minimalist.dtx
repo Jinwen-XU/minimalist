@@ -18,31 +18,31 @@
 %
 %<*minimart>
 \ProvidesClass{minimart}
-    [2021/11/09 A simple and clear article style]
+    [2021/12/16 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</minimart>
 %
 %<*minimbook>
 \ProvidesClass{minimbook}
-    [2021/11/09 A simple and clear book style]
+    [2021/12/16 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</minimbook>
 %
 %<*einfart>
 \ProvidesClass{einfart}
-    [2021/11/09 A simple and clear article style]
+    [2021/12/16 A simple and clear article style]
 \def\minimclass@baseclass{article}
 %</einfart>
 %
 %<*simplivre>
 \ProvidesClass{simplivre}
-    [2021/11/09 A simple and clear book style]
+    [2021/12/16 A simple and clear book style]
 \def\minimclass@baseclass{book}
 %</simplivre>
 %
 %<*minimalist>
 \ProvidesPackage{minimalist}
-    [2021/11/09 A simple and clear style for articles and books]
+    [2021/12/16 A simple and clear style for articles and books]
 %</minimalist>
 %
 %# 下面两行引入宏包的代码是所有文件共用的。
@@ -740,10 +740,6 @@
 %# Use `microtype` to get details better
 \PassOptionsToPackage{verbose=silent}{microtype}
 \RequirePackage{microtype}
-\AtEndPreamble{\AtBeginDocument{\microtypesetup{deactivate}{\scshape}\microtypesetup{reactivate}}}
-\AtEndPreamble{\AtBeginDocument{\microtypesetup{deactivate}{\bfseries\scshape}\microtypesetup{reactivate}}}
-\AtEndPreamble{\AtBeginDocument{\microtypesetup{deactivate}{\sffamily\scshape}\microtypesetup{reactivate}}}
-\AtEndPreamble{\AtBeginDocument{\microtypesetup{deactivate}{\ttfamily\scshape}\microtypesetup{reactivate}}}
 %# 使用 nowidow 以减少换页时的单行
 %# Use `nowidow` to reduce single line near the edge
 \PassOptionsToPackage{all}{nowidow}
@@ -1018,46 +1014,9 @@
 %# 设置行号
 %# Line numbers' configuration
 \PassOptionsToPackage{pagewise,mathlines}{lineno}
-\RequirePackage{lineno}
+\RequirePackage{linenoamsmath}
 \renewcommand\linenumberfont{\ttfamily\color{maintext!7!paper}\footnotesize}
 \setlength\linenumbersep{1em}
-
-\RequirePackage{mathtools}
-
-%# 对 lineno 的补丁，使得数学公式能够被正确编上行号
-%# Patch to lineno, so that equations can be correctly numbered
-% From https://tex.stackexchange.com/a/461192
-\ifdefined\linenomathpatch\else
-% Patch 'normal' math environments:
-\newcommand*\linenomathpatch[1]{%
-    \cspreto{#1}{\linenomath}%
-    \cspreto{#1*}{\linenomath}%
-    \csappto{end#1}{\endlinenomath}%
-    \csappto{end#1*}{\endlinenomath}%
-}
-% Patch AMS math environments:
-\newcommand*\linenomathpatchAMS[1]{%
-    \cspreto{#1}{\linenomathAMS}%
-    \cspreto{#1*}{\linenomathAMS}%
-    \csappto{end#1}{\endlinenomath}%
-    \csappto{end#1*}{\endlinenomath}%
-}
-% Define \linenomathAMS depending on whether 'mathlines' option is provided
-\expandafter\ifx\linenomath\linenomathWithnumbers
-    \let\linenomathAMS\linenomathWithnumbers
-% The following line gets rid of an extra line numbers at the bottom:
-    \patchcmd\linenomathAMS{\advance\postdisplaypenalty\linenopenalty}{}{}{}
-\else
-    \let\linenomathAMS\linenomathNonumbers
-\fi
-
-\linenomathpatch{equation}
-\linenomathpatchAMS{gather}
-\linenomathpatchAMS{multline}
-\linenomathpatchAMS{align}
-\linenomathpatchAMS{alignat}
-\linenomathpatchAMS{flalign}
-\fi
 
 %# 用于记录是否计量行号的 bool 变量
 %# Record whether linenumber has turned on
@@ -1336,7 +1295,7 @@
     ref = \arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$)$}
 \setlist[description]{font=\normalfont\conditionalbfseries}
 \if@minimalist@classical
-\newcommand\desculine{\bgroup\markoverwith{\color{maintext!27!paper}%
+\newcommand\desculine{\colorlet{currentcolor}{.}\bgroup\markoverwith{\color{currentcolor!50!paper}%
     \rule[-.45ex]{2pt}{.75pt}}\ULon}
 \renewcommand{\descriptionlabel}[1]{%
   \hspace{\labelsep}\normalfont\desculine{#1}%
@@ -1344,10 +1303,10 @@
 \fi
 
 \setlist[itemize]{leftmargin=*}
-\gappto{\PJLlang@langconfig@common}{\setlist[itemize,1]{label=\textcolor{maintext!25}{$\bullet$}}}
-\gappto{\PJLlang@langconfig@FR}{\setlist[itemize,1]{label=\textcolor{maintext!50}{---}}}
-\setlist[itemize,2]{label=\textcolor{maintext!27}{--}}
-\setlist[itemize,3]{label=\textcolor{maintext!27}{\texttt{*}}}
+\gappto{\PJLlang@langconfig@common}{\setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}}}
+\gappto{\PJLlang@langconfig@FR}{\setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!50!paper}{---}}}
+\setlist[itemize,2]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{--}}
+\setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{\texttt{*}}}
 
 %%================================
 %% Blank page
@@ -1375,6 +1334,7 @@
 %%================================
 %% Theorems
 %%================================
+\RequirePackage{mathtools}
 \RequirePackage{amsthm}
 \if@minimalist@classical
 %# 经典模式的定理样式
