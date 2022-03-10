@@ -1,8 +1,8 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2021 by Jinwen XU 
-% -------------------------------
-% 
+% Copyright (C) 2021-2022 by Jinwen XU
+% ------------------------------------
+%
 % This file may be distributed and/or modified under the conditions of the LaTeX
 % Project Public License, either version 1.3c of this license or (at your option)
 % any later version. The latest version of this license is in:
@@ -15,129 +15,95 @@
 \ProvidesFile{minimalist.dtx}
 %</driver>
 \NeedsTeXFormat{LaTeX2e}[2020-10-01]
+\RequirePackage{l3keys2e}
 %
 %<*minimart>
-\ProvidesClass{minimart}
-    [2021/12/16 A simple and clear article style]
-\def\minimclass@baseclass{article}
+\ProvidesExplClass
+  {minimart}
+  {2022/03/10} {}
+  {A simple and clear article style}
+
+\tl_const:Nn \l__minimalist_base_class_tl { article }
 %</minimart>
 %
 %<*minimbook>
-\ProvidesClass{minimbook}
-    [2021/12/16 A simple and clear book style]
-\def\minimclass@baseclass{book}
+\ProvidesExplClass
+  {minimbook}
+  {2022/03/10} {}
+  {A simple and clear book style}
+
+\tl_const:Nn \l__minimalist_base_class_tl { book }
 %</minimbook>
 %
 %<*einfart>
-\ProvidesClass{einfart}
-    [2021/12/16 A simple and clear article style]
-\def\minimclass@baseclass{article}
+\ProvidesExplClass
+  {einfart}
+  {2022/03/10} {}
+  {A simple and clear article style}
+
+\tl_const:Nn \l__minimalist_base_class_tl { article }
 %</einfart>
 %
 %<*simplivre>
-\ProvidesClass{simplivre}
-    [2021/12/16 A simple and clear book style]
-\def\minimclass@baseclass{book}
+\ProvidesExplClass
+  {simplivre}
+  {2022/03/10} {}
+  {A simple and clear book style}
+
+\tl_const:Nn \l__minimalist_base_class_tl { book }
 %</simplivre>
 %
 %<*minimalist>
-\ProvidesPackage{minimalist}
-    [2021/12/16 A simple and clear style for articles and books]
+\ProvidesExplPackage
+  {minimalist}
+  {2022/03/10} {}
+  {A simple and clear style for articles and books}
 %</minimalist>
-%
-%# 下面两行引入宏包的代码是所有文件共用的。
-%# The following two lines are common to all files.
-\RequirePackage{kvoptions}
-\RequirePackage{etoolbox}
-%
+
 %<*class>
-%# 这段代码定义了文档类中的选项。
-%# This code defines the options in the document class.
-\SetupKeyvalOptions{
-    family = @minimclass,
-    prefix = @minimclass@,
-}
-%# 草稿模式或快速模式
-%# Draft mode or fast mode
-\DeclareBoolOption[false]{draft}
-\DeclareBoolOption[false]{fast}
-%# 经典样式
-%# Classic style
-\DeclareBoolOption[false]{classical}
-%# 启用首行缩进而不是默认的段间空行
-%# Enable paragraph indentation instead of the default parskip
-\DeclareBoolOption[false]{useindent}
-%# 启用 old-style 数字
-%# Enable old-style figures
-\DeclareBoolOption[false]{useosf}
-%# 几个字体选项
-%# Several font options
-\DeclareBoolOption[false]{lmodern}
-\DeclareBoolOption[false]{palatino}
-\DeclareBoolOption[false]{times}
-\DeclareBoolOption[false]{garamond}
-\DeclareBoolOption[false]{noto}
-\DeclareBoolOption[false]{biolinum}
-%# 这一个选项用于表明要采用自定义的字体而不是默认字体
-%# This option is used to indicate that one uses a custom font instead of the default font
-\DeclareBoolOption[false]{customfont}
-%# 指定如何编号定理类环境
-%# Number theorem-like environments With ...
-\DeclareStringOption{thmnum}[PJL@thmnum@default]
+\keys_define:nn { minimclass }
+  {
+    , draft             .bool_set:N         = \l__minimclass_fast_bool
+    , draft             .initial:n          = { false }
+    , fast              .bool_set:N         = \l__minimclass_fast_bool
 
-%# 纸张尺寸选项 a4paper 和 b5paper
-%# Paper size options a4paper and b5paper
-\newif\if@minimclass@bfivepaper\@minimclass@bfivepaperfalse
-\DeclareVoidOption{b5paper}{\@minimclass@bfivepapertrue}
-\newif\if@minimclass@afourpaper\@minimclass@afourpaperfalse
-\DeclareVoidOption{a4paper}{\@minimclass@afourpapertrue}
+    , classical         .bool_set:N         = \l__minimclass_classical_bool
+    , classical         .initial:n          = { false }
 
-%# 处理选项并载入文档类
-%# Process options and load the base document class
-\DeclareDefaultOption{\PassOptionsToClass{\CurrentOption}{\minimclass@baseclass}}
-\ProcessKeyvalOptions*\relax
-\LoadClass{\minimclass@baseclass}
+    , use indent        .bool_set:N         = \l__minimclass_useindent_bool
+    , use indent        .initial:n          = { true }
+    , use~indent        .bool_set:N         = \l__minimclass_useindent_bool
+    , use-indent        .bool_set:N         = \l__minimclass_useindent_bool
 
-%# 下面的代码设定了一些选项之间的关系
-%# The following code sets the relationship between some options
-\if@minimclass@draft
-    \@minimclass@fasttrue
-\fi
-\if@minimclass@classical\else
-    \@minimclass@useindenttrue
-\fi
-\if@minimclass@lmodern
-    \@minimclass@customfonttrue
-\fi
-\if@minimclass@palatino
-    \@minimclass@customfonttrue
-\fi
-\if@minimclass@times
-    \@minimclass@customfonttrue
-\fi
-\if@minimclass@garamond
-    \@minimclass@customfonttrue
-\fi
-\if@minimclass@noto
-    \@minimclass@customfonttrue
-\fi
-\if@minimclass@biolinum
-    \@minimclass@customfonttrue
-\fi
+    , a4paper           .bool_set:N         = \l__minimclass_a_four_paper_bool
+    , a4paper           .initial:n          = { false }
+    , b5paper           .bool_set:N         = \l__minimclass_b_five_paper_bool
+    , b5paper           .initial:n          = { false }
+
+    , unknown           .code:n             = {
+                                                \PassOptionsToPackage { \CurrentOption } { minimalist }
+                                              }
+  }
+\ProcessKeysOptions { minimclass }
+
+\LoadClass{\l__minimalist_base_class_tl}
+
+\bool_if:NT \l__minimclass_classical_bool
+  {
+    \bool_set_false:N \l__minimclass_useindent_bool
+  }
 
 %%================================
-%% Page layout
+%%  Page layout
 %%================================
-%# 使用 silence 去除一些警告，主要是这里采用了 total 而不是 margin 的设置方法，因此用户要自行设置页面尺寸时可能会导致此类冲突
-%# Use silence to remove some warnings. The main reason is that `total` instead of `margin` is used for setting, so conflict may occur when the user wants to reset the page size
 \RequirePackage{silence}
-\WarningFilter{geometry}{Over-specification in}
-%# 设定页面尺寸
-%# Set page size
-\RequirePackage[heightrounded]{geometry}
-%# 这是默认的尺寸
-%# This is the default page size
-\geometry{
+\WarningFilter{geometry}{Over-specification~in}
+
+\PassOptionsToPackage { heightrounded } { geometry }
+\RequirePackage { geometry }
+
+\ExplSyntaxOff
+\geometry {
     papersize={7in,10in},
     % total={40em,60em},
     total={5.535in,8.300in},
@@ -145,614 +111,432 @@
     vmarginratio=1:1,
     footnotesep=2em plus 2pt minus 2pt,
 }
-%# B5 的尺寸
-%# B5 paper size
-\if@minimclass@bfivepaper
-\geometry{
-    b5paper,
-    % total={40em,59em},
-    total={5.535in,8.160in},
-    hmarginratio=1:1,
-    vmarginratio=1:1,
-    footnotesep=2em plus 2pt minus 2pt,
-}
-\fi
-%# A4 的尺寸
-%# A4 paper size
-\if@minimclass@afourpaper
-\geometry{
-    a4paper,
-    % total={47em,70em},
-    total={6.500in,9.685in},
-    hmarginratio=1:1,
-    vmarginratio=1:1,
-    footnotesep=2em plus 2pt minus 2pt,
-}
-\fi
+\ExplSyntaxOn
 
-%# 这几行代码用于生成快速模式下的 DRAFT 水印
-%# To generate DRAFT watermark in fast mode
-\if@minimclass@fast
+\bool_if:NT \l__minimclass_b_five_paper_bool
+  {
+    \ExplSyntaxOff
+    \geometry {
+      b5paper,
+      % total={40em,59em},
+      total={5.535in,8.160in},
+      hmarginratio=1:1,
+      vmarginratio=1:1,
+      footnotesep=2em plus 2pt minus 2pt,
+    }
+    \ExplSyntaxOn
+  }
+
+\bool_if:NT \l__minimclass_a_four_paper_bool
+  {
+    \ExplSyntaxOff
+    \geometry {
+      a4paper,
+      % total={47em,70em},
+      total={6.500in,9.685in},
+      hmarginratio=1:1,
+      vmarginratio=1:1,
+      footnotesep=2em plus 2pt minus 2pt,
+    }
+    \ExplSyntaxOn
+  }
+
+\bool_if:NT \l__minimclass_fast_bool
+  {
     \PassOptionsToPackage{fast}{minimalist}
     \RequirePackage{draftwatermark}
     \DraftwatermarkOptions{text={\normalfont DRAFT},color=paper!95!-paper}
-\fi
-%# 这几行代码决定段落的样式
-%# To determine the style of the paragraph
-\if@minimclass@useindent
-    \RequirePackage{indentfirst}
-\else
-    \AtEndPreamble{\RequirePackage{parskip}}
-\fi
-%# 载入主样式
-%# Load the main style
+  }
+
+\bool_if:NTF \l__minimclass_useindent_bool
+  {
+    \RequirePackage { indentfirst }
+  }
+  {
+    \hook_gput_code:nnn { begindocument/before } { minimalist }
+      {
+        \RequirePackage { parskip }
+      }
+  }
+
 \RequirePackage{minimalist}
 
 %%================================
 %% Fonts
 %%================================
-%# 下面的字体设置代码用于 minimart 和 minimbook
-%# The font setting below is for `minimart` and `minimbook`
-%<*minimart|minimbook>
-%# 这几行代码在 pdfLaTeX 编译时载入编码设置
-%# Load the encoding settings when pdfLaTeX is used
-\RequirePackage{iftex}
-\ifPDFTeX
-\RequirePackage[T1]{fontenc}
-\RequirePackage{inputenc}
-\fi
-%# 这几行代码载入默认字体
-%# Load the default font
-\if@minimclass@customfont\else
-\RequirePackage{mathpazo}
-\RequirePackage{newpxtext}
-\fi
-\RequirePackage{amssymb}
-%</minimart|minimbook>
-%
-%# 下面的字体设置代码用于 einfart 和 simplivre
-%# The font setting below is for `einfart` and `simplivre`
-%<*einfart|simplivre>
-%# 快速模式下的默认数学字体采用 mathpazo，为了让其生效，要放在 fontspec 的前面
-%# The default math font in fast mode uses `mathpazo`, in order to make it effective, it must be placed in front of `fontspec`
-\if@minimclass@customfont\else
-    \if@minimclass@fast
-        \RequirePackage{mathpazo}
-    \fi
-\fi
-
-%# 默认英文字体
-%# The default English main font
-\PassOptionsToPackage{no-math,quiet}{fontspec}
-\RequirePackage{fontspec}
-
-\IfFileExists{minimalist-font.tex}{
-    \input{minimalist-font.tex}
-}{
-\IfFontExistsTF{Palatino Linotype}{%
-    \setmainfont{Palatino Linotype}
-        [\if@minimclass@useosf Numbers = OldStyle\fi]
-}{
-    \setmainfont{TeXGyrePagellaX-Regular.otf}[
-        BoldFont       = TeXGyrePagellaX-Bold.otf ,
-        ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
-        \if@minimclass@useosf Numbers = OldStyle\fi ]
-}
-%# 默认英文无衬线字体
-%# The default English sans font
-    \setsansfont{SourceSansPro-Regular.otf}[
-        Scale          = MatchLowercase ,
-        BoldFont       = SourceSansPro-Bold.otf ,
-        ItalicFont     = SourceSansPro-RegularIt.otf ,
-        BoldItalicFont = SourceSansPro-BoldIt.otf ]
-%# 默认英文等宽字体
-%# The default English mono font
-    \setmonofont{NewCMMono10-Regular.otf}[
-        Scale          = 1.05 ,
-        BoldFont       = NewCMMono10-Bold.otf ,
-        ItalicFont     = NewCMMono10-Italic.otf ,
-        BoldItalicFont = NewCMMono10-BoldOblique.otf ]
-}
-
-%# 默认中文字体
-%# The default CJK main font
-\PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
-\RequirePackage{ctex}
-
-\IfFileExists{minimalist-font.cjk.tex}{
-    \input{minimalist-font.cjk.tex}
-}{
-\IfFontExistsTF{SourceHanSerifSC-Regular}{%
-    \setCJKmainfont{SourceHanSerifSC-Regular}[
-        BoldFont       = SourceHanSerifSC-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSerifSC-Bold ]
-}{
-    \setCJKmainfont{FandolSong-Regular.otf}[
-        BoldFont       = FandolSong-Bold.otf ,
-        ItalicFont     = FandolKai-Regular.otf ,
-        BoldItalicFont = FandolKai-Regular.otf ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-
-%# 默认中文无衬线字体
-%# The default CJK sans font
-\IfFontExistsTF{SourceHanSansSC-Regular}{%
-    \setCJKsansfont{SourceHanSansSC-Regular}[
-        BoldFont       = SourceHanSansSC-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSansSC-Bold ]
-}{
-    \setCJKsansfont{FandolHei-Regular.otf}[
-        BoldFont       = FandolHei-Bold.otf ,
-        ItalicFont     = * ,
-        BoldItalicFont = FandolHei-Bold.otf ]
-}
-
-%# 默认中文等宽字体
-%# The default CJK mono font
-\IfFontExistsTF{SourceHanMonoSC-Regular}{%
-    \setCJKmonofont{SourceHanMonoSC-Regular}[
-        BoldFont       = SourceHanMonoSC-Medium ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanMonoSC-Medium ]
-}{
-    \setCJKmonofont{FandolFang-Regular.otf}[
-        BoldFont       = * ,
-        BoldFeatures   = {FakeBold=4} ,
-        ItalicFont     = * ,
-        BoldItalicFont = * ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-
-%# 简体中文字体族
-%# SC font family
-\if@PJLlang@enable@CN
-\IfFontExistsTF{SourceHanSerifSC-Regular}{%
-    \setCJKfamilyfont{SCmain}{SourceHanSerifSC-Regular}[
-        BoldFont       = SourceHanSerifSC-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSerifSC-Bold ]
-}{
-    \setCJKfamilyfont{SCmain}{FandolSong-Regular.otf}[
-        BoldFont       = FandolSong-Bold.otf ,
-        ItalicFont     = FandolKai-Regular.otf ,
-        BoldItalicFont = FandolKai-Regular.otf ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-\IfFontExistsTF{SourceHanSansSC-Regular}{%
-    \setCJKfamilyfont{SCsans}{SourceHanSansSC-Regular}[
-        BoldFont       = SourceHanSansSC-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSansSC-Bold ]
-}{
-    \setCJKfamilyfont{SCsans}{FandolHei-Regular.otf}[
-        BoldFont       = FandolHei-Bold.otf ,
-        ItalicFont     = * ,
-        BoldItalicFont = FandolHei-Bold.otf ]
-}
-\IfFontExistsTF{SourceHanMonoSC-Regular}{%
-    \setCJKfamilyfont{SCmono}{SourceHanMonoSC-Regular}[
-        BoldFont       = SourceHanMonoSC-Medium ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanMonoSC-Medium ]
-}{
-    \setCJKfamilyfont{SCmono}{FandolFang-Regular.otf}[
-        BoldFont       = * ,
-        BoldFeatures   = {FakeBold=4} ,
-        ItalicFont     = * ,
-        BoldItalicFont = * ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-\fi
-
-%# 繁体中文字体族
-%# TC font family
-\if@PJLlang@enable@TC
-\IfFontExistsTF{SourceHanSerifTC-Regular}{%
-    \setCJKfamilyfont{TCmain}{SourceHanSerifTC-Regular}[
-        BoldFont       = SourceHanSerifTC-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSerifTC-Bold ]
-}{
-    \setCJKfamilyfont{TCmain}{FandolSong-Regular.otf}[
-        BoldFont       = FandolSong-Bold.otf ,
-        ItalicFont     = FandolKai-Regular.otf ,
-        BoldItalicFont = FandolKai-Regular.otf ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-\IfFontExistsTF{SourceHanSansTC-Regular}{%
-    \setCJKfamilyfont{TCsans}{SourceHanSansTC-Regular}[
-        BoldFont       = SourceHanSansTC-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSansTC-Bold ]
-}{
-    \setCJKfamilyfont{TCsans}{FandolHei-Regular.otf}[
-        BoldFont       = FandolHei-Bold.otf ,
-        ItalicFont     = * ,
-        BoldItalicFont = FandolHei-Bold.otf ]
-}
-\IfFontExistsTF{SourceHanMonoTC-Regular}{%
-    \setCJKfamilyfont{TCmono}{SourceHanMonoTC-Regular}[
-        BoldFont       = SourceHanMonoTC-Medium ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanMonoTC-Medium ]
-}{
-    \setCJKfamilyfont{TCmono}{FandolFang-Regular.otf}[
-        BoldFont       = * ,
-        BoldFeatures   = {FakeBold=4} ,
-        ItalicFont     = * ,
-        BoldItalicFont = * ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-\fi
-
-%# 日文字体族
-%# JP font family
-\if@PJLlang@enable@JP
-\IfFontExistsTF{SourceHanSerif-Regular}{%
-    \setCJKfamilyfont{JPmain}{SourceHanSerif-Regular}[
-        BoldFont       = SourceHanSerif-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSerif-Bold ]
-}{
-    \setCJKfamilyfont{JPmain}{FandolSong-Regular.otf}[
-        BoldFont       = FandolSong-Bold.otf ,
-        ItalicFont     = FandolKai-Regular.otf ,
-        BoldItalicFont = FandolKai-Regular.otf ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-\IfFontExistsTF{SourceHanSans-Regular}{%
-    \setCJKfamilyfont{JPsans}{SourceHanSans-Regular}[
-        BoldFont       = SourceHanSans-Bold ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanSans-Bold ]
-}{
-    \setCJKfamilyfont{JPsans}{FandolHei-Regular.otf}[
-        BoldFont       = FandolHei-Bold.otf ,
-        ItalicFont     = * ,
-        BoldItalicFont = FandolHei-Bold.otf ]
-}
-\IfFontExistsTF{SourceHanMono-Regular}{%
-    \setCJKfamilyfont{JPmono}{SourceHanMono-Regular}[
-        BoldFont       = SourceHanMono-Medium ,
-        ItalicFont     = * ,
-        BoldItalicFont = SourceHanMono-Medium ]
-}{
-    \setCJKfamilyfont{JPmono}{FandolFang-Regular.otf}[
-        BoldFont       = * ,
-        BoldFeatures   = {FakeBold=4} ,
-        ItalicFont     = * ,
-        BoldItalicFont = * ,
-        BoldItalicFeatures = {FakeBold=4} ]
-}
-\fi
-
 \WarningFilter{latexfont}{Font shape}
 \WarningFilter{latexfont}{Some font}
 
-%# 选定对应语言的 CJK 字体族
-%# Select the CJK font family of the corresponding language
-\def\CJKsffamily{}
-\def\CJKttfamily{}
+\RequirePackage { projlib-font }
 
-\apptocmd{\sffamily}{\CJKsffamily}{}{\FAIL}
-\apptocmd{\ttfamily}{\CJKttfamily}{}{\FAIL}
+%<*minimart|minimbook>
+\bool_if:NF \g_projlib_font_already_set_bool
+  {
+    \RequirePackage{mathpazo}
+    \RequirePackage{newpxtext}
+    \RequirePackage{amssymb}
+  }
+%</minimart|minimbook>
+%
+%<*einfart|simplivre>
+\bool_if:NF \g_projlib_font_already_set_bool
+  {
+    \bool_if:NT \l__minimclass_fast_bool
+      {
+        \RequirePackage{mathpazo}
+      }
 
-\if@PJLlang@enable@CN
-\gappto{\PJLlang@langconfig@CN}{%
-    \def\CJKsffamily{\CJKfamily{SCsans}}%
-    \def\CJKttfamily{\CJKfamily{SCmono}}%
-    \CJKfamily{SCmain}%
-}
-\fi
+    \PassOptionsToPackage{no-math,quiet}{fontspec}
+    \RequirePackage{fontspec}
 
-\if@PJLlang@enable@TC
-\gappto{\PJLlang@langconfig@TC}{%
-    \def\CJKsffamily{\CJKfamily{TCsans}}%
-    \def\CJKttfamily{\CJKfamily{TCmono}}%
-    \CJKfamily{TCmain}%
-}
-\fi
+    \IfFileExists{minimalist-font.latin.tex}
+      {
+        \input{minimalist-font.latin.tex}
+      }
+      {
+        \IfFontExistsTF{Palatino~Linotype}{%
+          \bool_if:NTF \l__projlib_font_useosf_bool
+            {
+              \setmainfont{Palatino~Linotype} [ Numbers = OldStyle ]
+            }
+            {
+              \setmainfont{Palatino~Linotype}
+            }
+        }{
+          \bool_if:NTF \l__projlib_font_useosf_bool
+            {
+              \setmainfont{TeXGyrePagellaX-Regular.otf}[
+                BoldFont       = TeXGyrePagellaX-Bold.otf ,
+                ItalicFont     = TeXGyrePagellaX-Italic.otf ,
+                BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
+                Numbers        = OldStyle                        ]
+            }
+            {
+              \setmainfont{TeXGyrePagellaX-Regular.otf}[
+                BoldFont       = TeXGyrePagellaX-Bold.otf ,
+                ItalicFont     = TeXGyrePagellaX-Italic.otf ,
+                BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf, ]
+            }
+        }
+        \setsansfont{SourceSansPro-Regular.otf}[
+            Scale          = MatchLowercase ,
+            BoldFont       = SourceSansPro-Bold.otf ,
+            ItalicFont     = SourceSansPro-RegularIt.otf ,
+            BoldItalicFont = SourceSansPro-BoldIt.otf ]
+        \setmonofont{NewCMMono10-Regular.otf}[
+            Scale          = 1.05 ,
+            BoldFont       = NewCMMono10-Bold.otf ,
+            ItalicFont     = NewCMMono10-Italic.otf ,
+            BoldItalicFont = NewCMMono10-BoldOblique.otf ]
 
-\if@PJLlang@enable@JP
-\gappto{\PJLlang@langconfig@JP}{%
-    \def\CJKsffamily{\CJKfamily{JPsans}}%
-    \def\CJKttfamily{\CJKfamily{JPmono}}%
-    \CJKfamily{JPmain}%
-}
-\fi
+        \projlib_language_set_linespacing_latin:n { \setstretch { 1.07 } }
+      }
 
-%# 标题字体：英文时为普通字体，中文时为无衬线字体
-%# Titles' font: normal font for English, sans serif font for CJK
-\def\minimalist@titlefontshape{\CJKsffamily}
-}
+    \PassOptionsToPackage{fontset=none,scheme=plain}{ctex}
+    \RequirePackage{ctex}
 
-%# 默认数学字体
-%# The default math font
-\if@minimclass@customfont\else
-%## 快速模式下只引用 amssymb 以提供 \mathbb 等字形的定义
-%## In fast mode, only load `amssymb` to provide definitions of \mathbb and other shapes
-\if@minimclass@fast
-\RequirePackage{amssymb}
-\else
-%## 正常模式下使用 unicode-math
-%## Use `unicode-math` in normal mode
-\PassOptionsToPackage
-    {warnings-off={mathtools-colon,mathtools-overbracket}}{unicode-math}
-\RequirePackage{unicode-math}
-\unimathsetup{math-style=ISO, partial=upright, nabla=upright}
-%### 主字体采用 Asana Math，与 Palatino 字体搭配
-%### The base font is Asana Math, which matches with the Palatino font
-\setmathfont{Asana-Math.otf}
-\IfFontExistsTF{Neo Euler}{%
-%###- 下面这段未被采用的代码记录了 Neo Euler 字体的全部支持范围，以供参考
-%###- The following unused code records the full range of Neo Euler for reference
-% See https://tex.stackexchange.com/a/425887
-% \setmathfont{Neo Euler}
-%     [range={"0000-"0001,"0020-"007E,
-%             "00A0,"00A7-"00A8,"00AC,"00AF,"00B1,"00B4-"00B5,"00B7,
-%             "00D7,"00F7,
-%             "0131,
-%             "0237,"02C6-"02C7,"02D8-"02DA,"02DC,
-%             "0300-"030C,"030F,"0311,"0323-"0325,"032E-"0332,"0338,
-%             "0391-"0393,"0395-"03A1,"03A3-"03A8,"03B1-"03BB,
-%             "03BD-"03C1,"03C3-"03C9,"03D1,"03D5-"03D6,"03F5,
-%             "2016,"2018-"2019,"2021,"2026-"202C,"2032-"2037,"2044,
-%             "2057,"20D6-"20D7,"20DB-"20DD,"20E1,"20EE-"20EF,
-%             "210B-"210C,"210E-"2113,"2118,"211B-"211C,"2126-"2128,
-%             "212C-"212D,"2130-"2131,"2133,"2135,"2190-"2199,
-%             "21A4,"21A6,"21A9-"21AA,"21BC-"21CC,"21D0-"21D5,
-%             "2200,"2202-"2209,"220B-"220C,"220F-"2213,"2215-"221E,
-%             "2223,"2225,"2227-"222E,"2234-"2235,"2237-"223D,
-%             "2240-"224C,"2260-"2269,"226E-"2279,"2282-"228B,"228E,
-%             "2291-"2292,"2295-"2299,"22A2-"22A5,"22C0-"22C5,
-%             "22DC-"22DD,"22EF,"22F0-"22F1,
-%             "2308-"230B,"2320-"2321,"2329-"232A,"239B-"23AE,
-%             "23DC-"23DF,
-%             "27E8-"27E9,"27F5-"27FE,"2A0C,"2B1A,
-%             "1D400-"1D433,"1D49C,"1D49E-"1D49F,"1D4A2,"1D4A5-"1D4A6,
-%             "1D4A9-"1D4AC,"1D4AE-"1D4B5,"1D4D0-"1D4E9,"1D504-"1D505,
-%             "1D507-"1D50A,"1D50D-"1D514,"1D516-"1D51C,"1D51E-"1D537,
-%             "1D56C-"1D59F,"1D6A8-"1D6B8,"1D6BA-"1D6D2,"1D6D4-"1D6DD,
-%             "1D6DF,"1D6E1,"1D7CE-"1D7D7 }]
-% \setmathfont[range={up/{latin, Latin, greek, Greek}, 
-%                     bfup/{latin, Latin, greek, Greek}, 
-%                     frak, bffrak, cal}
-%             ]{Neo Euler}
-%### 在主字体的基础上替换一些来自 Neo Euler 的符号和字母
-%### Replace some symbols and letters from Neo Euler on the basis of the base font
-\setmathfont[range={up/{Latin,latin,Greek,greek},
-                    bfup/{Latin,latin,Greek,greek},
-                    cal, bfcal, frak, bffrak,
-                    `(,`),`[,`],`\{,`\},`:,`=,\ne,\equiv,`/,\backslash,
-                    \in,\notin,\ni,\subset,\supset,\subseteq,\supseteq,
-                    \rightarrow,\leftarrow,\mapsto,\hookrightarrow,\hookleftarrow,
-                    \sum,\prod,\coprod,
-                    \sqrt,\int,\iint,\iiint,\oint},
-              script-features={},
-              sscript-features={},
-              Scale = 1.05,
-            ]{Neo Euler}
-}{}
-%### 再替换一些来自 Latin Modern 的符号，默认符号有些过粗
-%### Replace some symbols from Latin Modern, the default symbols are a bit too thick
-\setmathfont[range={\leq,\geq,\ll,\gg,\lll,\ggg,\leqslant,\geqslant},
-              Scale = 0.95,
-            ]{latinmodern-math.otf}
-% \setmathfont[range={bfup/num, it, bfit, scr, bfscr,
-%                     sfup, sfit, bfsfup, bfsfit, tt, bfcal}
-%             ]{Asana-Math.otf}
-%### 最后，使用 TeX Gyre Pagella 的数字，这样能得到更好看的分数线
-%### Finally, use numbers from TeX Gyre Pagella to get better fraction line
-\setmathfont[range={up/num, bfup/num}
-            ]{texgyrepagella-math.otf}
+    \IfFileExists{minimalist-font.cjk.tex}
+      {
+        \input{minimalist-font.cjk.tex}
+      }
+      {
+        \IfFontExistsTF{SourceHanSerifSC-Regular}{%
+            \setCJKmainfont{SourceHanSerifSC-Regular}[
+                BoldFont       = SourceHanSerifSC-Bold ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanSerifSC-Bold ]
+        }{
+            \setCJKmainfont{FandolSong-Regular.otf}[
+                BoldFont       = FandolSong-Bold.otf ,
+                ItalicFont     = FandolKai-Regular.otf ,
+                BoldItalicFont = FandolKai-Regular.otf ,
+                BoldItalicFeatures = {FakeBold=4} ]
+        }
 
-\AtBeginDocument{
-%# 下面这段代码缩减 \mid 和 \nmid 前后的水平距离，默认距离过大
-%# The following code reduces the horizontal space before and after \mid and \nmid, the default space is too large
-\let\mid@original\mid
-\renewcommand{\mid}{\hspace{-.2em}\mid@original\hspace{-.2em}}
-\let\nmid@original\nmid
-\renewcommand{\nmid}{\hspace{-.2em}\nmid@original\hspace{-.2em}}
-%# 下面这段代码缩减 \frac 的竖直间距，默认距离过大
-%# The following code reduces the vertical space inside \frac, the default space is too large
-\renewcommand{\frac}[2]{\genfrac{}{}{}{}{
-    \mathchoice
-        {\raisebox{-.15em}{$\displaystyle #1$}}
-        {\raisebox{-.15em}{$\textstyle #1$}}
-        {\raisebox{-.08em}{$\scriptstyle #1$}}
-        {\scriptscriptstyle #1}
-}{
-    \mathchoice
-        {\raisebox{.08em}{$\displaystyle #2$}}
-        {\raisebox{.08em}{$\textstyle #2$}}
-        {\raisebox{.05em}{$\scriptstyle #2$}}
-        {\scriptscriptstyle #2}
-}}
-}
+        \IfFontExistsTF{SourceHanSansSC-Regular}{%
+            \setCJKsansfont{SourceHanSansSC-Regular}[
+                BoldFont       = SourceHanSansSC-Bold ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanSansSC-Bold ]
+        }{
+            \setCJKsansfont{FandolHei-Regular.otf}[
+                BoldFont       = FandolHei-Bold.otf ,
+                ItalicFont     = * ,
+                BoldItalicFont = FandolHei-Bold.otf ]
+        }
 
-%# 接下来使用 tikz-cd 重定义可伸缩箭头，默认的箭头有些粗细不均
-%# The following uses tikz-cd to define retractable arrows to avoid problems with unicode-math.
-\RequirePackage{tikz-cd}
-\newbox\xratbelow
-\newbox\xratabove
-% Redefine \xrightarrow[below]{above}
-\renewcommand{\xrightarrow}[2][]{%
-    \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
-    \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
-    \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [->, baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) -- node[below=3pt] {\box\xratbelow}
-        node[above=2pt] {\box\xratabove}
-        (\xratlen,0) ;}}
-% Redefine \xlefttarrow[below]{above}
-\renewcommand{\xleftarrow}[2][]{%
-    \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
-    \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
-    \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [<-, baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) -- node[below=3pt] {\box\xratbelow}
-        node[above=2pt] {\box\xratabove}
-        (\xratlen,0) ;}}
-% Redefine \xleftrightarrow[below]{above}
-\renewcommand{\xleftrightarrow}[2][]{%
-    \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
-    \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
-    \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [<->, baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) -- node[below=3pt] {\box\xratbelow}
-        node[above=2pt] {\box\xratabove}
-        (\xratlen,0) ;}}
-% Redefine \xhookrightarrow[below]{above}, using the hookrightarrow from tikz-cd
-\renewcommand{\xhookrightarrow}[2][]{%
-    \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
-    \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
-    \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) edge[commutative diagrams/hookrightarrow] node[below=3pt] {\box\xratbelow}
-        node[above=2pt] {\box\xratabove}
-        (\xratlen,0) ;}}
-% Redefine \xhooklefttarrow[below]{above}, using the hookleftarrow from tikz-cd
-\renewcommand{\xhookleftarrow}[2][]{%
-    \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
-    \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
-    \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) edge[commutative diagrams/hookleftarrow] node[below=3pt] {\box\xratbelow}
-        node[above=2pt] {\box\xratabove}
-        (\xratlen,0) ;}}
-% Redefine \xmapsto[below]{above}, using the mapsto from tikz-cd
-\renewcommand{\xmapsto}[2][]{%
-    \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
-    \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
-    \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) edge[commutative diagrams/mapsto] node[below=3pt] {\box\xratbelow}
-        node[above=2pt] {\box\xratabove}
-        (\xratlen,0) ;}}
-% Define \xlongequal[below]{above}, using the equal from tikz-cd
-\newcommand{\xlongequal}[2][]{%
-    \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
-    \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
-    \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
-    \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) edge[commutative diagrams/equal] node[below=3pt] {\box\xratbelow}
-        node[above=2pt] {\box\xratabove}
-        (\xratlen,0) ;}}
-%# 使用 tikz-cd 重新定义一些箭头，默认箭头过粗
-%# Redefine \twoheadrightarrow and \twoheadleftarrow, using those from tikz-cd
-\AtBeginDocument{
-\renewcommand{\twoheadrightarrow}{%
-    \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) edge[commutative diagrams/twoheadrightarrow] (.8em,0) ;}}
-\renewcommand{\twoheadleftarrow}{%
-    \mathrel{\tikz [baseline=-.55ex, every node/.style={inner sep=0pt}]
-        \draw (0,0) edge[commutative diagrams/twoheadleftarrow] (.8em,0) ;}}
-}
-\fi
-\fi
+        \IfFontExistsTF{SourceHanMonoSC-Regular}{%
+            \setCJKmonofont{SourceHanMonoSC-Regular}[
+                BoldFont       = SourceHanMonoSC-Medium ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanMonoSC-Medium ]
+        }{
+            \setCJKmonofont{FandolFang-Regular.otf}[
+                BoldFont       = * ,
+                BoldFeatures   = {FakeBold=4} ,
+                ItalicFont     = * ,
+                BoldItalicFont = * ,
+                BoldItalicFeatures = {FakeBold=4} ]
+        }
+
+        \bool_if:NT \g__projlib_language_enabled_schinese_bool
+          {
+            \IfFontExistsTF{SourceHanSerifSC-Regular}{%
+                \setCJKfamilyfont{SCmain}{SourceHanSerifSC-Regular}[
+                    BoldFont       = SourceHanSerifSC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSerifSC-Bold ]
+            }{
+                \setCJKfamilyfont{SCmain}{FandolSong-Regular.otf}[
+                    BoldFont       = FandolSong-Bold.otf ,
+                    ItalicFont     = FandolKai-Regular.otf ,
+                    BoldItalicFont = FandolKai-Regular.otf ,
+                    BoldItalicFeatures = {FakeBold=4} ]
+            }
+            \IfFontExistsTF{SourceHanSansSC-Regular}{%
+                \setCJKfamilyfont{SCsans}{SourceHanSansSC-Regular}[
+                    BoldFont       = SourceHanSansSC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSansSC-Bold ]
+            }{
+                \setCJKfamilyfont{SCsans}{FandolHei-Regular.otf}[
+                    BoldFont       = FandolHei-Bold.otf ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = FandolHei-Bold.otf ]
+            }
+            \IfFontExistsTF{SourceHanMonoSC-Regular}{%
+                \setCJKfamilyfont{SCmono}{SourceHanMonoSC-Regular}[
+                    BoldFont       = SourceHanMonoSC-Medium ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanMonoSC-Medium ]
+            }{
+                \setCJKfamilyfont{SCmono}{FandolFang-Regular.otf}[
+                    BoldFont       = * ,
+                    BoldFeatures   = {FakeBold=4} ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = * ,
+                    BoldItalicFeatures = {FakeBold=4} ]
+            }
+          }
+
+        \bool_if:NT \g__projlib_language_enabled_tchinese_bool
+          {
+            \IfFontExistsTF{SourceHanSerifTC-Regular}{%
+                \setCJKfamilyfont{TCmain}{SourceHanSerifTC-Regular}[
+                    BoldFont       = SourceHanSerifTC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSerifTC-Bold ]
+            }{
+                \setCJKfamilyfont{TCmain}{FandolSong-Regular.otf}[
+                    BoldFont       = FandolSong-Bold.otf ,
+                    ItalicFont     = FandolKai-Regular.otf ,
+                    BoldItalicFont = FandolKai-Regular.otf ,
+                    BoldItalicFeatures = {FakeBold=4} ]
+            }
+            \IfFontExistsTF{SourceHanSansTC-Regular}{%
+                \setCJKfamilyfont{TCsans}{SourceHanSansTC-Regular}[
+                    BoldFont       = SourceHanSansTC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSansTC-Bold ]
+            }{
+                \setCJKfamilyfont{TCsans}{FandolHei-Regular.otf}[
+                    BoldFont       = FandolHei-Bold.otf ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = FandolHei-Bold.otf ]
+            }
+            \IfFontExistsTF{SourceHanMonoTC-Regular}{%
+                \setCJKfamilyfont{TCmono}{SourceHanMonoTC-Regular}[
+                    BoldFont       = SourceHanMonoTC-Medium ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanMonoTC-Medium ]
+            }{
+                \setCJKfamilyfont{TCmono}{FandolFang-Regular.otf}[
+                    BoldFont       = * ,
+                    BoldFeatures   = {FakeBold=4} ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = * ,
+                    BoldItalicFeatures = {FakeBold=4} ]
+            }
+          }
+
+        \bool_if:NT \g__projlib_language_enabled_japanese_bool
+          {
+            \IfFontExistsTF{SourceHanSerif-Regular}{%
+                \setCJKfamilyfont{JPmain}{SourceHanSerif-Regular}[
+                    BoldFont       = SourceHanSerif-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSerif-Bold ]
+            }{
+                \setCJKfamilyfont{JPmain}{FandolSong-Regular.otf}[
+                    BoldFont       = FandolSong-Bold.otf ,
+                    ItalicFont     = FandolKai-Regular.otf ,
+                    BoldItalicFont = FandolKai-Regular.otf ,
+                    BoldItalicFeatures = {FakeBold=4} ]
+            }
+            \IfFontExistsTF{SourceHanSans-Regular}{%
+                \setCJKfamilyfont{JPsans}{SourceHanSans-Regular}[
+                    BoldFont       = SourceHanSans-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSans-Bold ]
+            }{
+                \setCJKfamilyfont{JPsans}{FandolHei-Regular.otf}[
+                    BoldFont       = FandolHei-Bold.otf ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = FandolHei-Bold.otf ]
+            }
+            \IfFontExistsTF{SourceHanMono-Regular}{%
+                \setCJKfamilyfont{JPmono}{SourceHanMono-Regular}[
+                    BoldFont       = SourceHanMono-Medium ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanMono-Medium ]
+            }{
+                \setCJKfamilyfont{JPmono}{FandolFang-Regular.otf}[
+                    BoldFont       = * ,
+                    BoldFeatures   = {FakeBold=4} ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = * ,
+                    BoldItalicFeatures = {FakeBold=4} ]
+            }
+          }
+
+        \def\CJKsffamily{}
+        \def\CJKttfamily{}
+
+        \hook_gput_code:nnn { cmd/sffamily/after } { minimalist } { \CJKsffamily }
+        \hook_gput_code:nnn { cmd/ttfamily/after } { minimalist } { \CJKttfamily }
+
+        \AddLanguageSetting [schinese]
+          {
+            \def\CJKsffamily{\CJKfamily{SCsans}}
+            \def\CJKttfamily{\CJKfamily{SCmono}}
+            \CJKfamily{SCmain}
+          }
+        \AddLanguageSetting [tchinese]
+          {
+            \def\CJKsffamily{\CJKfamily{TCsans}}
+            \def\CJKttfamily{\CJKfamily{TCmono}}
+            \CJKfamily{TCmain}
+          }
+        \AddLanguageSetting [japanese]
+          {
+            \def\CJKsffamily{\CJKfamily{JPsans}}
+            \def\CJKttfamily{\CJKfamily{JPmono}}
+            \CJKfamily{JPmain}
+          }
+
+        \tl_gset:Nn \g_minimalist_title_font_common_tl { \CJKsffamily }
+      }
+
+
+    \bool_if:NTF \l__minimclass_fast_bool
+      {
+        \RequirePackage{amssymb}
+      }
+      {
+        \PassOptionsToPackage
+            {warnings-off={mathtools-colon,mathtools-overbracket}}{unicode-math}
+        \RequirePackage{unicode-math}
+        \unimathsetup{math-style=ISO, partial=upright, nabla=upright}
+        \setmathfont{Asana-Math.otf}
+        \IfFontExistsTF{Neo~Euler}{
+        \setmathfont[range={up/{Latin,latin,Greek,greek},
+                            bfup/{Latin,latin,Greek,greek},
+                            cal, bfcal, frak, bffrak,
+                            `(,`),`[,`],`\{,`\},`:,`=,\ne,\equiv,`/,\backslash,
+                            \in,\notin,\ni,\subset,\supset,\subseteq,\supseteq,
+                            \rightarrow,\leftarrow,\mapsto,\hookrightarrow,\hookleftarrow,
+                            \sum,\prod,\coprod,
+                            \sqrt,\int,\iint,\iiint,\oint},
+                      script-features={},
+                      sscript-features={},
+                      Scale = 1.05,
+                    ]{Neo~Euler}
+        }{}
+        \setmathfont[range={\leq,\geq,\ll,\gg,\lll,\ggg,\leqslant,\geqslant},
+                      Scale = 0.95,
+                    ]{latinmodern-math.otf}
+        \setmathfont[range={up/num, bfup/num}
+                    ]{texgyrepagella-math.otf}
+
+        \RequirePackage{tikz-cd}
+        \newbox\xratbelow
+        \newbox\xratabove
+        \renewcommand{\xrightarrow}[2][]{%
+            \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
+            \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
+            \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
+            \mathrel{\tikz [->, baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                \draw (0,0) -- node[below=3pt] {\box\xratbelow}
+                node[above=2pt] {\box\xratabove}
+                (\xratlen,0) ;}}
+        \renewcommand{\xleftarrow}[2][]{%
+            \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
+            \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
+            \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
+            \mathrel{\tikz [<-, baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                \draw (0,0) -- node[below=3pt] {\box\xratbelow}
+                node[above=2pt] {\box\xratabove}
+                (\xratlen,0) ;}}
+        \renewcommand{\xleftrightarrow}[2][]{%
+            \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
+            \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
+            \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
+            \mathrel{\tikz [<->, baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                \draw (0,0) -- node[below=3pt] {\box\xratbelow}
+                node[above=2pt] {\box\xratabove}
+                (\xratlen,0) ;}}
+        \renewcommand{\xhookrightarrow}[2][]{%
+            \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
+            \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
+            \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
+            \mathrel{\tikz [baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                \draw (0,0) edge[commutative~diagrams/hookrightarrow] node[below=3pt] {\box\xratbelow}
+                node[above=2pt] {\box\xratabove}
+                (\xratlen,0) ;}}
+        \renewcommand{\xhookleftarrow}[2][]{%
+            \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
+            \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
+            \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
+            \mathrel{\tikz [baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                \draw (0,0) edge[commutative~diagrams/hookleftarrow] node[below=3pt] {\box\xratbelow}
+                node[above=2pt] {\box\xratabove}
+                (\xratlen,0) ;}}
+        \renewcommand{\xmapsto}[2][]{%
+            \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
+            \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
+            \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
+            \mathrel{\tikz [baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                \draw (0,0) edge[commutative~diagrams/mapsto] node[below=3pt] {\box\xratbelow}
+                node[above=2pt] {\box\xratabove}
+                (\xratlen,0) ;}}
+        \newcommand{\xlongequal}[2][]{%
+            \setbox\xratbelow=\hbox{\ensuremath{\scriptstyle #1}}%
+            \setbox\xratabove=\hbox{\ensuremath{\scriptstyle #2}}%
+            \pgfmathsetlengthmacro{\xratlen}{max(\wd\xratbelow, \wd\xratabove) + .8em}%
+            \mathrel{\tikz [baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                \draw (0,0) edge[commutative~diagrams/equal] node[below=3pt] {\box\xratbelow}
+                node[above=2pt] {\box\xratabove}
+                (\xratlen,0) ;}}
+        \hook_gput_code:nnn { begindocument/after } { minimalist }
+          {
+            \renewcommand{\twoheadrightarrow}{%
+                \mathrel{\tikz [baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                    \draw (0,0) edge[commutative~diagrams/twoheadrightarrow] (.8em,0) ;}}
+            \renewcommand{\twoheadleftarrow}{%
+                \mathrel{\tikz [baseline=-.55ex, every~node/.style={inner~sep=0pt}]
+                    \draw (0,0) edge[commutative~diagrams/twoheadleftarrow] (.8em,0) ;}}
+          }
+      }
+  }
 %</einfart|simplivre>
 
-%# 下面配置字体选项
-%# Configure the font options below
-\if@minimclass@lmodern
-    \RequirePackage{amssymb}
-    \if@minimclass@useosf
-        \RequirePackage{cfr-lm}
-    \else
-        \RequirePackage{lmodern}
-    \fi
-    \PJLsetlinespacing{\setstretch{1.00}}
-\fi
-
-\if@minimclass@palatino
-    \RequirePackage{amssymb}
-    \RequirePackage{mathpazo}
-    \PassOptionsToPackage{defaultsups}{newpxtext}
-    \RequirePackage{newpxtext}
-    % \RequirePackage{newpxmath}
-    \let\openbox\relax
-    \PJLsetlinespacing{\setstretch{1.07}}
-    \if@minimclass@useosf\useosf\fi
-\fi
-
-\if@minimclass@times
-    \RequirePackage{amssymb}
-    \PassOptionsToPackage{defaultsups}{newtxtext}
-    \RequirePackage{newtxtext}
-    \RequirePackage{newtxmath}
-    \let\openbox\relax
-    \PJLsetlinespacing{\setstretch{1.00}}
-    \if@minimclass@useosf\useosf\fi
-\fi
-
-\if@minimclass@garamond
-    \RequirePackage{amssymb}
-    \if@minimclass@useosf\else
-        \PassOptionsToPackage{lining}{ebgaramond}
-    \fi
-    \RequirePackage{ebgaramond-maths}
-    \RequirePackage{ebgaramond}
-    % \RequirePackage{garamondlibre}
-    \PJLsetlinespacing{\setstretch{1.00}}
-\fi
-
-\if@minimclass@noto
-    \RequirePackage{amssymb}
-    \if@minimclass@useosf
-        \PassOptionsToPackage{oldstyle}{notomath}
-    \fi
-    \RequirePackage{anyfontsize}
-    \RequirePackage{notomath}
-    \PJLsetlinespacing{\setstretch{1.00}}
-\fi
-
-\if@minimclass@biolinum
-    \RequirePackage{amssymb}
-    % \RequirePackage{mathpazo}
-    % \RequirePackage[sansmath]{libertinust1math}
-    \ifPDFTeX
-        \if@minimclass@useosf
-            \PassOptionsToPackage{osf}{biolinum}
-        \fi
-        \RequirePackage{biolinum}
-        \renewcommand*\familydefault{\biolinum@family}
-    \else
-        \PassOptionsToPackage{no-math}{fontspec}
-        \RequirePackage{fontspec}
-        \setmainfont{LinBiolinum_R.otf}[
-            BoldFont       = LinBiolinum_RB.otf ,
-            ItalicFont     = LinBiolinum_RI.otf ,
-            BoldItalicFont = LinBiolinum_RBO.otf,
-            \if@minimclass@useosf Numbers = OldStyle\fi ]
-    \fi
-    \PJLsetlinespacing{\setstretch{1.05}}
-    \RequirePackage[italic,defaultmathsizes]{mathastext}
-\fi
-
-%# 这一行代码会让 ProjLib 中的字体选项失效
-%# The following line will invalidate the font options of ProjLib
-\def\PJL@font@alreadyset{}
-
-%# 使用 microtype 优化排版细节
-%# Use `microtype` to get details better
-\PassOptionsToPackage{verbose=silent}{microtype}
-\RequirePackage{microtype}
-%# 使用 nowidow 以减少换页时的单行
-%# Use `nowidow` to reduce single line near the edge
 \PassOptionsToPackage{all}{nowidow}
 \RequirePackage{nowidow}
-%# 使用 embrac 以在 \emph 中获得直立的括号
-%# Use `embrac` to get upright brackets in \emph
 \RequirePackage{embrac}
 
 %%================================
-%% Graphics
+%%  Graphics
 %%================================
-%# 下面的代码提供了基本的图像和浮动体配置功能
-%# The code below provides basic graphic and float configuration
 \RequirePackage{graphicx}
 \graphicspath{{images/}}
 \RequirePackage{wrapfig}
@@ -761,211 +545,186 @@
 \captionsetup{font=small}
 
 %%================================
-%% Index
+%%  Index
 %%================================
-% \RequirePackage{imakeidx}
-%# 下面的代码用于去除索引中的行号
-%# Switch off the line numbers in the index
-\AtEndPreamble{
-\pretocmd{\printindex}{\LocallyStopLineNumbers}{}{}
-\apptocmd{\printindex}{\ResumeLineNumbers}{}{}
-}
+\hook_gput_code:nnn { begindocument/before } { minimalist }
+  {
+    \hook_gput_code:nnn { cmd/printindex/before } { minimalist } { \LocallyStopLineNumbers }
+    \hook_gput_code:nnn { cmd/printindex/after } { minimalist } { \ResumeLineNumbers }
+  }
 %</class>
 %
 %
 %<*minimalist>
-%# 这段代码定义了宏包中的选项。
-%# This code defines the options in the package.
-\SetupKeyvalOptions{%
-    family = @minimalist,
-    prefix = @minimalist@
-}
-%# 草稿模式或快速模式
-%# Draft mode or fast mode
-\DeclareBoolOption[false]{draft}
-\DeclareBoolOption[false]{fast}
-%# 纯文本模式 （不加载定理类环境）
-%# Pure text mode (no theorem-like environments loaded)
-\DeclareBoolOption[false]{puretext}
-\DeclareBoolOption[false]{nothms}
-%# 推迟建立定理类环境
-%# Delay the setup of theorem-like environments to the end of the preamble
-\DeclareBoolOption[false]{delaythms}
-%# 定理类环境不编号
-%# No numbering for theorem-like environments
-\DeclareBoolOption[false]{nothmnum}
-%# 指定如何编号定理类环境
-%# Number theorem-like environments With ...
-\DeclareStringOption{thmnum}[minimalist@thmnum@default]
-%# 引用的名称是否将随当前语言的不同而改变
-%# Whether reference name will change with the current language
-\DeclareBoolOption[true]{regionalref}
-\DeclareBoolOption[false]{originalref}
-%# 允许标题中的粗体
-%# Allow bold faces in the titles
-\DeclareBoolOption[false]{allowbf}
-%# 经典样式
-%# Classic style
-\DeclareBoolOption[false]{classical}
-%# subsubsection 标题采用 runin 样式
-%# Use `runin` style for subsubsection
-\DeclareBoolOption[false]{runin}
-%# 处理选项
-%# Process options
-\ProcessKeyvalOptions*\relax
+\keys_define:nn { minimalist }
+  {
+    , draft             .bool_set:N         = \l__minimalist_fast_bool
+    , draft             .initial:n          = { false }
+    , fast              .bool_set:N         = \l__minimalist_fast_bool
 
-%# 下面的代码设定了一些选项之间的关系
-%# The following code sets the relationship between some options
-\if@minimalist@originalref
-    \@minimalist@regionalreffalse
-\fi
-\if@minimalist@draft
-  \@minimalist@fasttrue
-\fi
-\if@minimalist@puretext
-  \@minimalist@nothmstrue
-\fi
+    , classical         .bool_set:N         = \l__minimalist_classical_bool
+    , classical         .initial:n          = { false }
 
-%# 向组件传递一些参数
-%# Pass some options to the components
-\if@minimalist@fast
-    \PassOptionsToPackage{fast}{PJLdraft}
-    \PassOptionsToPackage{fast}{PJLthm}
-\fi
-\expandafter\ifstrempty\expandafter{\@minimalist@thmnum}{}{
-    \expandafter\ifstrequal\expandafter{\@minimalist@thmnum}{minimalist@thmnum@default}{
-        \PassOptionsToPackage{thmnum}{PJLthm}
-    }{
-        \PassOptionsToPackage{thmnum=\@minimalist@thmnum}{PJLthm}
-    }
-}
-\if@minimalist@regionalref\else
-    \PassOptionsToPackage{originalref}{PJLthm}
-\fi
+    , use-boldface      .bool_set:N         = \l__minimalist_use_boldface_bool
+    , use-boldface      .initial:n          = { false }
+    , use~boldface      .bool_set:N         = \l__minimalist_use_boldface_bool
+    , use boldface      .bool_set:N         = \l__minimalist_use_boldface_bool
+    , usebf             .bool_set:N         = \l__minimalist_use_boldface_bool
+    , allow-boldface    .bool_set:N         = \l__minimalist_use_boldface_bool
+    , allow~boldface    .bool_set:N         = \l__minimalist_use_boldface_bool
+    , allow boldface    .bool_set:N         = \l__minimalist_use_boldface_bool
+    , allowbf           .bool_set:N         = \l__minimalist_use_boldface_bool
+    , runin             .bool_set:N         = \l__minimalist_runin_bool
+    , runin             .initial:n          = { false }
 
-%# 设定带条件的加粗
-%# Set the conditional bold face
-\if@minimalist@allowbf
-    \newcommand{\conditionalbfseries}{\bfseries\colorlet{PJLtempcolor}{.}\color{PJLtempcolor!83!paper}}
-\else
-    \newcommand{\conditionalbfseries}{}
-\fi
+    , unknown           .code:n             = {
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-language }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-author }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-datetime }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-draft }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-font }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-logo }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-math }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-paper }
+                                                \PassOptionsToPackage { \CurrentOption } { projlib-theorem }
+                                              }
+  }
+\ProcessKeysOptions { minimalist }
 
-%# 判断是文章还是书
-%# Article or Book?
-\newif\ifIsBook
-\ifdefined\c@chapter\IsBooktrue\else\IsBookfalse\fi
+\bool_new:N \l__minimalist_is_book_bool
+\cs_if_exist:cTF { c@chapter }
+  {
+    \bool_set_true:N \l__minimalist_is_book_bool
+  }
+  {
+    \bool_set_false:N \l__minimalist_is_book_bool
+  }
 
 %%================================
-%% Title fonts
+%%  Paper configuration
 %%================================
-\RequirePackage{anyfontsize}
-
-%# 标题共用的字形（在文档类中设置，默认为空）
-%# The common font shape of the titles (set in the document class, default is none)
-\def\minimalist@titlefontshape{}
-% \def\minimalist@titlefontshape{\sffamily}
-
-%# 各级标题的字形
-%# The font shape of the titles
-\if@minimalist@classical
-\newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\secfont}{\conditionalbfseries}
-\newcommand{\subsecfont}{\conditionalbfseries}
-\newcommand{\subsubsecfont}{\conditionalbfseries\itshape}
-\else
-\newcommand{\partfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\chapfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\secfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\subsecfont}{\conditionalbfseries\minimalist@titlefontshape}
-\newcommand{\subsubsecfont}{\conditionalbfseries\minimalist@titlefontshape}
-\fi
+\RequirePackage{projlib-paper}
 
 %%================================
-%% Paper configuration
+%%  Multi-language support
 %%================================
-%# 引入 ProjLib 中用于设置页面颜色等参数的模块
-%# Introduce the module of ProjLib used to set page color etc.
-\RequirePackage{PJLpaper}
+\RequirePackage{projlib-language}
 
 %%================================
-%% Footer
+%%  Title fonts
 %%================================
-\RequirePackage{geometry}
-\RequirePackage{fancyhdr}
-\RequirePackage{extramarks}
+\RequirePackage { anyfontsize }
 
-%# 下面这一行用来修复页面参数被修改时错误的页眉页脚位置
-%# The following line is used to fix the wrong header and footer position when the page parameters are modified
-\AtEndPreamble{\fancyhfoffset{0pt}}
+\bool_if:NTF \l__minimalist_use_boldface_bool
+  {
+    \cs_new:Nn \minimalist_bfseries: { \bfseries \colorlet{minimalist-temp-color}{.} \color{minimalist-temp-color!83!paper} }
+  }
+  {
+    \cs_new:Nn \minimalist_bfseries: {}
+  }
 
-%# 默认的页眉页脚设置
-%# Default header and footer settings
-\fancypagestyle{fancy}{
+\tl_new:N \g_minimalist_title_font_common_tl
+
+\tl_new:N \g_minimalist_title_font_part_tl
+\tl_new:N \g_minimalist_title_font_chapter_tl
+\tl_new:N \g_minimalist_title_font_section_tl
+\tl_new:N \g_minimalist_title_font_subsection_tl
+\tl_new:N \g_minimalist_title_font_subsubsection_tl
+
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+    \tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+    \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: }
+    \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: }
+    \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
+  }
+  {
+    \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+    \tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+    \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+    \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+    \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+  }
+
+%%================================
+%%  Footer
+%%================================
+\RequirePackage { geometry }
+\RequirePackage { fancyhdr }
+\RequirePackage { extramarks }
+
+\hook_gput_code:nnn { begindocument/before } { minimalist }
+  {
+    \fancyhfoffset { 0pt }
+  }
+
+\fancypagestyle { fancy }
+  {
     \fancyhf{}
     \if@twoside
-        \fancyfoot[RO]{\small\textcolor{maintext!30!paper}{\lastrightmark}%
-            ~~\rlap{\textcolor{maintext!27!paper}{$|$}~~\thepage}}
-        \fancyfoot[LE]{\small\leavevmode\llap{\thepage%
-            ~~\textcolor{maintext!27!paper}{$|$}}%
-            ~~\textcolor{maintext!30!paper}{\lastleftmark}}
+      \fancyfoot[RO]{\small\textcolor{main-text!30!paper}{\lastrightmark}
+        \nobreakspace\nobreakspace\rlap{\textcolor{main-text!27!paper}{$|$}\nobreakspace\nobreakspace\thepage}}
+      \fancyfoot[LE]{\small\leavevmode\llap{\thepage
+        \nobreakspace\nobreakspace\textcolor{main-text!27!paper}{$|$}}
+        \nobreakspace\nobreakspace\textcolor{main-text!30!paper}{\lastleftmark}}
     \else
-        \fancyfoot[R]{\small\textcolor{maintext!30!paper}{\lastrightmark}%
-            ~~\rlap{\textcolor{maintext!27!paper}{$|$}~~\thepage}}
+      \fancyfoot[R]{\small\textcolor{main-text!30!paper}{\lastrightmark}
+        \nobreakspace\nobreakspace\rlap{\textcolor{main-text!27!paper}{$|$}\nobreakspace\nobreakspace\thepage}}
     \fi
     \renewcommand{\headrulewidth}{0pt}
-}
+  }
 \pagestyle{fancy}
 
-%# 第一页的页眉页脚设置
-%# First page's header and footer settings
-\fancypagestyle{plain}{
+\fancypagestyle { plain }
+  {
     \fancyhf{}
     \if@twoside
-        \fancyfoot[RO]{\small%
-            ~\rlap{\textcolor{maintext!27!paper}{$|$}~~\thepage}}
-        \fancyfoot[LE]{\small\leavevmode\llap{\thepage%
-            ~~\textcolor{maintext!27!paper}{$|$}}}
+      \fancyfoot[RO]{\small
+        \nobreakspace\rlap{\textcolor{main-text!27!paper}{$|$}\nobreakspace\nobreakspace\thepage}}
+      \fancyfoot[LE]{\small\leavevmode\llap{\thepage
+        \nobreakspace\nobreakspace\textcolor{main-text!27!paper}{$|$}}}
     \else
-        \fancyfoot[R]{\small%
-            ~\rlap{\textcolor{maintext!27!paper}{$|$}~~\thepage}}
+      \fancyfoot[R]{\small
+        \nobreakspace\rlap{\textcolor{main-text!27!paper}{$|$}\nobreakspace\nobreakspace\thepage}}
     \fi
     \renewcommand{\headrulewidth}{0pt}
-}
-\ifbool{IsBook}{
-%# 针对书的设定
-%# Configure for books
-%## part 页的页面及页眉页脚设置
-%## Part pages' style and their header and footer settings
-    \if@minimalist@fast
-    \newcommand{\drawHelpLine}{}
-    \else
-    \RequirePackage{tikz}
-    \usetikzlibrary{calc,shadings}
-    \RequirePackage{tikzpagenodes}% For `current page text area`
-    \newcommand{\drawHelpLine}{%
-        \begin{tikzpicture}[remember picture,overlay]
-            \foreach\i in {0,1,...,5}{%
-                \fill[opacity=0.12-0.02*\i] 
-                    ($(current page text area.north east)
-                        +(-\i*0.5em-.025em,-10pt+\i*1.1pt)$) 
-                    rectangle ($(current page text area.south east)
-                        +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
-                \shade[top color=paper,bottom color=maintext,opacity=0.12-0.02*\i] 
-                    ($(current page text area.north east)
-                        +(-\i*0.5em-.025em,2pt)$) 
-                    rectangle ($(current page text area.north east)
-                        +(-\i*0.5em+.025em,-10pt+\i*1.1pt)$);
-                \shade[top color=maintext,bottom color=paper,opacity=0.12-0.02*\i] 
-                    ($(current page text area.south east)
-                        +(-\i*0.5em-.025em,-2pt)$) 
-                    rectangle ($(current page text area.south east)
-                        +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
-            }
-        \end{tikzpicture}%
-    }
-    \fi
+  }
+
+\bool_if:NTF \l__minimalist_is_book_bool
+  {
+    \bool_if:NTF \l__minimalist_fast_bool
+      {
+        \newcommand{\drawHelpLine}{}
+      }
+      {
+        \RequirePackage{tikz}
+        \ExplSyntaxOff
+        \usetikzlibrary{calc,shadings}
+        \ExplSyntaxOn
+        \RequirePackage{tikzpagenodes} % For `current page text area`
+        \newcommand{\drawHelpLine}{
+            \begin{tikzpicture}[remember~picture,overlay]
+                \foreach\i in {0,1,...,5}{
+                    \fill[opacity=0.12-0.02*\i]
+                        ($(current~page~text~area.north~east)
+                            +(-\i*0.5em-.025em,-10pt+\i*1.1pt)$)
+                        rectangle ($(current~page~text~area.south~east)
+                            +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+                    \shade[top~color=paper,bottom~color=main-text,opacity=0.12-0.02*\i]
+                        ($(current~page~text~area.north~east)
+                            +(-\i*0.5em-.025em,2pt)$)
+                        rectangle ($(current~page~text~area.north~east)
+                            +(-\i*0.5em+.025em,-10pt+\i*1.1pt)$);
+                    \shade[top~color=main-text,bottom~color=paper,opacity=0.12-0.02*\i]
+                        ($(current~page~text~area.south~east)
+                            +(-\i*0.5em-.025em,-2pt)$)
+                        rectangle ($(current~page~text~area.south~east)
+                            +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+                }
+            \end{tikzpicture}
+        }
+      }
     \fancypagestyle{part}{
         \fancyhf{}
         \renewcommand{\headrulewidth}{0pt}
@@ -973,319 +732,319 @@
     }
     \addtolength{\headheight}{20pt}
     \addtolength{\topmargin}{-20pt}
-%## mark 的设置
-%## Configure the marks
     \if@twoside
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
     \else
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
-    \renewcommand*{\sectionmark}[1]{%
-        \markright{\sec@decochar~\arabic{section}~\sec@decochar~~~#1}}
-}{
-%# 针对文章的设定
-%# Configure for articles
-%## mark 的设置
-%## Configure the marks
+    \renewcommand*{\sectionmark}[1]{
+        \markright{\sec@decochar\nobreakspace\arabic{section}\nobreakspace\sec@decochar\nobreakspace\nobreakspace\nobreakspace#1}}
+  }
+  {
     \if@twoside
         \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{}}
     \else
         \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
-}
-%
-%%================================
-%% Languages and line spacing
-%%================================
-%# 引入 ProjLib 中用于提供多语言设置的模块
-%# Introduce the module of ProjLib that offers language-specific configurations
-\RequirePackage{PJLlang}
-%# 行距设置，中文大约是 1.5 倍行距，英文大约是单倍行距，根据字体变化
-%# Line spacing configuration, CJK uses about one-half spacing, and English is single line spacing, depending on the font
-% \RequirePackage{setspace}
-\PJLsetlinespacing{\setstretch{1.07}}
-\PJLsetCJKlinespacing{\onehalfspacing}
-% To avoid `Underfull \vbox (badness 10000)`
-\raggedbottom
+  }
 
 %%================================
-%% Line numbers
+%%  Line numbers
 %%================================
-%# 设置行号
-%# Line numbers' configuration
 \PassOptionsToPackage{pagewise,mathlines}{lineno}
 \RequirePackage{linenoamsmath}
-\renewcommand\linenumberfont{\ttfamily\color{maintext!7!paper}\footnotesize}
-\setlength\linenumbersep{1em}
+\renewcommand{\linenumberfont}{\ttfamily\color{main-text!7!paper}\footnotesize}
+\setlength{\linenumbersep}{1em}
 
-%# 用于记录是否计量行号的 bool 变量
-%# Record whether linenumber has turned on
 \newif\ifLNturnsON
-\def\LocallyStopLineNumbers{\LNturnsONfalse%
+\def\LocallyStopLineNumbers{\LNturnsONfalse
     \ifLineNumbers\LNturnsONtrue\fi\nolinenumbers}
 \def\ResumeLineNumbers{\ifLNturnsON\linenumbers\fi}
 
-%# 下面的代码用于去除目录中的行号
-%# Switch off the line numbers in the TOC
-\pretocmd{\tableofcontents}{\LocallyStopLineNumbers}{}{\FAIL}
-\apptocmd{\tableofcontents}{\ResumeLineNumbers}{}{\FAIL}
-%# 下面的代码用于去除参考文献中的行号
-%# Switch off the line numbers in the bibliography
-\pretocmd{\thebibliography}{\LocallyStopLineNumbers}{}{\FAIL}
-\apptocmd{\endthebibliography}{\ResumeLineNumbers}{}{\FAIL}
+\hook_gput_code:nnn { cmd/tableofcontents/before } { minimalist } { \LocallyStopLineNumbers }
+\hook_gput_code:nnn { cmd/tableofcontents/after } { minimalist } { \ResumeLineNumbers }
+\hook_gput_code:nnn { env/bibliography/before } { minimalist } { \LocallyStopLineNumbers }
+\hook_gput_code:nnn { env/bibliography/after } { minimalist } { \ResumeLineNumbers }
 
 %%================================
-%% Title format
+%%  Title format
 %%================================
-\RequirePackage[explicit,newparttoc]{titlesec}
-\PassOptionsToPackage{normalem}{ulem}
-\RequirePackage{ulem}
+\RequirePackage [ explicit, newparttoc ] { titlesec }
+\PassOptionsToPackage { normalem } { ulem }
+\RequirePackage { ulem }
 
-%# 设定 CJK 的 part 标题本地化（babel 目前不包含这个设置）
-%# Set CJK's part title localization (`babel` currently does not include this setting)
-\newcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}
-\gappto{\PJLlang@langconfig@common}{%
-\renewcommand{\partstring}{\MakeUppercase{{\partname~\protect\thepart}}}%
-}
-\gappto{\PJLlang@langconfig@CN}{%
-\renewcommand{\partstring}{第~\thepart~部分}%
-}
-\gappto{\PJLlang@langconfig@TC}{%
-\renewcommand{\partstring}{第~\thepart~部分}%
-}
-\gappto{\PJLlang@langconfig@JP}{%
-\renewcommand{\partstring}{第~\thepart~部}%
-}
+\newcommand{\partstring}{\MakeUppercase{{\partname\nobreakspace\protect\thepart}}}
 
-\ifbool{IsBook}{
-%# 针对书的标题样式设定
-%# Configure the title formats for books
+\AddLanguageSetting
+  {
+    \renewcommand{\partstring}{\MakeUppercase{{\partname\nobreakspace\protect\thepart}}}
+  }
+\AddLanguageSetting [ schinese ]
+  {
+    \renewcommand{\partstring}{第 \nobreakspace\thepart\nobreakspace 部分}
+  }
+\AddLanguageSetting [ tchinese ]
+  {
+    \renewcommand{\partstring}{第 \nobreakspace\thepart\nobreakspace 部分}
+  }
+\AddLanguageSetting [ japanese ]
+  {
+    \renewcommand{\partstring}{第 \nobreakspace\thepart\nobreakspace 部}
+  }
+
+\bool_if:NTF \l__minimalist_is_book_bool
+  {
+    \setcounter{secnumdepth}{3}
+
     %% Part
     \titleclass{\part}{top} % make part like a chapter
     \titleformat{\part}[display]
-        {\thispagestyle{part}%
-        \LocallyStopLineNumbers%
-        \partfont\filleft}
-        {\partstring}
-        {1em}
-        {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
-        [\ResumeLineNumbers]
+      {\thispagestyle{part}
+      \LocallyStopLineNumbers
+      \g_minimalist_title_font_part_tl\filleft}
+      {\partstring}
+      {1em}
+      {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+      [\ResumeLineNumbers]
     \titleformat{name=\part,numberless}[display]
-        {\thispagestyle{part}%
-        \LocallyStopLineNumbers%
-        % \phantomsection\addcontentsline{toc}{part}{#1}%
-        \partfont\filleft}
-        {\phantom{\MakeUppercase{\partname}}}
-        {1em}
-        {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
-        [\ResumeLineNumbers]
+      {\thispagestyle{part}
+      \LocallyStopLineNumbers
+        \phantomsection\addcontentsline{toc}{part}{#1}
+      \g_minimalist_title_font_part_tl\filleft}
+      {\phantom{\MakeUppercase{\partname}}}
+      {1em}
+      {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+      [\ResumeLineNumbers]
     \titlespacing*{\part}{0pt}{5em}{6em}
     %% Text after part
-    \newcommand{\parttext}[1]{%
-    \vfill%
-    \LocallyStopLineNumbers%
-    \begin{flushright}%
-        \begin{minipage}{0.833\textwidth}%
-            \color{maintext!80!paper}\raggedleft#1%
-        \end{minipage}%
-    \end{flushright}%
-    \ResumeLineNumbers%
-    \vfill\vfill%
-    \cleardoublepage%
+    \newcommand{\parttext}[1]{
+    \vfill
+    \LocallyStopLineNumbers
+    \begin{flushright}
+      \begin{minipage}{0.833\textwidth}
+        \color{main-text!80!paper}\raggedleft#1
+      \end{minipage}
+    \end{flushright}
+    \ResumeLineNumbers
+    \vfill\vfill
+    \cleardoublepage
     }
-    
+
     %% Chapter
     \titleformat{\chapter}
-        {\thispagestyle{fancy}%
-        \LocallyStopLineNumbers%
-        \color{maintext!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
-        {\rlap{\hspace*{-.5em}{\color{maintext!12!paper}%
-            \fontsize{80}{0}\selectfont\raisebox{-7pt}{\thechapter}}}#1}
-        [\ResumeLineNumbers]
+      {\thispagestyle{fancy}
+      \LocallyStopLineNumbers
+      \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
+        \fontsize{80}{0}\selectfont\raisebox{-7pt}{\thechapter}}}#1}
+      [\ResumeLineNumbers]
     \titleformat{name=\chapter,numberless}
-        {\thispagestyle{fancy}%
-        \LocallyStopLineNumbers%
-        % \phantomsection\addcontentsline{toc}{chapter}{#1}%
-        \color{maintext!80!paper}\chapfont\fontsize{16}{0}\selectfont}{}{0em}
-        {\rlap{\hspace*{-.5em}{\color{maintext!12!paper}%
-            \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
-        [\ResumeLineNumbers]
-}{
-%# 针对文章的标题样式设定
-%# Configure the title formats for articles
+      {\thispagestyle{fancy}
+      \LocallyStopLineNumbers
+        \phantomsection\addcontentsline{toc}{chapter}{#1}
+      \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
+        \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
+      [\ResumeLineNumbers]
+  }
+  {
     %% Part
     \titleformat{\part}[display]
-        {\LocallyStopLineNumbers%
-        \partfont\filleft}
-        {\partstring}
-        {.3em}
-        {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
-        [\ResumeLineNumbers]
+      {\LocallyStopLineNumbers
+      \g_minimalist_title_font_part_tl\filleft}
+      {\partstring}
+      {.3em}
+      {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
+      [\ResumeLineNumbers]
     \titleformat{name=\part,numberless}[display]
-        {\LocallyStopLineNumbers%
-        % \phantomsection\addcontentsline{toc}{part}{#1}%
-        \partfont\filleft}
-        {\phantom{\MakeUppercase{\partname}}}
-        {.3em}
-        {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
-        [\ResumeLineNumbers]
+      {\LocallyStopLineNumbers
+        \phantomsection\addcontentsline{toc}{part}{#1}
+      \g_minimalist_title_font_part_tl\filleft}
+      {\phantom{\MakeUppercase{\partname}}}
+      {.3em}
+      {\fontsize{16}{0}\selectfont\MakeUppercase{#1}}
+      [\ResumeLineNumbers]
     %% Text after part
-    \newcommand{\parttext}[1]{%
-        \LocallyStopLineNumbers%
-        \begin{flushright}%
-            \begin{minipage}{0.833\textwidth}%
-                \color{maintext!80!paper}\raggedleft#1%
-            \end{minipage}%
-        \end{flushright}%
-        \ResumeLineNumbers%
+    \newcommand{\parttext}[1]{
+      \LocallyStopLineNumbers
+      \begin{flushright}
+        \begin{minipage}{0.833\textwidth}
+          \color{main-text!80!paper}\raggedleft#1
+        \end{minipage}
+      \end{flushright}
+      \ResumeLineNumbers
     }
-}
+  }
 
 %% Section
-\if@minimalist@classical
-\renewcommand\thesection{\arabic{section}}
-\newcommand\seculine{\bgroup\markoverwith{\color{maintext!27!paper}%
-    \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
-\newcommand\sec@decochar{\raisebox{.03em}{\normalfont/}}
-\titleformat{\section}
-    {\LocallyStopLineNumbers%
-    \secfont\centering}{}{0em}
-    {{\small\textcolor{maintext!27!paper}{\footnotesize\sec@decochar}%
-        \,\,\textcolor{maintext!90!paper}{\conditionalbfseries\arabic{section}}%
-        \,\,\textcolor{maintext!27!paper}{\footnotesize\sec@decochar}}\\
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \renewcommand\thesection{\arabic{section}}
+    \newcommand\seculine{\bgroup\markoverwith{\color{main-text!27!paper}
+        \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
+    \newcommand\sec@decochar{\raisebox{.03em}{\normalfont/}}
+    \titleformat{\section}
+      {\LocallyStopLineNumbers
+      \g_minimalist_title_font_section_tl\centering}{}{0em}
+      {{\small\textcolor{main-text!27!paper}{\footnotesize\sec@decochar}
+        \,\,\textcolor{main-text!90!paper}{\minimalist_bfseries:\arabic{section}}
+        \,\,\textcolor{main-text!27!paper}{\footnotesize\sec@decochar}}\\
         \seculine{#1}}
-    [\ResumeLineNumbers]
-\titleformat{name=\section,numberless}
-    {\LocallyStopLineNumbers%
-    % \phantomsection\addcontentsline{toc}{section}{#1}%
-    \secfont\centering}{}{0em}
-    {\seculine{#1}}
-    [\ResumeLineNumbers]
-\else
-\newcommand\sec@decochar{}
-\titleformat{\section}
-    {\LocallyStopLineNumbers%
-    \secfont\centering}
-    {\thesection}{.75em}
-    {#1}
-    [\ResumeLineNumbers]
-\fi
+      [\ResumeLineNumbers]
+    \titleformat{name=\section,numberless}
+      {\LocallyStopLineNumbers
+        \phantomsection\addcontentsline{toc}{section}{#1}
+      \g_minimalist_title_font_section_tl\centering}{}{0em}
+      {\seculine{#1}}
+      [\ResumeLineNumbers]
+  }
+  {
+    \newcommand\sec@decochar{}
+    \titleformat{\section}
+      {\LocallyStopLineNumbers
+      \g_minimalist_title_font_section_tl\centering}
+      {\textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}}}{.75em}
+      {#1}
+      [\ResumeLineNumbers]
+  }
 
 %% Subsection
-\if@minimalist@classical
-\renewcommand\thesubsection{%
-    \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
-\newcommand\subseculine{\bgroup\markoverwith{\color{maintext!27!paper}%
-    \rule[-1ex]{2pt}{.75pt}}\ULon}
-\titleformat{\subsection}
-    {\LocallyStopLineNumbers%
-    \subsecfont}{}{0em}
-    {\subseculine{\thesubsection~\textcolor{maintext!27!paper}{$|$}~#1}}
-    [\ResumeLineNumbers]
-\titleformat{name=\subsection,numberless}
-    {\LocallyStopLineNumbers%
-    \subsecfont}{}{0em}
-    {\subseculine{#1}}
-    [\ResumeLineNumbers]
-\else
-\titleformat{\subsection}
-    {\LocallyStopLineNumbers%
-    \subsecfont}
-    {\thesubsection}{.75em}
-    {#1}
-    [\ResumeLineNumbers]
-\fi
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \renewcommand\thesubsection{
+      \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
+    \newcommand\subseculine{\bgroup\markoverwith{\color{main-text!27!paper}
+      \rule[-1ex]{2pt}{.75pt}}\ULon}
+    \titleformat{\subsection}
+      {\LocallyStopLineNumbers
+      \g_minimalist_title_font_subsection_tl}{}{0em}
+      {\subseculine{\thesubsection\nobreakspace\textcolor{main-text!27!paper}{$|$}\nobreakspace #1}}
+      [\ResumeLineNumbers]
+    \titleformat{name=\subsection,numberless}
+      {\LocallyStopLineNumbers
+      \g_minimalist_title_font_subsection_tl}{}{0em}
+      {\subseculine{#1}}
+      [\ResumeLineNumbers]
+  }
+  {
+    \titleformat{\subsection}
+      {\LocallyStopLineNumbers
+      \g_minimalist_title_font_subsection_tl}
+      {\textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}}}{.5em}
+      {#1}
+      [\ResumeLineNumbers]
+  }
 
 %% Subsubsection
-\if@minimalist@runin
-\titleformat{\subsubsection}[runin]
-    {\color{maintext!70!paper}\subsubsecfont}{\thesubsubsection}{.5em}
-    {#1.}[\hspace*{.3em}]
-\else
-\titleformat{\subsubsection}
-    {\LocallyStopLineNumbers%
-    \color{maintext!70!paper}\subsubsecfont}{\thesubsubsection}{.5em}
-    {#1}
-    [\ResumeLineNumbers]
-\fi
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \bool_if:NTF \l__minimalist_runin_bool
+      {
+        \titleformat{\subsubsection}[runin]
+          {\color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
+          {\thesubsubsection}{.5em}
+          {#1.}[\hspace*{.3em}]
+      }
+      {
+        \titleformat{\subsubsection}
+          {\LocallyStopLineNumbers
+          \color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
+          {\thesubsubsection}{.5em}
+          {#1}
+          [\ResumeLineNumbers]
+      }
+  }
+  {
+    \bool_if:NTF \l__minimalist_runin_bool
+      {
+        \titleformat{\subsubsection}[runin]
+          {\g_minimalist_title_font_subsubsection_tl}
+          { \textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}$.$\arabic{subsubsection}} }{.5em}
+          {#1.}[\hspace*{.3em}]
+      }
+      {
+        \titleformat{\subsubsection}
+          {\LocallyStopLineNumbers
+          \g_minimalist_title_font_subsubsection_tl}
+          { \textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}$.$\arabic{subsubsection}} }{.5em}
+          {#1}
+          [\ResumeLineNumbers]
+      }
+  }
 
 %% Paragraph
 \titleformat{\paragraph}[runin]
-    {\scshape}{\theparagraph}{1em}{#1}
+  {\scshape}{\theparagraph}{1em}{#1}
 
 \titlespacing{\section}{0pt}{\baselineskip}{.6\baselineskip}
 \titlespacing{\subsection}{0pt}{.75\baselineskip}{.4\baselineskip}
 \titlespacing{\subsubsection}{0pt}{.5\baselineskip}{.2\baselineskip}
 
 %%================================
-%% ToC format
+%%  ToC format
 %%================================
 \RequirePackage{titletoc}
 \titlecontents{part}
-    [0em]
-    {\addvspace{1.5pc}\filcenter\normalfont}
-    {\thecontentslabel\nopagebreak\\\nopagebreak\uppercase}
-    {}
-    {} % without page number
-    [\addvspace{.5pc}]
-\ifbool{IsBook}{
-%# 针对书的目录样式设定
-%# Configure the TOC style for books
+  [0em]
+  {\addvspace{1.5pc}\filcenter\normalfont}
+  {\thecontentslabel\nopagebreak\\\nopagebreak\uppercase}
+  {}
+  {} % without page number
+  [\addvspace{.5pc}]
+\bool_if:NTF \l__minimalist_is_book_bool
+  {
     \titlecontents{chapter}
-        [2em] % i.e., 0em (part) + 2em
-        {\addvspace{.5pc}\normalfont}
-        {\contentslabel{2em}}
-        {\hspace*{-2em}}
-        {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
+      [2em] % i.e., 0em (part) + 2em
+      {\addvspace{.5pc}\normalfont}
+      {\contentslabel{2em}}
+      {\hspace*{-2em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{section}
-        [4em] % i.e., 2em (chapter) + 2em
-        {\normalfont}
-        {\contentslabel[\textcolor{maintext!27!paper}{\small\sec@decochar}\,\textcolor{maintext!90!paper}{\thecontentslabel}\,\textcolor{maintext!27!paper}{\small\sec@decochar}]{2em}}
-        {\hspace*{-2em}}
-        {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
+      [4em] % i.e., 2em (chapter) + 2em
+      {\normalfont}
+      {\contentslabel[\textcolor{main-text!27!paper}{\small\sec@decochar}\,\textcolor{main-text!90!paper}{\thecontentslabel}\,\textcolor{main-text!27!paper}{\small\sec@decochar}]{2em}}
+      {\hspace*{-2em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsection}
-        [6.5em] % i.e., 4em (section) + 2.5em
-        {\normalfont}
-        {\contentslabel{2.25em}}
-        {\hspace*{-2.25em}}
-        {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
+      [6.5em] % i.e., 4em (section) + 2.5em
+      {\normalfont}
+      {\contentslabel{2.25em}}
+      {\hspace*{-2.25em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
-        [8.5em] % i.e., 6.5em (subsection) + 3em
-        {\normalfont}
-        {\contentslabel{2.75em}}
-        {\hspace*{-2.75em}}
-        {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
-}{
-%# 针对文章的目录样式设定
-%# Configure the TOC style for articles
+      [8.5em] % i.e., 6.5em (subsection) + 3em
+      {\normalfont}
+      {\contentslabel{2.75em}}
+      {\hspace*{-2.75em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+  }
+  {
     \titlecontents{section}
-        [2em] % i.e., 0em (part) + 2em
-        {\normalfont}
-        {\contentslabel{1.75em}}
-        {\hspace*{-1.75em}}
-        {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
+      [2em] % i.e., 0em (part) + 2em
+      {\normalfont}
+      {\contentslabel{1.75em}}
+      {\hspace*{-1.75em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsection}
-        [4.5em] % i.e., 2em (section) + 2.5em
-        {\normalfont}
-        {\contentslabel{2.25em}}
-        {\hspace*{-2.25em}}
-        {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
+      [4.5em] % i.e., 2em (section) + 2.5em
+      {\normalfont}
+      {\contentslabel{2.25em}}
+      {\hspace*{-2.25em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
-        [7.5em] % i.e., 4.5em (subsection) + 3em
-        {\normalfont}
-        {\contentslabel{2.75em}}
-        {\hspace*{-2.75em}}
-        {\titlerule*[1em]{\textcolor{maintext!15!paper}{.}}\contentspage}
-}
+      [7.5em] % i.e., 4.5em (subsection) + 3em
+      {\normalfont}
+      {\contentslabel{2.75em}}
+      {\hspace*{-2.75em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+  }
 
 %%================================
-%% Lists
+%%  Lists
 %%================================
-%# 列表样式设定
-%# Configure the style of lists
 \RequirePackage{enumitem}
 \setlist{noitemsep}
-% \setlist[1]{labelindent=\parindent} % < Usually a good idea
+% \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
 \setlist[enumerate,1]{label=\arabic*$)$,
     ref = \arabic*$)$}
@@ -1293,542 +1052,321 @@
     ref = \arabic{enumi}.\emph{\roman*}$)$}
 \setlist[enumerate,3]{label=\emph{\alph*}$)$,
     ref = \arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$)$}
-\setlist[description]{font=\normalfont\conditionalbfseries}
-\if@minimalist@classical
-\newcommand\desculine{\colorlet{currentcolor}{.}\bgroup\markoverwith{\color{currentcolor!50!paper}%
-    \rule[-.45ex]{2pt}{.75pt}}\ULon}
-\renewcommand{\descriptionlabel}[1]{%
-  \hspace{\labelsep}\normalfont\desculine{#1}%
-}
-\fi
+\setlist[description]{font=\normalfont\minimalist_bfseries:}
+\bool_if:NT \l__minimalist_classical_bool
+  {
+    \newcommand\desculine{\colorlet{currentcolor}{.}\bgroup\markoverwith{\color{currentcolor!55!paper}
+      \rule[-.45ex]{2pt}{.75pt}}\ULon}
+    \renewcommand{\descriptionlabel}[1]{
+      \hspace{\labelsep}\normalfont\desculine{#1}
+    }
+  }
 
 \setlist[itemize]{leftmargin=*}
-\gappto{\PJLlang@langconfig@common}{\setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}}}
-\gappto{\PJLlang@langconfig@FR}{\setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!50!paper}{---}}}
+\AddLanguageSetting { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}} }
+\AddLanguageSetting [french] { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!55!paper}{---}} }
 \setlist[itemize,2]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{--}}
 \setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{\texttt{*}}}
 
 %%================================
-%% Blank page
+%%  Blank page
 %%================================
-%# 空白页样式
-%# The blank page style
-\newcommand{\blinkpagetext}{This page is intentionally left blank}
-\renewcommand{\cleardoublepage}{\relax
-    \clearpage
-    \if@twoside\ifodd\c@page\relax\else
-    \thispagestyle{empty}
-    \AddToHookNext{shipout/background}
-      {% 
-       \put(0.5\paperwidth,-0.5\paperheight){%
-       \makebox[0pt]{\large\color{maintext!10!paper}\blinkpagetext}}}
-    \null\newpage\fi\fi}
+\newcommand{\blinkpagetext}{This~page~is~intentionally~left~blank}
+\renewcommand{\cleardoublepage}{
+  \relax
+  \clearpage
+  \if@twoside\ifodd\c@page\relax\else
+  \thispagestyle{empty}
+  \hook_gput_next_code:nn { shipout/background }
+    {
+      \put(0.5\paperwidth,-0.5\paperheight){
+      \makebox[0pt]{\large\color{main-text!10!paper}\blinkpagetext}}
+    }
+  \null\newpage\fi\fi
+}
 
 %%================================
-%% Draft mark
+%%  Draft mark
 %%================================
-%# 引入 ProjLib 中用于提供草稿阶段指令的模块
-%# Introduce the module of ProjLib that offers macros for draft stage
-\RequirePackage{PJLdraft}
+\RequirePackage{projlib-draft}
 
 %%================================
-%% Theorems
+%%  Theorems
 %%================================
 \RequirePackage{mathtools}
 \RequirePackage{amsthm}
-\if@minimalist@classical
-%# 经典模式的定理样式
-%# The theorem style for classical mode
-\def\simpleqedsymbol{%
-    \makebox[1em]{\rlap{\textcolor{maintext!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
-\newtheoremstyle{simple}%
-    {}{}%
-    {\normalfont}{}%
-    {\normalfont}{}%
-    {0pt}%
-    {\global\let\qedsymbol\simpleqedsymbol%
-        {\conditionalbfseries\thmname{#1}\thmnumber{ #2}}\hspace{.4em}%
-        \textcolor{maintext!27!paper}{$|$}\hspace{.4em}%
-        \color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}%
-        \pushQED{\qed}%
-    }
-\def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol%
-    \popQED\endtrivlist\@endpefalse
-    \global\let\qedsymbol\qedsymbolOriginal}
-\else
-%# 正常模式的定理样式
-%# The theorem style for normal mode
-% Style #1
-% \newtheoremstyle{simple}%
-%     {}{}%
-%     {\normalfont}{}%
-%     {\normalfont}{}%
-%     {0pt}%
-%     {\thmname{\textsc{#1}}\thmnumber{ #2}\hspace{.4em}%
-%         \ifstrequal{#3}{}{\@empty\textcolor{maintext!27!paper}{$-$}\hspace{.4em}}%
-%         {\color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}}}
-%
-% Style #2
-% \newcommand\thmuline{\bgroup\markoverwith{\color{maintext!27!paper}%
-%     \rule[-.6ex]{2pt}{.75pt}}\ULon}
-% \newtheoremstyle{simple}%
-%     {}{}%
-%     {\normalfont}{}%
-%     {\normalfont}{}%
-%     {0pt}%
-%     {\thmuline{\thmname{\textsc{#1}}\thmnumber{ #2}}\hspace{.4em}%
-%         {\color{maintext!50!paper}\thmnote{\ensuremath{(\text{#3})}~~}}}
-%
-% Style #3
-    \newtheoremstyle{simple}%
-        {}{}%
-        {\normalfont}{}%
-        {\normalfont}{}%
-        {0pt}%
-        {{\conditionalbfseries\minimalist@titlefontshape\thmname{#1}\thmnumber{ #2}}%
-            {\color{maintext!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}~~{\normalfont---}~~}
-\fi
 
-%# 灰色实心的 QED 符号
-%# A grey solid QED symbol
-\renewcommand{\qedsymbol}{%
-    \makebox[1em]{\color{maintext!27!paper}\rule[-0.1em]{.95em}{.95em}}}
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \def\simpleqedsymbol{
+      \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+    \newtheoremstyle{simple}
+      {}{}
+      {\normalfont}{}
+      {\normalfont}{}
+      {0pt}
+      { \global\let\qedsymbol\simpleqedsymbol
+        {\minimalist_bfseries:\thmname{#1}\nobreakspace\thmnumber{#2}}\hspace{.4em}
+        \textcolor{main-text!27!paper}{$|$}\hspace{.4em}
+        \color{main-text!50!paper}\thmnote{\ensuremath{(\text{#3})}\nobreakspace\nobreakspace}
+        \pushQED{\qed}
+      }
+    \def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol
+      \popQED\endtrivlist\@endpefalse
+      \global\let\qedsymbol\qedsymbolOriginal}
+  }
+  {
+    \newtheoremstyle{simple}
+    {}{}
+    {\normalfont}{}
+    {\normalfont}{}
+    {0pt}
+    {{\minimalist_bfseries:\g_minimalist_title_font_common_tl \thmname{#1}\nobreakspace\thmnumber{#2}}
+      {\color{main-text!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+  }
+
+\theoremstyle{simple}
+
+\renewcommand{\qedsymbol}{
+  \makebox[1em]{\color{main-text!27!paper}\rule[-0.1em]{.95em}{.95em}}}
 \let\qedsymbolOriginal\qedsymbol
 
-%# 超链接的设置
-%# The configuration of hyperlinks
-\if@minimalist@fast
+\bool_if:NTF \l__minimalist_fast_bool
+  {
     \providecommand{\phantomsection}{}
     \RequirePackage{url}
     \newcommand{\href}[2]{#2}
-\else
+  }
+  {
     \PassOptionsToPackage{hidelinks,linktoc=all}{hyperref}
-% To solve `Difference between bookmark levels is greater than one`
     \RequirePackage{bookmark}
     \RequirePackage{hyperref}
-\fi
+  }
 
-%# 引入 ProjLib 中用于设置定理类环境的模块
-%# Introduce the module of ProjLib that offers the configuration of theorem-like environments
-% Should be placed after "hyperref"
-\PassOptionsToPackage{nothms,simplename}{PJLthm}
-\RequirePackage{PJLthm}
+\PassOptionsToPackage { simplename } { projlib-theorem }
+\RequirePackage { projlib-theorem }
 
-%# 英文定理标题的样式
-%# Adjust English theorems names
-\pretocmd{\theoremnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\lemmanameEN}{\textsc}{}{\FAIL}
-\pretocmd{\propositionnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\corollarynameEN}{\textsc}{}{\FAIL}
-\pretocmd{\propertynameEN}{\textsc}{}{\FAIL}
-\pretocmd{\factnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\conjecturenameEN}{\textsc}{}{\FAIL}
-\pretocmd{\definitionnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\axiomnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\assumptionnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\conventionnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\hypothesisnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\notationnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\examplenameEN}{\textsc}{}{\FAIL}
-\pretocmd{\problemnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\questionnameEN}{\textsc}{}{\FAIL}
-\pretocmd{\exercisenameEN}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameEN}{\itshape}{}{\FAIL}
-\pretocmd{\observationnameEN}{\itshape}{}{\FAIL}
+\SetTheorem
+  {
+    assertion                 ,
+    assumption                ,
+    axiom                     ,
+    conclusion                ,
+    conjecture                ,
+    convention                ,
+    corollary                 ,
+    definition                ,
+    example                   ,
+    exercise                  ,
+    fact                      ,
+    hypothesis                ,
+    lemma                     ,
+    notation                  ,
+    observation               ,
+    postulate                 ,
+    problem                   ,
+    property                  ,
+    proposition               ,
+    question                  ,
+    theorem                   ,
+  }
+  {
+    name style = {
+      heading style = {
+        , english = \textsc
+        , french = \textsc
+        , ngerman = \textsc
+        , italian = \textsc
+        , portuguese = \textsc
+        , brazilian = \textsc
+        , spanish = \textsc
+      }
+    }
+  }
 
-%# 法语定理标题的样式
-%# Adjust French theorems names
-\pretocmd{\theoremnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\lemmanameFR}{\textsc}{}{\FAIL}
-\pretocmd{\propositionnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\corollarynameFR}{\textsc}{}{\FAIL}
-\pretocmd{\propertynameFR}{\textsc}{}{\FAIL}
-\pretocmd{\factnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\conjecturenameFR}{\textsc}{}{\FAIL}
-\pretocmd{\definitionnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\axiomnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\assumptionnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\conventionnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\hypothesisnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\notationnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\examplenameFR}{\textsc}{}{\FAIL}
-\pretocmd{\problemnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\questionnameFR}{\textsc}{}{\FAIL}
-\pretocmd{\exercisenameFR}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameFR}{\itshape}{}{\FAIL}
-\pretocmd{\observationnameFR}{\itshape}{}{\FAIL}
+\SetTheorem { remark }
+  {
+    name style = {
+      heading style = {
+        , english = \itshape
+        , french = \itshape
+        , ngerman = \itshape
+        , italian = \itshape
+        , portuguese = \itshape
+        , brazilian = \itshape
+        , spanish = \itshape
+        , russian = \itshape
+      }
+    }
+  }
 
-%# 德语定理标题的样式
-%# Adjust German theorems names
-\pretocmd{\theoremnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\lemmanameDE}{\textsc}{}{\FAIL}
-\pretocmd{\propositionnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\corollarynameDE}{\textsc}{}{\FAIL}
-\pretocmd{\propertynameDE}{\textsc}{}{\FAIL}
-\pretocmd{\factnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\conjecturenameDE}{\textsc}{}{\FAIL}
-\pretocmd{\definitionnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\axiomnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\assumptionnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\conventionnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\hypothesisnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\notationnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\examplenameDE}{\textsc}{}{\FAIL}
-\pretocmd{\problemnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\questionnameDE}{\textsc}{}{\FAIL}
-\pretocmd{\exercisenameDE}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameDE}{\itshape}{}{\FAIL}
-\pretocmd{\observationnameDE}{\itshape}{}{\FAIL}
 
-%# 意大利语定理标题的样式
-%# Adjust Italian theorems names
-\pretocmd{\theoremnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\lemmanameIT}{\textsc}{}{\FAIL}
-\pretocmd{\propositionnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\corollarynameIT}{\textsc}{}{\FAIL}
-\pretocmd{\propertynameIT}{\textsc}{}{\FAIL}
-\pretocmd{\factnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\conjecturenameIT}{\textsc}{}{\FAIL}
-\pretocmd{\definitionnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\axiomnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\assumptionnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\conventionnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\hypothesisnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\notationnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\examplenameIT}{\textsc}{}{\FAIL}
-\pretocmd{\problemnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\questionnameIT}{\textsc}{}{\FAIL}
-\pretocmd{\exercisenameIT}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameIT}{\itshape}{}{\FAIL}
-\pretocmd{\observationnameIT}{\itshape}{}{\FAIL}
-
-%# 葡萄牙语定理标题的样式
-%# Adjust Portuguese theorems names
-\pretocmd{\theoremnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\lemmanamePT}{\textsc}{}{\FAIL}
-\pretocmd{\propositionnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\corollarynamePT}{\textsc}{}{\FAIL}
-\pretocmd{\propertynamePT}{\textsc}{}{\FAIL}
-\pretocmd{\factnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\conjecturenamePT}{\textsc}{}{\FAIL}
-\pretocmd{\definitionnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\axiomnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\assumptionnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\conventionnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\hypothesisnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\notationnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\examplenamePT}{\textsc}{}{\FAIL}
-\pretocmd{\problemnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\questionnamePT}{\textsc}{}{\FAIL}
-\pretocmd{\exercisenamePT}{\textsc}{}{\FAIL}
-\pretocmd{\remarknamePT}{\itshape}{}{\FAIL}
-\pretocmd{\observationnamePT}{\itshape}{}{\FAIL}
-
-%# 巴西葡萄牙语定理标题的样式
-%# Adjust Brazilian theorems names
-\pretocmd{\theoremnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\lemmanameBR}{\textsc}{}{\FAIL}
-\pretocmd{\propositionnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\corollarynameBR}{\textsc}{}{\FAIL}
-\pretocmd{\propertynameBR}{\textsc}{}{\FAIL}
-\pretocmd{\factnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\conjecturenameBR}{\textsc}{}{\FAIL}
-\pretocmd{\definitionnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\axiomnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\assumptionnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\conventionnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\hypothesisnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\notationnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\examplenameBR}{\textsc}{}{\FAIL}
-\pretocmd{\problemnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\questionnameBR}{\textsc}{}{\FAIL}
-\pretocmd{\exercisenameBR}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameBR}{\itshape}{}{\FAIL}
-\pretocmd{\observationnameBR}{\itshape}{}{\FAIL}
-
-%# 西班牙语定理标题的样式
-%# Adjust Spanish theorems names
-\pretocmd{\theoremnameES}{\textsc}{}{\FAIL}
-\pretocmd{\lemmanameES}{\textsc}{}{\FAIL}
-\pretocmd{\propositionnameES}{\textsc}{}{\FAIL}
-\pretocmd{\corollarynameES}{\textsc}{}{\FAIL}
-\pretocmd{\propertynameES}{\textsc}{}{\FAIL}
-\pretocmd{\factnameES}{\textsc}{}{\FAIL}
-\pretocmd{\conjecturenameES}{\textsc}{}{\FAIL}
-\pretocmd{\definitionnameES}{\textsc}{}{\FAIL}
-\pretocmd{\axiomnameES}{\textsc}{}{\FAIL}
-\pretocmd{\assumptionnameES}{\textsc}{}{\FAIL}
-\pretocmd{\conventionnameES}{\textsc}{}{\FAIL}
-\pretocmd{\hypothesisnameES}{\textsc}{}{\FAIL}
-\pretocmd{\notationnameES}{\textsc}{}{\FAIL}
-\pretocmd{\examplenameES}{\textsc}{}{\FAIL}
-\pretocmd{\problemnameES}{\textsc}{}{\FAIL}
-\pretocmd{\questionnameES}{\textsc}{}{\FAIL}
-\pretocmd{\exercisenameES}{\textsc}{}{\FAIL}
-\pretocmd{\remarknameES}{\itshape}{}{\FAIL}
-\pretocmd{\observationnameES}{\itshape}{}{\FAIL}
-
-%# 判断最高级别的标题是 section 还是 chapter
-%# Detect the highest level of title: section or chapter?
-% \ifbool{IsBook}{
-%     \newaliascnt{highest}{chapter}
-% }{
-%     \newaliascnt{highest}{section}
-% }
-%# 按照 thmnum 决定定理类环境如何编号
-%# Number the theorem-like environment with respect to thmnum
-% \RenewDocumentCommand{\CreateTheorem@thmnum}{m}{
-%     \expandafter\ifstrempty\expandafter{\@minimalist@thmnum}{
-%         \CreateTheorem{#1}<highest>
-%     }{
-%         \expandafter\ifstrequal\expandafter{\@minimalist@thmnum}{minimalist@thmnum@default}{
-%             \CreateTheorem{#1}
-%         }{
-%             \CreateTheorem{#1}<\@minimalist@thmnum>
-%         }
-%     }
-% }
-
-%# 建立定理类环境
-%# Set-up theorem-like environments
-\theoremstyle{simple}
-
-\def\minimalist@definethms{
-\if@minimalist@nothms\else
-\if@minimalist@nothmnum
-\CreateTheorem*{theorem}
-\CreateTheorem*{lemma}
-\CreateTheorem*{proposition}
-\CreateTheorem*{corollary}
-\CreateTheorem*{definition-proposition}
-\CreateTheorem*{definition-theorem}
-\CreateTheorem*{property}
-\CreateTheorem*{fact}
-\CreateTheorem*{conjecture}
-\else
-\CreateTheorem@thmnum{theorem}
-\CreateTheorem{lemma}[theorem]
-\CreateTheorem{proposition}[theorem]
-\CreateTheorem{corollary}[theorem]
-\CreateTheorem{definition-proposition}[theorem]
-\CreateTheorem{definition-theorem}[theorem]
-\CreateTheorem{property}[theorem]
-\CreateTheorem{fact}[theorem]
-\CreateTheorem{conjecture}[theorem]
-\fi
-\CreateTheorem*{theorem*}
-\CreateTheorem*{lemma*}
-\CreateTheorem*{proposition*}
-\CreateTheorem*{corollary*}
-\CreateTheorem*{definition-proposition*}
-\CreateTheorem*{definition-theorem*}
-\CreateTheorem*{property*}
-\CreateTheorem*{fact*}
-\CreateTheorem*{conjecture*}
-%
-\if@minimalist@nothmnum
-\CreateTheorem*{definition}
-\CreateTheorem*{axiom}
-\CreateTheorem*{assumption}
-\CreateTheorem*{convention}
-\CreateTheorem*{hypothesis}
-\CreateTheorem*{notation}
-\CreateTheorem*{example}
-\CreateTheorem*{problem}
-\CreateTheorem*{question}
-\CreateTheorem*{exercise}
-\else
-\CreateTheorem{definition}[theorem]
-\CreateTheorem{axiom}[theorem]
-\CreateTheorem{assumption}[theorem]
-\CreateTheorem{convention}[theorem]
-\CreateTheorem{hypothesis}[theorem]
-\CreateTheorem{notation}[theorem]
-\CreateTheorem{example}[theorem]
-\CreateTheorem{problem}[theorem]
-\CreateTheorem{question}[theorem]
-\CreateTheorem{exercise}[theorem]
-\fi
-\CreateTheorem*{definition*}
-\CreateTheorem*{axiom*}
-\CreateTheorem*{assumption*}
-\CreateTheorem*{convention*}
-\CreateTheorem*{hypothesis*}
-\CreateTheorem*{notation*}
-\CreateTheorem*{example*}
-\CreateTheorem*{problem*}
-\CreateTheorem*{question*}
-\CreateTheorem*{exercise*}
-%
-\if@minimalist@nothmnum
-\CreateTheorem*{remark}
-\CreateTheorem*{observation}
-\else
-\CreateTheorem@thmnum{remark}
-\CreateTheorem@thmnum{observation}
-\fi
-\CreateTheorem*{remark*}
-\CreateTheorem*{observation*}
-\fi
-}
-
-\if@minimalist@delaythms
-    \AtEndPreamble{\minimalist@definethms}
-\else
-    \minimalist@definethms
-\fi
-
-\ifbool{IsBook}{}{%
-%# 针对文章的一些设定
-%# Some configurations for articles
+\bool_if:NF \l__minimalist_is_book_bool {
 
 %%================================
-%% Title block style
+%%  Title block style
 %%================================
-\if@minimalist@classical
-\renewcommand{\@maketitle}{%
-    \LocallyStopLineNumbers%
-    \noindent%
-    {\textcolor{maintext!27!paper}{\rule{\textwidth}{0.75pt}}}%
-    % \vspace{-\parskip}%
-    \vspace{-.5\baselineskip}%
-    \begin{flushright}%
-        \let\footnote\thanks%
-        {\conditionalbfseries\@title}\\\medskip%
-        \color{maintext!80!paper}%
-        {\small\scshape\@author}%
-        \par\vspace{-\parskip}\vspace{2pt}%
-        {\small\@date}%
-    \end{flushright}%
-    % \vspace{-\parskip}%
-    \vspace{-.5\baselineskip}%
-    \ifx\@date\@empty%
-        \vspace{\baselineskip}%
-        \vspace{1.2\parskip}%
-    \else%
-        \vspace{-.5\baselineskip}%
-    \fi%
-    {\textcolor{maintext!27!paper}{\rule{\textwidth}{0.75pt}}\par}%
-    \ResumeLineNumbers%
-}
-\else
-\renewcommand{\@maketitle}{%
-    \LocallyStopLineNumbers%
-    \begin{center}%
-        \let\footnote\thanks%
-        {\conditionalbfseries\minimalist@titlefontshape\large\@title}\\\bigskip%
-        \color{maintext!80!paper}%
-        {\small\scshape\@author}\\[2pt]%
-        {\small\@date}%
-    \end{center}%
-    \ifx\@date\@empty\bigskip\fi%
-    \bigskip\par%
-    \ResumeLineNumbers%
-}
-\fi
-\apptocmd{\maketitle}{\thispagestyle{fancy}}{}{\FAIL}
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \renewcommand{\@maketitle}{
+      \LocallyStopLineNumbers
+      \noindent
+      {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}}
+      % \vspace{-\parskip}
+      \vspace{-.5\baselineskip}
+      \begin{flushright}
+        \let\footnote\thanks
+        {\minimalist_bfseries:\@title}\\\medskip
+        \color{main-text!80!paper}
+        {\small\scshape\@author}
+        \par\vspace{-\parskip}\vspace{2pt}
+        {\small\@date}
+      \end{flushright}
+      % \vspace{-\parskip}
+      \vspace{-.5\baselineskip}
+      \ifx\@date\@empty
+          \vspace{\baselineskip}
+          \vspace{1.2\parskip}
+      \else
+          \vspace{-.5\baselineskip}
+      \fi
+      {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}\par}
+      \ResumeLineNumbers
+    }
+  }
+  {
+    \renewcommand{\@maketitle}{
+      \LocallyStopLineNumbers
+      \begin{center}
+        \let\footnote\thanks
+        {\minimalist_bfseries:\g_minimalist_title_font_common_tl \large\@title}\\\bigskip
+        \color{main-text!80!paper}
+        {\small\scshape\@author}
+        \par\smallskip\vspace{-\parskip}
+        {\small\@date}
+      \end{center}
+      \ifx\@date\@empty\bigskip\fi
+      \bigskip\par
+      \ResumeLineNumbers
+    }
+  }
+
+\hook_gput_code:nnn { cmd/maketitle/after } { minimalist } { \thispagestyle{fancy} }
 
 %%================================
-%% Abstract style
+%%  Abstract style
 %%================================
-\if@minimalist@classical
-\renewenvironment{abstract}{%
-    \LocallyStopLineNumbers%
-    \begin{flushright}%
-        \textsc{\conditionalbfseries\small\abstractname}\par%
-        \vspace{-\parskip}%
-        \vspace{-.25\baselineskip}%
-        \begin{minipage}[t]{.833\textwidth}%
-            \vspace{0pt}%
-            \color{maintext!80!paper}%
-            \footnotesize%
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \renewenvironment{abstract}
+      {
+        \LocallyStopLineNumbers
+        \begin{flushright}
+          \textsc{\minimalist_bfseries:\small\abstractname}\par
+          \vspace{-\parskip}
+          \vspace{-.25\baselineskip}
+          \begin{minipage}[t]{.833\textwidth}
+            \vspace{0pt}
+            \color{main-text!80!paper}
+            \footnotesize
             \parindent=2em
-}{%
-        \end{minipage}%
-    \end{flushright}%
-    \bigskip%
-    \ResumeLineNumbers%
-}
-\else
-\renewenvironment{abstract}{%
-    \LocallyStopLineNumbers%
-    \vspace{-\baselineskip}%
-    \begin{center}%
-        \textsc{\conditionalbfseries\minimalist@titlefontshape\small\abstractname}\\%
-        \vspace{-.3\baselineskip}%
-        \begin{minipage}[t]{.833\textwidth}%
-            \vspace{0pt}%
-            \color{maintext!80!paper}%
-            \footnotesize%
+      }
+      {
+          \end{minipage}
+        \end{flushright}
+        \bigskip
+        \ResumeLineNumbers
+      }
+  }
+  {
+    \renewenvironment{abstract}
+      {
+        \LocallyStopLineNumbers
+        \vspace{-\baselineskip}
+        \begin{center}
+          \textsc{\minimalist_bfseries:\g_minimalist_title_font_common_tl \small\abstractname}\\
+          \vspace{-.3\baselineskip}
+          \begin{minipage}[t]{.833\textwidth}
+            \vspace{0pt}
+            \color{main-text!80!paper}
+            \footnotesize
             \parindent=2em
-}{%
-        \end{minipage}%
-    \end{center}%
-    \medskip%
-    \ResumeLineNumbers%
-}
-\fi
+      }
+      {
+          \end{minipage}
+        \end{center}
+        \medskip
+        \ResumeLineNumbers
+      }
+  }
 
 %%================================
-%% Keyword environment
+%%  Keyword environment
 %%================================
-\def\keywordnameEN{\textsc{Keywords}}
-\def\keywordnameFR{\textsc{Mots clés}}
-\def\keywordnameDE{\textsc{Schlüsselwörter}}
-\def\keywordnameCN{关键词}
-\def\keywordnameTC{關鍵詞}
-\def\keywordnameJP{キーワード}
-\def\keywordnameRU{Ключевые слова}
-
-\if@minimalist@classical
-\newenvironment{keyword}{%
-    \LocallyStopLineNumbers%
-    \vspace{-.5\baselineskip}%
-    \begin{flushright}%
-        {\conditionalbfseries\small\csname keywordname\csname\languagename ABBR\endcsname\endcsname}\par%
-        \vspace{-\parskip}%
-        \vspace{-.30\baselineskip}%
-        \begin{minipage}[t]{.833\textwidth}%
-            \vspace{0pt}%
-            \color{maintext!80!paper}%
-            \footnotesize%
-            \parindent=2em
-            \raggedleft%
-}{%
-        \end{minipage}%
-    \end{flushright}%
-    \bigskip%
-    \ResumeLineNumbers%
+\DefineMultilingualText { \keywordname }
+{
+  EN = \textsc{Keywords}                      ,
+  FR = \textsc{Mots~clés}                     ,
+  DE = \textsc{Schlüsselwörter}               ,
+  IT = \textsc{Parole~chiave}                 ,
+  PT = \textsc{Palavras~chave}                ,
+  BR = \textsc{Palavras~chave}                ,
+  ES = \textsc{Palabras~clave}                ,
+  CN = 关键词                                 ,
+  TC = 關鍵詞                                 ,
+  JP = キーワード                             ,
+  RU = Ключевые~слова                         ,
 }
-\else
-\newenvironment{keyword}{%
-    \LocallyStopLineNumbers%
-    \vspace{-.75\baselineskip}%
-    \begin{center}%
-        {\conditionalbfseries\small\csname keywordname\csname\languagename ABBR\endcsname\endcsname}\\%
-        \vspace{-.3\baselineskip}%
-        \begin{minipage}[t]{.833\textwidth}%
-            \vspace{0pt}%
-            \color{maintext!80!paper}%
-            \footnotesize%
-            \parindent=2em
-            \begin{center}%
-}{%
-            \end{center}%
-        \end{minipage}%
-    \end{center}%
-    \medskip%
-    \ResumeLineNumbers%
-}
-\fi
+
+\bool_if:NTF \l__minimalist_classical_bool
+  {
+    \newenvironment{keyword}{
+      \LocallyStopLineNumbers
+      \vspace{-.5\baselineskip}
+      \begin{flushright}
+        {\minimalist_bfseries:\small\keywordname}\par
+        \vspace{-\parskip}
+        \vspace{-.30\baselineskip}
+        \begin{minipage}[t]{.833\textwidth}
+          \vspace{0pt}
+          \color{main-text!80!paper}
+          \footnotesize
+          \parindent=2em
+          \raggedleft
+    }{
+        \end{minipage}
+      \end{flushright}
+      \bigskip
+      \ResumeLineNumbers
+    }
+  }
+  {
+    \newenvironment{keyword}{
+      \LocallyStopLineNumbers
+      \vspace{-.75\baselineskip}
+      \begin{center}
+        {\minimalist_bfseries:\small\keywordname}\\
+        \vspace{-.3\baselineskip}
+        \begin{minipage}[t]{.833\textwidth}
+          \vspace{0pt}
+          \color{main-text!80!paper}
+          \footnotesize
+          \parindent=2em
+          \begin{center}
+    }{
+          \end{center}
+        \end{minipage}
+      \end{center}
+      \medskip
+      \ResumeLineNumbers
+    }
+  }
 
 %%================================
-%% Simulate features of amsart
+%%  Simulate features of amsart
 %%================================
-%# 引入 ProjLib 中用于模拟 AMS 文档类写法的模块
-%# Introduce the module of ProjLib that emulates the writing style in AMS classes
-\PassOptionsToPackage{amsfashion}{PJLauthor}
-\RequirePackage{PJLauthor}
+\PassOptionsToPackage { amsfashion } { projlib-author }
+\RequirePackage { projlib-author }
 
 }
 %</minimalist>
