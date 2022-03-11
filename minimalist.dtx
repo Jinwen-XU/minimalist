@@ -232,18 +232,78 @@
 
         \projlib_language_set_linespacing_latin:n { \setstretch { 1.07 } }
       }
+  }
 
-    \PassOptionsToPackage { fontset = none, scheme = plain } { ctex }
-    \RequirePackage { ctex }
+\PassOptionsToPackage { fontset = none, scheme = plain } { ctex }
+\RequirePackage { ctex }
 
-    \IfFileExists { minimalist-font.cjk.tex }
+\IfFileExists { minimalist-font.cjk.tex }
+  {
+    \input { minimalist-font.cjk.tex }
+  }
+  {
+    \IfFontExistsTF{SourceHanSerifSC-Regular}
       {
-        \input { minimalist-font.cjk.tex }
+        \setCJKmainfont { SourceHanSerifSC-Regular }
+          [
+            BoldFont       = SourceHanSerifSC-Bold ,
+            ItalicFont     = * ,
+            BoldItalicFont = SourceHanSerifSC-Bold ,
+          ]
       }
       {
-        \IfFontExistsTF{SourceHanSerifSC-Regular}
+        \setCJKmainfont { FandolSong-Regular.otf }
+          [
+            BoldFont       = FandolSong-Bold.otf ,
+            ItalicFont     = FandolKai-Regular.otf ,
+            BoldItalicFont = FandolKai-Regular.otf ,
+            BoldItalicFeatures = { FakeBold = 4 } ,
+          ]
+      }
+
+    \IfFontExistsTF { SourceHanSansSC-Regular }
+      {
+        \setCJKsansfont{SourceHanSansSC-Regular}
+          [
+            BoldFont       = SourceHanSansSC-Bold ,
+            ItalicFont     = * ,
+            BoldItalicFont = SourceHanSansSC-Bold ,
+          ]
+      }
+      {
+        \setCJKsansfont { FandolHei-Regular.otf }
+          [
+            BoldFont       = FandolHei-Bold.otf ,
+            ItalicFont     = * ,
+            BoldItalicFont = FandolHei-Bold.otf ,
+          ]
+      }
+
+    \IfFontExistsTF { SourceHanMonoSC-Regular }
+      {
+        \setCJKmonofont { SourceHanMonoSC-Regular }
+          [
+            BoldFont       = SourceHanMonoSC-Medium ,
+            ItalicFont     = * ,
+            BoldItalicFont = SourceHanMonoSC-Medium ,
+          ]
+      }
+      {
+        \setCJKmonofont { FandolFang-Regular.otf }
+          [
+            BoldFont       = * ,
+            BoldFeatures   = { FakeBold = 4 } ,
+            ItalicFont     = * ,
+            BoldItalicFont = * ,
+            BoldItalicFeatures = { FakeBold = 4 } ,
+          ]
+      }
+
+    \bool_if:NT \g__projlib_language_enabled_schinese_bool
+      {
+        \IfFontExistsTF { SourceHanSerifSC-Regular }
           {
-            \setCJKmainfont { SourceHanSerifSC-Regular }
+            \setCJKfamilyfont { SCmain } { SourceHanSerifSC-Regular }
               [
                 BoldFont       = SourceHanSerifSC-Bold ,
                 ItalicFont     = * ,
@@ -251,7 +311,7 @@
               ]
           }
           {
-            \setCJKmainfont { FandolSong-Regular.otf }
+            \setCJKfamilyfont { SCmain } { FandolSong-Regular.otf }
               [
                 BoldFont       = FandolSong-Bold.otf ,
                 ItalicFont     = FandolKai-Regular.otf ,
@@ -259,10 +319,9 @@
                 BoldItalicFeatures = { FakeBold = 4 } ,
               ]
           }
-
         \IfFontExistsTF { SourceHanSansSC-Regular }
           {
-            \setCJKsansfont{SourceHanSansSC-Regular}
+            \setCJKfamilyfont { SCsans } { SourceHanSansSC-Regular }
               [
                 BoldFont       = SourceHanSansSC-Bold ,
                 ItalicFont     = * ,
@@ -270,17 +329,16 @@
               ]
           }
           {
-            \setCJKsansfont { FandolHei-Regular.otf }
+            \setCJKfamilyfont { SCsans } { FandolHei-Regular.otf }
               [
                 BoldFont       = FandolHei-Bold.otf ,
                 ItalicFont     = * ,
                 BoldItalicFont = FandolHei-Bold.otf ,
               ]
           }
-
         \IfFontExistsTF { SourceHanMonoSC-Regular }
           {
-            \setCJKmonofont { SourceHanMonoSC-Regular }
+            \setCJKfamilyfont { SCmono } { SourceHanMonoSC-Regular }
               [
                 BoldFont       = SourceHanMonoSC-Medium ,
                 ItalicFont     = * ,
@@ -288,7 +346,7 @@
               ]
           }
           {
-            \setCJKmonofont { FandolFang-Regular.otf }
+            \setCJKfamilyfont { SCmono } { FandolFang-Regular.otf }
               [
                 BoldFont       = * ,
                 BoldFeatures   = { FakeBold = 4 } ,
@@ -297,209 +355,155 @@
                 BoldItalicFeatures = { FakeBold = 4 } ,
               ]
           }
-
-        \bool_if:NT \g__projlib_language_enabled_schinese_bool
-          {
-            \IfFontExistsTF { SourceHanSerifSC-Regular }
-              {
-                \setCJKfamilyfont { SCmain } { SourceHanSerifSC-Regular }
-                  [
-                    BoldFont       = SourceHanSerifSC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSerifSC-Bold ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { SCmain } { FandolSong-Regular.otf }
-                  [
-                    BoldFont       = FandolSong-Bold.otf ,
-                    ItalicFont     = FandolKai-Regular.otf ,
-                    BoldItalicFont = FandolKai-Regular.otf ,
-                    BoldItalicFeatures = { FakeBold = 4 } ,
-                  ]
-              }
-            \IfFontExistsTF { SourceHanSansSC-Regular }
-              {
-                \setCJKfamilyfont { SCsans } { SourceHanSansSC-Regular }
-                  [
-                    BoldFont       = SourceHanSansSC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSansSC-Bold ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { SCsans } { FandolHei-Regular.otf }
-                  [
-                    BoldFont       = FandolHei-Bold.otf ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = FandolHei-Bold.otf ,
-                  ]
-              }
-            \IfFontExistsTF { SourceHanMonoSC-Regular }
-              {
-                \setCJKfamilyfont { SCmono } { SourceHanMonoSC-Regular }
-                  [
-                    BoldFont       = SourceHanMonoSC-Medium ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanMonoSC-Medium ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { SCmono } { FandolFang-Regular.otf }
-                  [
-                    BoldFont       = * ,
-                    BoldFeatures   = { FakeBold = 4 } ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = * ,
-                    BoldItalicFeatures = { FakeBold = 4 } ,
-                  ]
-              }
-          }
-
-        \bool_if:NT \g__projlib_language_enabled_tchinese_bool
-          {
-            \IfFontExistsTF { SourceHanSerifTC-Regular }
-              {
-                \setCJKfamilyfont { TCmain } { SourceHanSerifTC-Regular }
-                  [
-                    BoldFont       = SourceHanSerifTC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSerifTC-Bold ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { TCmain } { FandolSong-Regular.otf }
-                  [
-                    BoldFont       = FandolSong-Bold.otf ,
-                    ItalicFont     = FandolKai-Regular.otf ,
-                    BoldItalicFont = FandolKai-Regular.otf ,
-                    BoldItalicFeatures = { FakeBold = 4 } ,
-                  ]
-              }
-            \IfFontExistsTF { SourceHanSansTC-Regular }
-              {
-                \setCJKfamilyfont { TCsans } { SourceHanSansTC-Regular }
-                  [
-                    BoldFont       = SourceHanSansTC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSansTC-Bold ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { TCsans } { FandolHei-Regular.otf }
-                  [
-                    BoldFont       = FandolHei-Bold.otf ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = FandolHei-Bold.otf ,
-                  ]
-              }
-            \IfFontExistsTF { SourceHanMonoTC-Regular }
-              {
-                \setCJKfamilyfont { TCmono } { SourceHanMonoTC-Regular }
-                  [
-                    BoldFont       = SourceHanMonoTC-Medium ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanMonoTC-Medium ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { TCmono } { FandolFang-Regular.otf }
-                  [
-                    BoldFont       = * ,
-                    BoldFeatures   = { FakeBold = 4 } ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = * ,
-                    BoldItalicFeatures = { FakeBold = 4 } ,
-                  ]
-              }
-          }
-
-        \bool_if:NT \g__projlib_language_enabled_japanese_bool
-          {
-            \IfFontExistsTF { SourceHanSerif-Regular }
-              {
-                \setCJKfamilyfont { JPmain } { SourceHanSerif-Regular }
-                  [
-                    BoldFont       = SourceHanSerif-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSerif-Bold ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { JPmain } { FandolSong-Regular.otf }
-                  [
-                    BoldFont       = FandolSong-Bold.otf ,
-                    ItalicFont     = FandolKai-Regular.otf ,
-                    BoldItalicFont = FandolKai-Regular.otf ,
-                    BoldItalicFeatures = { FakeBold = 4 } ,
-                  ]
-              }
-            \IfFontExistsTF { SourceHanSans-Regular }
-              {
-                \setCJKfamilyfont { JPsans } { SourceHanSans-Regular }
-                  [
-                    BoldFont       = SourceHanSans-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSans-Bold ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { JPsans } { FandolHei-Regular.otf }
-                  [
-                    BoldFont       = FandolHei-Bold.otf ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = FandolHei-Bold.otf ,
-                  ]
-              }
-            \IfFontExistsTF { SourceHanMono-Regular }
-              {
-                \setCJKfamilyfont { JPmono } { SourceHanMono-Regular }
-                  [
-                    BoldFont       = SourceHanMono-Medium ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanMono-Medium ,
-                  ]
-              }
-              {
-                \setCJKfamilyfont { JPmono } { FandolFang-Regular.otf }
-                  [
-                    BoldFont       = * ,
-                    BoldFeatures   = { FakeBold = 4 } ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = * ,
-                    BoldItalicFeatures = { FakeBold = 4 } ,
-                  ]
-              }
-          }
-
-        \cs_new:Nn \minimclass_cjk_sffamily: {}
-        \cs_new:Nn \minimclass_cjk_ttfamily: {}
-
-        \hook_gput_code:nnn { cmd/sffamily/after } { minimclass } { \minimclass_cjk_sffamily: }
-        \hook_gput_code:nnn { cmd/ttfamily/after } { minimclass } { \minimclass_cjk_ttfamily: }
-
-        \AddLanguageSetting [schinese]
-          {
-            \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { SCsans } }
-            \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { SCmono } }
-            \CJKfamily { SCmain }
-          }
-        \AddLanguageSetting [tchinese]
-          {
-            \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { TCsans } }
-            \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { TCmono } }
-            \CJKfamily { TCmain }
-          }
-        \AddLanguageSetting [japanese]
-          {
-            \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { JPsans } }
-            \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { JPmono } }
-            \CJKfamily { JPmain }
-          }
-
-        \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
       }
 
+    \bool_if:NT \g__projlib_language_enabled_tchinese_bool
+      {
+        \IfFontExistsTF { SourceHanSerifTC-Regular }
+          {
+            \setCJKfamilyfont { TCmain } { SourceHanSerifTC-Regular }
+              [
+                BoldFont       = SourceHanSerifTC-Bold ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanSerifTC-Bold ,
+              ]
+          }
+          {
+            \setCJKfamilyfont { TCmain } { FandolSong-Regular.otf }
+              [
+                BoldFont       = FandolSong-Bold.otf ,
+                ItalicFont     = FandolKai-Regular.otf ,
+                BoldItalicFont = FandolKai-Regular.otf ,
+                BoldItalicFeatures = { FakeBold = 4 } ,
+              ]
+          }
+        \IfFontExistsTF { SourceHanSansTC-Regular }
+          {
+            \setCJKfamilyfont { TCsans } { SourceHanSansTC-Regular }
+              [
+                BoldFont       = SourceHanSansTC-Bold ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanSansTC-Bold ,
+              ]
+          }
+          {
+            \setCJKfamilyfont { TCsans } { FandolHei-Regular.otf }
+              [
+                BoldFont       = FandolHei-Bold.otf ,
+                ItalicFont     = * ,
+                BoldItalicFont = FandolHei-Bold.otf ,
+              ]
+          }
+        \IfFontExistsTF { SourceHanMonoTC-Regular }
+          {
+            \setCJKfamilyfont { TCmono } { SourceHanMonoTC-Regular }
+              [
+                BoldFont       = SourceHanMonoTC-Medium ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanMonoTC-Medium ,
+              ]
+          }
+          {
+            \setCJKfamilyfont { TCmono } { FandolFang-Regular.otf }
+              [
+                BoldFont       = * ,
+                BoldFeatures   = { FakeBold = 4 } ,
+                ItalicFont     = * ,
+                BoldItalicFont = * ,
+                BoldItalicFeatures = { FakeBold = 4 } ,
+              ]
+          }
+      }
+
+    \bool_if:NT \g__projlib_language_enabled_japanese_bool
+      {
+        \IfFontExistsTF { SourceHanSerif-Regular }
+          {
+            \setCJKfamilyfont { JPmain } { SourceHanSerif-Regular }
+              [
+                BoldFont       = SourceHanSerif-Bold ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanSerif-Bold ,
+              ]
+          }
+          {
+            \setCJKfamilyfont { JPmain } { FandolSong-Regular.otf }
+              [
+                BoldFont       = FandolSong-Bold.otf ,
+                ItalicFont     = FandolKai-Regular.otf ,
+                BoldItalicFont = FandolKai-Regular.otf ,
+                BoldItalicFeatures = { FakeBold = 4 } ,
+              ]
+          }
+        \IfFontExistsTF { SourceHanSans-Regular }
+          {
+            \setCJKfamilyfont { JPsans } { SourceHanSans-Regular }
+              [
+                BoldFont       = SourceHanSans-Bold ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanSans-Bold ,
+              ]
+          }
+          {
+            \setCJKfamilyfont { JPsans } { FandolHei-Regular.otf }
+              [
+                BoldFont       = FandolHei-Bold.otf ,
+                ItalicFont     = * ,
+                BoldItalicFont = FandolHei-Bold.otf ,
+              ]
+          }
+        \IfFontExistsTF { SourceHanMono-Regular }
+          {
+            \setCJKfamilyfont { JPmono } { SourceHanMono-Regular }
+              [
+                BoldFont       = SourceHanMono-Medium ,
+                ItalicFont     = * ,
+                BoldItalicFont = SourceHanMono-Medium ,
+              ]
+          }
+          {
+            \setCJKfamilyfont { JPmono } { FandolFang-Regular.otf }
+              [
+                BoldFont       = * ,
+                BoldFeatures   = { FakeBold = 4 } ,
+                ItalicFont     = * ,
+                BoldItalicFont = * ,
+                BoldItalicFeatures = { FakeBold = 4 } ,
+              ]
+          }
+      }
+
+    \cs_new:Nn \minimclass_cjk_sffamily: {}
+    \cs_new:Nn \minimclass_cjk_ttfamily: {}
+
+    \hook_gput_code:nnn { cmd/sffamily/after } { minimclass } { \minimclass_cjk_sffamily: }
+    \hook_gput_code:nnn { cmd/ttfamily/after } { minimclass } { \minimclass_cjk_ttfamily: }
+
+    \AddLanguageSetting [schinese]
+      {
+        \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { SCsans } }
+        \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { SCmono } }
+        \CJKfamily { SCmain }
+      }
+    \AddLanguageSetting [tchinese]
+      {
+        \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { TCsans } }
+        \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { TCmono } }
+        \CJKfamily { TCmain }
+      }
+    \AddLanguageSetting [japanese]
+      {
+        \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { JPsans } }
+        \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { JPmono } }
+        \CJKfamily { JPmain }
+      }
+
+    \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
+  }
+
+
+\bool_if:NF \g_projlib_font_already_set_bool
+  {
     \bool_if:NTF \l__minimclass_fast_bool
       {
         \RequirePackage { amssymb }
