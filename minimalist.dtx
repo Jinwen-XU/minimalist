@@ -1052,14 +1052,14 @@
       {
         \titleformat{\subsubsection}[runin]
           {\color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
-          {\thesubsubsection}{.5em}
+          {\scalebox{0.9}{\thesubsubsection}}{.33em}
           {#1.}[\hspace*{.3em}]
       }
       {
         \titleformat{\subsubsection}
           {\LocallyStopLineNumbers
           \color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
-          {\thesubsubsection}{.5em}
+          {\scalebox{0.9}{\thesubsubsection}}{.33em}
           {#1}
           [\ResumeLineNumbers]
       }
@@ -1088,7 +1088,7 @@
 
 \titlespacing{\section}{0pt}{\baselineskip}{.6\baselineskip}
 \titlespacing{\subsection}{0pt}{.75\baselineskip}{.4\baselineskip}
-\titlespacing{\subsubsection}{0pt}{.5\baselineskip}{.2\baselineskip}
+\titlespacing{\subsubsection}{0pt}{.5\baselineskip}{.3\baselineskip}
 
 %%================================
 %%  ToC format
@@ -1213,7 +1213,7 @@
     \bool_if:NTF \l__minimalist_use_theorem_in_new_line_bool
       {
         \newtheoremstyle{simple}
-          {}{}
+          {.5\baselineskip}{.5\baselineskip}
           {\normalfont}{}
           {\normalfont}{}
           {\newline}
@@ -1226,7 +1226,7 @@
       }
       {
         \newtheoremstyle{simple}
-          {}{}
+          {.5\baselineskip}{.5\baselineskip}
           {\normalfont}{}
           {\normalfont}{}
           {0pt}
@@ -1284,30 +1284,7 @@
 \PassOptionsToPackage { simplename } { projlib-theorem }
 \RequirePackage { projlib-theorem }
 
-\SetTheorem
-  {
-    assertion                 ,
-    assumption                ,
-    axiom                     ,
-    conclusion                ,
-    conjecture                ,
-    convention                ,
-    corollary                 ,
-    definition                ,
-    example                   ,
-    exercise                  ,
-    fact                      ,
-    hypothesis                ,
-    lemma                     ,
-    notation                  ,
-    observation               ,
-    postulate                 ,
-    problem                   ,
-    property                  ,
-    proposition               ,
-    question                  ,
-    theorem                   ,
-  }
+\exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist }
   {
     name style = {
       heading style = {
@@ -1394,7 +1371,7 @@
       \LocallyStopLineNumbers
       \begin{center}
         \let\footnote\thanks
-        {\minimalist_bfseries:\g_minimalist_title_font_common_tl \large\@title}\\\bigskip
+        {\minimalist_bfseries:\sffamily\scshape\Large\@title}\\\bigskip
         \color{main-text!80!paper}
         {\small\scshape\@author}
         \par\smallskip\vspace{-\parskip}
