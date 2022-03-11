@@ -549,25 +549,6 @@
             \NewCommandCopy \minimclass_backup_nmid: \nmid
             \RenewDocumentCommand \nmid {}
               { \skip_horizontal:n {-.15em} \minimclass_backup_nmid: \skip_horizontal:n {-.15em} }
-
-            \RenewDocumentCommand \frac { m m }
-              {
-                \genfrac{}{}{}{}
-                  {
-                    \mathchoice
-                      { \raisebox{-.15em}{$\displaystyle #1$} }
-                      { \raisebox{-.15em}{$\textstyle #1$} }
-                      { \raisebox{-.08em}{$\scriptstyle #1$} }
-                      { \scriptscriptstyle #1 }
-                  }
-                  {
-                    \mathchoice
-                      { \raisebox{.08em}{$\displaystyle #2$} }
-                      { \raisebox{.08em}{$\textstyle #2$} }
-                      { \raisebox{.05em}{$\scriptstyle #2$} }
-                      { \scriptscriptstyle #2 }
-                  }
-              }
           }
 
         \RequirePackage { tikz-cd }
@@ -1395,6 +1376,32 @@
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
         }
+      }
+  }
+
+\bool_if:NF \l__minimalist_fast_bool
+  {
+    \PassOptionsToPackage { many } { tcolorbox }
+    \RequirePackage { tcolorbox }
+    \cs_new_protected:Nn \minimclass_box_environment:n
+      {
+        \tcolorboxenvironment { #1 }
+          {
+            enhanced~jigsaw,
+            frame~hidden,
+            interior~hidden,
+            top = 0pt, bottom = 0pt,
+            left = 0pt, right = 0pt,
+            boxrule = 0pt, boxsep = 0pt,
+            before~skip = 1em+\parskip,
+            after~skip = 1.2em+\parskip,
+            breakable, lines~before~break=3,
+          }
+      }
+    \exp_args:No \clist_map_inline:nn { \c_projlib_theorem_supported_clist }
+      {
+        \minimclass_box_environment:n { #1 }
+        \minimclass_box_environment:n { #1 * }
       }
   }
 
