@@ -1005,7 +1005,7 @@
     \titleformat{\section}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_section_tl\centering}
-      {\textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}}}{.75em}
+      {\raisebox{-.08em}{\textcolor{main-text!39!paper}{\large\usefont{U}{zeur}{b}{n}\arabic{section}}}}{1em}
       {#1}
       [\ResumeLineNumbers]
   }
@@ -1032,7 +1032,7 @@
     \titleformat{\subsection}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_subsection_tl}
-      {\textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}}}{.5em}
+      {\textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}}}{.75em}
       {#1}
       [\ResumeLineNumbers]
   }
@@ -1320,6 +1320,19 @@
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
+          , numbering style = {
+              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+            }
         }
       }
 
@@ -1327,42 +1340,55 @@
       {
         name style = {
           , heading style = {
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
+              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
           , crefname style = {
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
+              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
           , crefname style = {
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\itshape
+              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+            }
+          , numbering style = {
+              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
