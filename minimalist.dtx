@@ -1530,7 +1530,7 @@
       {
         \LocallyStopLineNumbers
         \begin{flushright}
-          \textsc{\minimalist_bfseries:\small\abstractname}\par
+          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\par
           \vspace{-\parskip}
           \vspace{-.25\baselineskip}
           \begin{minipage}[t]{.833\textwidth}
@@ -1552,7 +1552,7 @@
         \LocallyStopLineNumbers
         \vspace{-\baselineskip}
         \begin{center}
-          \textsc{\minimalist_bfseries:\g_minimalist_title_font_common_tl \small\abstractname}\\
+          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\\
           \vspace{-.3\baselineskip}
           \begin{minipage}[t]{.833\textwidth}
             \vspace{0pt}
@@ -1572,19 +1572,19 @@
 %%  Keyword environment
 %%================================
 \DefineMultilingualText { \keywordname }
-{
-  EN = \textsc{Keywords}                      ,
-  FR = \textsc{Mots~clés}                     ,
-  DE = \textsc{Schlüsselwörter}               ,
-  IT = \textsc{Parole~chiave}                 ,
-  PT = \textsc{Palavras~chave}                ,
-  BR = \textsc{Palavras~chave}                ,
-  ES = \textsc{Palabras~clave}                ,
-  CN = 关键词                                 ,
-  TC = 關鍵詞                                 ,
-  JP = キーワード                             ,
-  RU = Ключевые~слова                         ,
-}
+  {
+    EN = Keywords                               ,
+    FR = Mots~clés                              ,
+    DE = Schlüsselwörter                        ,
+    IT = Parole~chiave                          ,
+    PT = Palavras~chave                         ,
+    BR = Palavras~chave                         ,
+    ES = Palabras~clave                         ,
+    CN = 关键词                                 ,
+    TC = 關鍵詞                                 ,
+    JP = キーワード                             ,
+    RU = Ключевые~слова                         ,
+  }
 
 \bool_if:NTF \l__minimalist_classical_bool
   {
@@ -1592,7 +1592,7 @@
       \LocallyStopLineNumbers
       \vspace{-.5\baselineskip}
       \begin{flushright}
-        {\minimalist_bfseries:\small\keywordname}\par
+        {\minimalist_bfseries:\scshape\small\keywordname}\par
         \vspace{-\parskip}
         \vspace{-.30\baselineskip}
         \begin{minipage}[t]{.833\textwidth}
@@ -1611,9 +1611,9 @@
   {
     \newenvironment{keyword}{
       \LocallyStopLineNumbers
-      \vspace{-.75\baselineskip}
+      \vspace{-1.25\baselineskip}
       \begin{center}
-        {\minimalist_bfseries:\small\keywordname}\\
+        {\minimalist_bfseries:\scshape\small\keywordname}\\
         \vspace{-.3\baselineskip}
         \begin{minipage}[t]{.833\textwidth}
           \vspace{0pt}
