@@ -23,7 +23,7 @@
   {2022/03/10} {}
   {A simple and clear article style}
 
-\tl_const:Nn \l__minimalist_base_class_tl { article }
+\tl_const:Nn \l__minimclass_base_class_tl { article }
 %</minimart>
 %
 %<*minimbook>
@@ -32,7 +32,7 @@
   {2022/03/10} {}
   {A simple and clear book style}
 
-\tl_const:Nn \l__minimalist_base_class_tl { book }
+\tl_const:Nn \l__minimclass_base_class_tl { book }
 %</minimbook>
 %
 %<*einfart>
@@ -50,7 +50,7 @@
   {2022/03/10} {}
   {A simple and clear book style}
 
-\tl_const:Nn \l__minimalist_base_class_tl { book }
+\tl_const:Nn \l__minimclass_base_class_tl { book }
 %</simplivre>
 %
 %<*minimalist>
@@ -821,7 +821,7 @@
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
     \renewcommand*{\sectionmark}[1]{
-        \markright{\sec@decochar\nobreakspace\arabic{section}\nobreakspace\sec@decochar\nobreakspace\nobreakspace\nobreakspace#1}}
+      \markright{\g_minimalist_section_decoration_char_tl\nobreakspace\arabic{section}\nobreakspace\g_minimalist_section_decoration_char_tl\nobreakspace\nobreakspace\nobreakspace#1}}
   }
   {
     \if@twoside
@@ -855,6 +855,24 @@
 \RequirePackage [ explicit, newparttoc ] { titlesec }
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
+
+\cs_new:Nn \minimalist_apply_title_numbering_style:N
+  {
+    \bool_if:NTF \l__minimalist_classical_bool
+      {
+        #1
+      }
+      {
+        \bool_if:NT \l__minimalist_is_book_bool
+          { \tl_replace_all:Nnn \thechapter {.} {$.$} }
+        \tl_replace_all:Nnn \thesection {.} {$.$}
+        \tl_replace_all:Nnn \thesubsection {.} {$.$}
+        \tl_replace_all:Nnn \thesubsubsection {.} {$.$}
+        \tl_if_exist:NT \thecontentslabel
+          { \tl_replace_all:Nnn \thecontentslabel {.} {$.$} }
+        \textcolor{main-text!39!paper}{ \usefont{U}{zeur}{b}{n} #1 }
+      }
+  }
 
 \newcommand{\partstring}{\MakeUppercase{{\partname\nobreakspace\protect\thepart}}}
 
@@ -892,7 +910,7 @@
     \titleformat{name=\part,numberless}[display]
       {\thispagestyle{part}
       \LocallyStopLineNumbers
-        \phantomsection\addcontentsline{toc}{part}{#1}
+        % \phantomsection\addcontentsline{toc}{part}{#1}
       \g_minimalist_title_font_part_tl\filleft}
       {\phantom{\MakeUppercase{\partname}}}
       {1em}
@@ -901,16 +919,16 @@
     \titlespacing*{\part}{0pt}{5em}{6em}
     %% Text after part
     \newcommand{\parttext}[1]{
-    \vfill
-    \LocallyStopLineNumbers
-    \begin{flushright}
-      \begin{minipage}{0.833\textwidth}
-        \color{main-text!80!paper}\raggedleft#1
-      \end{minipage}
-    \end{flushright}
-    \ResumeLineNumbers
-    \vfill\vfill
-    \cleardoublepage
+      \vfill
+      \LocallyStopLineNumbers
+      \begin{flushright}
+        \begin{minipage}{0.833\textwidth}
+          \color{main-text!80!paper}\raggedleft#1
+        \end{minipage}
+      \end{flushright}
+      \ResumeLineNumbers
+      \vfill\vfill
+      \cleardoublepage
     }
 
     %% Chapter
@@ -924,7 +942,7 @@
     \titleformat{name=\chapter,numberless}
       {\thispagestyle{fancy}
       \LocallyStopLineNumbers
-        \phantomsection\addcontentsline{toc}{chapter}{#1}
+        % \phantomsection\addcontentsline{toc}{chapter}{#1}
       \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
       {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
         \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
@@ -941,7 +959,7 @@
       [\ResumeLineNumbers]
     \titleformat{name=\part,numberless}[display]
       {\LocallyStopLineNumbers
-        \phantomsection\addcontentsline{toc}{part}{#1}
+        % \phantomsection\addcontentsline{toc}{part}{#1}
       \g_minimalist_title_font_part_tl\filleft}
       {\phantom{\MakeUppercase{\partname}}}
       {.3em}
@@ -965,28 +983,28 @@
     \renewcommand\thesection{\arabic{section}}
     \newcommand\seculine{\bgroup\markoverwith{\color{main-text!27!paper}
         \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
-    \newcommand\sec@decochar{\raisebox{.03em}{\normalfont/}}
+        \tl_gset:Nn \g_minimalist_section_decoration_char_tl { \raisebox{.03em}{\normalfont/} }
     \titleformat{\section}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_section_tl\centering}{}{0em}
-      {{\small\textcolor{main-text!27!paper}{\footnotesize\sec@decochar}
+      {{\small\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }
         \,\,\textcolor{main-text!90!paper}{\minimalist_bfseries:\arabic{section}}
-        \,\,\textcolor{main-text!27!paper}{\footnotesize\sec@decochar}}\\
+        \,\,\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }}\\
         \seculine{#1}}
       [\ResumeLineNumbers]
     \titleformat{name=\section,numberless}
       {\LocallyStopLineNumbers
-        \phantomsection\addcontentsline{toc}{section}{#1}
+        % \phantomsection\addcontentsline{toc}{section}{#1}
       \g_minimalist_title_font_section_tl\centering}{}{0em}
       {\seculine{#1}}
       [\ResumeLineNumbers]
   }
   {
-    \newcommand\sec@decochar{}
+    \tl_gset:Nn \g_minimalist_section_decoration_char_tl {}
     \titleformat{\section}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_section_tl\centering}
-      {\raisebox{-.08em}{\textcolor{main-text!39!paper}{\large\usefont{U}{zeur}{b}{n}\arabic{section}}}}{1em}
+      {\raisebox{-.08em}{\large \minimalist_apply_title_numbering_style:N { \thesection } }}{1em}
       {#1}
       [\ResumeLineNumbers]
   }
@@ -1013,7 +1031,7 @@
     \titleformat{\subsection}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_subsection_tl}
-      {\textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}}}{.75em}
+      { \minimalist_apply_title_numbering_style:N { \thesubsection } }{.75em}
       {#1}
       [\ResumeLineNumbers]
   }
@@ -1042,14 +1060,14 @@
       {
         \titleformat{\subsubsection}[runin]
           {\g_minimalist_title_font_subsubsection_tl}
-          { \textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}$.$\arabic{subsubsection}} }{.5em}
+          { \minimalist_apply_title_numbering_style:N { \thesection } }{.5em}
           {#1.}[\hspace*{.3em}]
       }
       {
         \titleformat{\subsubsection}
           {\LocallyStopLineNumbers
           \g_minimalist_title_font_subsubsection_tl}
-          { \textcolor{main-text!39!paper}{\usefont{U}{zeur}{b}{n}\arabic{section}$.$\arabic{subsection}$.$\arabic{subsubsection}} }{.5em}
+          { \minimalist_apply_title_numbering_style:N { \thesubsubsection } }{.5em}
           {#1}
           [\ResumeLineNumbers]
       }
@@ -1074,50 +1092,62 @@
   {}
   {} % without page number
   [\addvspace{.5pc}]
+
 \bool_if:NTF \l__minimalist_is_book_bool
   {
     \titlecontents{chapter}
       [2em] % i.e., 0em (part) + 2em
       {\addvspace{.5pc}\normalfont}
-      {\contentslabel{2em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2em}}
       {\hspace*{-2em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-    \titlecontents{section}
-      [4em] % i.e., 2em (chapter) + 2em
-      {\normalfont}
-      {\contentslabel[\textcolor{main-text!27!paper}{\small\sec@decochar}\,\textcolor{main-text!90!paper}{\thecontentslabel}\,\textcolor{main-text!27!paper}{\small\sec@decochar}]{2em}}
-      {\hspace*{-2em}}
-      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+    \bool_if:NTF \l__minimalist_classical_bool
+      {
+        \titlecontents{section}
+          [4em] % i.e., 2em (chapter) + 2em
+          {\normalfont}
+          {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:N { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2em}}
+          {\hspace*{-2em}}
+          {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+      }
+      {
+        \titlecontents{section}
+          [4em] % i.e., 2em (chapter) + 2em
+          {\normalfont}
+          {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2em}}
+          {\hspace*{-2em}}
+          {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+      }
     \titlecontents{subsection}
-      [6.5em] % i.e., 4em (section) + 2.5em
+      [7em] % i.e., 4em (section) + 3em
       {\normalfont}
-      {\contentslabel{2.25em}}
-      {\hspace*{-2.25em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2.75em}}
+      {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
-      [8.5em] % i.e., 6.5em (subsection) + 3em
+      [9.5em] % i.e., 7em (subsection) + 3.5em
       {\normalfont}
-      {\contentslabel{2.75em}}
-      {\hspace*{-2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{3.25em}}
+      {\hspace*{-3.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
   }
   {
     \titlecontents{section}
       [2em] % i.e., 0em (part) + 2em
       {\normalfont}
-      {\contentslabel{1.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{1.75em}}
       {\hspace*{-1.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsection}
       [4.5em] % i.e., 2em (section) + 2.5em
       {\normalfont}
-      {\contentslabel{2.25em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2.25em}}
       {\hspace*{-2.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
       [7.5em] % i.e., 4.5em (subsection) + 3em
       {\normalfont}
-      {\contentslabel{2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
   }
