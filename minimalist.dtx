@@ -80,6 +80,9 @@
     , b5paper           .bool_set:N         = \l__minimclass_b_five_paper_bool
     , b5paper           .initial:n          = { false }
 
+    , 11pt              .code:n             = { \PassOptionsToClass { \CurrentOption } { \l__minimclass_base_class_tl } }
+    , 12pt              .code:n             = { \PassOptionsToClass { \CurrentOption } { \l__minimclass_base_class_tl } }
+
     , unknown           .code:n             = {
                                                 \PassOptionsToPackage { \CurrentOption } { minimalist }
                                               }
