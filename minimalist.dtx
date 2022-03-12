@@ -161,152 +161,98 @@
 \WarningFilter { latexfont } { Font~shape }
 \WarningFilter { latexfont } { Some~font  }
 
-\RequirePackage { projlib-font }
+\file_if_exist:nTF { minimalist.font.tex }
+  {
+    \input { minimalist.font.tex }
+  }
+  {
+    \RequirePackage { projlib-font }
 
 %<*minimart|minimbook>
-\bool_if:NF \g_projlib_font_already_set_bool
-  {
-    \RequirePackage { mathpazo }
-    \RequirePackage { newpxtext }
-    \RequirePackage { amssymb }
-  }
+    \bool_if:NF \g_projlib_font_already_set_bool
+      {
+        \RequirePackage { mathpazo }
+        \RequirePackage { newpxtext }
+        \RequirePackage { amssymb }
+      }
 %</minimart|minimbook>
 %
 %<*einfart|simplivre>
-\bool_if:NF \g_projlib_font_already_set_bool
-  {
-    \bool_if:NT \l__minimclass_fast_bool
+    \bool_if:NF \g_projlib_font_already_set_bool
       {
-        \RequirePackage { mathpazo }
-      }
-
-    \PassOptionsToPackage { no-math,quiet } { fontspec }
-    \RequirePackage { fontspec }
-
-    \IfFileExists { minimalist-font.latin.tex }
-      {
-        \input { minimalist-font.latin.tex }
-      }
-      {
-        \IfFontExistsTF { Palatino~Linotype }
+        \bool_if:NT \l__minimclass_fast_bool
           {
-            \bool_if:NTF \l__projlib_font_useosf_bool
-              {
-                \setmainfont { Palatino~Linotype } [ Numbers = OldStyle ]
-              }
-              {
-                \setmainfont { Palatino~Linotype }
-              }
+            \RequirePackage { mathpazo }
+          }
+
+        \PassOptionsToPackage { no-math,quiet } { fontspec }
+        \RequirePackage { fontspec }
+
+        \file_if_exist:nTF { minimalist.font.latin.tex }
+          {
+            \input { minimalist.font.latin.tex }
           }
           {
-            \bool_if:NTF \l__projlib_font_useosf_bool
+            \IfFontExistsTF { Palatino~Linotype }
               {
-                \setmainfont { TeXGyrePagellaX-Regular.otf }
-                  [
-                    BoldFont       = TeXGyrePagellaX-Bold.otf ,
-                    ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                    BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
-                    Numbers        = OldStyle ,
-                  ]
+                \bool_if:NTF \l__projlib_font_useosf_bool
+                  {
+                    \setmainfont { Palatino~Linotype } [ Numbers = OldStyle ]
+                  }
+                  {
+                    \setmainfont { Palatino~Linotype }
+                  }
               }
               {
-                \setmainfont { TeXGyrePagellaX-Regular.otf }
-                  [
-                    BoldFont       = TeXGyrePagellaX-Bold.otf ,
-                    ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                    BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
-                  ]
+                \bool_if:NTF \l__projlib_font_useosf_bool
+                  {
+                    \setmainfont { TeXGyrePagellaX-Regular.otf }
+                      [
+                        BoldFont       = TeXGyrePagellaX-Bold.otf ,
+                        ItalicFont     = TeXGyrePagellaX-Italic.otf ,
+                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
+                        Numbers        = OldStyle ,
+                      ]
+                  }
+                  {
+                    \setmainfont { TeXGyrePagellaX-Regular.otf }
+                      [
+                        BoldFont       = TeXGyrePagellaX-Bold.otf ,
+                        ItalicFont     = TeXGyrePagellaX-Italic.otf ,
+                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
+                      ]
+                  }
               }
+            \setsansfont { SourceSansPro-Regular.otf }
+              [
+                Scale          = MatchLowercase ,
+                BoldFont       = SourceSansPro-Bold.otf ,
+                ItalicFont     = SourceSansPro-RegularIt.otf ,
+                BoldItalicFont = SourceSansPro-BoldIt.otf ,
+              ]
+            \setmonofont { NewCMMono10-Regular.otf }
+              [
+                Scale          = 1.05 ,
+                BoldFont       = NewCMMono10-Bold.otf ,
+                ItalicFont     = NewCMMono10-Italic.otf ,
+                BoldItalicFont = NewCMMono10-BoldOblique.otf ,
+              ]
+
+            \projlib_language_set_linespacing_latin:n { \setstretch { 1.07 } }
           }
-        \setsansfont { SourceSansPro-Regular.otf }
-          [
-            Scale          = MatchLowercase ,
-            BoldFont       = SourceSansPro-Bold.otf ,
-            ItalicFont     = SourceSansPro-RegularIt.otf ,
-            BoldItalicFont = SourceSansPro-BoldIt.otf ,
-          ]
-        \setmonofont { NewCMMono10-Regular.otf }
-          [
-            Scale          = 1.05 ,
-            BoldFont       = NewCMMono10-Bold.otf ,
-            ItalicFont     = NewCMMono10-Italic.otf ,
-            BoldItalicFont = NewCMMono10-BoldOblique.otf ,
-          ]
-
-        \projlib_language_set_linespacing_latin:n { \setstretch { 1.07 } }
-      }
-  }
-
-\PassOptionsToPackage { fontset = none, scheme = plain } { ctex }
-\RequirePackage { ctex }
-
-\IfFileExists { minimalist-font.cjk.tex }
-  {
-    \input { minimalist-font.cjk.tex }
-  }
-  {
-    \IfFontExistsTF{SourceHanSerifSC-Regular}
-      {
-        \setCJKmainfont { SourceHanSerifSC-Regular }
-          [
-            BoldFont       = SourceHanSerifSC-Bold ,
-            ItalicFont     = * ,
-            BoldItalicFont = SourceHanSerifSC-Bold ,
-          ]
-      }
-      {
-        \setCJKmainfont { FandolSong-Regular.otf }
-          [
-            BoldFont       = FandolSong-Bold.otf ,
-            ItalicFont     = FandolKai-Regular.otf ,
-            BoldItalicFont = FandolKai-Regular.otf ,
-            BoldItalicFeatures = { FakeBold = 4 } ,
-          ]
       }
 
-    \IfFontExistsTF { SourceHanSansSC-Regular }
-      {
-        \setCJKsansfont{SourceHanSansSC-Regular}
-          [
-            BoldFont       = SourceHanSansSC-Bold ,
-            ItalicFont     = * ,
-            BoldItalicFont = SourceHanSansSC-Bold ,
-          ]
-      }
-      {
-        \setCJKsansfont { FandolHei-Regular.otf }
-          [
-            BoldFont       = FandolHei-Bold.otf ,
-            ItalicFont     = * ,
-            BoldItalicFont = FandolHei-Bold.otf ,
-          ]
-      }
+    \PassOptionsToPackage { fontset = none, scheme = plain } { ctex }
+    \RequirePackage { ctex }
 
-    \IfFontExistsTF { SourceHanMonoSC-Regular }
+    \file_if_exist:nTF { minimalist.font.cjk.tex }
       {
-        \setCJKmonofont { SourceHanMonoSC-Regular }
-          [
-            BoldFont       = SourceHanMonoSC-Medium ,
-            ItalicFont     = * ,
-            BoldItalicFont = SourceHanMonoSC-Medium ,
-          ]
+        \input { minimalist.font.cjk.tex }
       }
       {
-        \setCJKmonofont { FandolFang-Regular.otf }
-          [
-            BoldFont       = * ,
-            BoldFeatures   = { FakeBold = 4 } ,
-            ItalicFont     = * ,
-            BoldItalicFont = * ,
-            BoldItalicFeatures = { FakeBold = 4 } ,
-          ]
-      }
-
-    \bool_if:NT \g__projlib_language_enabled_schinese_bool
-      {
-        \IfFontExistsTF { SourceHanSerifSC-Regular }
+        \IfFontExistsTF{SourceHanSerifSC-Regular}
           {
-            \setCJKfamilyfont { SCmain } { SourceHanSerifSC-Regular }
+            \setCJKmainfont { SourceHanSerifSC-Regular }
               [
                 BoldFont       = SourceHanSerifSC-Bold ,
                 ItalicFont     = * ,
@@ -314,7 +260,7 @@
               ]
           }
           {
-            \setCJKfamilyfont { SCmain } { FandolSong-Regular.otf }
+            \setCJKmainfont { FandolSong-Regular.otf }
               [
                 BoldFont       = FandolSong-Bold.otf ,
                 ItalicFont     = FandolKai-Regular.otf ,
@@ -322,9 +268,10 @@
                 BoldItalicFeatures = { FakeBold = 4 } ,
               ]
           }
+
         \IfFontExistsTF { SourceHanSansSC-Regular }
           {
-            \setCJKfamilyfont { SCsans } { SourceHanSansSC-Regular }
+            \setCJKsansfont{SourceHanSansSC-Regular}
               [
                 BoldFont       = SourceHanSansSC-Bold ,
                 ItalicFont     = * ,
@@ -332,16 +279,17 @@
               ]
           }
           {
-            \setCJKfamilyfont { SCsans } { FandolHei-Regular.otf }
+            \setCJKsansfont { FandolHei-Regular.otf }
               [
                 BoldFont       = FandolHei-Bold.otf ,
                 ItalicFont     = * ,
                 BoldItalicFont = FandolHei-Bold.otf ,
               ]
           }
+
         \IfFontExistsTF { SourceHanMonoSC-Regular }
           {
-            \setCJKfamilyfont { SCmono } { SourceHanMonoSC-Regular }
+            \setCJKmonofont { SourceHanMonoSC-Regular }
               [
                 BoldFont       = SourceHanMonoSC-Medium ,
                 ItalicFont     = * ,
@@ -349,7 +297,7 @@
               ]
           }
           {
-            \setCJKfamilyfont { SCmono } { FandolFang-Regular.otf }
+            \setCJKmonofont { FandolFang-Regular.otf }
               [
                 BoldFont       = * ,
                 BoldFeatures   = { FakeBold = 4 } ,
@@ -358,267 +306,325 @@
                 BoldItalicFeatures = { FakeBold = 4 } ,
               ]
           }
-      }
 
-    \bool_if:NT \g__projlib_language_enabled_tchinese_bool
-      {
-        \IfFontExistsTF { SourceHanSerifTC-Regular }
+        \bool_if:NT \g__projlib_language_enabled_schinese_bool
           {
-            \setCJKfamilyfont { TCmain } { SourceHanSerifTC-Regular }
-              [
-                BoldFont       = SourceHanSerifTC-Bold ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanSerifTC-Bold ,
-              ]
-          }
-          {
-            \setCJKfamilyfont { TCmain } { FandolSong-Regular.otf }
-              [
-                BoldFont       = FandolSong-Bold.otf ,
-                ItalicFont     = FandolKai-Regular.otf ,
-                BoldItalicFont = FandolKai-Regular.otf ,
-                BoldItalicFeatures = { FakeBold = 4 } ,
-              ]
-          }
-        \IfFontExistsTF { SourceHanSansTC-Regular }
-          {
-            \setCJKfamilyfont { TCsans } { SourceHanSansTC-Regular }
-              [
-                BoldFont       = SourceHanSansTC-Bold ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanSansTC-Bold ,
-              ]
-          }
-          {
-            \setCJKfamilyfont { TCsans } { FandolHei-Regular.otf }
-              [
-                BoldFont       = FandolHei-Bold.otf ,
-                ItalicFont     = * ,
-                BoldItalicFont = FandolHei-Bold.otf ,
-              ]
-          }
-        \IfFontExistsTF { SourceHanMonoTC-Regular }
-          {
-            \setCJKfamilyfont { TCmono } { SourceHanMonoTC-Regular }
-              [
-                BoldFont       = SourceHanMonoTC-Medium ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanMonoTC-Medium ,
-              ]
-          }
-          {
-            \setCJKfamilyfont { TCmono } { FandolFang-Regular.otf }
-              [
-                BoldFont       = * ,
-                BoldFeatures   = { FakeBold = 4 } ,
-                ItalicFont     = * ,
-                BoldItalicFont = * ,
-                BoldItalicFeatures = { FakeBold = 4 } ,
-              ]
-          }
-      }
-
-    \bool_if:NT \g__projlib_language_enabled_japanese_bool
-      {
-        \IfFontExistsTF { SourceHanSerif-Regular }
-          {
-            \setCJKfamilyfont { JPmain } { SourceHanSerif-Regular }
-              [
-                BoldFont       = SourceHanSerif-Bold ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanSerif-Bold ,
-              ]
-          }
-          {
-            \setCJKfamilyfont { JPmain } { FandolSong-Regular.otf }
-              [
-                BoldFont       = FandolSong-Bold.otf ,
-                ItalicFont     = FandolKai-Regular.otf ,
-                BoldItalicFont = FandolKai-Regular.otf ,
-                BoldItalicFeatures = { FakeBold = 4 } ,
-              ]
-          }
-        \IfFontExistsTF { SourceHanSans-Regular }
-          {
-            \setCJKfamilyfont { JPsans } { SourceHanSans-Regular }
-              [
-                BoldFont       = SourceHanSans-Bold ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanSans-Bold ,
-              ]
-          }
-          {
-            \setCJKfamilyfont { JPsans } { FandolHei-Regular.otf }
-              [
-                BoldFont       = FandolHei-Bold.otf ,
-                ItalicFont     = * ,
-                BoldItalicFont = FandolHei-Bold.otf ,
-              ]
-          }
-        \IfFontExistsTF { SourceHanMono-Regular }
-          {
-            \setCJKfamilyfont { JPmono } { SourceHanMono-Regular }
-              [
-                BoldFont       = SourceHanMono-Medium ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanMono-Medium ,
-              ]
-          }
-          {
-            \setCJKfamilyfont { JPmono } { FandolFang-Regular.otf }
-              [
-                BoldFont       = * ,
-                BoldFeatures   = { FakeBold = 4 } ,
-                ItalicFont     = * ,
-                BoldItalicFont = * ,
-                BoldItalicFeatures = { FakeBold = 4 } ,
-              ]
-          }
-      }
-
-    \cs_new:Nn \minimclass_cjk_sffamily: {}
-    \cs_new:Nn \minimclass_cjk_ttfamily: {}
-
-    \hook_gput_code:nnn { cmd/sffamily/after } { minimclass } { \minimclass_cjk_sffamily: }
-    \hook_gput_code:nnn { cmd/ttfamily/after } { minimclass } { \minimclass_cjk_ttfamily: }
-
-    \AddLanguageSetting [schinese]
-      {
-        \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { SCsans } }
-        \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { SCmono } }
-        \CJKfamily { SCmain }
-      }
-    \AddLanguageSetting [tchinese]
-      {
-        \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { TCsans } }
-        \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { TCmono } }
-        \CJKfamily { TCmain }
-      }
-    \AddLanguageSetting [japanese]
-      {
-        \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { JPsans } }
-        \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { JPmono } }
-        \CJKfamily { JPmain }
-      }
-
-    \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
-  }
-
-
-\bool_if:NF \g_projlib_font_already_set_bool
-  {
-    \bool_if:NTF \l__minimclass_fast_bool
-      {
-        \RequirePackage { amssymb }
-      }
-      {
-        \PassOptionsToPackage { warnings-off = { mathtools-colon, mathtools-overbracket } } { unicode-math }
-        \RequirePackage { unicode-math }
-        \unimathsetup { math-style = ISO, partial = upright, nabla = upright }
-        \setmathfont { Asana-Math.otf }
-        \IfFontExistsTF { Neo~Euler }
-          {
-            \setmathfont { Neo~Euler }
-              [
-                range             = { up / { Latin, latin, Greek, greek },
-                                      bfup / { Latin, latin, Greek, greek },
-                                      cal, bfcal, frak, bffrak,
-                                      `(, `), `[, `], `\{, `\}, `:, `=, \ne, \equiv, `/, \backslash,
-                                      \in, \notin, \ni, \subset, \supset, \subseteq, \supseteq,
-                                      \rightarrow, \leftarrow, \mapsto, \hookrightarrow, \hookleftarrow,
-                                      \sum, \prod, \coprod,
-                                      \sqrt, \int, \iint, \iiint, \oint
-                                    },
-                script-features   = {},
-                sscript-features  = {},
-                Scale             = 1.05,
-              ]
-          }{}
-        \setmathfont { latinmodern-math.otf }
-          [
-            range = { \leq, \geq, \ll, \gg, \lll, \ggg, \leqslant, \geqslant },
-            Scale = 0.95,
-          ]
-        \setmathfont { texgyrepagella-math.otf }
-          [
-            range = { up / num, bfup / num }
-          ]
-
-        \hook_gput_code:nnn { begindocument } { minimclass }
-          {
-            \NewCommandCopy \minimclass_backup_mid: \mid
-            \RenewDocumentCommand \mid {}
-              { \skip_horizontal:n {-.15em} \minimclass_backup_mid: \skip_horizontal:n {-.15em} }
-            \NewCommandCopy \minimclass_backup_nmid: \nmid
-            \RenewDocumentCommand \nmid {}
-              { \skip_horizontal:n {-.15em} \minimclass_backup_nmid: \skip_horizontal:n {-.15em} }
-          }
-
-        \RequirePackage { tikz-cd }
-
-        \box_new:N \l__minimclass_xarrows_above_box
-        \box_new:N \l__minimclass_xarrows_below_box
-        \dim_new:N \l__minimclass_xarrows_length_dim
-        \cs_new_protected:Nn \minimclass_xarrows_generic:nnnn
-          % #3 = option of \tikz
-          % #4 = edge of \draw
-          {
-            \hbox_set:Nn \l__minimclass_xarrows_below_box { \ensuremath { \scriptstyle #1 } }
-            \hbox_set:Nn \l__minimclass_xarrows_above_box { \ensuremath { \scriptstyle #2 } }
-            \dim_set:Nn \l__minimclass_xarrows_length_dim
-              { \dim_eval:n { \dim_max:nn { \box_wd:N \l__minimclass_xarrows_below_box } { \box_wd:N \l__minimclass_xarrows_above_box } + .8em } }
-            \mathrel
+            \IfFontExistsTF { SourceHanSerifSC-Regular }
               {
-                \tikz [ #3, baseline = -.55ex, every~node/.style = { inner~sep = 0pt } ]
-                  \draw (0,0) #4
-                    node [ below = 3pt ] { \box_use:N \l__minimclass_xarrows_below_box }
-                    node [ above = 2pt ] { \box_use:N \l__minimclass_xarrows_above_box }
-                    ( \l__minimclass_xarrows_length_dim ,0) ;
+                \setCJKfamilyfont { SCmain } { SourceHanSerifSC-Regular }
+                  [
+                    BoldFont       = SourceHanSerifSC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSerifSC-Bold ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { SCmain } { FandolSong-Regular.otf }
+                  [
+                    BoldFont       = FandolSong-Bold.otf ,
+                    ItalicFont     = FandolKai-Regular.otf ,
+                    BoldItalicFont = FandolKai-Regular.otf ,
+                    BoldItalicFeatures = { FakeBold = 4 } ,
+                  ]
+              }
+            \IfFontExistsTF { SourceHanSansSC-Regular }
+              {
+                \setCJKfamilyfont { SCsans } { SourceHanSansSC-Regular }
+                  [
+                    BoldFont       = SourceHanSansSC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSansSC-Bold ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { SCsans } { FandolHei-Regular.otf }
+                  [
+                    BoldFont       = FandolHei-Bold.otf ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = FandolHei-Bold.otf ,
+                  ]
+              }
+            \IfFontExistsTF { SourceHanMonoSC-Regular }
+              {
+                \setCJKfamilyfont { SCmono } { SourceHanMonoSC-Regular }
+                  [
+                    BoldFont       = SourceHanMonoSC-Medium ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanMonoSC-Medium ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { SCmono } { FandolFang-Regular.otf }
+                  [
+                    BoldFont       = * ,
+                    BoldFeatures   = { FakeBold = 4 } ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = * ,
+                    BoldItalicFeatures = { FakeBold = 4 } ,
+                  ]
               }
           }
 
-        \RenewDocumentCommand \xrightarrow { O{} m }
+        \bool_if:NT \g__projlib_language_enabled_tchinese_bool
           {
-            \minimclass_xarrows_generic:nnnn { #1 } { #2 } { -> } { -- }
-          }
-        \RenewDocumentCommand \xleftarrow { O{} m }
-          {
-            \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <- } { -- }
-          }
-        \RenewDocumentCommand \xleftrightarrow { O{} m }
-          {
-            \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <-> } { -- }
-          }
-        \RenewDocumentCommand \xhookrightarrow { O{} m }
-          {
-            \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookrightarrow ] }
-          }
-        \RenewDocumentCommand \xhookleftarrow { O{} m }
-          {
-            \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookleftarrow ] }
-          }
-        \RenewDocumentCommand \xmapsto { O{} m }
-          {
-            \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/mapsto ] }
-          }
-        \NewDocumentCommand \xlongequal { O{} m }
-          {
-            \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/equal ] }
-          }
-        \hook_gput_code:nnn { begindocument/end } { minimclass }
-          {
-            \RenewDocumentCommand \twoheadrightarrow {}
+            \IfFontExistsTF { SourceHanSerifTC-Regular }
               {
-                \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadrightarrow ] }
+                \setCJKfamilyfont { TCmain } { SourceHanSerifTC-Regular }
+                  [
+                    BoldFont       = SourceHanSerifTC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSerifTC-Bold ,
+                  ]
               }
-            \RenewDocumentCommand \twoheadleftarrow {}
               {
-                \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadleftarrow ] }
+                \setCJKfamilyfont { TCmain } { FandolSong-Regular.otf }
+                  [
+                    BoldFont       = FandolSong-Bold.otf ,
+                    ItalicFont     = FandolKai-Regular.otf ,
+                    BoldItalicFont = FandolKai-Regular.otf ,
+                    BoldItalicFeatures = { FakeBold = 4 } ,
+                  ]
+              }
+            \IfFontExistsTF { SourceHanSansTC-Regular }
+              {
+                \setCJKfamilyfont { TCsans } { SourceHanSansTC-Regular }
+                  [
+                    BoldFont       = SourceHanSansTC-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSansTC-Bold ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { TCsans } { FandolHei-Regular.otf }
+                  [
+                    BoldFont       = FandolHei-Bold.otf ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = FandolHei-Bold.otf ,
+                  ]
+              }
+            \IfFontExistsTF { SourceHanMonoTC-Regular }
+              {
+                \setCJKfamilyfont { TCmono } { SourceHanMonoTC-Regular }
+                  [
+                    BoldFont       = SourceHanMonoTC-Medium ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanMonoTC-Medium ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { TCmono } { FandolFang-Regular.otf }
+                  [
+                    BoldFont       = * ,
+                    BoldFeatures   = { FakeBold = 4 } ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = * ,
+                    BoldItalicFeatures = { FakeBold = 4 } ,
+                  ]
+              }
+          }
+
+        \bool_if:NT \g__projlib_language_enabled_japanese_bool
+          {
+            \IfFontExistsTF { SourceHanSerif-Regular }
+              {
+                \setCJKfamilyfont { JPmain } { SourceHanSerif-Regular }
+                  [
+                    BoldFont       = SourceHanSerif-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSerif-Bold ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { JPmain } { FandolSong-Regular.otf }
+                  [
+                    BoldFont       = FandolSong-Bold.otf ,
+                    ItalicFont     = FandolKai-Regular.otf ,
+                    BoldItalicFont = FandolKai-Regular.otf ,
+                    BoldItalicFeatures = { FakeBold = 4 } ,
+                  ]
+              }
+            \IfFontExistsTF { SourceHanSans-Regular }
+              {
+                \setCJKfamilyfont { JPsans } { SourceHanSans-Regular }
+                  [
+                    BoldFont       = SourceHanSans-Bold ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanSans-Bold ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { JPsans } { FandolHei-Regular.otf }
+                  [
+                    BoldFont       = FandolHei-Bold.otf ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = FandolHei-Bold.otf ,
+                  ]
+              }
+            \IfFontExistsTF { SourceHanMono-Regular }
+              {
+                \setCJKfamilyfont { JPmono } { SourceHanMono-Regular }
+                  [
+                    BoldFont       = SourceHanMono-Medium ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = SourceHanMono-Medium ,
+                  ]
+              }
+              {
+                \setCJKfamilyfont { JPmono } { FandolFang-Regular.otf }
+                  [
+                    BoldFont       = * ,
+                    BoldFeatures   = { FakeBold = 4 } ,
+                    ItalicFont     = * ,
+                    BoldItalicFont = * ,
+                    BoldItalicFeatures = { FakeBold = 4 } ,
+                  ]
+              }
+          }
+
+        \cs_new:Nn \minimclass_cjk_sffamily: {}
+        \cs_new:Nn \minimclass_cjk_ttfamily: {}
+
+        \hook_gput_code:nnn { cmd/sffamily/after } { minimclass } { \minimclass_cjk_sffamily: }
+        \hook_gput_code:nnn { cmd/ttfamily/after } { minimclass } { \minimclass_cjk_ttfamily: }
+
+        \AddLanguageSetting [schinese]
+          {
+            \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { SCsans } }
+            \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { SCmono } }
+            \CJKfamily { SCmain }
+          }
+        \AddLanguageSetting [tchinese]
+          {
+            \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { TCsans } }
+            \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { TCmono } }
+            \CJKfamily { TCmain }
+          }
+        \AddLanguageSetting [japanese]
+          {
+            \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { JPsans } }
+            \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { JPmono } }
+            \CJKfamily { JPmain }
+          }
+
+        \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
+      }
+
+
+    \bool_if:NF \g_projlib_font_already_set_bool
+      {
+        \bool_if:NTF \l__minimclass_fast_bool
+          {
+            \RequirePackage { amssymb }
+          }
+          {
+            \PassOptionsToPackage { warnings-off = { mathtools-colon, mathtools-overbracket } } { unicode-math }
+            \RequirePackage { unicode-math }
+            \unimathsetup { math-style = ISO, partial = upright, nabla = upright }
+            \setmathfont { Asana-Math.otf }
+            \IfFontExistsTF { Neo~Euler }
+              {
+                \setmathfont { Neo~Euler }
+                  [
+                    range             = { up / { Latin, latin, Greek, greek },
+                                          bfup / { Latin, latin, Greek, greek },
+                                          cal, bfcal, frak, bffrak,
+                                          `(, `), `[, `], `\{, `\}, `:, `=, \ne, \equiv, `/, \backslash,
+                                          \in, \notin, \ni, \subset, \supset, \subseteq, \supseteq,
+                                          \rightarrow, \leftarrow, \mapsto, \hookrightarrow, \hookleftarrow,
+                                          \sum, \prod, \coprod,
+                                          \sqrt, \int, \iint, \iiint, \oint
+                                        },
+                    script-features   = {},
+                    sscript-features  = {},
+                    Scale             = 1.05,
+                  ]
+              }{}
+            \setmathfont { latinmodern-math.otf }
+              [
+                range = { \leq, \geq, \ll, \gg, \lll, \ggg, \leqslant, \geqslant },
+                Scale = 0.95,
+              ]
+            \setmathfont { texgyrepagella-math.otf }
+              [
+                range = { up / num, bfup / num }
+              ]
+
+            \hook_gput_code:nnn { begindocument } { minimclass }
+              {
+                \NewCommandCopy \minimclass_backup_mid: \mid
+                \RenewDocumentCommand \mid {}
+                  { \skip_horizontal:n {-.15em} \minimclass_backup_mid: \skip_horizontal:n {-.15em} }
+                \NewCommandCopy \minimclass_backup_nmid: \nmid
+                \RenewDocumentCommand \nmid {}
+                  { \skip_horizontal:n {-.15em} \minimclass_backup_nmid: \skip_horizontal:n {-.15em} }
+              }
+
+            \RequirePackage { tikz-cd }
+
+            \box_new:N \l__minimclass_xarrows_above_box
+            \box_new:N \l__minimclass_xarrows_below_box
+            \dim_new:N \l__minimclass_xarrows_length_dim
+            \cs_new_protected:Nn \minimclass_xarrows_generic:nnnn
+              % #3 = option of \tikz
+              % #4 = edge of \draw
+              {
+                \hbox_set:Nn \l__minimclass_xarrows_below_box { \ensuremath { \scriptstyle #1 } }
+                \hbox_set:Nn \l__minimclass_xarrows_above_box { \ensuremath { \scriptstyle #2 } }
+                \dim_set:Nn \l__minimclass_xarrows_length_dim
+                  { \dim_eval:n { \dim_max:nn { \box_wd:N \l__minimclass_xarrows_below_box } { \box_wd:N \l__minimclass_xarrows_above_box } + .8em } }
+                \mathrel
+                  {
+                    \tikz [ #3, baseline = -.55ex, every~node/.style = { inner~sep = 0pt } ]
+                      \draw (0,0) #4
+                        node [ below = 3pt ] { \box_use:N \l__minimclass_xarrows_below_box }
+                        node [ above = 2pt ] { \box_use:N \l__minimclass_xarrows_above_box }
+                        ( \l__minimclass_xarrows_length_dim ,0) ;
+                  }
+              }
+
+            \RenewDocumentCommand \xrightarrow { O{} m }
+              {
+                \minimclass_xarrows_generic:nnnn { #1 } { #2 } { -> } { -- }
+              }
+            \RenewDocumentCommand \xleftarrow { O{} m }
+              {
+                \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <- } { -- }
+              }
+            \RenewDocumentCommand \xleftrightarrow { O{} m }
+              {
+                \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <-> } { -- }
+              }
+            \RenewDocumentCommand \xhookrightarrow { O{} m }
+              {
+                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookrightarrow ] }
+              }
+            \RenewDocumentCommand \xhookleftarrow { O{} m }
+              {
+                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookleftarrow ] }
+              }
+            \RenewDocumentCommand \xmapsto { O{} m }
+              {
+                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/mapsto ] }
+              }
+            \NewDocumentCommand \xlongequal { O{} m }
+              {
+                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/equal ] }
+              }
+            \hook_gput_code:nnn { begindocument/end } { minimclass }
+              {
+                \RenewDocumentCommand \twoheadrightarrow {}
+                  {
+                    \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadrightarrow ] }
+                  }
+                \RenewDocumentCommand \twoheadleftarrow {}
+                  {
+                    \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadleftarrow ] }
+                  }
               }
           }
       }
-  }
 %</einfart|simplivre>
+  }
 
 \PassOptionsToPackage { all } { nowidow }
 \RequirePackage { nowidow }
