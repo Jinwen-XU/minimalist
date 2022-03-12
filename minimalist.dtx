@@ -713,6 +713,7 @@
 \tl_new:N \g_minimalist_title_font_section_tl
 \tl_new:N \g_minimalist_title_font_subsection_tl
 \tl_new:N \g_minimalist_title_font_subsubsection_tl
+\tl_new:N \g_minimalist_title_font_paragraph_tl
 
 \bool_if:NTF \l__minimalist_classical_bool
   {
@@ -721,6 +722,7 @@
     \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: }
     \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: }
     \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
+    \tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \scshape }
   }
   {
     \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
@@ -728,6 +730,7 @@
     \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
     \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
     \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+    \tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
   }
 
 %%================================
@@ -1075,7 +1078,7 @@
 
 %% Paragraph
 \titleformat{\paragraph}[runin]
-  {\scshape}{\theparagraph}{1em}{#1}
+  { \g_minimalist_title_font_paragraph_tl }{\theparagraph}{1em}{#1}
 
 \titlespacing{\section}{0pt}{\baselineskip}{.6\baselineskip}
 \titlespacing{\subsection}{0pt}{.75\baselineskip}{.4\baselineskip}
