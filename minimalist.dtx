@@ -655,10 +655,10 @@
     , runin             .bool_set:N         = \l__minimalist_runin_bool
     , runin             .initial:n          = { false }
 
-    , theorem-in-new-line .bool_set:N       = \l__minimalist_use_theorem_in_new_line_bool
+    , theorem-in-new-line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
     , theorem-in-new-line .initial:n        = { false }
-    , theorem~in~new~line .bool_set:N       = \l__minimalist_use_theorem_in_new_line_bool
-    , theorem in new line .bool_set:N       = \l__minimalist_use_theorem_in_new_line_bool
+    , theorem~in~new~line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
+    , theorem in new line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
 
     , unknown           .code:n             = {
                                                 \PassOptionsToPackage { \CurrentOption } { projlib-language }
@@ -1183,7 +1183,7 @@
   {
     \def\simpleqedsymbol{
       \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
-    \bool_if:NTF \l__minimalist_use_theorem_in_new_line_bool
+    \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
       {
         \newtheoremstyle{simple}
           {.5\baselineskip}{.5\baselineskip}
@@ -1215,7 +1215,7 @@
       \global\let\qedsymbol\qedsymbolOriginal}
   }
   {
-    \bool_if:NTF \l__minimalist_use_theorem_in_new_line_bool
+    \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
       {
         \newtheoremstyle{simple}
           {}{}
@@ -1381,27 +1381,30 @@
 
 \bool_if:NF \l__minimalist_fast_bool
   {
-    \PassOptionsToPackage { many } { tcolorbox }
-    \RequirePackage { tcolorbox }
-    \cs_new_protected:Nn \minimclass_box_environment:n
+    \bool_if:NT \l__minimalist_theorem_in_new_line_bool
       {
-        \tcolorboxenvironment { #1 }
+        \PassOptionsToPackage { many } { tcolorbox }
+        \RequirePackage { tcolorbox }
+        \cs_new_protected:Nn \minimclass_box_environment:n
           {
-            enhanced~jigsaw,
-            frame~hidden,
-            interior~hidden,
-            top = 0pt, bottom = 0pt,
-            left = 0pt, right = 0pt,
-            boxrule = 0pt, boxsep = 0pt,
-            before~skip = 1em+\parskip,
-            after~skip = 1.2em+\parskip,
-            breakable, lines~before~break=3,
+            \tcolorboxenvironment { #1 }
+              {
+                enhanced~jigsaw,
+                frame~hidden,
+                interior~hidden,
+                top = 0pt, bottom = 0pt,
+                left = 0pt, right = 0pt,
+                boxrule = 0pt, boxsep = 0pt,
+                before~skip = 1em+\parskip,
+                after~skip = 1.2em+\parskip,
+                breakable, lines~before~break=3,
+              }
           }
-      }
-    \exp_args:No \clist_map_inline:nn { \c_projlib_theorem_supported_clist }
-      {
-        \minimclass_box_environment:n { #1 }
-        \minimclass_box_environment:n { #1 * }
+        \exp_args:No \clist_map_inline:nn { \c_projlib_theorem_supported_clist }
+          {
+            \minimclass_box_environment:n { #1 }
+            \minimclass_box_environment:n { #1 * }
+          }
       }
   }
 
