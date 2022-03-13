@@ -63,29 +63,34 @@
 %<*class>
 \keys_define:nn { minimclass }
   {
-    , draft             .bool_set:N         = \l__minimclass_fast_bool
-    , draft             .initial:n          = { false }
-    , fast              .bool_set:N         = \l__minimclass_fast_bool
+    , draft                   .bool_set:N         = \l__minimclass_fast_bool
+    , draft                   .initial:n          = { false }
+    , fast                    .bool_set:N         = \l__minimclass_fast_bool
 
-    , classical         .bool_set:N         = \l__minimclass_classical_bool
-    , classical         .initial:n          = { false }
+    , classical               .bool_set:N         = \l__minimclass_classical_bool
+    , classical               .initial:n          = { false }
 
-    , use indent        .bool_set:N         = \l__minimclass_useindent_bool
-    , use indent        .initial:n          = { true }
-    , use~indent        .bool_set:N         = \l__minimclass_useindent_bool
-    , use-indent        .bool_set:N         = \l__minimclass_useindent_bool
+    , use indent              .bool_set:N         = \l__minimclass_useindent_bool
+    , use indent              .initial:n          = { true }
+    , use~indent              .bool_set:N         = \l__minimclass_useindent_bool
+    , use-indent              .bool_set:N         = \l__minimclass_useindent_bool
 
-    , a4paper           .bool_set:N         = \l__minimclass_a_four_paper_bool
-    , a4paper           .initial:n          = { false }
-    , b5paper           .bool_set:N         = \l__minimclass_b_five_paper_bool
-    , b5paper           .initial:n          = { false }
+    , load custom font file   .bool_set:N         = \l__minimclass_load_custom_font_file_bool
+    , load custom font file   .initial:n          = { false }
+    , load~custom~font~file   .bool_set:N         = \l__minimclass_load_custom_font_file_bool
+    , load-custom-font-file   .bool_set:N         = \l__minimclass_load_custom_font_file_bool
 
-    , 11pt              .code:n             = { \PassOptionsToClass { \CurrentOption } { \l__minimclass_base_class_tl } }
-    , 12pt              .code:n             = { \PassOptionsToClass { \CurrentOption } { \l__minimclass_base_class_tl } }
+    , a4paper                 .bool_set:N         = \l__minimclass_a_four_paper_bool
+    , a4paper                 .initial:n          = { false }
+    , b5paper                 .bool_set:N         = \l__minimclass_b_five_paper_bool
+    , b5paper                 .initial:n          = { false }
 
-    , unknown           .code:n             = {
-                                                \PassOptionsToPackage { \CurrentOption } { minimalist }
-                                              }
+    , 11pt                    .code:n             = { \PassOptionsToClass { \CurrentOption } { \l__minimclass_base_class_tl } }
+    , 12pt                    .code:n             = { \PassOptionsToClass { \CurrentOption } { \l__minimclass_base_class_tl } }
+
+    , unknown                 .code:n             = {
+                                                      \PassOptionsToPackage { \CurrentOption } { minimalist }
+                                                    }
   }
 \ProcessKeysOptions { minimclass }
 
@@ -161,10 +166,15 @@
 \WarningFilter { latexfont } { Font~shape }
 \WarningFilter { latexfont } { Some~font  }
 
-\file_if_exist:nTF { minimalist.font.tex }
+\bool_if:NT \l__minimclass_load_custom_font_file_bool
   {
-    \input { minimalist.font.tex }
+    \file_if_exist:nT { minimalist.font.tex }
+      {
+        \file_input:n { minimalist.font.tex }
+        \use_none:nn
+      }
   }
+\use:n
   {
     \RequirePackage { projlib-font }
 
@@ -188,10 +198,15 @@
         \PassOptionsToPackage { no-math,quiet } { fontspec }
         \RequirePackage { fontspec }
 
-        \file_if_exist:nTF { minimalist.font.latin.tex }
+        \bool_if:NT \l__minimclass_load_custom_font_file_bool
           {
-            \input { minimalist.font.latin.tex }
+            \file_if_exist:nT { minimalist.font.latin.tex }
+              {
+                \file_input:n { minimalist.font.latin.tex }
+                \use_none:nn
+              }
           }
+        \use:n
           {
             \IfFontExistsTF { Palatino~Linotype }
               {
@@ -210,7 +225,7 @@
                       [
                         BoldFont       = TeXGyrePagellaX-Bold.otf ,
                         ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
+                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
                         Numbers        = OldStyle ,
                       ]
                   }
@@ -219,7 +234,7 @@
                       [
                         BoldFont       = TeXGyrePagellaX-Bold.otf ,
                         ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf,
+                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
                       ]
                   }
               }
@@ -245,10 +260,15 @@
     \PassOptionsToPackage { fontset = none, scheme = plain } { ctex }
     \RequirePackage { ctex }
 
-    \file_if_exist:nTF { minimalist.font.cjk.tex }
+    \bool_if:NT \l__minimclass_load_custom_font_file_bool
       {
-        \input { minimalist.font.cjk.tex }
+        \file_if_exist:nT { minimalist.font.cjk.tex }
+          {
+            \file_input:n { minimalist.font.cjk.tex }
+            \use_none:nn
+          }
       }
+    \use:n
       {
         \IfFontExistsTF{SourceHanSerifSC-Regular}
           {
