@@ -1036,7 +1036,7 @@
     \titleformat{\section}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_section_tl\centering}
-      {\raisebox{-.05\baselineskip}{\large \minimalist_apply_title_numbering_style:N { \thesection } }}{1em}
+      {\raisebox{-.03\baselineskip}{\large \minimalist_apply_title_numbering_style:N { \thesection } }}{1em}
       {#1}
       [\ResumeLineNumbers]
   }
@@ -1533,8 +1533,8 @@
         \par\smallskip\vspace{-\parskip}
         {\small\@date}
       \end{center}
-      \ifx\@date\@empty\bigskip\fi
-      \bigskip\par
+      \ifx\@date\@empty\medskip\fi
+      \medskip\par
       \ResumeLineNumbers
     }
   }
@@ -1570,7 +1570,7 @@
     \renewenvironment{abstract}
       {
         \LocallyStopLineNumbers
-        \vspace{-\baselineskip}
+        \vspace{-.5\baselineskip}
         \begin{center}
           { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\\
           \vspace{-.3\baselineskip}
@@ -1631,7 +1631,7 @@
   {
     \newenvironment{keyword}{
       \LocallyStopLineNumbers
-      \vspace{-1.25\baselineskip}
+      \vspace{-.75\baselineskip}
       \begin{center}
         {\minimalist_bfseries:\scshape\small\keywordname}\\
         \vspace{-.3\baselineskip}
