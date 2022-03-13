@@ -529,116 +529,126 @@
         \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
       }
 
-
-    \bool_if:NF \g_projlib_font_already_set_bool
+    \bool_if:NT \l__minimclass_load_custom_font_file_bool
       {
-        \bool_if:NTF \l__minimclass_fast_bool
+        \file_if_exist:nT { minimalist.font.math.tex }
           {
-            \RequirePackage { amssymb }
+            \file_input:n { minimalist.font.math.tex }
+            \use_none:nn
           }
+      }
+    \use:n
+      {
+        \bool_if:NF \g_projlib_font_already_set_bool
           {
-            \PassOptionsToPackage { warnings-off = { mathtools-colon, mathtools-overbracket } } { unicode-math }
-            \RequirePackage { unicode-math }
-            \unimathsetup { math-style = ISO, partial = upright, nabla = upright }
-            \setmathfont { Asana-Math.otf }
-            \IfFontExistsTF { Neo~Euler }
+            \bool_if:NTF \l__minimclass_fast_bool
               {
-                \setmathfont { Neo~Euler }
+                \RequirePackage { amssymb }
+              }
+              {
+                \PassOptionsToPackage { warnings-off = { mathtools-colon, mathtools-overbracket } } { unicode-math }
+                \RequirePackage { unicode-math }
+                \unimathsetup { math-style = ISO, partial = upright, nabla = upright }
+                \setmathfont { Asana-Math.otf }
+                \IfFontExistsTF { Neo~Euler }
+                  {
+                    \setmathfont { Neo~Euler }
+                      [
+                        range             = { up / { Latin, latin, Greek, greek },
+                                              bfup / { Latin, latin, Greek, greek },
+                                              cal, bfcal, frak, bffrak,
+                                              `(, `), `[, `], `\{, `\}, `:, `=, \ne, \equiv, `/, \backslash,
+                                              \in, \notin, \ni, \subset, \supset, \subseteq, \supseteq,
+                                              \rightarrow, \leftarrow, \mapsto, \hookrightarrow, \hookleftarrow,
+                                              \sum, \prod, \coprod,
+                                              \sqrt, \int, \iint, \iiint, \oint
+                                            },
+                        script-features   = {},
+                        sscript-features  = {},
+                        Scale             = 1.05,
+                      ]
+                  }{}
+                \setmathfont { latinmodern-math.otf }
                   [
-                    range             = { up / { Latin, latin, Greek, greek },
-                                          bfup / { Latin, latin, Greek, greek },
-                                          cal, bfcal, frak, bffrak,
-                                          `(, `), `[, `], `\{, `\}, `:, `=, \ne, \equiv, `/, \backslash,
-                                          \in, \notin, \ni, \subset, \supset, \subseteq, \supseteq,
-                                          \rightarrow, \leftarrow, \mapsto, \hookrightarrow, \hookleftarrow,
-                                          \sum, \prod, \coprod,
-                                          \sqrt, \int, \iint, \iiint, \oint
-                                        },
-                    script-features   = {},
-                    sscript-features  = {},
-                    Scale             = 1.05,
+                    range = { \leq, \geq, \ll, \gg, \lll, \ggg, \leqslant, \geqslant },
+                    Scale = 0.95,
                   ]
-              }{}
-            \setmathfont { latinmodern-math.otf }
-              [
-                range = { \leq, \geq, \ll, \gg, \lll, \ggg, \leqslant, \geqslant },
-                Scale = 0.95,
-              ]
-            \setmathfont { texgyrepagella-math.otf }
-              [
-                range = { up / num, bfup / num }
-              ]
+                \setmathfont { texgyrepagella-math.otf }
+                  [
+                    range = { up / num, bfup / num }
+                  ]
 
-            \hook_gput_code:nnn { begindocument } { minimclass }
-              {
-                \NewCommandCopy \minimclass_backup_mid: \mid
-                \RenewDocumentCommand \mid {}
-                  { \skip_horizontal:n {-.15em} \minimclass_backup_mid: \skip_horizontal:n {-.15em} }
-                \NewCommandCopy \minimclass_backup_nmid: \nmid
-                \RenewDocumentCommand \nmid {}
-                  { \skip_horizontal:n {-.15em} \minimclass_backup_nmid: \skip_horizontal:n {-.15em} }
-              }
-
-            \RequirePackage { tikz-cd }
-
-            \box_new:N \l__minimclass_xarrows_above_box
-            \box_new:N \l__minimclass_xarrows_below_box
-            \dim_new:N \l__minimclass_xarrows_length_dim
-            \cs_new_protected:Nn \minimclass_xarrows_generic:nnnn
-              % #3 = option of \tikz
-              % #4 = edge of \draw
-              {
-                \hbox_set:Nn \l__minimclass_xarrows_below_box { \ensuremath { \scriptstyle #1 } }
-                \hbox_set:Nn \l__minimclass_xarrows_above_box { \ensuremath { \scriptstyle #2 } }
-                \dim_set:Nn \l__minimclass_xarrows_length_dim
-                  { \dim_eval:n { \dim_max:nn { \box_wd:N \l__minimclass_xarrows_below_box } { \box_wd:N \l__minimclass_xarrows_above_box } + .8em } }
-                \mathrel
+                \hook_gput_code:nnn { begindocument } { minimclass }
                   {
-                    \tikz [ #3, baseline = -.55ex, every~node/.style = { inner~sep = 0pt } ]
-                      \draw (0,0) #4
-                        node [ below = 3pt ] { \box_use:N \l__minimclass_xarrows_below_box }
-                        node [ above = 2pt ] { \box_use:N \l__minimclass_xarrows_above_box }
-                        ( \l__minimclass_xarrows_length_dim ,0) ;
+                    \NewCommandCopy \minimclass_backup_mid: \mid
+                    \RenewDocumentCommand \mid {}
+                      { \skip_horizontal:n {-.15em} \minimclass_backup_mid: \skip_horizontal:n {-.15em} }
+                    \NewCommandCopy \minimclass_backup_nmid: \nmid
+                    \RenewDocumentCommand \nmid {}
+                      { \skip_horizontal:n {-.15em} \minimclass_backup_nmid: \skip_horizontal:n {-.15em} }
                   }
-              }
 
-            \RenewDocumentCommand \xrightarrow { O{} m }
-              {
-                \minimclass_xarrows_generic:nnnn { #1 } { #2 } { -> } { -- }
-              }
-            \RenewDocumentCommand \xleftarrow { O{} m }
-              {
-                \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <- } { -- }
-              }
-            \RenewDocumentCommand \xleftrightarrow { O{} m }
-              {
-                \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <-> } { -- }
-              }
-            \RenewDocumentCommand \xhookrightarrow { O{} m }
-              {
-                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookrightarrow ] }
-              }
-            \RenewDocumentCommand \xhookleftarrow { O{} m }
-              {
-                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookleftarrow ] }
-              }
-            \RenewDocumentCommand \xmapsto { O{} m }
-              {
-                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/mapsto ] }
-              }
-            \NewDocumentCommand \xlongequal { O{} m }
-              {
-                \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/equal ] }
-              }
-            \hook_gput_code:nnn { begindocument/end } { minimclass }
-              {
-                \RenewDocumentCommand \twoheadrightarrow {}
+                \RequirePackage { tikz-cd }
+
+                \box_new:N \l__minimclass_xarrows_above_box
+                \box_new:N \l__minimclass_xarrows_below_box
+                \dim_new:N \l__minimclass_xarrows_length_dim
+                \cs_new_protected:Nn \minimclass_xarrows_generic:nnnn
+                  % #3 = option of \tikz
+                  % #4 = edge of \draw
                   {
-                    \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadrightarrow ] }
+                    \hbox_set:Nn \l__minimclass_xarrows_below_box { \ensuremath { \scriptstyle #1 } }
+                    \hbox_set:Nn \l__minimclass_xarrows_above_box { \ensuremath { \scriptstyle #2 } }
+                    \dim_set:Nn \l__minimclass_xarrows_length_dim
+                      { \dim_eval:n { \dim_max:nn { \box_wd:N \l__minimclass_xarrows_below_box } { \box_wd:N \l__minimclass_xarrows_above_box } + .8em } }
+                    \mathrel
+                      {
+                        \tikz [ #3, baseline = -.55ex, every~node/.style = { inner~sep = 0pt } ]
+                          \draw (0,0) #4
+                            node [ below = 3pt ] { \box_use:N \l__minimclass_xarrows_below_box }
+                            node [ above = 2pt ] { \box_use:N \l__minimclass_xarrows_above_box }
+                            ( \l__minimclass_xarrows_length_dim ,0) ;
+                      }
                   }
-                \RenewDocumentCommand \twoheadleftarrow {}
+
+                \RenewDocumentCommand \xrightarrow { O{} m }
                   {
-                    \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadleftarrow ] }
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } { -> } { -- }
+                  }
+                \RenewDocumentCommand \xleftarrow { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <- } { -- }
+                  }
+                \RenewDocumentCommand \xleftrightarrow { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } { <-> } { -- }
+                  }
+                \RenewDocumentCommand \xhookrightarrow { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookrightarrow ] }
+                  }
+                \RenewDocumentCommand \xhookleftarrow { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/hookleftarrow ] }
+                  }
+                \RenewDocumentCommand \xmapsto { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/mapsto ] }
+                  }
+                \NewDocumentCommand \xlongequal { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/equal ] }
+                  }
+                \hook_gput_code:nnn { begindocument/end } { minimclass }
+                  {
+                    \RenewDocumentCommand \twoheadrightarrow {}
+                      {
+                        \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadrightarrow ] }
+                      }
+                    \RenewDocumentCommand \twoheadleftarrow {}
+                      {
+                        \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadleftarrow ] }
+                      }
                   }
               }
           }
