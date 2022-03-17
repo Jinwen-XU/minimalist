@@ -1476,24 +1476,50 @@
 % \PassOptionsToPackage { simplename } { projlib-theorem }
 \RequirePackage { projlib-theorem }
 
+\exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist }
+  {
+    name style = {
+      , heading style = {
+          , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
+          , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
+          , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
+          , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
+          , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
+          , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
+          , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
+          , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+        }
+    }
+  }
+
+\SetTheorem { remark }
+  {
+    name style = {
+      , heading style = {
+          , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
+          , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+        }
+    }
+  }
+
 \bool_if:NF \l__projlib_theorem_complexname_bool
   {
     \exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist }
       {
         name style = {
-          , heading style = {
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-            }
           , crefname style = {
               , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
               , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
@@ -1539,20 +1565,6 @@
     \SetTheorem { remark }
       {
         name style = {
-          , heading style = {
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-            }
           , crefname style = {
               , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
@@ -1567,7 +1579,7 @@
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
-          , crefname style = {
+          , Crefname style = {
               , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
@@ -1597,6 +1609,7 @@
         }
       }
   }
+
 
 \bool_if:NF \l__minimalist_fast_bool
   {
