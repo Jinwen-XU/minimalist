@@ -59,6 +59,20 @@
   {2022/03/10} {}
   {A simple and clear style for articles and books}
 %</minimalist>
+%
+%<*minimalist-plain>
+\ProvidesExplPackage
+  {minimalist-plain}
+  {2022/03/10} {}
+  {The plain style of minimalist}
+%</minimalist-plain>
+%
+%<*minimalist-classical>
+\ProvidesExplPackage
+  {minimalist-classical}
+  {2022/03/10} {}
+  {The classical style of minimalist}
+%</minimalist-classical>
 
 %<*class>
 
@@ -756,8 +770,9 @@
     , draft             .initial:n          = { false }
     , fast              .bool_set:N         = \l__minimalist_fast_bool
 
-    , classical         .bool_set:N         = \l__minimalist_classical_bool
-    , classical         .initial:n          = { false }
+    , style             .str_set:N          = \l__minimalist_style_str
+    , style             .initial:n          = { plain }
+    , classical         .meta:n             = { style = classical }
 
     , use-boldface      .bool_set:N         = \l__minimalist_use_boldface_bool
     , use-boldface      .initial:n          = { false }
@@ -810,6 +825,22 @@
 \RequirePackage { projlib-language }
 
 %%================================
+%%  Loading the style
+%%================================
+\exp_args:No \RequirePackage { minimalist- \l__minimalist_style_str }
+%</minimalist>
+%
+%<*style>
+\@ifpackageloaded { minimalist } {}
+  {
+    \msg_new:nnn { \@currname }
+      { minimalist-not-loaded }
+      { "#1"~is~an~internal~style~of~"minimalist".~To~use~it,~you~must~load~the~package~"minimalist"~first. }
+    \msg_warning:nnx { \@currname } { minimalist-not-loaded } { \@currname }
+    \endinput
+  }
+
+%%================================
 %%  Title fonts
 %%================================
 \RequirePackage { anyfontsize }
@@ -831,23 +862,22 @@
 \tl_new:N \g_minimalist_title_font_subsubsection_tl
 \tl_new:N \g_minimalist_title_font_paragraph_tl
 
-\bool_if:NTF \l__minimalist_classical_bool
-  {
-    \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-    \tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-    \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: }
-    \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: }
-    \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
-    \tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \scshape }
-  }
-  {
-    \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-    \tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-    \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
-    \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
-    \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-    \tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
-  }
+%<*minimalist-plain>
+\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+\tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+%</minimalist-plain>
+%<*minimalist-classical>
+\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: }
+\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: }
+\tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \scshape }
+%</minimalist-classical>
 
 %%================================
 %%  Footer
@@ -861,17 +891,34 @@
     \fancyhfoffset { 0pt }
   }
 
+\tl_new:N \l_minimalist_leftmark_tl
+\tl_new:N \l_minimalist_rightmark_tl
+
+\tl_set:Nn \l_minimalist_leftmark_tl
+  {
+    \begin{minipage}[t]{.833\textwidth}
+      \lastleftmark
+    \end{minipage}
+  }
+\tl_set:Nn \l_minimalist_rightmark_tl
+  {
+    \begin{minipage}[t]{.833\textwidth}
+      \filleft
+      \lastrightmark
+    \end{minipage}
+  }
+
 \fancypagestyle { fancy }
   {
     \fancyhf{}
     \if@twoside
-      \fancyfoot[RO]{\small\textcolor{main-text!30!paper}{\lastrightmark}
+      \fancyfoot[RO]{\small\textcolor{main-text!30!paper}{ \l_minimalist_rightmark_tl }
         \nobreakspace\nobreakspace\rlap{\textcolor{main-text!27!paper}{$|$}\nobreakspace\nobreakspace\thepage}}
       \fancyfoot[LE]{\small\leavevmode\llap{\thepage
         \nobreakspace\nobreakspace\textcolor{main-text!27!paper}{$|$}}
-        \nobreakspace\nobreakspace\textcolor{main-text!30!paper}{\lastleftmark}}
+        \nobreakspace\nobreakspace\textcolor{main-text!30!paper}{ \l_minimalist_leftmark_tl }}
     \else
-      \fancyfoot[R]{\small\textcolor{main-text!30!paper}{\lastrightmark}
+      \fancyfoot[R]{\small\textcolor{main-text!30!paper}{ \l_minimalist_rightmark_tl }
         \nobreakspace\nobreakspace\rlap{\textcolor{main-text!27!paper}{$|$}\nobreakspace\nobreakspace\thepage}}
     \fi
     \renewcommand{\headrulewidth}{0pt}
@@ -897,7 +944,7 @@
   {
     \bool_if:NTF \l__minimalist_fast_bool
       {
-        \newcommand{\drawHelpLine}{}
+        \newcommand{ \minimalist_draw_help_line: }{}
       }
       {
         \RequirePackage { tikz }
@@ -905,7 +952,7 @@
         \usetikzlibrary{calc,shadings}
         \ExplSyntaxOn
         \RequirePackage { tikzpagenodes } % For `current page text area`
-        \newcommand{\drawHelpLine}{
+        \newcommand{ \minimalist_draw_help_line: }{
             \begin{tikzpicture}[remember~picture,overlay]
                 \foreach\i in {0,1,...,5}{
                     \fill[opacity=0.12-0.02*\i]
@@ -930,7 +977,7 @@
     \fancypagestyle{part}{
         \fancyhf{}
         \renewcommand{\headrulewidth}{0pt}
-        \fancyhead[C]{\drawHelpLine}
+        \fancyhead[C]{ \minimalist_draw_help_line: }
     }
     \addtolength{\headheight}{20pt}
     \addtolength{\topmargin}{-20pt}
@@ -978,15 +1025,14 @@
 \cs_generate_variant:Nn \seq_set_split:Nnn { Nnx }
 \cs_new:Nn \minimalist_apply_title_numbering_style:N
   {
-    \bool_if:NTF \l__minimalist_classical_bool
-      {
-        #1
-      }
-      {
-        \seq_set_split:Nnx \l_tmpa_seq { . } { #1 }
-        \seq_set_map:NNn \l_tmpb_seq \l_tmpa_seq { \usefont{U}{zeur}{b}{n} ##1 }
-        \textcolor{main-text!39!paper}{ \seq_use:Nn \l_tmpb_seq { $.$ } }
-      }
+%<*minimalist-plain>
+    \seq_set_split:Nnx \l_tmpa_seq { . } { #1 }
+    \seq_set_map:NNn \l_tmpb_seq \l_tmpa_seq { \usefont{U}{zeur}{b}{n} ##1 }
+    \textcolor{main-text!39!paper}{ \seq_use:Nn \l_tmpb_seq { $.$ } }
+%</minimalist-plain>
+%<*minimalist-classical>
+    #1
+%</minimalist-classical>
   }
 
 \newcommand{\partstring}{\MakeUppercase{{\partname\nobreakspace\protect\thepart}}}
@@ -1093,100 +1139,97 @@
   }
 
 %% Section
-\bool_if:NTF \l__minimalist_classical_bool
-  {
-    \renewcommand\thesection{\arabic{section}}
-    \newcommand\seculine{\bgroup\markoverwith{\color{main-text!27!paper}
-        \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
-        \tl_gset:Nn \g_minimalist_section_decoration_char_tl { \raisebox{.03em}{\normalfont/} }
-    \titleformat{\section}
-      {\LocallyStopLineNumbers
-      \g_minimalist_title_font_section_tl\centering}{}{0em}
-      {{\small\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }
-        \,\,\textcolor{main-text!90!paper}{\minimalist_bfseries:\arabic{section}}
-        \,\,\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }}\\
-        \seculine{#1}}
-      [\ResumeLineNumbers]
-    \titleformat{name=\section,numberless}
-      {\LocallyStopLineNumbers
-        % \phantomsection\addcontentsline{toc}{section}{#1}
-      \g_minimalist_title_font_section_tl\centering}{}{0em}
-      {\seculine{#1}}
-      [\ResumeLineNumbers]
-  }
-  {
-    \tl_gset:Nn \g_minimalist_section_decoration_char_tl {}
-    \titleformat{\section}
-      {\LocallyStopLineNumbers
-      \g_minimalist_title_font_section_tl\centering}
-      {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:N { \thesection } }}{1em}
-      {#1}
-      [\ResumeLineNumbers]
-  }
+%<*minimalist-plain>
+\tl_gset:Nn \g_minimalist_section_decoration_char_tl {}
+\titleformat{\section}
+  {\LocallyStopLineNumbers
+  \g_minimalist_title_font_section_tl\centering}
+  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:N { \thesection } }}{1em}
+  {#1}
+  [\ResumeLineNumbers]
+%</minimalist-plain>
+%<*minimalist-classical>
+\renewcommand\thesection{\arabic{section}}
+\newcommand\seculine{\bgroup\markoverwith{\color{main-text!27!paper}
+    \rule[-0.9ex]{2pt}{.6pt}\hspace{-2pt}\rule[-1.2ex]{2pt}{.6pt}}\ULon}
+    \tl_gset:Nn \g_minimalist_section_decoration_char_tl { \raisebox{.03em}{\normalfont/} }
+\titleformat{\section}
+  {\LocallyStopLineNumbers
+  \g_minimalist_title_font_section_tl\centering}{}{0em}
+  {{\small\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }
+    \,\,\textcolor{main-text!90!paper}{\minimalist_bfseries:\arabic{section}}
+    \,\,\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }}\\
+    \seculine{#1}}
+  [\ResumeLineNumbers]
+\titleformat{name=\section,numberless}
+  {\LocallyStopLineNumbers
+    % \phantomsection\addcontentsline{toc}{section}{#1}
+  \g_minimalist_title_font_section_tl\centering}{}{0em}
+  {\seculine{#1}}
+  [\ResumeLineNumbers]
+%</minimalist-classical>
 
 %% Subsection
-\bool_if:NTF \l__minimalist_classical_bool
+%<*minimalist-plain>
+\titleformat{\subsection}
+  {\LocallyStopLineNumbers
+  \g_minimalist_title_font_subsection_tl}
+  { \minimalist_apply_title_numbering_style:N { \thesubsection } }{.75em}
+  {#1}
+  [\ResumeLineNumbers]
+%</minimalist-plain>
+%<*minimalist-classical>
+\renewcommand\thesubsection{
+  \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
+\newcommand\subseculine{\bgroup\markoverwith{\color{main-text!27!paper}
+  \rule[-1ex]{2pt}{.75pt}}\ULon}
+\titleformat{\subsection}
+  {\LocallyStopLineNumbers
+  \g_minimalist_title_font_subsection_tl}{}{0em}
+  {\subseculine{\thesubsection\nobreakspace\textcolor{main-text!27!paper}{$|$}\nobreakspace #1}}
+  [\ResumeLineNumbers]
+\titleformat{name=\subsection,numberless}
+  {\LocallyStopLineNumbers
+  \g_minimalist_title_font_subsection_tl}{}{0em}
+  {\subseculine{#1}}
+  [\ResumeLineNumbers]
+%</minimalist-classical>
+
+%% Subsubsection
+%<*minimalist-plain>
+\bool_if:NTF \l__minimalist_runin_bool
   {
-    \renewcommand\thesubsection{
-      \ifnum\c@section=0\else\arabic{section}.\fi\arabic{subsection}}
-    \newcommand\subseculine{\bgroup\markoverwith{\color{main-text!27!paper}
-      \rule[-1ex]{2pt}{.75pt}}\ULon}
-    \titleformat{\subsection}
-      {\LocallyStopLineNumbers
-      \g_minimalist_title_font_subsection_tl}{}{0em}
-      {\subseculine{\thesubsection\nobreakspace\textcolor{main-text!27!paper}{$|$}\nobreakspace #1}}
-      [\ResumeLineNumbers]
-    \titleformat{name=\subsection,numberless}
-      {\LocallyStopLineNumbers
-      \g_minimalist_title_font_subsection_tl}{}{0em}
-      {\subseculine{#1}}
-      [\ResumeLineNumbers]
+    \titleformat{\subsubsection}[runin]
+      {\g_minimalist_title_font_subsubsection_tl}
+      { \minimalist_apply_title_numbering_style:N { \thesection } }{.5em}
+      {#1.}[\hspace*{.3em}]
   }
   {
-    \titleformat{\subsection}
+    \titleformat{\subsubsection}
       {\LocallyStopLineNumbers
-      \g_minimalist_title_font_subsection_tl}
-      { \minimalist_apply_title_numbering_style:N { \thesubsection } }{.75em}
+      \g_minimalist_title_font_subsubsection_tl}
+      { \minimalist_apply_title_numbering_style:N { \thesubsubsection } }{.5em}
       {#1}
       [\ResumeLineNumbers]
   }
-
-%% Subsubsection
-\bool_if:NTF \l__minimalist_classical_bool
+%</minimalist-plain>
+%<*minimalist-classical>
+\bool_if:NTF \l__minimalist_runin_bool
   {
-    \bool_if:NTF \l__minimalist_runin_bool
-      {
-        \titleformat{\subsubsection}[runin]
-          {\color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
-          {\scalebox{0.9}{\thesubsubsection}}{.33em}
-          {#1.}[\hspace*{.3em}]
-      }
-      {
-        \titleformat{\subsubsection}
-          {\LocallyStopLineNumbers
-          \color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
-          {\scalebox{0.9}{\thesubsubsection}}{.33em}
-          {#1}
-          [\ResumeLineNumbers]
-      }
+    \titleformat{\subsubsection}[runin]
+      {\color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
+      {\scalebox{0.9}{\thesubsubsection}}{.33em}
+      {#1.}[\hspace*{.3em}]
   }
   {
-    \bool_if:NTF \l__minimalist_runin_bool
-      {
-        \titleformat{\subsubsection}[runin]
-          {\g_minimalist_title_font_subsubsection_tl}
-          { \minimalist_apply_title_numbering_style:N { \thesection } }{.5em}
-          {#1.}[\hspace*{.3em}]
-      }
-      {
-        \titleformat{\subsubsection}
-          {\LocallyStopLineNumbers
-          \g_minimalist_title_font_subsubsection_tl}
-          { \minimalist_apply_title_numbering_style:N { \thesubsubsection } }{.5em}
-          {#1}
-          [\ResumeLineNumbers]
-      }
+    \titleformat{\subsubsection}
+      {\LocallyStopLineNumbers
+      \color{main-text!70!paper}\g_minimalist_title_font_subsubsection_tl}
+      {\scalebox{0.9}{\thesubsubsection}}{.33em}
+      {#1}
+      [\ResumeLineNumbers]
   }
+%</minimalist-classical>
 
 %% Paragraph
 \titleformat{\paragraph}[runin]
@@ -1216,23 +1259,22 @@
       {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2em}}
       {\hspace*{-2em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-    \bool_if:NTF \l__minimalist_classical_bool
-      {
-        \titlecontents{section}
-          [4em] % i.e., 2em (chapter) + 2em
-          {\normalfont}
-          {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:N { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2em}}
-          {\hspace*{-2em}}
-          {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-      }
-      {
-        \titlecontents{section}
-          [4em] % i.e., 2em (chapter) + 2em
-          {\normalfont}
-          {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2em}}
-          {\hspace*{-2em}}
-          {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-      }
+%<*minimalist-plain>
+    \titlecontents{section}
+      [4em] % i.e., 2em (chapter) + 2em
+      {\normalfont}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2em}}
+      {\hspace*{-2em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%</minimalist-plain>
+%<*minimalist-classical>
+    \titlecontents{section}
+      [4em] % i.e., 2em (chapter) + 2em
+      {\normalfont}
+      {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:N { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2em}}
+      {\hspace*{-2em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%</minimalist-classical>
     \titlecontents{subsection}
       [7em] % i.e., 4em (section) + 3em
       {\normalfont}
@@ -1281,14 +1323,13 @@
 \setlist[enumerate,3]{label=\emph{\alph*}$)$,
     ref = \arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$)$}
 \setlist[description]{font=\normalfont\minimalist_bfseries:}
-\bool_if:NT \l__minimalist_classical_bool
-  {
-    \newcommand\desculine{\colorlet{currentcolor}{.}\bgroup\markoverwith{\color{currentcolor!55!paper}
-      \rule[-.45ex]{2pt}{.75pt}}\ULon}
-    \renewcommand{\descriptionlabel}[1]{
-      \hspace{\labelsep}\normalfont\desculine{#1}
-    }
-  }
+%<*minimalist-classical>
+\newcommand\desculine{\colorlet{currentcolor}{.}\bgroup\markoverwith{\color{currentcolor!55!paper}
+  \rule[-.45ex]{2pt}{.75pt}}\ULon}
+\renewcommand{\descriptionlabel}[1]{
+  \hspace{\labelsep}\normalfont\desculine{#1}
+}
+%</minimalist-classical>
 
 \setlist[itemize]{leftmargin=*}
 \AddLanguageSetting { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}} }
@@ -1324,62 +1365,61 @@
 \RequirePackage { mathtools }
 \RequirePackage { amsthm }
 
-\bool_if:NTF \l__minimalist_classical_bool
+%<*minimalist-plain>
+\bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
-    \def\simpleqedsymbol{
-      \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
-    \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
-      {
-        \newtheoremstyle{simple}
-          {.5\baselineskip}{.5\baselineskip}
-          {\normalfont}{}
-          {\normalfont}{}
-          {\newline}
-          { \global\let\qedsymbol\simpleqedsymbol
-            {\thmname{#1}\nobreakspace\thmnumber{#2}}
-            \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{$|$}\hspace{.4em}\color{main-text!50!paper}\ensuremath{(\text{#3})}}
-            \smallskip
-            \pushQED{\qed}
-          }
-      }
-      {
-        \newtheoremstyle{simple}
-          {.5\baselineskip}{.5\baselineskip}
-          {\normalfont}{}
-          {\normalfont}{}
-          {0pt}
-          { \global\let\qedsymbol\simpleqedsymbol
-            {\thmname{#1}\nobreakspace\thmnumber{#2}}\hspace{.4em}
-            \textcolor{main-text!27!paper}{$|$}\hspace{.4em}
-            \color{main-text!50!paper}\thmnote{\ensuremath{(\text{#3})}\nobreakspace\nobreakspace}
-            \pushQED{\qed}
-          }
-      }
-    \def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol
-      \popQED\endtrivlist\@endpefalse
-      \global\let\qedsymbol\qedsymbolOriginal}
+    \newtheoremstyle{simple}
+      {}{}
+      {\normalfont}{}
+      {\normalfont}{}
+      {\newline}
+      {{\thmname{#1}\nobreakspace\thmnumber{#2}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}\smallskip}
   }
   {
-    \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
-      {
-        \newtheoremstyle{simple}
-          {}{}
-          {\normalfont}{}
-          {\normalfont}{}
-          {\newline}
-          {{\thmname{#1}\nobreakspace\thmnumber{#2}}
-            {\color{main-text!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}\smallskip}
-      }
-      {
-        \newtheoremstyle{simple}
-          {}{}
-          {\normalfont}{}
-          {\normalfont}{}
-          {0pt}
-          {{\thmname{#1}\nobreakspace\thmnumber{#2}}
-            {\color{main-text!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+    \newtheoremstyle{simple}
+      {}{}
+      {\normalfont}{}
+      {\normalfont}{}
+      {0pt}
+      {{\thmname{#1}\nobreakspace\thmnumber{#2}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+  }
+%</minimalist-plain>
+%<*minimalist-classical>
+\def\simpleqedsymbol{
+  \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+\bool_if:NTF \l__minimalist_theorem_in_new_line_bool
+  {
+    \newtheoremstyle{simple}
+      {.5\baselineskip}{.5\baselineskip}
+      {\normalfont}{}
+      {\normalfont}{}
+      {\newline}
+      { \global\let\qedsymbol\simpleqedsymbol
+        {\thmname{#1}\nobreakspace\thmnumber{#2}}
+        \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{$|$}\hspace{.4em}\color{main-text!50!paper}\ensuremath{(\text{#3})}}
+        \smallskip
+        \pushQED{\qed}
       }
   }
+  {
+    \newtheoremstyle{simple}
+      {.5\baselineskip}{.5\baselineskip}
+      {\normalfont}{}
+      {\normalfont}{}
+      {0pt}
+      { \global\let\qedsymbol\simpleqedsymbol
+        {\thmname{#1}\nobreakspace\thmnumber{#2}}\hspace{.4em}
+        \textcolor{main-text!27!paper}{$|$}\hspace{.4em}
+        \color{main-text!50!paper}\thmnote{\ensuremath{(\text{#3})}\nobreakspace\nobreakspace}
+        \pushQED{\qed}
+      }
+  }
+\def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol
+  \popQED\endtrivlist\@endpefalse
+  \global\let\qedsymbol\qedsymbolOriginal}
+%</minimalist-classical>
 
 \theoremstyle{simple}
 
@@ -1577,99 +1617,97 @@
 %%================================
 %%  Title block style
 %%================================
-\bool_if:NTF \l__minimalist_classical_bool
-  {
-    \renewcommand{\@maketitle}{
-      \LocallyStopLineNumbers
-      \noindent
-      {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}}
-      % \vspace{-\parskip}
+%<*minimalist-plain>
+\renewcommand{\@maketitle}{
+  \LocallyStopLineNumbers
+  \begin{center}
+    \let\footnote\thanks
+    {\minimalist_bfseries:\sffamily\scshape\Large\@title}\\\bigskip
+    \color{main-text!80!paper}
+    {\small\scshape\@author}
+    \par\smallskip\vspace{-\parskip}
+    {\small\@date}
+  \end{center}
+  \ifx\@date\@empty\medskip\fi
+  \medskip\par
+  \ResumeLineNumbers
+}
+%</minimalist-plain>
+%<*minimalist-classical>
+\renewcommand{\@maketitle}{
+  \LocallyStopLineNumbers
+  \noindent
+  {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}}
+  % \vspace{-\parskip}
+  \vspace{-.5\baselineskip}
+  \begin{flushright}
+    \let\footnote\thanks
+    {\minimalist_bfseries:\@title}\\\medskip
+    \color{main-text!80!paper}
+    {\small\scshape\@author}
+    \par\vspace{-\parskip}\vspace{2pt}
+    {\small\@date}
+  \end{flushright}
+  % \vspace{-\parskip}
+  \vspace{-.5\baselineskip}
+  \ifx\@date\@empty
+      \vspace{\baselineskip}
+      \vspace{1.2\parskip}
+  \else
       \vspace{-.5\baselineskip}
-      \begin{flushright}
-        \let\footnote\thanks
-        {\minimalist_bfseries:\@title}\\\medskip
-        \color{main-text!80!paper}
-        {\small\scshape\@author}
-        \par\vspace{-\parskip}\vspace{2pt}
-        {\small\@date}
-      \end{flushright}
-      % \vspace{-\parskip}
-      \vspace{-.5\baselineskip}
-      \ifx\@date\@empty
-          \vspace{\baselineskip}
-          \vspace{1.2\parskip}
-      \else
-          \vspace{-.5\baselineskip}
-      \fi
-      {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}\par}
-      \ResumeLineNumbers
-    }
-  }
-  {
-    \renewcommand{\@maketitle}{
-      \LocallyStopLineNumbers
-      \begin{center}
-        \let\footnote\thanks
-        {\minimalist_bfseries:\sffamily\scshape\Large\@title}\\\bigskip
-        \color{main-text!80!paper}
-        {\small\scshape\@author}
-        \par\smallskip\vspace{-\parskip}
-        {\small\@date}
-      \end{center}
-      \ifx\@date\@empty\medskip\fi
-      \medskip\par
-      \ResumeLineNumbers
-    }
-  }
+  \fi
+  {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}\par}
+  \ResumeLineNumbers
+}
+%</minimalist-classical>
 
 \hook_gput_code:nnn { cmd/maketitle/after } { minimalist } { \thispagestyle{fancy} }
 
 %%================================
 %%  Abstract style
 %%================================
-\bool_if:NTF \l__minimalist_classical_bool
+%<*minimalist-plain>
+\renewenvironment{abstract}
   {
-    \renewenvironment{abstract}
-      {
-        \LocallyStopLineNumbers
-        \begin{flushright}
-          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\par
-          \vspace{-\parskip}
-          \vspace{-.25\baselineskip}
-          \begin{minipage}[t]{.833\textwidth}
-            \vspace{0pt}
-            \color{main-text!80!paper}
-            \footnotesize
-            \parindent=2em
-      }
-      {
-          \end{minipage}
-        \end{flushright}
-        \bigskip
-        \ResumeLineNumbers
-      }
+    \LocallyStopLineNumbers
+    \vspace{-.5\baselineskip}
+    \begin{center}
+      { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\\
+      \vspace{-.3\baselineskip}
+      \begin{minipage}[t]{.833\textwidth}
+        \vspace{0pt}
+        \color{main-text!80!paper}
+        \footnotesize
+        \parindent=2em
   }
   {
-    \renewenvironment{abstract}
-      {
-        \LocallyStopLineNumbers
-        \vspace{-.5\baselineskip}
-        \begin{center}
-          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\\
-          \vspace{-.3\baselineskip}
-          \begin{minipage}[t]{.833\textwidth}
-            \vspace{0pt}
-            \color{main-text!80!paper}
-            \footnotesize
-            \parindent=2em
-      }
-      {
-          \end{minipage}
-        \end{center}
-        \medskip
-        \ResumeLineNumbers
-      }
+      \end{minipage}
+    \end{center}
+    \medskip
+    \ResumeLineNumbers
   }
+%</minimalist-plain>
+%<*minimalist-classical>
+\renewenvironment{abstract}
+  {
+    \LocallyStopLineNumbers
+    \begin{flushright}
+      { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\par
+      \vspace{-\parskip}
+      \vspace{-.25\baselineskip}
+      \begin{minipage}[t]{.833\textwidth}
+        \vspace{0pt}
+        \color{main-text!80!paper}
+        \footnotesize
+        \parindent=2em
+  }
+  {
+      \end{minipage}
+    \end{flushright}
+    \bigskip
+    \ResumeLineNumbers
+  }
+%</minimalist-classical>
 
 %%================================
 %%  Keyword environment
@@ -1689,49 +1727,48 @@
     RU = Ключевые~слова                         ,
   }
 
-\bool_if:NTF \l__minimalist_classical_bool
-  {
-    \newenvironment{keyword}{
-      \LocallyStopLineNumbers
-      \vspace{-.5\baselineskip}
-      \begin{flushright}
-        {\minimalist_bfseries:\scshape\small\keywordname}\par
-        \vspace{-\parskip}
-        \vspace{-.30\baselineskip}
-        \begin{minipage}[t]{.833\textwidth}
-          \vspace{0pt}
-          \color{main-text!80!paper}
-          \footnotesize
-          \parindent=2em
-          \raggedleft
-    }{
-        \end{minipage}
-      \end{flushright}
-      \bigskip
-      \ResumeLineNumbers
-    }
-  }
-  {
-    \newenvironment{keyword}{
-      \LocallyStopLineNumbers
-      \vspace{-.75\baselineskip}
+%<*minimalist-plain>
+\newenvironment{keyword}{
+  \LocallyStopLineNumbers
+  \vspace{-.75\baselineskip}
+  \begin{center}
+    {\minimalist_bfseries:\scshape\small\keywordname}\\
+    \vspace{-.3\baselineskip}
+    \begin{minipage}[t]{.833\textwidth}
+      \vspace{0pt}
+      \color{main-text!80!paper}
+      \footnotesize
+      \parindent=2em
       \begin{center}
-        {\minimalist_bfseries:\scshape\small\keywordname}\\
-        \vspace{-.3\baselineskip}
-        \begin{minipage}[t]{.833\textwidth}
-          \vspace{0pt}
-          \color{main-text!80!paper}
-          \footnotesize
-          \parindent=2em
-          \begin{center}
-    }{
-          \end{center}
-        \end{minipage}
+}{
       \end{center}
-      \medskip
-      \ResumeLineNumbers
-    }
-  }
+    \end{minipage}
+  \end{center}
+  \medskip
+  \ResumeLineNumbers
+}
+%</minimalist-plain>
+%<*minimalist-classical>
+\newenvironment{keyword}{
+  \LocallyStopLineNumbers
+  \vspace{-.5\baselineskip}
+  \begin{flushright}
+    {\minimalist_bfseries:\scshape\small\keywordname}\par
+    \vspace{-\parskip}
+    \vspace{-.30\baselineskip}
+    \begin{minipage}[t]{.833\textwidth}
+      \vspace{0pt}
+      \color{main-text!80!paper}
+      \footnotesize
+      \parindent=2em
+      \raggedleft
+}{
+    \end{minipage}
+  \end{flushright}
+  \bigskip
+  \ResumeLineNumbers
+}
+%</minimalist-classical>
 
 %%================================
 %%  Simulate features of amsart
@@ -1740,6 +1777,6 @@
 \RequirePackage { projlib-author }
 
 }
-%</minimalist>
+%</style>
 
 \endinput
