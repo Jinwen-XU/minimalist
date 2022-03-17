@@ -898,6 +898,7 @@
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
 
+\cs_generate_variant:Nn \seq_set_split:Nnn { Nnx }
 \cs_new:Nn \minimalist_apply_title_numbering_style:N
   {
     \bool_if:NTF \l__minimalist_classical_bool
@@ -905,14 +906,9 @@
         #1
       }
       {
-        \bool_if:NT \l__minimalist_is_book_bool
-          { \tl_replace_all:Nnn \thechapter {.} {$.$} }
-        \tl_replace_all:Nnn \thesection {.} {$.$}
-        \tl_replace_all:Nnn \thesubsection {.} {$.$}
-        \tl_replace_all:Nnn \thesubsubsection {.} {$.$}
-        \tl_if_exist:NT \thecontentslabel
-          { \tl_replace_all:Nnn \thecontentslabel {.} {$.$} }
-        \textcolor{main-text!39!paper}{ \usefont{U}{zeur}{b}{n} #1 }
+        \seq_set_split:Nnx \l_tmpa_seq { . } { #1 }
+        \seq_set_map:NNn \l_tmpb_seq \l_tmpa_seq { \usefont{U}{zeur}{b}{n} ##1 }
+        \textcolor{main-text!39!paper}{ \seq_use:Nn \l_tmpb_seq { $.$ } }
       }
   }
 
