@@ -15,9 +15,9 @@
 \ProvidesFile{minimalist-doc.dtx}
 %</driver>
 %
-%<minimalist-doc>\documentclass[classical]{minimart}
-%<einfart-doc-cn,einfart-doc-en,einfart-doc-fr>\documentclass[classical]{einfart}
-%<simplivre-doc-cn,simplivre-doc-en,simplivre-doc-fr>\documentclass[classical]{simplivre}
+%<minimalist-doc>\documentclass[classical, simple name]{minimart}
+%<einfart-doc-cn,einfart-doc-en,einfart-doc-fr>\documentclass[classical, simple name]{einfart}
+%<simplivre-doc-cn,simplivre-doc-en,simplivre-doc-fr>\documentclass[use boldface, simple name]{simplivre}
 
 \linenumbers % Enable line numbers
 
@@ -150,19 +150,21 @@
 %</einfart-doc-en>
 %
 %<*simplivre-doc-en>
+\LocallyStopLineNumbers
+
 \frontmatter
 
 \begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
 \begin{tikzpicture}[overlay,remember picture]
-    \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
-    \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
+    \fill [blue!50!cyan!50!black] ($(current page.south west)$) rectangle ($(current page.north west)+(21,-7)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
     \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\textsc{Write your books in \\a simple and clear way}\\[10pt]\tiny Corresponding to: \texttt{\simplivre{} \PackageVersion}}};
-    \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{\scshape Jinwen XU}};
-    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{\TheDate{\PackageVersion}[only-year-month], in Paris}};
+    \node[text width=15em] at ($(current page.south)+(3.5,3)$) {\color{white}\hfill\fontsize{16pt}{0pt}\selectfont{\scshape Jinwen XU}\\[1em]\hfill\fontsize{12pt}{0pt}\selectfont\TheDate{\PackageVersion}[only-year-month], in Paris};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
+
+\ResumeLineNumbers
 %</simplivre-doc-en>
 %
 %<*einfart-doc-cn>
@@ -177,18 +179,19 @@
 %
 %<*simplivre-doc-cn>
 \frontmatter
+\LocallyStopLineNumbers
 
 \begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
 \begin{tikzpicture}[overlay,remember picture]
-    \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
-    \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
+    \fill [blue!50!cyan!50!black] ($(current page.south west)$) rectangle ($(current page.north west)+(21,-7)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
     \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\hspace*{-.05em}以极简主义风格排版你的图书\\[10pt]\tiny 对应版本. \texttt{\simplivre{} \PackageVersion}}};
-    \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{许锦文}};
-    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{\TheDate{\PackageVersion}[only-year-month]，巴黎}};
+    \node[text width=15em] at ($(current page.south)+(3.5,3)$) {\color{white}\hfill\fontsize{16pt}{0pt}\selectfont{许锦文}\\[1em]\hfill\fontsize{12pt}{0pt}\selectfont\TheDate{\PackageVersion}[only-year-month]，巴黎};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
+
+\ResumeLineNumbers
 %</simplivre-doc-cn>
 %
 %<*einfart-doc-fr>
@@ -203,18 +206,19 @@
 %
 %<*simplivre-doc-fr>
 \frontmatter
+\LocallyStopLineNumbers
 
 \begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
 \begin{tikzpicture}[overlay,remember picture]
-    \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
-    \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
+    \fill [blue!50!cyan!50!black] ($(current page.south west)$) rectangle ($(current page.north west)+(21,-7)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
     \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\textsc{Écrivez vos livres \\de manière simple et claire}\\[10pt]\tiny Correspondant à : \texttt{\simplivre{} \PackageVersion}}};
-    \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{\scshape Jinwen XU}};
-    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{\TheDate{\PackageVersion}[only-year-month], à Paris}};
+    \node[text width=15em] at ($(current page.south)+(3.5,3)$) {\color{white}\hfill\fontsize{16pt}{0pt}\selectfont{\scshape Jinwen XU}\\[1em]\hfill\fontsize{12pt}{0pt}\selectfont\TheDate{\PackageVersion}[only-year-month], à Paris};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
+
+\ResumeLineNumbers
 %</simplivre-doc-fr>
 
 
@@ -266,7 +270,7 @@
 
 \simplivre{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
 
-This documentation is typeset using \simplivre{} (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
+This documentation is typeset using \simplivre{} (with the option \texttt{use boldface}). You can think of it as a short introduction and demonstration.
 
 \bigskip
 \begin{tip}
@@ -281,7 +285,7 @@ This documentation is typeset using \simplivre{} (with the option \texttt{classi
 
 \simplivre{} 支持英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
 
-这篇说明文档即是用 \simplivre{} 排版的 (使用了参数 \texttt{classical})，你可以把它看作一份简短的说明与演示。
+这篇说明文档即是用 \simplivre{} 排版的 (使用了参数 \texttt{use boldface})，你可以把它看作一份简短的说明与演示。
 
 \bigskip
 \begin{tip}
@@ -296,7 +300,7 @@ This documentation is typeset using \simplivre{} (with the option \texttt{classi
 
 \simplivre{} prend en charge plusieurs langues, notamment le chinois (simplifié et traditionnel), l'anglais, le français, l'allemand, l'italien, le japonais, le portugais (européen et brésilien), le russe et l'espagnol. Ces langues peuvent être commutées de manière transparente dans un seul document. En raison de l'utilisation de polices personnalisées, \simplivre{} demande soit \hologo{XeLaTeX} soit \hologo{LuaLaTeX} pour la compilation.
 
-Cette documentation est composée à l'aide de \simplivre{} (avec l'option \texttt{classical}). Vous pouvez le considérer comme une courte introduction et une démonstration.
+Cette documentation est composée à l'aide de \simplivre{} (avec l'option \texttt{use boldface}). Vous pouvez le considérer comme une courte introduction et une démonstration.
 
 \bigskip
 \begin{tip}
@@ -1934,8 +1938,8 @@ In \lstinline|\section| or \lstinline|\subsection| , if you wish to add footnote
 \end{itemize}
 This is a disadvantage brought about by the underline decoration of the title.
 
-\LevelThreeTitle{On the QED symbols}
-Since the font in the theorem-like environments is the same as that of the main text, in order to indicate where the environments end, a hollow QED symbol \simpleqedsymbol{} is placed at the end of the theorem-like environments. However, if your theorem ends with an equation or list (itemize, enumerate, description, etc.), this symbol cannot be automatically placed in the correct position. In this case, you need to manually add a \lstinline|\qedhere| at the end of your equation or the last entry of your list to make the QED symbol appear at the end of the line.
+% \LevelThreeTitle{On the QED symbols}
+% Since the font in the theorem-like environments is the same as that of the main text, in order to indicate where the environments end, a hollow QED symbol \simpleqedsymbol{} is placed at the end of the theorem-like environments. However, if your theorem ends with an equation or list (itemize, enumerate, description, etc.), this symbol cannot be automatically placed in the correct position. In this case, you need to manually add a \lstinline|\qedhere| at the end of your equation or the last entry of your list to make the QED symbol appear at the end of the line.
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 %
 %<*einfart-doc-cn,simplivre-doc-cn>
@@ -1971,8 +1975,8 @@ Dans \lstinline|\section| ou \lstinline|\subsection| , si vous souhaitez ajouter
 \end{itemize}
 C'est un inconvénient provoqué par la décoration de soulignement du titre.
 
-\LevelThreeTitle{Les symboles QED}
-Puisque la police dans les environnements de type théorème est la même que celle du texte principal, afin d'indiquer où se terminent les environnements, un symbole QED creux \simpleqedsymbol{} est placé à la fin des environnements de type théorème. Cependant, si votre théorème se termine par une équation ou une liste (itemize, énumérer, description, etc.), ce symbole ne peut pas être automatiquement placé à la bonne position. Dans ce cas, vous devez ajouter manuellement un \lstinline|\qedhere| à la fin de votre équation ou la dernière entrée de votre liste pour faire apparaître le symbole QED en fin de ligne.
+% \LevelThreeTitle{Les symboles QED}
+% Puisque la police dans les environnements de type théorème est la même que celle du texte principal, afin d'indiquer où se terminent les environnements, un symbole QED creux \simpleqedsymbol{} est placé à la fin des environnements de type théorème. Cependant, si votre théorème se termine par une équation ou une liste (itemize, énumérer, description, etc.), ce symbole ne peut pas être automatiquement placé à la bonne position. Dans ce cas, vous devez ajouter manuellement un \lstinline|\qedhere| à la fin de votre équation ou la dernière entrée de votre liste pour faire apparaître le symbole QED en fin de ligne.
 %</einfart-doc-fr,simplivre-doc-fr>
 
 
