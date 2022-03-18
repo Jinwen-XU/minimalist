@@ -1,8 +1,8 @@
 % \iffalse meta-comment
 %
-% Copyright (C) 2021 by Jinwen XU 
+% Copyright (C) 2021-2022 by Jinwen XU
 % -------------------------------
-% 
+%
 % This file may be distributed and/or modified under the conditions of the LaTeX
 % Project Public License, either version 1.3c of this license or (at your option)
 % any later version. The latest version of this license is in:
@@ -56,19 +56,19 @@
     % numbers=left,
     numberstyle=\scriptsize, stepnumber=1, numbersep=5pt,
     % firstnumber=last,
-} 
+}
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,part,parttext,chapter,section,subsection,subsubsection,frontmatter,mainmatter,backmatter,tableofcontents,href,
-    color,NameTheorem,CreateTheorem,proofideanameEN,cref,dnf,needgraph,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,PLdate,ProjLib,qedhere
+    color,NameTheorem,CreateTheorem,cref,dnf,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,TheDate,ProjLib,qedhere
     }
 }
-\lstnewenvironment{code}% 
+\lstnewenvironment{code}%
 {\setstretch{1.07}\LocallyStopLineNumbers%
 \setkeys{lst}{columns=fullflexible,keepspaces=true}%
 }
 {\ResumeLineNumbers}
-\lstnewenvironment{code*}% 
+\lstnewenvironment{code*}%
 {\setstretch{1.07}\LocallyStopLineNumbers%
 \setkeys{lst}{numbers=left,columns=fullflexible,keepspaces=true}%
 }
@@ -127,12 +127,14 @@
 %%================================
 \begin{document}
 
+\def\PackageVersion{2022/03/18}
+
 %<*minimalist-doc>
 \title{\minimalist{}, write your articles or books in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\minimalist{} 2021/12/16}}
+\thanks{Corresponding to: \texttt{\minimalist{} \PackageVersion}}
 \email{\href{mailto:ProjLib@outlook.com}{ProjLib@outlook.com}}
-\date{December 2021, in Paris}
+\date{\TheDate{\PackageVersion}[only-year-month], in Paris}
 
 \maketitle
 %</minimalist-doc>
@@ -140,21 +142,14 @@
 %<*einfart-doc-en>
 \title{\einfart{}, write your articles in a simple and clear way}
 \author{Jinwen XU}
-\thanks{Corresponding to: \texttt{\einfart{} 2021/12/16}}
+\thanks{Corresponding to: \texttt{\einfart{} \PackageVersion}}
 \email{\href{mailto:ProjLib@outlook.com}{ProjLib@outlook.com}}
-\date{December 2021, in Paris}
+\date{\TheDate{\PackageVersion}[only-year-month], in Paris}
 
 \maketitle
 %</einfart-doc-en>
 %
 %<*simplivre-doc-en>
-% \title{\simplivre{}, write your books in a simple and clear way}
-% \author{Jinwen XU}
-% \thanks{Corresponding to: \texttt{\simplivre{} 2021/05/23}}
-% \date{May 2021, Beijing}
-% 
-% \maketitle
-
 \frontmatter
 
 \begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
@@ -162,9 +157,9 @@
     \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
     \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
-    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\textsc{Write your books in \\a simple and clear way}\\[10pt]\tiny Corresponding to: \texttt{\simplivre{} 2021/12/16}}};
+    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\textsc{Write your books in \\a simple and clear way}\\[10pt]\tiny Corresponding to: \texttt{\simplivre{} \PackageVersion}}};
     \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{\scshape Jinwen XU}};
-    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{December 2021, in Paris}};
+    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{\TheDate{\PackageVersion}[only-year-month], in Paris}};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
@@ -173,9 +168,9 @@
 %<*einfart-doc-cn>
 \title{\einfart{}，以极简主义风格排版你的文章}
 \author{许锦文}
-\thanks{对应版本. \texttt{\einfart{} 2021/12/16}}
+\thanks{对应版本. \texttt{\einfart{} \PackageVersion}}
 \email{\href{mailto:ProjLib@outlook.com}{ProjLib@outlook.com}}
-\date{2021年12月，巴黎}
+\date{\TheDate{\PackageVersion}[only-year-month]，巴黎}
 
 \maketitle
 %</einfart-doc-cn>
@@ -188,9 +183,9 @@
     \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
     \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
-    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\hspace*{-.05em}以极简主义风格排版你的图书\\[10pt]\tiny 对应版本. \texttt{\simplivre{} 2021/12/16}}};
+    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\hspace*{-.05em}以极简主义风格排版你的图书\\[10pt]\tiny 对应版本. \texttt{\simplivre{} \PackageVersion}}};
     \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{许锦文}};
-    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{2021年12月，巴黎}};
+    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{\TheDate{\PackageVersion}[only-year-month]，巴黎}};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
@@ -199,9 +194,9 @@
 %<*einfart-doc-fr>
 \title{\einfart{}, écrivez vos articles de manière simple et claire}
 \author{Jinwen XU}
-\thanks{Correspondant à : \texttt{\einfart{} 2021/12/16}}
+\thanks{Correspondant à : \texttt{\einfart{} \PackageVersion}}
 \email{\href{mailto:ProjLib@outlook.com}{ProjLib@outlook.com}}
-\date{Décembre 2021, à Paris}
+\date{\TheDate{\PackageVersion}[only-year-month], à Paris}
 
 \maketitle
 %</einfart-doc-fr>
@@ -214,9 +209,9 @@
     \fill [cyan!90!black] ($(current page.south west)+(0,7)$) rectangle ($(current page.north west)+(21,-7)$);
     \fill [yellow] (current page.south west) rectangle ($(current page.north west)+(3,0)$);
     \node[text width=10cm] at ($(current page.north west)+(8.5,-6)$) {\huge\ProjLib};
-    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\textsc{Écrivez vos livres \\de manière simple et claire}\\[10pt]\tiny Correspondant à : \texttt{\simplivre{} 2021/12/16}}};
+    \node[text width=6cm,text height=3.5cm,scale=2.5] at ($(current page.north west)+(11,-9)$) {\textcolor{white}{\sffamily\simplivre{}\\[5pt]\footnotesize\textsc{Écrivez vos livres \\de manière simple et claire}\\[10pt]\tiny Correspondant à : \texttt{\simplivre{} \PackageVersion}}};
     \node at ($(current page.south)+(1.5,3)$) {\fontsize{16pt}{0pt}\selectfont\textcolor{gray}{\scshape Jinwen XU}};
-    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{Décembre 2021, à Paris}};
+    \node at ($(current page.south)+(1.5,2)$) {\fontsize{12pt}{0pt}\selectfont\textcolor{gray}{\TheDate{\PackageVersion}[only-year-month], à Paris}};
 \end{tikzpicture}%
 \end{titlepage}%
 \cleardoublepage%
@@ -227,7 +222,7 @@
 %<*minimalist-doc>
 \begin{abstract}
     \minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. The original intention in designing this series was to write drafts and notes that look simple yet not shabby. With the help of the \ProjLib{} toolkit, also developed by the author, the classes provided here have multi-language support, preset theorem-like environments with clever reference support, and many other functionalities. Notably, using these classes, one can organize the author information in the \AmS{} fashion, makes it easy to switch to journal classes later for publication.
-    
+
     Finally, this documentation is typeset using the \minimart{} class (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
 \end{abstract}
 %</minimalist-doc>
@@ -237,7 +232,7 @@
     \einfart{} is part of the \minimalist{} class series, whose name is taken from German word ``einfach'' (``simple''), combined with the first three letters of ``artikel'' (``article''). The entire collection includes \minimart{} and \einfart{} for typesetting articles, and \minimbook{} and \simplivre{} for typesetting books. My original intention in designing them was to write drafts and notes that look simple yet not shabby.
 
     \einfart{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
-    
+
     This documentation is typeset using \einfart{} (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
 \end{abstract}
 %</einfart-doc-en>
@@ -247,7 +242,7 @@
     \einfart{} 是 \minimalist{} 文档类系列的成员之一，其名称取自于德文的 einfach (``简约'')，并取了 artikel (``文章'') 的前三个字母组合而成。整个 \minimalist{} 系列包含用于排版文章的 \minimart{}、\einfart{} 以及用于排版书的 \minimbook{}、\simplivre{}。我设计这一系列的初衷是为了撰写草稿与笔记，使之看上去简朴而不简陋。
 
     \einfart{} 支持英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
-    
+
     这篇说明文档即是用 \einfart{} 排版的 (使用了参数 \texttt{classical})，你可以把它看作一份简短的说明与演示。
 \end{abstract}
 %</einfart-doc-cn>
@@ -311,6 +306,12 @@ Cette documentation est composée à l'aide de \simplivre{} (avec l'option \text
 
 
 
+\begin{tip}
+    This documentation has not been fully up-to-date with the new \texttt{expl3} version of this class series. Some options or commands introduced here might be obsolete.
+\end{tip}
+
+
+
 %<minimalist-doc,einfart-doc-cn,einfart-doc-en,einfart-doc-fr>\setcounter{tocdepth}{2}
 %<!einfart-doc-cn>\tableofcontents
 %<einfart-doc-cn>{\setstretch{1.07}\tableofcontents}
@@ -351,7 +352,7 @@ In order to use the package or classes described here, you need to:
     \item install TeX Live or MikTeX of the latest possible version, and make sure that \texttt{minimalist} and \texttt{projlib} are correctly installed in your \TeX{} system.
 %<minimalist-doc>    \item download and install the required fonts if needed.
 %<!minimalist-doc>    \item download and install the required fonts, see the section "On the default fonts".
-    \item be familiar with the basic usage of \LaTeX{}, and knows how to compile your document with \hologo{pdfLaTeX}, \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
+    \item be familiar with the basic usage of \LaTeX{}, and know how to compile your document with \hologo{pdfLaTeX}, \hologo{XeLaTeX} or \hologo{LuaLaTeX}.
 \end{itemize}
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 %
@@ -387,7 +388,7 @@ Pour utiliser les classes de documents décrites ici, vous devez :
 %<*minimalist-doc>
 \LevelOneTitle{Introduction}
 
-\minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. The original intention in designing this series was to write drafts and notes that look simple yet not shabby. 
+\minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. The original intention in designing this series was to write drafts and notes that look simple yet not shabby.
 
 The entire collection includes \verb|minimalist.sty|, which is the main style shared by all of the following classes; \verb|minimart.cls| for typesetting articles and \verb|minimbook.cls| for typesetting books. They compile with any major \TeX{} engine, with native support to English, French, German, Italian, Portuguese (European and Brazilian) and Spanish typesetting via \lstinline|\UseLanguage| (see the instruction below for detail).
 
@@ -443,7 +444,7 @@ One only needs to put
 \begin{code}
 \documentclass{simplivre}
 \end{code}
-as the first line to use the \simplivre{} class. 
+as the first line to use the \simplivre{} class.
 
 \begin{tip}[Attention]
     You need to use either \hologo{XeLaTeX} or \hologo{LuaLaTeX} engine to compile.
@@ -554,7 +555,7 @@ Regardons d'abord un document complet.
 
 \title{(*\meta{title}*)}
 \author{(*\meta{author}*)}
-\date{\PLdate{2022-04-01}}
+\date{\TheDate{2022-04-01}}
 
 \maketitle
 
@@ -649,7 +650,7 @@ Initialization is straightforward. The first line loads the document class \mini
 %</minimalist-doc>
 %
 %<*einfart-doc-en>
-\clearpage
+% \clearpage
 \LevelThreeTitle{Initialization}
 
 \medskip
@@ -674,7 +675,7 @@ Initialization is straightforward. The first line loads the document class \simp
 %</simplivre-doc-en>
 %
 %<*einfart-doc-cn>
-\clearpage
+% \clearpage
 \LevelThreeTitle{初始化部分}
 
 \medskip
@@ -699,7 +700,7 @@ Initialization is straightforward. The first line loads the document class \simp
 %</simplivre-doc-cn>
 %
 %<*einfart-doc-fr>
-\clearpage
+% \clearpage
 \LevelThreeTitle{Initialisation}
 
 \medskip
@@ -775,7 +776,7 @@ Pour une description détaillée de cette commande et d'autres commandes associ�
 \begin{code}
 \title{(*\meta{title}*)}
 \author{(*\meta{author}*)}
-\date{\PLdate{2022-04-01}}
+\date{\TheDate{2022-04-01}}
 \maketitle
 
 \begin{abstract}
@@ -808,7 +809,7 @@ In addition, you may also write in the \AmS{} fashion, i.e.:
 \author{(*\meta{author 2}*)}
 \address{(*\meta{address 2}*)}
 \email{(*\meta{email 2}*)}
-\date{\PLdate{2022-04-01}}
+\date{\TheDate{2022-04-01}}
 \subjclass{*****}
 \keywords{(*\meta{keywords}*)}
 
@@ -827,7 +828,7 @@ In addition, you may also write in the \AmS{} fashion, i.e.:
 \begin{code}
 \title{(*\meta{title}*)}
 \author{(*\meta{author}*)}
-\date{\PLdate{2022-04-01}}
+\date{\TheDate{2022-04-01}}
 \maketitle
 
 \begin{abstract}
@@ -860,7 +861,7 @@ In addition, you may also write in the \AmS{} fashion, i.e.:
 \author{(*\meta{author 2}*)}
 \address{(*\meta{address 2}*)}
 \email{(*\meta{email 2}*)}
-\date{\PLdate{2022-04-01}}
+\date{\TheDate{2022-04-01}}
 \subjclass{*****}
 \keywords{(*\meta{keywords}*)}
 
@@ -879,7 +880,7 @@ In addition, you may also write in the \AmS{} fashion, i.e.:
 \begin{code}
 \title{(*\meta{title}*)}
 \author{(*\meta{author}*)}
-\date{\PLdate{2022-04-01}}
+\date{\TheDate{2022-04-01}}
 \maketitle
 
 \begin{abstract}
@@ -912,7 +913,7 @@ De plus, vous pouvez également écrire à la manière \AmS{}, c'est-à-dire :
 \author{(*\meta{author 2}*)}
 \address{(*\meta{address 2}*)}
 \email{(*\meta{email 2}*)}
-\date{\PLdate{2022-04-01}}
+\date{\TheDate{2022-04-01}}
 \subjclass{*****}
 \keywords{(*\meta{keywords}*)}
 
@@ -1113,7 +1114,7 @@ Si vous aimez la classe de document actuelle, mais que vous souhaitez un style p
 
 
 %<*minimalist-doc>
-\clearpage
+% \clearpage
 \LevelTwoTitle{Example - \minimbook}
 
 Now let's look at an example of \minimbook{} (the same works for \simplivre{}).
@@ -1156,7 +1157,7 @@ There is no much differences with \minimart{}, only that the title and author in
 
 \bigskip
 In the next section, we will go through the options available.
-\clearpage
+% \clearpage
 %</minimalist-doc>
 
 
@@ -1254,7 +1255,7 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
         \begin{itemize}
             \item Allow boldface. When this option is enabled, the main title, the titles of all levels and the names of theorem-like environments will be bolded.
         \end{itemize}
-%<einfart-doc-en>\clearpage
+%<einfart-doc-en>% \clearpage
     \item \texttt{classical}
         \begin{itemize}
 %             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
@@ -1273,18 +1274,14 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
         \begin{itemize}
             \item Use the ``runin'' style for \lstinline|\subsubsection|
         \end{itemize}
-%<simplivre-doc-en>\clearpage
-    \item \texttt{puretext} or \texttt{nothms}
+%<simplivre-doc-en>% \clearpage
+    \item \texttt{nothms}
         \begin{itemize}
             \item Pure text mode. Do not load theorem-like environments.
         \end{itemize}
-    \item \texttt{delaythms}
-        \begin{itemize}
-            \item Defer the definition of theorem-like environments to the end of the preamble. Use this option if you want the theorem-like environments to be numbered within a custom counter.
-        \end{itemize}
     \item \texttt{nothmnum}, \texttt{thmnum} or \texttt{thmnum=}\meta{counter}
         \begin{itemize}
-            \item Theorem-like environments will not be numbered / numbered in order 1, 2, 3... / numbered within \meta{counter}. Here, \meta{counter} should be a built-in counter (such as \texttt{subsection}) or a custom counter defined in the preamble (with the option \texttt{delaythms} enabled). If no option is used, they will be numbered within \texttt{chapter} (book) or \texttt{section} (article).
+            \item Theorem-like environments will not be numbered / numbered in order 1, 2, 3... / numbered within \meta{counter}. If no option is used, they will be numbered within \texttt{chapter} (book) or \texttt{section} (article).
         \end{itemize}
     \item \texttt{regionalref}, \texttt{originalref}
         \begin{itemize}
@@ -1356,7 +1353,7 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
         \begin{itemize}
             \item 允许加粗。启用这一选项时，题目、各级标题、定理类环境名称会被加粗。
         \end{itemize}
-%<einfart-doc-cn>\clearpage
+%<einfart-doc-cn>% \clearpage
     \item \texttt{classical}
         \begin{itemize}
 %             \item 经典模式。启用这一选项时，样式会变得更加中规中矩：段落呈首行缩进样式、各类下划线减少、标题样式改变、定理类环境的样式也会更贴近常见的设置。
@@ -1369,22 +1366,18 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
         \begin{itemize}
             \item 采用段首缩进而不是段间间距。
         \end{itemize}
-%<simplivre-doc-cn>\clearpage
+%<simplivre-doc-cn>% \clearpage
     \item \texttt{runin}
         \begin{itemize}
             \item \lstinline|\subsubsection| 采用 ``runin'' 风格。
         \end{itemize}
-    \item \texttt{puretext} 或 \texttt{nothms}
+    \item \texttt{nothms}
         \begin{itemize}
             \item 纯文本模式，不加载定理类环境。
         \end{itemize}
-    \item \texttt{delaythms}
-        \begin{itemize}
-            \item 将定理类环境设定推迟到导言结尾。如果你希望定理类环境跟随自定义计数器编号，则应考虑这一选项。
-        \end{itemize}
     \item \texttt{nothmnum}、\texttt{thmnum} 或 \texttt{thmnum=}\meta{counter}
         \begin{itemize}
-            \item 定理类环境均不编号 / 按照 1、2、3 顺序编号 / 在 \meta{counter} 内编号。其中 \meta{counter} 应该是自带的计数器 (如 \texttt{subsection}) 或在导言部分自定义的计数器 (在启用 \texttt{delaythms} 选项的情况下)。在没有使用任何选项的情况下将按照 \texttt{chapter} (书) 或 \texttt{section} (文章) 编号。
+            \item 定理类环境均不编号 / 按照 1、2、3 顺序编号 / 在 \meta{counter} 内编号。在没有使用任何选项的情况下将按照 \texttt{chapter} (书) 或 \texttt{section} (文章) 编号。
         \end{itemize}
     \item \texttt{regionalref}、\texttt{originalref}
         \begin{itemize}
@@ -1448,22 +1441,18 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
         \begin{itemize}
             \item Utilisez l'indentation des paragraphes au lieu de l'espacement entre les paragraphes.
         \end{itemize}
-%<simplivre-doc-fr>\clearpage
+%<simplivre-doc-fr>% \clearpage
     \item \texttt{runin}
         \begin{itemize}
             \item Utilisez le style «~runin~» pour \lstinline|\subsubsection|
         \end{itemize}
-    \item \texttt{puretext} ou \texttt{nothms}
+    \item \texttt{nothms}
         \begin{itemize}
             \item Mode texte pur. Ne pas définir les environnements de type théorème.
         \end{itemize}
-    \item \texttt{delaythms}
-        \begin{itemize}
-            \item Reportez la définition des environnements de type théorème à la fin du préambule. Utilisez cette option si vous souhaitez que les environnements soient numérotés dans un compteur personnalisé.
-        \end{itemize}
     \item \texttt{nothmnum}, \texttt{thmnum} ou \texttt{thmnum=}\meta{counter}
         \begin{itemize}
-            \item Les environnements de type théorème ne seront pas numérotés / numérotés dans l'ordre 1, 2, 3... / numérotés dans \meta{counter}. Ici, \meta{counter} doit être un compteur intégré (tel que \texttt{subsection}) ou un compteur défini dans le préambule (avec l'option \texttt{delaythms} activée). Si aucune option n'est utilisée, ils seront numérotés dans \texttt{chapter} (livre) ou \texttt{section} (article).
+            \item Les environnements de type théorème ne seront pas numérotés / numérotés dans l'ordre 1, 2, 3... / numérotés dans \meta{counter}. Si aucune option n'est utilisée, ils seront numérotés dans \texttt{chapter} (livre) ou \texttt{section} (article).
         \end{itemize}
     \item \texttt{regionalref}, \texttt{originalref}
         \begin{itemize}
@@ -1481,7 +1470,7 @@ De plus, les options \texttt{oneside} et \texttt{twoside} couramment utilisées 
 
 
 %<*minimalist-doc,einfart-doc-en,simplivre-doc-en>
-%<minimalist-doc>\clearpage
+%<minimalist-doc>% \clearpage
 \LevelOneTitle{Instructions by topic}
 
 \LevelTwoTitle{Language configuration}
@@ -1573,7 +1562,7 @@ For example, \lstinline|\AddLanguageSetting(German){\color{orange}}| can make al
 %</einfart-doc-cn,simplivre-doc-cn>
 %
 %<*einfart-doc-fr,simplivre-doc-fr>
-%<einfart-doc-fr>\clearpage
+%<einfart-doc-fr>% \clearpage
 \LevelOneTitle{Instructions par sujet}
 
 \LevelTwoTitle{Configurer la langue}
@@ -1652,6 +1641,10 @@ By default, when referenced, the name of the theorem matches the current context
 \end{tip}
 
 \UseLanguage{English}
+
+\begin{tip}
+    Please refer to the documentation of the package \textsf{create-theorem} to see how to declare new theorem-like environments.
+\end{tip}
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 %
 %<*einfart-doc-cn,simplivre-doc-cn>
@@ -1689,6 +1682,10 @@ By default, when referenced, the name of the theorem matches the current context
 \end{tip}
 
 \UseLanguage{Chinese}
+
+\begin{tip}
+    请参阅 \textsf{create-theorem} 的说明文档以获知如何定义新的定理类环境。
+\end{tip}
 %</einfart-doc-cn,simplivre-doc-cn>
 %
 %<*einfart-doc-fr,simplivre-doc-fr>
@@ -1724,250 +1721,21 @@ Par défaut, lors du référencement, le nom du théorème correspond au context
 \end{tip}
 
 \UseLanguage{French}
+
+\begin{tip}
+    Veuillez consulter la documentation du paquet \textsf{create-theorem} pour voir comment déclarer de nouveaux environnements de type théorème.
+\end{tip}
 %</einfart-doc-fr,simplivre-doc-fr>
 
 
 
 %<*minimalist-doc,einfart-doc-en,simplivre-doc-en>
-\LevelTwoTitle{Define a new theorem-like environment}
-
-If you need to define a new theorem-like environment, you must first define the name of the environment in the language to use:
-\begin{itemize}
-    \item \lstinline|\NameTheorem[|\meta{language name}\lstinline|]{|\meta{name of environment}\lstinline|}{|\meta{name string}\lstinline|}|
-\end{itemize}
-For \meta{language name}, please refer to the section on language configuration. When \meta{language name} is not specified, the name will be set for all supported languages. In addition, environments with or without asterisk share the same name, therefore, \lstinline|\NameTheorem{envname*}{...}| has the same effect as \lstinline|\NameTheorem{envname}{...}| .
-
-\medskip
-And then define this environment in one of following five ways:
-\begin{itemize}
-    \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
-        \begin{itemize}
-            \item Define an unnumbered environment \meta{name of environment}
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}|
-        \begin{itemize}
-            \item Define a numbered environment \meta{name of environment}, numbered in order 1,2,3,\dots
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}[|\meta{numbered like}\lstinline|]|
-        \begin{itemize}
-            \item Define a numbered environment \meta{name of environment}, which shares the counter \meta{numbered like}
-        \end{itemize}
-%<minimalist-doc>\clearpage
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
-        \begin{itemize}
-            \item Define a numbered environment \meta{name of environment}, numbered within the counter \meta{numbered within}
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|\\
-    \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|
-        \begin{itemize}
-            \item Identify \meta{name of environment} with \meta{existed environment} or \meta{existed environment}\lstinline|*|.
-            \item This method is usually useful in the following two situations:
-                \begin{enumerate}
-                    \item To use a more concise name. For example, with \lstinline|\CreateTheorem{thm}(theorem)|, one can then use the name \texttt{thm} to write theorem.
-                    \item To remove the numbering of some environments. For example, one can remove the numbering of the \texttt{remark} environment with \lstinline|\CreateTheorem{remark}(remark*)|.
-                \end{enumerate}
-        \end{itemize}
-\end{itemize}
-
-\begin{tip}
-    This macro utilizes the feature of \textsf{amsthm} internally, so the traditional \texttt{theoremstyle} is also applicable to it. One only needs declare the style before the relevant definitions.
-\end{tip}
-
-% \def\proofideanameEN{Idea}
-\NameTheorem[EN]{proofidea}{Idea}
-\CreateTheorem*{proofidea*}
-%<minimalist-doc,einfart-doc-en>\CreateTheorem{proofidea}<subsection>
-%<simplivre-doc-en>\CreateTheorem{proofidea}<section>
-
-\bigskip
-Here is an example. The following code:
-
-\begin{code}
-\NameTheorem[EN]{proofidea}{Idea}
-\CreateTheorem*{proofidea*}
-%<minimalist-doc,einfart-doc-en>\CreateTheorem{proofidea}<subsection>
-%<simplivre-doc-en>\CreateTheorem{proofidea}<section>
-\end{code}
-
-%<minimalist-doc,einfart-doc-en>defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within subsection) respectively. They can be used in English context. 
-%<simplivre-doc-en>defines an unnumbered environment \lstinline|proofidea*| and a numbered environment \lstinline|proofidea| (numbered within section) respectively. They can be used in English context. 
-The effect is as follows:
-
-\vspace{-0.3\baselineskip}
-\begin{proofidea*}
-    The \lstinline|proofidea*| environment.
-\end{proofidea*}
-
-\vspace{-\baselineskip}
-\begin{proofidea}
-    The \lstinline|proofidea| environment.
-\end{proofidea}
-%</minimalist-doc,einfart-doc-en,simplivre-doc-en>
-%
-%<*einfart-doc-cn,simplivre-doc-cn>
-\LevelTwoTitle{定义新的定理型环境}
-
-若需要定义新的定理类环境，首先要定义这个环境在所用语言下的名称：
-% \vspace{-.15\baselineskip}%
-\begin{itemize}
-    \item \lstinline|\NameTheorem[|\meta{language name}\lstinline|]{|\meta{name of environment}\lstinline|}{|\meta{name string}\lstinline|}|
-\end{itemize}
-% \vspace{-.15\baselineskip}%
-其中，\meta{language name} 可参阅关于语言设置的小节。当不指定 \meta{language name}时，则会将该名称设置为所有支持语言下的名称。另外，带星号与不带星号的同名环境共用一个名称，因此 \lstinline|\NameTheorem{envname*}{...}| 与 \lstinline|\NameTheorem{envname}{...}| 效果相同。
-
-%<simplivre-doc-cn>\clearpage
-然后用下面五种方式之一定义这一环境：
-\begin{itemize}
-    \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
-        \begin{itemize}
-            \item 定义不编号的环境 \meta{name of environment}
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}|
-        \begin{itemize}
-            \item 定义编号环境 \meta{name of environment}，按顺序编号
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}[|\meta{numbered like}\lstinline|]|
-        \begin{itemize}
-            \item 定义编号环境 \meta{name of environment}，与 \meta{numbered like} 计数器共用编号
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
-        \begin{itemize}
-            \item 定义编号环境 \meta{name of environment}，在 \meta{numbered within} 计数器内编号
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|\\
-    \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|
-        \begin{itemize}
-            \item 将 \meta{name of environment} 与 \meta{existed environment} 或 \meta{existed environment}\lstinline|*| 等同。
-            \item 这种方式通常在两种情况下比较有用：
-                \begin{enumerate}
-                    \item 希望定义更简洁的名称。例如，使用 \lstinline|\CreateTheorem{thm}(theorem)|，便可以直接用名称 \texttt{thm} 来撰写定理。
-                    \item 希望去除某些环境的编号。例如，使用 \lstinline|\CreateTheorem{remark}(remark*)|，便可以去除 \texttt{remark} 环境的编号。
-                \end{enumerate}
-        \end{itemize}
-\end{itemize}
-
-\begin{tip}
-    其内部使用了 \textsf{amsthm}，因此传统的 \texttt{theoremstyle} 对其也是适用的，只需在相关定义前标明即可。
-\end{tip}
-
-% \def\proofideanameCN{思路}
-\NameTheorem[CN]{proofidea}{思路}
-\CreateTheorem*{proofidea*}
-%<einfart-doc-cn>\CreateTheorem{proofidea}<subsection>
-%<simplivre-doc-cn>\CreateTheorem{proofidea}<section>
-
-% \bigskip
-\clearpage
-下面提供一个例子。这三行代码：
-
-\begin{code}
-\NameTheorem[CN]{proofidea}{思路}
-\CreateTheorem*{proofidea*}
-%<einfart-doc-cn>\CreateTheorem{proofidea}<subsection>
-%<simplivre-doc-cn>\CreateTheorem{proofidea}<section>
-\end{code}
-
-%<einfart-doc-cn>可以分别定义不编号的环境 \lstinline|proofidea*| 和编号的环境 \lstinline|proofidea| (在 subsection 内编号)，它们支持在简体中文语境中使用，效果如下所示:
-%<simplivre-doc-cn>可以分别定义不编号的环境 \lstinline|proofidea*| 和编号的环境 \lstinline|proofidea| (在 section 内编号)，它们支持在简体中文语境中使用，效果如下所示:
-
-\vspace{-.3\baselineskip}
-\begin{proofidea*}
-    \lstinline|proofidea*| 环境。
-\end{proofidea*}
-\vspace{-.5\baselineskip}
-\begin{proofidea}
-    \lstinline|proofidea| 环境。
-\end{proofidea}
-%</einfart-doc-cn,simplivre-doc-cn>
-%
-%<*einfart-doc-fr,simplivre-doc-fr>
-\LevelTwoTitle{Définir un nouvel environnement de type théorème}
-
-Si vous avez besoin de définir un nouvel environnement de type théorème, vous devez d'abord définir le nom de l'environnement dans le langage à utiliser :
-\begin{itemize}
-    \item \lstinline|\NameTheorem[|\meta{language name}\lstinline|]{|\meta{name of environment}\lstinline|}{|\meta{name string}\lstinline|}|
-\end{itemize}
-Pour \meta{language name}, veuillez vous référer à la section sur la configuration de la langue. Lorsqu'il n'est pas spécifié, le nom sera défini pour toutes les langues prises en charge. De plus, les environnements avec ou sans astérisque partagent le même nom, donc \lstinline|\NameTheorem{envname*}{...}| a le même effet que \lstinline|\NameTheorem{envname}{...}| .
-
-\medskip
-Ensuite, créez cet environnement de l'une des cinq manières suivantes :
-\begin{itemize}
-    \item \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}|
-        \begin{itemize}
-            \item Définir un environnement \meta{name of environment} non numéroté
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}|
-        \begin{itemize}
-            \item Définir un environnement \meta{name of environment} numéroté dans l'ordre 1, 2, 3, \dots
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}[|\meta{numbered like}\lstinline|]|
-        \begin{itemize}
-            \item Définir un environnement \meta{name of environment} numéroté, qui partage le compteur \meta{numbered like}
-        \end{itemize}
-%<einfart-doc-fr>\clearpage
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}<|\meta{numbered within}\lstinline|>|
-        \begin{itemize}
-            \item Définir un environnement \meta{name of environment} numéroté dans le compteur \meta{numbered within}
-        \end{itemize}
-    \item \lstinline|\CreateTheorem{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|\\
-    \lstinline|\CreateTheorem*{|\meta{name of environment}\lstinline|}(|\meta{existed environment}\lstinline|)|
-        \begin{itemize}
-            \item Identifiez \meta{name of environment} avec \meta{existed environment} ou \meta{existed environment}\lstinline|*|.
-            \item Cette méthode est généralement utile dans les deux situations suivantes :
-                \begin{enumerate}
-                    \item Pour utiliser un nom plus concis. Par exemple, avec \lstinline|\CreateTheorem{thm}(theorem)|, on peut alors utiliser le nom \texttt{thm} pour écrire le théorème.
-                    \item Pour supprimer la numérotation de certains environnements. Par exemple, on peut supprimer la numérotation de l'environnement \texttt{remark} avec \lstinline|\CreateTheorem{remark}(remark*)|.
-                \end{enumerate}
-        \end{itemize}
-\end{itemize}
-
-\begin{tip}
-    Cette macro utilise la fonctionnalité de \textsf{amsthm} en interne, donc le traditionnel \texttt{theoremstyle} lui est également applicable. Il suffit de déclarer le style avant les définitions pertinentes.
-\end{tip}
-
-\NameTheorem[FR]{proofidea}{Idée}
-\CreateTheorem*{proofidea*}
-%<einfart-doc-fr>\CreateTheorem{proofidea}<subsection>
-%<simplivre-doc-fr>\CreateTheorem{proofidea}<section>
-
-\bigskip
-Voici un exemple. Le code suivant :
-
-\begin{code}
-\NameTheorem[FR]{proofidea}{Idée}
-\CreateTheorem*{proofidea*}
-%<einfart-doc-fr>\CreateTheorem{proofidea}<subsection>
-%<simplivre-doc-fr>\CreateTheorem{proofidea}<section>
-\end{code}
-
-%<einfart-doc-fr>définit un environnement non numéroté \lstinline|proofidea*| et un environnement numéroté \lstinline|proofidea| (numérotés dans la sous-section) respectivement. Ils peuvent être utilisés dans le contexte français. L'effet est le suivant :
-%<simplivre-doc-fr>définit un environnement non numéroté \lstinline|proofidea*| et un environnement numéroté \lstinline|proofidea| (numérotés dans la section) respectivement. Ils peuvent être utilisés dans le contexte français. L'effet est le suivant :
-
-\vspace{-0.3\baselineskip}
-\begin{proofidea*}
-    La environnement \lstinline|proofidea*| .
-\end{proofidea*}
-
-\vspace{-\baselineskip}
-\begin{proofidea}
-    La environnement \lstinline|proofidea| .
-\end{proofidea}
-%</einfart-doc-fr,simplivre-doc-fr>
-
-
-
-%<*minimalist-doc,einfart-doc-en,simplivre-doc-en>
-%<simplivre-doc-en>\clearpage
+%<simplivre-doc-en>% \clearpage
 \LevelTwoTitle{Draft mark}
 
 You can use \lstinline|\dnf| to mark the unfinished part. For example:
 \begin{itemize}
     \item \lstinline|\dnf| or \lstinline|\dnf<...>|. The effect is: \dnf~ or \dnf<...>. \\The prompt text changes according to the current language. For example, it will be displayed as \UseOtherLanguage{French}{\dnf} in French mode.
-\end{itemize}
-
-Similarly, there is \lstinline|\needgraph| : 
-\begin{itemize}
-    \item \lstinline|\needgraph| or \lstinline|\needgraph<...>|. The effect is: \needgraph or \needgraph<...>The prompt text changes according to the current language. For example, in French mode, it will be displayed as \UseOtherLanguage{French}{\needgraph}
 \end{itemize}
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 %
@@ -1978,11 +1746,6 @@ Similarly, there is \lstinline|\needgraph| :
 \begin{itemize}
     \item \lstinline|\dnf| 或 \lstinline|\dnf<...>|。效果为：\dnf~或 \dnf<...>。\\其提示文字与当前语言相对应，例如，在法语模式下将会显示为 \UseOtherLanguage{French}{\dnf}。
 \end{itemize}
-
-类似的，还有 \lstinline|\needgraph| ：
-\begin{itemize}
-    \item \lstinline|\needgraph| 或 \lstinline|\needgraph<...>|。效果为：\needgraph~或 \needgraph<...>其提示文字与当前语言相对应，例如，在法语模式下将会显示为 \UseOtherLanguage{French}{\needgraph}
-\end{itemize}
 %</einfart-doc-cn,simplivre-doc-cn>
 %
 %<*einfart-doc-fr,simplivre-doc-fr>
@@ -1992,17 +1755,12 @@ Vous pouvez utiliser \lstinline|\dnf| pour marquer la partie inachevée. Par exa
 \begin{itemize}
     \item \lstinline|\dnf| ou \lstinline|\dnf<...>|. L'effet est : \dnf~ ou \dnf<...>. \\Le texte à l'intérieur changera en fonction de la langue actuelle. Par exemple, il sera affiché sous la forme \UseOtherLanguage{English}{\dnf} en mode anglais.
 \end{itemize}
-
-De même, il y a aussi \lstinline|\needgraph| : 
-\begin{itemize}
-    \item \lstinline|\needgraph| ou \lstinline|\needgraph<...>|. L'effet est : \needgraph ou \needgraph<...>Le texte de l'invite change en fonction de la langue actuelle. Par exemple, en mode anglais, il sera affiché sous la forme \UseOtherLanguage{English}{\needgraph}
-\end{itemize}
 %</einfart-doc-fr,simplivre-doc-fr>
 
 
 
 %<*minimalist-doc,einfart-doc-en>
-%<minimalist-doc>\clearpage
+%<minimalist-doc>% \clearpage
 \LevelTwoTitle{Title, abstract and keywords}
 
 %<minimalist-doc>\minimart{} has both the features of standard classes and that of the \AmS{} classes.
@@ -2162,7 +1920,7 @@ Parmi eux, l'ordre mutuel de \lstinline|\address|, \lstinline|\curraddr|, \lstin
 
 
 %<*minimalist-doc,einfart-doc-en,simplivre-doc-en>
-%<minimalist-doc>\clearpage
+%<minimalist-doc>% \clearpage
 \LevelTwoTitle{Miscellaneous}
 
 \LevelThreeTitle{On the line numbers}
@@ -2199,7 +1957,7 @@ Since the font in the theorem-like environments is the same as that of the main 
 %</einfart-doc-cn,simplivre-doc-cn>
 %
 %<*einfart-doc-fr,simplivre-doc-fr>
-%<einfart-doc-fr>\clearpage
+%<einfart-doc-fr>% \clearpage
 \LevelTwoTitle{Divers}
 
 \LevelThreeTitle{Les numéros de ligne}
@@ -2220,7 +1978,7 @@ Puisque la police dans les environnements de type théorème est la même que ce
 
 
 %<*minimalist-doc,einfart-doc-en,simplivre-doc-en>
-%<einfart-doc-en>\clearpage
+%<einfart-doc-en>% \clearpage
 \LevelOneTitle{Known issues}
 
 \begin{itemize}[itemsep=.6em]
@@ -2232,7 +1990,7 @@ Puisque la police dans les environnements de type théorème est la même que ce
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 %
 %<*einfart-doc-cn,simplivre-doc-cn>
-%<einfart-doc-cn>\clearpage
+%<einfart-doc-cn>% \clearpage
 \LevelOneTitle{目前存在的问题}
 
 \begin{itemize}[itemsep=.6em]

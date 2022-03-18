@@ -1012,7 +1012,7 @@
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
     \renewcommand*{\sectionmark}[1]{
-      \markright{\g_minimalist_section_decoration_char_tl\nobreakspace\arabic{section}\nobreakspace\g_minimalist_section_decoration_char_tl\nobreakspace\nobreakspace\nobreakspace#1}}
+      \markright{\protect\g_minimalist_section_decoration_char_tl\nobreakspace\arabic{section}\nobreakspace\protect\g_minimalist_section_decoration_char_tl\nobreakspace\nobreakspace\nobreakspace#1}}
   }
   {
     \if@twoside

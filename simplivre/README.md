@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2021 by Jinwen XU -->
+<!-- Copyright (C) 2021-2022 by Jinwen XU -->
 
 # `simplivre` : write you books in a simple and clear way
 
