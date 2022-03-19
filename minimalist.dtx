@@ -20,7 +20,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2022/03/17} {}
+  {2022/03/19} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -29,7 +29,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2022/03/17} {}
+  {2022/03/19} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -38,7 +38,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2022/03/17} {}
+  {2022/03/19} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -47,7 +47,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2022/03/17} {}
+  {2022/03/19} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -56,21 +56,21 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2022/03/17} {}
+  {2022/03/19} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2022/03/17} {}
+  {2022/03/19} {}
   {The plain style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2022/03/17} {}
+  {2022/03/19} {}
   {The classical style of minimalist}
 %</minimalist-classical>
 
@@ -938,6 +938,40 @@
     \end{minipage}
   }
 
+%<*minimalist-plain>
+\fancypagestyle { fancy }
+  {
+    \fancyhf{}
+    \if@twoside
+      \fancyfoot[RO]{\textcolor{main-text!30!paper}{ \small \l_minimalist_rightmark_tl }
+        \rlap{\nobreakspace\nobreakspace\nobreakspace\nobreakspace\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
+      \fancyfoot[LE]{\leavevmode\llap{\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}
+        \nobreakspace\nobreakspace\nobreakspace\nobreakspace}
+        \textcolor{main-text!30!paper}{ \l_minimalist_leftmark_tl }}
+    \else
+      \fancyfoot[R]{\textcolor{main-text!30!paper}{ \l_minimalist_rightmark_tl }
+        \rlap{\nobreakspace\nobreakspace\nobreakspace\nobreakspace\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
+    \fi
+    \renewcommand{\headrulewidth}{0pt}
+  }
+\pagestyle{fancy}
+
+\fancypagestyle { plain }
+  {
+    \fancyhf{}
+    \if@twoside
+      \fancyfoot[RO]{
+        \nobreakspace\rlap{\nobreakspace\nobreakspace\nobreakspace\nobreakspace\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
+      \fancyfoot[LE]{\leavevmode\llap{\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}
+        \nobreakspace\nobreakspace}}
+    \else
+      \fancyfoot[R]{
+        \nobreakspace\nobreakspace\nobreakspace\rlap{\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
+    \fi
+    \renewcommand{\headrulewidth}{0pt}
+  }
+%</minimalist-plain>
+%<*minimalist-classical>
 \fancypagestyle { fancy }
   {
     \fancyhf{}
@@ -969,6 +1003,7 @@
     \fi
     \renewcommand{\headrulewidth}{0pt}
   }
+%</minimalist-classical>
 
 \bool_if:NTF \l__minimalist_is_book_bool
   {
@@ -1130,8 +1165,14 @@
       \LocallyStopLineNumbers
         % \phantomsection\addcontentsline{toc}{chapter}{#1}
       \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+%<*minimalist-plain>
+      {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
+        \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{\phantom{*}}}}#1}
+%</minimalist-plain>
+%<*minimalist-classical>
       {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
         \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
+%</minimalist-classical>
       [\ResumeLineNumbers]
   }
   {
