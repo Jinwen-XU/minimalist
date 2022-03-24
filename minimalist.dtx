@@ -952,67 +952,167 @@
 %<*minimalist-plain>
 \fancypagestyle { fancy }
   {
-    \fancyhf{}
+    \fancyhf { }
     \if@twoside
-      \fancyfoot[RO]{\textcolor{main-text!30!paper}{ \small \l_minimalist_rightmark_tl }
-        \rlap{\nobreakspace\nobreakspace\nobreakspace\nobreakspace\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
-      \fancyfoot[LE]{\leavevmode\llap{\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}
-        \nobreakspace\nobreakspace\nobreakspace\nobreakspace}
-        \textcolor{main-text!30!paper}{ \l_minimalist_leftmark_tl }}
+      \fancyfoot[RO]
+        {
+          \textcolor { main-text!30!paper } { \small \l_minimalist_rightmark_tl }
+          \rlap
+            {
+              \nobreakspace \nobreakspace \nobreakspace \nobreakspace
+              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+            }
+        }
+      \fancyfoot[LE]
+        {
+          \leavevmode
+          \llap
+            {
+              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \nobreakspace \nobreakspace \nobreakspace \nobreakspace
+            }
+          \textcolor { main-text!30!paper } { \small \l_minimalist_leftmark_tl }
+        }
     \else
-      \fancyfoot[R]{\textcolor{main-text!30!paper}{ \l_minimalist_rightmark_tl }
-        \rlap{\nobreakspace\nobreakspace\nobreakspace\nobreakspace\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
+      \fancyfoot[R]
+        {
+          \textcolor { main-text!30!paper } { \small \l_minimalist_rightmark_tl }
+          \rlap
+            {
+              \nobreakspace \nobreakspace \nobreakspace \nobreakspace
+              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+            }
+        }
     \fi
-    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand { \headrulewidth } { 0pt }
   }
-\pagestyle{fancy}
+\pagestyle { fancy }
 
 \fancypagestyle { plain }
   {
-    \fancyhf{}
+    \fancyhf { }
     \if@twoside
-      \fancyfoot[RO]{
-        \nobreakspace\rlap{\nobreakspace\nobreakspace\nobreakspace\nobreakspace\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
-      \fancyfoot[LE]{\leavevmode\llap{\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}
-        \nobreakspace\nobreakspace}}
+      \fancyfoot[RO]
+        {
+          \nobreakspace
+          \rlap
+            {
+              \nobreakspace \nobreakspace \nobreakspace \nobreakspace
+              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+            }
+        }
+      \fancyfoot[LE]
+        {
+          \leavevmode
+          \llap
+            {
+              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \nobreakspace \nobreakspace \nobreakspace \nobreakspace
+            }
+          \nobreakspace
+        }
     \else
-      \fancyfoot[R]{
-        \nobreakspace\nobreakspace\nobreakspace\rlap{\textcolor{main-text!75!paper}{\minimalist_bfseries: \thepage}}}
+      \fancyfoot[R]
+        {
+          \nobreakspace
+          \rlap
+            {
+              \nobreakspace \nobreakspace \nobreakspace \nobreakspace
+              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+            }
+        }
     \fi
-    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand { \headrulewidth } { 0pt }
   }
 %</minimalist-plain>
 %<*minimalist-classical>
 \fancypagestyle { fancy }
   {
-    \fancyhf{}
+    \fancyhf { }
     \if@twoside
-      \fancyfoot[RO]{\small\textcolor{main-text!30!paper}{ \l_minimalist_rightmark_tl }
-        \nobreakspace\nobreakspace\rlap{\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\nobreakspace\nobreakspace\thepage}}
-      \fancyfoot[LE]{\small\leavevmode\llap{\thepage
-        \nobreakspace\nobreakspace\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }}
-        \nobreakspace\nobreakspace\textcolor{main-text!30!paper}{ \l_minimalist_leftmark_tl }}
+      \fancyfoot[RO]
+        {
+          \small
+          \textcolor { main-text!30!paper } { \l_minimalist_rightmark_tl }
+          \nobreakspace \nobreakspace
+          \rlap
+            {
+              \textcolor { main-text!27!paper } { \l_minimalist_sep_bar }
+              \nobreakspace \nobreakspace
+              \thepage
+            }
+        }
+      \fancyfoot[LE]
+        {
+          \small
+          \leavevmode
+          \llap
+            {
+              \thepage
+              \nobreakspace \nobreakspace
+              \textcolor { main-text!27!paper } { \l_minimalist_sep_bar }
+            }
+          \nobreakspace \nobreakspace
+          \textcolor { main-text!30!paper } { \l_minimalist_leftmark_tl }
+        }
     \else
-      \fancyfoot[R]{\small\textcolor{main-text!30!paper}{ \l_minimalist_rightmark_tl }
-        \nobreakspace\nobreakspace\rlap{\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\nobreakspace\nobreakspace\thepage}}
+      \fancyfoot[R]
+        {
+          \small
+          \textcolor { main-text!30!paper } { \l_minimalist_rightmark_tl }
+          \nobreakspace \nobreakspace
+          \rlap
+            {
+              \textcolor { main-text!27!paper } { \l_minimalist_sep_bar }
+              \nobreakspace \nobreakspace
+              \thepage
+            }
+        }
     \fi
-    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand { \headrulewidth } { 0pt }
   }
-\pagestyle{fancy}
+\pagestyle { fancy }
 
 \fancypagestyle { plain }
   {
-    \fancyhf{}
+    \fancyhf { }
     \if@twoside
-      \fancyfoot[RO]{\small
-        \nobreakspace\rlap{\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\nobreakspace\nobreakspace\thepage}}
-      \fancyfoot[LE]{\small\leavevmode\llap{\thepage
-        \nobreakspace\nobreakspace\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }}}
+      \fancyfoot[RO]
+        {
+          \small
+          \nobreakspace
+          \rlap
+            {
+              \textcolor { main-text!27!paper } { \l_minimalist_sep_bar }
+              \nobreakspace \nobreakspace
+              \thepage
+            }
+        }
+      \fancyfoot[LE]
+        {
+          \small
+          \leavevmode
+          \llap
+            {
+              \thepage
+              \nobreakspace \nobreakspace
+              \textcolor { main-text!27!paper } { \l_minimalist_sep_bar }
+            }
+        }
     \else
-      \fancyfoot[R]{\small
-        \nobreakspace\rlap{\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\nobreakspace\nobreakspace\thepage}}
+      \fancyfoot[R]
+        {
+          \small
+          \nobreakspace
+          \rlap
+            {
+              \textcolor { main-text!27!paper } { \l_minimalist_sep_bar }
+              \nobreakspace \nobreakspace
+              \thepage
+            }
+        }
     \fi
-    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand { \headrulewidth } { 0pt }
   }
 %</minimalist-classical>
 
@@ -1023,35 +1123,31 @@
         \newcommand{ \minimalist_draw_help_line: }{}
       }
       {
-        \newcommand{ \minimalist_draw_help_line: }{
+        \newcommand{ \minimalist_draw_help_line: }
+          {
             \begin{tikzpicture}[remember~picture,overlay]
-                \foreach\i in {0,1,...,5}{
-                    \fill[opacity=0.12-0.02*\i]
-                        ($(current~page~text~area.north~east)
-                            +(-\i*0.5em-.025em,-10pt+\i*1.1pt)$)
-                        rectangle ($(current~page~text~area.south~east)
-                            +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
-                    \shade[top~color=paper,bottom~color=main-text,opacity=0.12-0.02*\i]
-                        ($(current~page~text~area.north~east)
-                            +(-\i*0.5em-.025em,2pt)$)
-                        rectangle ($(current~page~text~area.north~east)
-                            +(-\i*0.5em+.025em,-10pt+\i*1.1pt)$);
-                    \shade[top~color=main-text,bottom~color=paper,opacity=0.12-0.02*\i]
-                        ($(current~page~text~area.south~east)
-                            +(-\i*0.5em-.025em,-2pt)$)
-                        rectangle ($(current~page~text~area.south~east)
-                            +(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
-                }
+              \foreach\i in {0,1,...,5}{
+                \fill[opacity=0.12-0.02*\i]
+                    ($(current~page~text~area.north~east)+(-\i*0.5em-.025em,-10pt+\i*1.1pt)$)
+                      rectangle ($(current~page~text~area.south~east)+(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+                \shade[top~color=paper,bottom~color=main-text,opacity=0.12-0.02*\i]
+                    ($(current~page~text~area.north~east)+(-\i*0.5em-.025em,2pt)$)
+                      rectangle ($(current~page~text~area.north~east)+(-\i*0.5em+.025em,-10pt+\i*1.1pt)$);
+                \shade[top~color=main-text,bottom~color=paper,opacity=0.12-0.02*\i]
+                    ($(current~page~text~area.south~east)+(-\i*0.5em-.025em,-2pt)$)
+                      rectangle ($(current~page~text~area.south~east)+(-\i*0.5em+.025em,10pt-\i*1.1pt)$);
+              }
             \end{tikzpicture}
-        }
+          }
       }
-    \fancypagestyle{part}{
-        \fancyhf{}
-        \renewcommand{\headrulewidth}{0pt}
-        \fancyhead[C]{ \minimalist_draw_help_line: }
-    }
-    \addtolength{\headheight}{20pt}
-    \addtolength{\topmargin}{-20pt}
+    \fancypagestyle { part }
+      {
+        \fancyhf { }
+        \renewcommand { \headrulewidth } { 0pt }
+        \fancyhead[C] { \minimalist_draw_help_line: }
+      }
+    \addtolength { \headheight } { 20pt }
+    \addtolength { \topmargin } { -20pt }
     \if@twoside
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{}}
     \else
