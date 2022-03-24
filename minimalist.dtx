@@ -296,6 +296,17 @@
         \RequirePackage { mathpazo }
         \RequirePackage { newpxtext }
         \RequirePackage { amssymb }
+        \sys_if_engine_pdftex:F
+          {
+            \setsansfont { texgyreheros }
+              [
+                Scale          = MatchUppercase ,
+                UprightFont    = *-regular ,
+                BoldFont       = *-bold ,
+                ItalicFont     = *-italic ,
+                BoldItalicFont = *-bolditalic ,
+              ]
+          }
       }
 %</minimart|minimbook>
 %
