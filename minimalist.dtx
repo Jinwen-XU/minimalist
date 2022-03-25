@@ -883,7 +883,7 @@
 
 %<*minimalist-plain>
 \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
 \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
 \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
 \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
@@ -1210,11 +1210,11 @@
   }
 \AddLanguageSetting [ schinese ]
   {
-    \renewcommand{\partstring}{第 \nobreakspace\thepart\nobreakspace 部分}
+    \renewcommand{\partstring}{第 \zhnumber{\arabic{part}} 部分}
   }
 \AddLanguageSetting [ tchinese ]
   {
-    \renewcommand{\partstring}{第 \nobreakspace\thepart\nobreakspace 部分}
+    \renewcommand{\partstring}{第 \zhnumber{\arabic{part}} 部分}
   }
 \AddLanguageSetting [ japanese ]
   {
@@ -1260,6 +1260,37 @@
     }
 
     %% Chapter
+%<*minimalist-plain>
+    \titleformat{\chapter}
+      {\thispagestyle{fancy}
+      \LocallyStopLineNumbers
+      \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      {
+        \rlap
+          {
+            \hspace*{-.5em}
+            \color{main-text!10!paper}
+            \fontsize{90}{0}\selectfont\raisebox{-10pt}{ \usefont{U}{zeur}{b}{n} \thechapter }
+          }
+        #1
+      }
+      [\ResumeLineNumbers]
+    \titleformat{name=\chapter,numberless}
+      {\thispagestyle{fancy}
+      \LocallyStopLineNumbers
+        % \phantomsection\addcontentsline{toc}{chapter}{#1}
+      \color{main-text!90!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      {
+        \rlap
+          {
+            \hspace*{-.5em}
+            \fontsize{80}{0}\selectfont\raisebox{-10pt}{ \phantom{*} }
+          }
+        #1
+      }
+      [\ResumeLineNumbers]
+%</minimalist-plain>
+%<*minimalist-classical>
     \titleformat{\chapter}
       {\thispagestyle{fancy}
       \LocallyStopLineNumbers
@@ -1272,15 +1303,10 @@
       \LocallyStopLineNumbers
         % \phantomsection\addcontentsline{toc}{chapter}{#1}
       \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
-%<*minimalist-plain>
-      {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
-        \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{\phantom{*}}}}#1}
-%</minimalist-plain>
-%<*minimalist-classical>
       {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
         \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
-%</minimalist-classical>
       [\ResumeLineNumbers]
+%</minimalist-classical>
   }
   {
     %% Part
@@ -1428,7 +1454,7 @@
 \titlecontents{part}
   [0em]
   {\addvspace{1.5pc}\filcenter\normalfont}
-  {\thecontentslabel\nopagebreak\\\nopagebreak\uppercase}
+  { \minimalist_apply_title_numbering_style:N { \thecontentslabel } \nopagebreak\\\nopagebreak\uppercase}
   {}
   {} % without page number
   [\addvspace{.5pc}]
