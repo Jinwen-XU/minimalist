@@ -651,51 +651,39 @@
                 \PassOptionsToPackage { warnings-off = { mathtools-colon, mathtools-overbracket } } { unicode-math }
                 \RequirePackage { unicode-math }
                 \unimathsetup { math-style = ISO, partial = upright, nabla = upright }
-                \setmathfont { Asana-Math.otf }
+                \setmathfont { KpMath-Regular.otf }
+                \setmathfont { KpMath-Sans.otf }
+                  [
+                    range = { \sum, \prod, \coprod }
+                  ]
                 \__minimclass_if_font_exist:nnn { Neo~Euler }
                   {
                     \setmathfont { Neo~Euler }
                       [
                         range             = { up / { Latin, latin, Greek, greek },
                                               bfup / { Latin, latin, Greek, greek },
-                                              cal, bfcal, frak, bffrak,
-                                              `(, `), `[, `], `\{, `\}, `:, `=, \ne, \equiv, `/, \backslash,
-                                              \in, \notin, \ni, \subset, \supset, \subseteq, \supseteq,
-                                              \rightarrow, \leftarrow, \leftrightarrow,
-                                              \longleftarrow, \longrightarrow, \longleftrightarrow,
-                                              \Leftarrow, \Rightarrow, \Leftrightarrow,
-                                              \Longleftarrow, \Longrightarrow, \Longleftrightarrow,
-                                              \nrightarrow, \nleftarrow, \nleftrightarrow,
-                                              \nLeftarrow, \nRightarrow, \nLeftrightarrow,
-                                              \mapsto, \hookrightarrow, \hookleftarrow,
-                                              \leftharpoonup, \rightharpoonup, \leftharpoondown, \rightharpoondown,
-                                              \rightleftharpoons, \leftrightharpoons,
-                                              \sum, \prod, \coprod,
-                                              \sqrt, \int, \iint, \iiint, \oint
+                                              `(, `), `[, `], `\{, `\}
                                             },
-                        script-features   = {},
-                        sscript-features  = {},
                         Scale             = 1.05,
                       ]
                   }{}
                 \setmathfont { latinmodern-math.otf }
                   [
-                    range = { \leq, \geq, \ll, \gg, \lll, \ggg, \leqslant, \geqslant },
-                    Scale = 0.95,
+                    range = { cal, bfcal, frak, bffrak }
                   ]
                 \setmathfont { texgyrepagella-math.otf }
                   [
-                    range = { up / num, bfup / num }
+                    range = { it / { Latin, latin }, bfit / { Latin, latin }, up / num, bfup / num }
                   ]
 
                 \hook_gput_code:nnn { begindocument } { minimclass }
                   {
                     \NewCommandCopy \minimclass_backup_mid: \mid
                     \RenewDocumentCommand \mid {}
-                      { \skip_horizontal:n {-.15em} \minimclass_backup_mid: \skip_horizontal:n {-.15em} }
+                      { \skip_horizontal:n {-.1em} \minimclass_backup_mid: \skip_horizontal:n {-.1em} }
                     \NewCommandCopy \minimclass_backup_nmid: \nmid
                     \RenewDocumentCommand \nmid {}
-                      { \skip_horizontal:n {-.15em} \minimclass_backup_nmid: \skip_horizontal:n {-.15em} }
+                      { \skip_horizontal:n {-.1em} \minimclass_backup_nmid: \skip_horizontal:n {-.1em} }
                   }
 
                 \RequirePackage { tikz-cd }
@@ -710,10 +698,10 @@
                     \hbox_set:Nn \l__minimclass_xarrows_below_box { \ensuremath { \scriptstyle #1 } }
                     \hbox_set:Nn \l__minimclass_xarrows_above_box { \ensuremath { \scriptstyle #2 } }
                     \dim_set:Nn \l__minimclass_xarrows_length_dim
-                      { \dim_eval:n { \dim_max:nn { \box_wd:N \l__minimclass_xarrows_below_box } { \box_wd:N \l__minimclass_xarrows_above_box } + .8em } }
+                      { \dim_eval:n { \dim_max:nn { \box_wd:N \l__minimclass_xarrows_below_box } { \box_wd:N \l__minimclass_xarrows_above_box } + 1em } }
                     \mathrel
                       {
-                        \tikz [ #3, baseline = -.55ex, every~node/.style = { inner~sep = 0pt } ]
+                        \tikz [ #3, line~width = .6pt, baseline = -.5ex, every~node/.style = { inner~sep = 0pt }, >={Stealth[round,length=3.4pt,width=6.15pt,inset=2.25pt]} ]
                           \draw (0,0) #4
                             node [ below = 3pt ] { \box_use:N \l__minimclass_xarrows_below_box }
                             node [ above = 2pt ] { \box_use:N \l__minimclass_xarrows_above_box }
