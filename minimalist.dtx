@@ -1536,7 +1536,20 @@
 %%================================
 %%  Blank page
 %%================================
-\newcommand{\blinkpagetext}{This~page~is~intentionally~left~blank}
+\projlib_langauge_define_multilingual_text:Nn \bl@nkpagetext
+  {
+    , EN = This~page~is~intentionally~left~blank
+    , FR = Cette~page~a~été~intentionellement~laissée~vide
+    , DE = Diese~Seite~wurde~absichtlich~leer~gelassen
+    , IT = Questa~pagina~è~stata~lasciata~vuota~intenzionalmente
+    , PT = Esta~página~foi~intencionalmente~deixada~em~branco
+    , BR = Esta~página~foi~intencionalmente~deixada~em~branco
+    , ES = Esta~página~se~ha~dejado~intencionadamente~en~blanco
+    , CN = 此页为有意留为空白
+    , TC = 此頁為有意留為空白
+    , JP = このページは意図的に空白にしてあります
+    , RU = Эта~страница~намеренно~оставлена~пустой
+  }
 \renewcommand{\cleardoublepage}{
   \relax
   \clearpage
@@ -1545,7 +1558,7 @@
   \hook_gput_next_code:nn { shipout/background }
     {
       \put(0.5\paperwidth,-0.5\paperheight){
-      \makebox[0pt]{\large\color{main-text!10!paper}\blinkpagetext}}
+      \makebox[0pt]{\large\color{main-text!10!paper}\bl@nkpagetext}}
     }
   \null\newpage\fi\fi
 }
