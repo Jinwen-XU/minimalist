@@ -1828,169 +1828,10 @@
 %%  Index
 %%================================
 \hook_gput_code:nnn { begindocument/before } { minimalist }
-{
-  \hook_gput_code:nnn { cmd/printindex/before } { minimalist } { \LocallyStopLineNumbers }
-  \hook_gput_code:nnn { cmd/printindex/after } { minimalist } { \ResumeLineNumbers }
-}
-
-
-\bool_if:NF \l__minimalist_is_book_bool {
-
-%%================================
-%%  Title block style
-%%================================
-%<*minimalist-plain>
-\renewcommand{\@maketitle}{
-  \LocallyStopLineNumbers
-  \begin{center}
-    \let\footnote\thanks
-    {\minimalist_bfseries:\sffamily\scshape\Large\@title}\\\bigskip
-    \color{main-text!80!paper}
-    {\small\scshape\@author}
-    \par\smallskip\vspace{-\parskip}
-    {\small\@date}
-  \end{center}
-  \ifx\@date\@empty\medskip\fi
-  \medskip\par
-  \ResumeLineNumbers
-}
-%</minimalist-plain>
-%<*minimalist-classical>
-\renewcommand{\@maketitle}{
-  \LocallyStopLineNumbers
-  \noindent
-  {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}}
-  % \vspace{-\parskip}
-  \vspace{-.5\baselineskip}
-  \begin{flushright}
-    \let\footnote\thanks
-    {\minimalist_bfseries:\@title}\\\medskip
-    \color{main-text!80!paper}
-    {\small\scshape\@author}
-    \par\vspace{-\parskip}\vspace{2pt}
-    {\small\@date}
-  \end{flushright}
-  % \vspace{-\parskip}
-  \vspace{-.5\baselineskip}
-  \ifx\@date\@empty
-      \vspace{\baselineskip}
-      \vspace{1.2\parskip}
-  \else
-      \vspace{-.5\baselineskip}
-  \fi
-  {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}\par}
-  \ResumeLineNumbers
-}
-%</minimalist-classical>
-
-\hook_gput_code:nnn { cmd/maketitle/after } { minimalist } { \thispagestyle{fancy} }
-
-%%================================
-%%  Abstract style
-%%================================
-%<*minimalist-plain>
-\renewenvironment{abstract}
   {
-    \LocallyStopLineNumbers
-    \vspace{-.5\baselineskip}
-    \begin{center}
-      { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\\
-      \vspace{-.3\baselineskip}
-      \begin{minipage}[t]{.833\textwidth}
-        \vspace{0pt}
-        \color{main-text!80!paper}
-        \footnotesize
-        \parindent=2em
+    \hook_gput_code:nnn { cmd/printindex/before } { minimalist } { \LocallyStopLineNumbers }
+    \hook_gput_code:nnn { cmd/printindex/after } { minimalist } { \ResumeLineNumbers }
   }
-  {
-      \end{minipage}
-    \end{center}
-    \medskip
-    \ResumeLineNumbers
-  }
-%</minimalist-plain>
-%<*minimalist-classical>
-\renewenvironment{abstract}
-  {
-    \LocallyStopLineNumbers
-    \begin{flushright}
-      { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\par
-      \vspace{-\parskip}
-      \vspace{-.25\baselineskip}
-      \begin{minipage}[t]{.833\textwidth}
-        \vspace{0pt}
-        \color{main-text!80!paper}
-        \footnotesize
-        \parindent=2em
-  }
-  {
-      \end{minipage}
-    \end{flushright}
-    \bigskip
-    \ResumeLineNumbers
-  }
-%</minimalist-classical>
-
-%%================================
-%%  Keyword environment
-%%================================
-\DefineMultilingualText { \keywordname }
-  {
-    EN = Keywords                               ,
-    FR = Mots~clés                              ,
-    DE = Schlüsselwörter                        ,
-    IT = Parole~chiave                          ,
-    PT = Palavras~chave                         ,
-    BR = Palavras~chave                         ,
-    ES = Palabras~clave                         ,
-    CN = 关键词                                 ,
-    TC = 關鍵詞                                 ,
-    JP = キーワード                             ,
-    RU = Ключевые~слова                         ,
-  }
-
-%<*minimalist-plain>
-\newenvironment{keyword}{
-  \LocallyStopLineNumbers
-  \vspace{-.75\baselineskip}
-  \begin{center}
-    {\minimalist_bfseries:\scshape\small\keywordname}\\
-    \vspace{-.3\baselineskip}
-    \begin{minipage}[t]{.833\textwidth}
-      \vspace{0pt}
-      \color{main-text!80!paper}
-      \footnotesize
-      \parindent=2em
-      \begin{center}
-}{
-      \end{center}
-    \end{minipage}
-  \end{center}
-  \medskip
-  \ResumeLineNumbers
-}
-%</minimalist-plain>
-%<*minimalist-classical>
-\newenvironment{keyword}{
-  \LocallyStopLineNumbers
-  \vspace{-.5\baselineskip}
-  \begin{flushright}
-    {\minimalist_bfseries:\scshape\small\keywordname}\par
-    \vspace{-\parskip}
-    \vspace{-.30\baselineskip}
-    \begin{minipage}[t]{.833\textwidth}
-      \vspace{0pt}
-      \color{main-text!80!paper}
-      \footnotesize
-      \parindent=2em
-      \raggedleft
-}{
-    \end{minipage}
-  \end{flushright}
-  \bigskip
-  \ResumeLineNumbers
-}
-%</minimalist-classical>
 
 %%================================
 %%  Simulate features of amsart
@@ -1998,7 +1839,185 @@
 \PassOptionsToPackage { amsfashion } { projlib-author }
 \RequirePackage { projlib-author }
 
-}
+%%================================
+%%  Title block style
+%%================================
+\bool_if:NTF \l__minimalist_is_book_bool
+  {
+    \tl_gset:Nn \g__projlib_author_font_author_tl      { \normalfont \scshape }
+    \tl_gset:Nn \g__projlib_author_font_institute_tl   { \large \normalfont }
+    \tl_gset:Nn \g__projlib_author_font_address_tl     { \large \normalfont \itshape }
+    \tl_gset:Nn \g__projlib_author_font_curraddr_tl    { \large \normalfont \itshape }
+    \tl_gset:Nn \g__projlib_author_font_email_tl       { \large \normalfont \ttfamily }
+
+    \RequirePackage { projlib-titlepage }
+    \renewcommand{\maketitle}{
+      \LocallyStopLineNumbers
+      \ProjLibTitlePage [ style = simple ]
+        {
+          , title  = \@title
+          , author = \@author
+          , date   = \@date
+        }
+      \ResumeLineNumbers
+    }
+  }
+  {
+%<*minimalist-plain>
+    \renewcommand{\@maketitle}
+      {
+        \LocallyStopLineNumbers
+        \begin{center}
+          \let\footnote\thanks
+          {\minimalist_bfseries:\sffamily\scshape\Large\@title}\\\bigskip
+          \color{main-text!80!paper}
+          {\small\scshape\@author}
+          \par\smallskip\vspace{-\parskip}
+          {\small\@date}
+        \end{center}
+        \ifx\@date\@empty\medskip\fi
+        \medskip\par
+        \ResumeLineNumbers
+      }
+%</minimalist-plain>
+%<*minimalist-classical>
+    \renewcommand{\@maketitle}
+      {
+        \LocallyStopLineNumbers
+        \noindent
+        {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}}
+        % \vspace{-\parskip}
+        \vspace{-.5\baselineskip}
+        \begin{flushright}
+          \let\footnote\thanks
+          {\minimalist_bfseries:\@title}\\\medskip
+          \color{main-text!80!paper}
+          {\small\scshape\@author}
+          \par\vspace{-\parskip}\vspace{2pt}
+          {\small\@date}
+        \end{flushright}
+        % \vspace{-\parskip}
+        \vspace{-.5\baselineskip}
+        \ifx\@date\@empty
+            \vspace{\baselineskip}
+            \vspace{1.2\parskip}
+        \else
+            \vspace{-.5\baselineskip}
+        \fi
+        {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}\par}
+        \ResumeLineNumbers
+      }
+%</minimalist-classical>
+
+    \hook_gput_code:nnn { cmd/maketitle/after } { minimalist } { \thispagestyle{fancy} }
+
+%%================================
+%%  Abstract style
+%%================================
+%<*minimalist-plain>
+    \renewenvironment{abstract}
+      {
+        \LocallyStopLineNumbers
+        \vspace{-.5\baselineskip}
+        \begin{center}
+          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\\
+          \vspace{-.3\baselineskip}
+          \begin{minipage}[t]{.833\textwidth}
+            \vspace{0pt}
+            \color{main-text!80!paper}
+            \footnotesize
+            \parindent=2em
+      }
+      {
+          \end{minipage}
+        \end{center}
+        \medskip
+        \ResumeLineNumbers
+      }
+%</minimalist-plain>
+%<*minimalist-classical>
+    \renewenvironment{abstract}
+      {
+        \LocallyStopLineNumbers
+        \begin{flushright}
+          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\par
+          \vspace{-\parskip}
+          \vspace{-.25\baselineskip}
+          \begin{minipage}[t]{.833\textwidth}
+            \vspace{0pt}
+            \color{main-text!80!paper}
+            \footnotesize
+            \parindent=2em
+      }
+      {
+          \end{minipage}
+        \end{flushright}
+        \bigskip
+        \ResumeLineNumbers
+      }
+%</minimalist-classical>
+
+%%================================
+%%  Keyword environment
+%%================================
+    \DefineMultilingualText { \keywordname }
+      {
+        EN = Keywords                               ,
+        FR = Mots~clés                              ,
+        DE = Schlüsselwörter                        ,
+        IT = Parole~chiave                          ,
+        PT = Palavras~chave                         ,
+        BR = Palavras~chave                         ,
+        ES = Palabras~clave                         ,
+        CN = 关键词                                 ,
+        TC = 關鍵詞                                 ,
+        JP = キーワード                             ,
+        RU = Ключевые~слова                         ,
+      }
+
+%<*minimalist-plain>
+    \newenvironment{keyword}{
+      \LocallyStopLineNumbers
+      \vspace{-.75\baselineskip}
+      \begin{center}
+        {\minimalist_bfseries:\scshape\small\keywordname}\\
+        \vspace{-.3\baselineskip}
+        \begin{minipage}[t]{.833\textwidth}
+          \vspace{0pt}
+          \color{main-text!80!paper}
+          \footnotesize
+          \parindent=2em
+          \begin{center}
+    }{
+          \end{center}
+        \end{minipage}
+      \end{center}
+      \medskip
+      \ResumeLineNumbers
+    }
+%</minimalist-plain>
+%<*minimalist-classical>
+    \newenvironment{keyword}{
+      \LocallyStopLineNumbers
+      \vspace{-.5\baselineskip}
+      \begin{flushright}
+        {\minimalist_bfseries:\scshape\small\keywordname}\par
+        \vspace{-\parskip}
+        \vspace{-.30\baselineskip}
+        \begin{minipage}[t]{.833\textwidth}
+          \vspace{0pt}
+          \color{main-text!80!paper}
+          \footnotesize
+          \parindent=2em
+          \raggedleft
+    }{
+        \end{minipage}
+      \end{flushright}
+      \bigskip
+      \ResumeLineNumbers
+    }
+%</minimalist-classical>
+  } % end of \bool_if:NTF \l__minimalist_is_book_bool
 %</style>
 
 \endinput
