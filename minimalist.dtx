@@ -1178,12 +1178,13 @@
 \RequirePackage { ulem }
 
 \cs_generate_variant:Nn \seq_set_split:Nnn { Nnx }
-\cs_new:Nn \minimalist_apply_title_numbering_style:N
+\cs_new:Nn \minimalist_apply_title_numbering_style:n
   {
 %<*minimalist-plain>
-    \seq_set_split:Nnx \l_tmpa_seq { . } { #1 }
-    \seq_set_map:NNn \l_tmpb_seq \l_tmpa_seq { \usefont{U}{zeur}{b}{n} ##1 }
-    \textcolor{main-text!39!paper}{ \seq_use:Nn \l_tmpb_seq { $.$ } }
+    \tl_set:Nx \l_tmpa_tl { #1 }
+    \regex_replace_all:nnN { (\w) } { \c{textbf}{\1} } \l_tmpa_tl
+    \regex_replace_all:nnN { (\d) } { {\c{usefont}{U}{zeur}{b}{n}\1} } \l_tmpa_tl
+    \textcolor { main-text!39!paper } { \l_tmpa_tl }
 %</minimalist-plain>
 %<*minimalist-classical>
     #1
@@ -1331,7 +1332,7 @@
 \titleformat{\section}
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_section_tl\centering}
-  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:N { \thesection } }}{1em}
+  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:n { \thesection } }}{1em}
   {#1}
   [\ResumeLineNumbers]
 %</minimalist-plain>
@@ -1370,7 +1371,7 @@
 \titleformat{\subsection}
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_subsection_tl}
-  { \minimalist_apply_title_numbering_style:N { \thesubsection } }{.75em}
+  { \minimalist_apply_title_numbering_style:n { \thesubsection } }{.75em}
   {#1}
   [\ResumeLineNumbers]
 %</minimalist-plain>
@@ -1397,14 +1398,14 @@
   {
     \titleformat{\subsubsection}[runin]
       {\g_minimalist_title_font_subsubsection_tl}
-      { \minimalist_apply_title_numbering_style:N { \thesection } }{.5em}
+      { \minimalist_apply_title_numbering_style:n { \thesection } }{.5em}
       {#1.}[\hspace*{.3em}]
   }
   {
     \titleformat{\subsubsection}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_subsubsection_tl}
-      { \minimalist_apply_title_numbering_style:N { \thesubsubsection } }{.5em}
+      { \minimalist_apply_title_numbering_style:n { \thesubsubsection } }{.5em}
       {#1}
       [\ResumeLineNumbers]
   }
@@ -1442,7 +1443,7 @@
 \titlecontents{part}
   [0em]
   {\addvspace{1.5pc}\filcenter\normalfont}
-  { \minimalist_apply_title_numbering_style:N { \thecontentslabel } \nopagebreak\\\nopagebreak\uppercase}
+  { \minimalist_apply_title_numbering_style:n { \thecontentslabel } \nopagebreak\\\nopagebreak\uppercase}
   {}
   {} % without page number
   [\addvspace{.5pc}]
@@ -1452,14 +1453,14 @@
     \titlecontents{chapter}
       [2em] % i.e., 0em (part) + 2em
       {\addvspace{.5pc}\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2em}}
       {\hspace*{-2em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %<*minimalist-plain>
     \titlecontents{section}
       [4em] % i.e., 2em (chapter) + 2em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2em}}
       {\hspace*{-2em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %</minimalist-plain>
@@ -1467,20 +1468,20 @@
     \titlecontents{section}
       [4em] % i.e., 2em (chapter) + 2em
       {\normalfont}
-      {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:N { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2em}}
+      {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:n { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2em}}
       {\hspace*{-2em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %</minimalist-classical>
     \titlecontents{subsection}
       [7em] % i.e., 4em (section) + 3em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
       [9.5em] % i.e., 7em (subsection) + 3.5em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{3.25em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.25em}}
       {\hspace*{-3.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
   }
@@ -1488,19 +1489,19 @@
     \titlecontents{section}
       [2em] % i.e., 0em (part) + 2em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{1.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{1.75em}}
       {\hspace*{-1.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsection}
       [4.5em] % i.e., 2em (section) + 2.5em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2.25em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.25em}}
       {\hspace*{-2.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
       [7.5em] % i.e., 4.5em (subsection) + 3em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:N { \thecontentslabel } ]{2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
   }
