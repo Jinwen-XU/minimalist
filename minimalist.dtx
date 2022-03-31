@@ -1593,7 +1593,12 @@ heading_suffix "}\n"
     \centerline{ \minimalist_apply_title_numbering_style:n { #1 } }
     \nopagebreak
     \par
-    \vspace{2mm}%
+    \vspace{.3\baselineskip}
+  }
+\renewcommand*{\indexspace}
+  {
+    \par
+    \vspace{2pc~plus~.5pc~minus~.3pc}
   }
 
 \hook_gput_code:nnn { begindocument/before } { minimalist }
