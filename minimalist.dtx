@@ -1565,6 +1565,44 @@
 }
 
 %%================================
+%%  Index
+%%================================
+\RequirePackage { imakeidx }
+\makeindex[intoc]
+
+\RequirePackage { silence }
+\ExplSyntaxOff
+\WarningFilter{latex}{Writing or overwriting file}
+\begin{filecontents*}[overwrite]{\jobname.mst}
+delim_0 "\\IndexDotfill " % Filler between section heading and page number
+delim_1 "\\IndexDotfill " % Filler between subsection heading and page number
+headings_flag 1
+heading_prefix "\\IndexHeading{"
+heading_suffix "}\n"
+\end{filecontents*}
+\ExplSyntaxOn
+
+\newcommand*{\IndexDotfill}
+  {
+    \nobreakspace\nobreakspace
+    \titlerule*[.67em]{\textcolor{main-text!15!paper}{.}}
+    \nobreakspace\nobreakspace
+  }
+\newcommand*{\IndexHeading}[1]
+  {
+    \centerline{ \minimalist_apply_title_numbering_style:n { #1 } }
+    \nopagebreak
+    \par
+    \vspace{2mm}%
+  }
+
+\hook_gput_code:nnn { begindocument/before } { minimalist }
+  {
+    \hook_gput_code:nnn { cmd/printindex/before } { minimalist } { \LocallyStopLineNumbers }
+    \hook_gput_code:nnn { cmd/printindex/after } { minimalist } { \ResumeLineNumbers }
+  }
+
+%%================================
 %%  Draft mark
 %%================================
 \RequirePackage { projlib-draft }
@@ -1827,16 +1865,6 @@
           }
       }
   }
-
-%%================================
-%%  Index
-%%================================
-\hook_gput_code:nnn { begindocument/before } { minimalist }
-  {
-    \hook_gput_code:nnn { cmd/printindex/before } { minimalist } { \LocallyStopLineNumbers }
-    \hook_gput_code:nnn { cmd/printindex/after } { minimalist } { \ResumeLineNumbers }
-  }
-
 
 %%================================
 %%  Title block style
