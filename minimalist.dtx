@@ -1640,12 +1640,15 @@
   {
     \providecommand{\phantomsection}{}
     \RequirePackage { url }
-    \newcommand{\href}[2]{#2}
+    \providecommand{\href}[2]{#2}
+    \providecommand{\texorpdfstring}[2]{#1}
   }
   {
-    \PassOptionsToPackage { hidelinks,linktoc=all } { hyperref }
-    \RequirePackage { bookmark }
     \RequirePackage { hyperref }
+    \RequirePackage { bookmark }
+    \hypersetup{ hidelinks, linktoc = all }
+    \bookmarksetup{ numbered }
+    \renewcommand\Hy@numberline[1]{#1.~}
   }
 
 % \PassOptionsToPackage { simplename } { projlib-theorem }
