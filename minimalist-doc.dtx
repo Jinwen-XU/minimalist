@@ -59,7 +59,7 @@
 \providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
 \lstset{moretexcs=%
     {linenumbers,nolinenumbers,part,parttext,chapter,section,subsection,subsubsection,frontmatter,mainmatter,backmatter,tableofcontents,href,
-    color,NameTheorem,CreateTheorem,cref,dnf,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,TheDate,ProjLib,qedhere
+    color,NameTheorem,CreateTheorem,cref,DNF,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,TheDate,ProjLib,qedhere
     }
 }
 \lstnewenvironment{code}%
@@ -566,7 +566,7 @@ Regardons d'abord un document complet.
 \maketitle
 
 \begin{abstract}
-    Ceci est un résumé. \dnf<(*\meta{some hint}*)>
+    Ceci est un résumé. \DNF<(*\meta{some hint}*)>
 \end{abstract}
 \begin{keyword}
     AAA, BBB, CCC, DDD, EEE
@@ -611,7 +611,7 @@ Référence du théorème: \cref{thm:abc}
 
 \section{(*\meta{section title}*)}
 
-\dnf<(*\meta{some hint}*)>
+\DNF<(*\meta{some hint}*)>
 
 \begin{theorem}\label{thm:abc}
     Ceci est un théorème.
@@ -935,7 +935,7 @@ De plus, vous pouvez également écrire à la manière \AmS{}, c'est-à-dire :
 
 \medskip
 \begin{code}
-\dnf<(*\meta{some hint}*)>
+\DNF<(*\meta{some hint}*)>
 \end{code}
 
 When you have some places that have not yet been finished yet, you can mark them with this command, which is especially useful during the draft stage.
@@ -946,7 +946,7 @@ When you have some places that have not yet been finished yet, you can mark them
 
 \medskip
 \begin{code}
-\dnf<(*\meta{some hint}*)>
+\DNF<(*\meta{some hint}*)>
 \end{code}
 当你有一些地方尚未完成的时候，可以用这条指令标记出来，它在草稿阶段格外有用。
 %</einfart-doc-cn,simplivre-doc-cn>
@@ -956,7 +956,7 @@ When you have some places that have not yet been finished yet, you can mark them
 
 \medskip
 \begin{code}
-\dnf<(*\meta{some hint}*)>
+\DNF<(*\meta{some hint}*)>
 \end{code}
 Lorsque vous avez des endroits qui ne sont pas encore finis, vous pouvez les marquer avec cette commande, ce qui est particulièrement utile lors de la phase de brouillon.
 %</einfart-doc-fr,simplivre-doc-fr>
@@ -1727,27 +1727,27 @@ Par défaut, lors du référencement, le nom du théorème correspond au context
 %<*minimalist-doc,einfart-doc-en,simplivre-doc-en>
 \LevelTwoTitle{Draft mark}
 
-You can use \lstinline|\dnf| to mark the unfinished part. For example:
+You can use \lstinline|\DNF| to mark the unfinished part. For example:
 \begin{itemize}
-    \item \lstinline|\dnf| or \lstinline|\dnf<...>|. The effect is: \dnf~ or \dnf<...>. \\The prompt text changes according to the current language. For example, it will be displayed as \UseOtherLanguage{French}{\dnf} in French mode.
+    \item \lstinline|\DNF| or \lstinline|\DNF<...>|. The effect is: \DNF~ or \DNF<...>. \\The prompt text changes according to the current language. For example, it will be displayed as \UseOtherLanguage{French}{\DNF} in French mode.
 \end{itemize}
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
 %
 %<*einfart-doc-cn,simplivre-doc-cn>
 \LevelTwoTitle{未完成标记}
 
-你可以通过 \lstinline|\dnf| 来标记尚未完成的部分。例如：
+你可以通过 \lstinline|\DNF| 来标记尚未完成的部分。例如：
 \begin{itemize}
-    \item \lstinline|\dnf| 或 \lstinline|\dnf<...>|。效果为：\dnf~或 \dnf<...>。\\其提示文字与当前语言相对应，例如，在法语模式下将会显示为 \UseOtherLanguage{French}{\dnf}。
+    \item \lstinline|\DNF| 或 \lstinline|\DNF<...>|。效果为：\DNF~或 \DNF<...>。\\其提示文字与当前语言相对应，例如，在法语模式下将会显示为 \UseOtherLanguage{French}{\DNF}。
 \end{itemize}
 %</einfart-doc-cn,simplivre-doc-cn>
 %
 %<*einfart-doc-fr,simplivre-doc-fr>
 \LevelTwoTitle{Draft mark}
 
-Vous pouvez utiliser \lstinline|\dnf| pour marquer la partie inachevée. Par example :
+Vous pouvez utiliser \lstinline|\DNF| pour marquer la partie inachevée. Par example :
 \begin{itemize}
-    \item \lstinline|\dnf| ou \lstinline|\dnf<...>|. L'effet est : \dnf~ ou \dnf<...>. \\Le texte à l'intérieur changera en fonction de la langue actuelle. Par exemple, il sera affiché sous la forme \UseOtherLanguage{English}{\dnf} en mode anglais.
+    \item \lstinline|\DNF| ou \lstinline|\DNF<...>|. L'effet est : \DNF~ ou \DNF<...>. \\Le texte à l'intérieur changera en fonction de la langue actuelle. Par exemple, il sera affiché sous la forme \UseOtherLanguage{English}{\DNF} en mode anglais.
 \end{itemize}
 %</einfart-doc-fr,simplivre-doc-fr>
 
