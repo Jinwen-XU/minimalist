@@ -1874,8 +1874,8 @@ heading_suffix "}\n"
                     top = 0pt, bottom = 0pt,
                     left = 0pt, right = 0pt,
                     boxrule = 0pt, boxsep = 0pt,
-                    before~skip = 1em+\parskip,
-                    after~skip = 1.2em+\parskip,
+                    before~skip = \parskip+\topsep+.25\baselineskip,
+                    after~skip = \parskip+\topsep+.25\baselineskip,
                     breakable, lines~before~break=3,
                   ]
               }
@@ -1894,8 +1894,7 @@ heading_suffix "}\n"
   }
 
 %<*minimalist-plain>
-\hook_gput_code:nnn { env/proof/after } { minimalist } { \smallskip }
-\hook_gput_code:nnn { env/quote/before } { minimalist } { \small }
+\hook_gput_code:nnn { env/quote/begin } { minimalist } { \small }
 %</minimalist-plain>
 
 %%================================
