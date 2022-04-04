@@ -1514,7 +1514,7 @@
 %%  Lists
 %%================================
 \RequirePackage { enumitem }
-\setlist{noitemsep}
+\setlist{noitemsep, topsep=.33\topsep}
 % \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
 \setlist[enumerate,1]{label=\arabic*$)$,
@@ -1617,10 +1617,30 @@ heading_suffix "}\n"
     \par
     \vspace{.3\baselineskip}
   }
+
 \renewcommand*{\indexspace}
   {
     \par
-    \vspace{2pc~plus~.5pc~minus~.3pc}
+    \vspace{2pc ~ plus ~ .5pc ~ minus ~ .3pc}
+  }
+
+% Prevent column break before the first sub-entry in the index
+% See https://tex.stackexchange.com/a/132415
+\bool_new:N \l__minimalist_if_first_subitem_bool
+\renewcommand*{\@idxitem}
+  {
+    \par\hangindent40\p@
+    \bool_set_true:N \l__minimalist_if_first_subitem_bool
+  }
+\renewcommand*{\subitem}
+  {
+    \par\hangindent40\p@
+    \bool_if:NT \l__minimalist_if_first_subitem_bool
+      {
+        \nobreak
+        \bool_set_false:N \l__minimalist_if_first_subitem_bool
+      }
+    \hspace*{20\p@}
   }
 
 \hook_gput_code:nnn { begindocument/before } { minimalist }
