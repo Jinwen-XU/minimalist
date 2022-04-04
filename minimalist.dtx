@@ -826,6 +826,24 @@
   }
 
 %%================================
+%%  Line numbers
+%%================================
+\PassOptionsToPackage { pagewise,mathlines } { lineno }
+\RequirePackage { linenoamsmath }
+\renewcommand{\linenumberfont}{\ttfamily\color{main-text!7!paper}\footnotesize}
+\setlength{\linenumbersep}{1em}
+
+\newif\ifLNturnsON
+\def\LocallyStopLineNumbers{\LNturnsONfalse
+    \ifLineNumbers\LNturnsONtrue\fi\nolinenumbers}
+\def\ResumeLineNumbers{\ifLNturnsON\linenumbers\fi}
+
+\hook_gput_code:nnn { cmd/tableofcontents/before } { minimalist } { \LocallyStopLineNumbers }
+\hook_gput_code:nnn { cmd/tableofcontents/after } { minimalist } { \ResumeLineNumbers }
+\hook_gput_code:nnn { env/bibliography/before } { minimalist } { \LocallyStopLineNumbers }
+\hook_gput_code:nnn { env/bibliography/after } { minimalist } { \ResumeLineNumbers }
+
+%%================================
 %%  Paper configuration
 %%================================
 \RequirePackage { projlib-paper }
@@ -1155,24 +1173,6 @@
         \renewcommand*{\sectionmark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
   }
-
-%%================================
-%%  Line numbers
-%%================================
-\PassOptionsToPackage { pagewise,mathlines } { lineno }
-\RequirePackage { linenoamsmath }
-\renewcommand{\linenumberfont}{\ttfamily\color{main-text!7!paper}\footnotesize}
-\setlength{\linenumbersep}{1em}
-
-\newif\ifLNturnsON
-\def\LocallyStopLineNumbers{\LNturnsONfalse
-    \ifLineNumbers\LNturnsONtrue\fi\nolinenumbers}
-\def\ResumeLineNumbers{\ifLNturnsON\linenumbers\fi}
-
-\hook_gput_code:nnn { cmd/tableofcontents/before } { minimalist } { \LocallyStopLineNumbers }
-\hook_gput_code:nnn { cmd/tableofcontents/after } { minimalist } { \ResumeLineNumbers }
-\hook_gput_code:nnn { env/bibliography/before } { minimalist } { \LocallyStopLineNumbers }
-\hook_gput_code:nnn { env/bibliography/after } { minimalist } { \ResumeLineNumbers }
 
 %%================================
 %%  Title format
