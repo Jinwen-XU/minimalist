@@ -1875,12 +1875,14 @@ heading_suffix "}\n"
   }
 
 
+\PassOptionsToPackage { many } { tcolorbox }
+\RequirePackage { tcolorbox }
+\bool_if:NT \l__minimalist_fast_bool { \tcbstartdraftmode }
+
 \bool_if:NF \l__minimalist_fast_bool
   {
     \bool_if:NT \l__minimalist_theorem_in_new_line_bool
       {
-        \PassOptionsToPackage { many } { tcolorbox }
-        \RequirePackage { tcolorbox }
         \cs_new_protected:Nn \minimclass_box_environment:n
           {
             \hook_gput_code:nnn { env/#1/before } { minimalist }
@@ -1911,6 +1913,24 @@ heading_suffix "}\n"
             \minimclass_box_environment:n { #1 * }
           }
       }
+  }
+
+\NewDocumentEnvironment { emphasis } { }
+  {
+    \LocallyStopLineNumbers
+    \enlargethispage{2mm}
+    \begin{tcolorbox}
+        [
+          enhanced ~ jigsaw, enforce~breakable, oversize,
+          % nobeforeafter,
+          left = .5em, right=0mm, top=0.5mm, bottom=0mm, boxrule=0pt,
+          colback=main-text!2!paper, frame ~ hidden,
+          borderline ~ west = {.3em} {0mm} {main-text!25!paper}, arc = 0.2mm,
+        ]
+  }
+  {
+    \end{tcolorbox}
+    \ResumeLineNumbers
   }
 
 %<*minimalist-plain>
