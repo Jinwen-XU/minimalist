@@ -1669,7 +1669,7 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\newline}
       {{\thmname{#1}\nobreakspace\thmnumber{#2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}\smallskip}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\smallskip}
   }
   {
     \newtheoremstyle{simple}
@@ -1678,7 +1678,7 @@ heading_suffix "}\n"
       {\normalfont}{}
       {0pt}
       {{\thmname{#1}\nobreakspace\thmnumber{#2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}\ensuremath{(\text{#3})}}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
   }
 %</minimalist-plain>
 %<*minimalist-classical>
@@ -1693,7 +1693,7 @@ heading_suffix "}\n"
       {\newline}
       { \global\let\qedsymbol\simpleqedsymbol
         {\thmname{#1}\nobreakspace\thmnumber{#2}}
-        \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}\ensuremath{(\text{#3})}}
+        \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
         \smallskip
         \pushQED{\qed}
       }
@@ -1707,7 +1707,7 @@ heading_suffix "}\n"
       { \global\let\qedsymbol\simpleqedsymbol
         {\thmname{#1}\nobreakspace\thmnumber{#2}}\hspace{.4em}
         \textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
-        \color{main-text!50!paper}\thmnote{\ensuremath{(\text{#3})}\nobreakspace\nobreakspace}
+        \color{main-text!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
         \pushQED{\qed}
       }
   }
@@ -1896,7 +1896,7 @@ heading_suffix "}\n"
                     boxrule = 0pt, boxsep = 0pt,
                     before~skip = \parskip+\topsep+.25\baselineskip,
                     after~skip = \parskip+\topsep+.25\baselineskip,
-                    breakable, lines~before~break=3,
+                    enforce~breakable, lines~before~break=3,
                   ]
               }
             \hook_gput_code:nnn { env/#1/after } { minimalist }
