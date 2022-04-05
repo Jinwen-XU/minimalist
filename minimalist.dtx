@@ -874,13 +874,16 @@
 %%================================
 \RequirePackage { anyfontsize }
 
+\NewCommandCopy \minimalist_original_bfseries: \bfseries
 \bool_if:NTF \l__minimalist_use_boldface_bool
   {
-    \cs_new:Nn \minimalist_bfseries: { \bfseries \colorlet{minimalist-temp-color}{.} \color{minimalist-temp-color!70!paper} }
+    \cs_new:Nn \minimalist_bfseries: { \minimalist_original_bfseries: \colorlet{minimalist-temp-color}{.} \color{minimalist-temp-color!70!paper} }
   }
   {
     \cs_new:Nn \minimalist_bfseries: {}
   }
+\RenewDocumentCommand \bfseries { } { \minimalist_bfseries: }
+
 
 \tl_new:N \g_minimalist_title_font_common_tl
 
