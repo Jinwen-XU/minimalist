@@ -916,7 +916,7 @@
 %</minimalist-plain>
 %<*minimalist-classical>
 \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
 \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: }
 \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: }
 \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
@@ -1302,17 +1302,17 @@
     \titleformat{\chapter}
       {\thispagestyle{fancy}
       \LocallyStopLineNumbers
-      \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      \color{main-text!80!paper}\fontsize{16}{0}\selectfont}{}{0em}
       {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
-        \fontsize{80}{0}\selectfont\raisebox{-7pt}{\thechapter}}}#1}
+        \fontsize{80}{0}\selectfont\raisebox{-7pt}{\thechapter}}} \g_minimalist_title_font_chapter_tl #1}
       [\ResumeLineNumbers]
     \titleformat{name=\chapter,numberless}
       {\thispagestyle{fancy}
       \LocallyStopLineNumbers
         % \phantomsection\addcontentsline{toc}{chapter}{#1}
-      \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      \color{main-text!80!paper}\fontsize{16}{0}\selectfont}{}{0em}
       {\rlap{\hspace*{-.5em}{\color{main-text!12!paper}
-        \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}}#1}
+        \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}} \g_minimalist_title_font_chapter_tl #1}
       [\ResumeLineNumbers]
 %</minimalist-classical>
   }
@@ -1482,15 +1482,6 @@
       {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-%</minimalist-plain>
-%<*minimalist-classical>
-    \titlecontents{section}
-      [5em] % i.e., 2em (chapter) + 3em
-      {\normalfont}
-      {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:n { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2.75em}}
-      {\hspace*{-2.75em}}
-      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-%</minimalist-classical>
     \titlecontents{subsection}
       [9em] % i.e., 5em (section) + 4em
       {\normalfont}
@@ -1503,6 +1494,27 @@
       {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{4.25em}}
       {\hspace*{-4.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%</minimalist-plain>
+%<*minimalist-classical>
+    \titlecontents{section}
+      [5em] % i.e., 2em (chapter) + 3em
+      {\normalfont}
+      {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:n { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2.75em}}
+      {\hspace*{-2.75em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+    \titlecontents{subsection}
+      [8em] % i.e., 5em (section) + 3em
+      {\normalfont}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.75em}}
+      {\hspace*{-2.75em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+    \titlecontents{subsubsection}
+      [12em] % i.e., 8em (subsection) + 4em
+      {\normalfont}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.75em}}
+      {\hspace*{-3.75em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%</minimalist-classical>
   }
   {
     \titlecontents{section}
@@ -1511,6 +1523,7 @@
       {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{1.75em}}
       {\hspace*{-1.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%<*minimalist-plain>
     \titlecontents{subsection}
       [5em] % i.e., 2em (section) + 3em
       {\normalfont}
@@ -1523,6 +1536,21 @@
       {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.75em}}
       {\hspace*{-3.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%</minimalist-plain>
+%<*minimalist-classical>
+    \titlecontents{subsection}
+      [4.75em] % i.e., 2em (section) + 2.75em
+      {\normalfont}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.50em}}
+      {\hspace*{-2.50em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+    \titlecontents{subsubsection}
+      [8.25em] % i.e., 4.75em (subsection) + 3.5em
+      {\normalfont}
+      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.25em}}
+      {\hspace*{-3.25em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%</minimalist-classical>
   }
 
 %%================================
@@ -1683,7 +1711,7 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\normalfont}{}
       {\newline}
-      {{\thmname{#1}\nobreakspace\thmnumber{#2}}
+      {{\thmname{#1}\thmnumber{\nobreakspace #2}}
         {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\smallskip}
   }
   {
@@ -1692,7 +1720,7 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\normalfont}{}
       {0pt}
-      {{\thmname{#1}\nobreakspace\thmnumber{#2}}
+      {{\thmname{#1}\thmnumber{\nobreakspace #2}}
         {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
   }
 %</minimalist-plain>
@@ -1707,7 +1735,7 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\newline}
       { \global\let\qedsymbol\simpleqedsymbol
-        {\thmname{#1}\nobreakspace\thmnumber{#2}}
+        {\thmname{#1}\thmnumber{\nobreakspace #2}}
         \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
         \smallskip
         \pushQED{\qed}
@@ -1720,7 +1748,7 @@ heading_suffix "}\n"
       {\normalfont}{}
       {0pt}
       { \global\let\qedsymbol\simpleqedsymbol
-        {\thmname{#1}\nobreakspace\thmnumber{#2}}\hspace{.4em}
+        {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
         \textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
         \color{main-text!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
         \pushQED{\qed}
