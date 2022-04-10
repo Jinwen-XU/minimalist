@@ -876,25 +876,25 @@
 \RequirePackage { anyfontsize }
 
 \NewCommandCopy \minimalist_original_bfseries: \bfseries
+\bool_new:N \l_minimalist_is_under_bfseries_bool
+\bool_set_false:N \l_minimalist_is_under_bfseries_bool
+\RenewDocumentCommand \bfseries { }
+  {
+    \bool_if:NF \l_minimalist_is_under_bfseries_bool
+      {
+        \colorlet{minimalist-temp-color}{.}
+        \color{minimalist-temp-color!70!paper}
+      }
+    \minimalist_original_bfseries:
+    \bool_set_true:N \l_minimalist_is_under_bfseries_bool
+  }
 \bool_if:NTF \l__minimalist_use_boldface_bool
   {
-    \bool_new:N \l_minimalist_is_under_bfseries_bool
-    \bool_set_false:N \l_minimalist_is_under_bfseries_bool
-    \cs_new:Nn \minimalist_bfseries:
-      {
-        \bool_if:NF \l_minimalist_is_under_bfseries_bool
-          {
-            \colorlet{minimalist-temp-color}{.}
-            \color{minimalist-temp-color!70!paper}
-          }
-        \minimalist_original_bfseries:
-        \bool_set_true:N \l_minimalist_is_under_bfseries_bool
-      }
+    \cs_new:Nn \minimalist_bfseries: { \bfseries }
   }
   {
     \cs_new:Nn \minimalist_bfseries: {}
   }
-\RenewDocumentCommand \bfseries { } { \minimalist_bfseries: }
 
 
 \tl_new:N \g_minimalist_title_font_common_tl
