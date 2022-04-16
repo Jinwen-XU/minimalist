@@ -359,7 +359,7 @@
               }
             \setsansfont { SourceSansPro-Regular.otf }
               [
-                Scale          = MatchLowercase ,
+                Scale          = 1.05 ,
                 BoldFont       = SourceSansPro-Bold.otf ,
                 ItalicFont     = SourceSansPro-RegularIt.otf ,
                 BoldItalicFont = SourceSansPro-BoldIt.otf ,
@@ -1557,6 +1557,7 @@
 %%  Lists
 %%================================
 \RequirePackage { enumitem }
+\setlistdepth{9}
 \setlist{noitemsep, topsep=.33\topsep}
 % \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
@@ -1577,9 +1578,16 @@
 
 \setlist[itemize]{leftmargin=*}
 \AddLanguageSetting { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}} }
-\AddLanguageSetting [french] { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!55!paper}{---}} }
+\AddLanguageSetting [french] { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{---}} }
 \setlist[itemize,2]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{--}}
-\setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{\texttt{*}}}
+% \setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\diamond$}}
+\setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\circ$}}
+\setlist[itemize,4]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\ast$}}
+\setlist[itemize,5]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
+\setlist[itemize,6]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
+\setlist[itemize,7]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
+
+\renewlist{itemize}{itemize}{9}
 
 %%================================
 %%  Blank page
