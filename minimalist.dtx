@@ -680,6 +680,18 @@
                     range = { it / { Latin, latin }, bfit / { Latin, latin }, up / num, bfup / num }
                   ]
 
+                % https://tex.stackexchange.com/a/367529
+                \DeclareFontEncoding{FML}{}{}
+                \DeclareFontSubstitution{FML}{futm}{m}{it}
+                \DeclareFontEncoding{FMS}{}{}
+                \DeclareFontSubstitution{FMS}{futm}{m}{n}
+                \DeclareFontEncoding{FMX}{}{}
+                \DeclareFontSubstitution{FMX}{futm}{m}{n}
+                \DeclareSymbolFont{symbols}{FMS}{futm}{m}{n}
+                \DeclareSymbolFont{largesymbols}{FMX}{futm}{m}{n}
+                \DeclareMathDelimiter{\llbracket}{\mathopen}{symbols}{153}{largesymbols}{133}
+                \DeclareMathDelimiter{\rrbracket}{\mathclose}{symbols}{154}{largesymbols}{134}
+
                 \hook_gput_code:nnn { begindocument } { minimclass }
                   {
                     \NewCommandCopy \minimclass_backup_mid: \mid
