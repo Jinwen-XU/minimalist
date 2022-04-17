@@ -660,37 +660,19 @@
                   [
                     range = { \sum, \prod, \coprod }
                   ]
-                \__minimclass_if_font_exist:nnn { Neo~Euler }
-                  {
-                    \setmathfont { Neo~Euler }
-                      [
-                        range             = { up / { Latin, latin, Greek, greek },
-                                              bfup / { Latin, latin, Greek, greek },
-                                              `(, `), `[, `], `\{, `\}
-                                            },
-                        Scale             = 1.05,
-                      ]
-                  }{}
                 \setmathfont { latinmodern-math.otf }
                   [
                     range = { cal, bfcal, frak, bffrak }
                   ]
                 \setmathfont { texgyrepagella-math.otf }
                   [
+                    range = { `(, `) } ,
+                    Scale = 1.10
+                  ]
+                \setmathfont { texgyrepagella-math.otf }
+                  [
                     range = { it / { Latin, latin }, bfit / { Latin, latin }, up / num, bfup / num }
                   ]
-
-                % https://tex.stackexchange.com/a/367529
-                \DeclareFontEncoding{FML}{}{}
-                \DeclareFontSubstitution{FML}{futm}{m}{it}
-                \DeclareFontEncoding{FMS}{}{}
-                \DeclareFontSubstitution{FMS}{futm}{m}{n}
-                \DeclareFontEncoding{FMX}{}{}
-                \DeclareFontSubstitution{FMX}{futm}{m}{n}
-                \DeclareSymbolFont{symbols}{FMS}{futm}{m}{n}
-                \DeclareSymbolFont{largesymbols}{FMX}{futm}{m}{n}
-                \DeclareMathDelimiter{\llbracket}{\mathopen}{symbols}{153}{largesymbols}{133}
-                \DeclareMathDelimiter{\rrbracket}{\mathclose}{symbols}{154}{largesymbols}{134}
 
                 \hook_gput_code:nnn { begindocument } { minimclass }
                   {
