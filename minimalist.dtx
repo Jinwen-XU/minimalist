@@ -20,7 +20,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2022/04/03} {}
+  {2022/04/17} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -29,7 +29,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2022/04/03} {}
+  {2022/04/17} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -38,7 +38,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2022/04/03} {}
+  {2022/04/17} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -47,7 +47,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2022/04/03} {}
+  {2022/04/17} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -56,21 +56,21 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2022/04/03} {}
+  {2022/04/17} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2022/04/03} {}
+  {2022/04/17} {}
   {The plain style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2022/04/03} {}
+  {2022/04/17} {}
   {The classical style of minimalist}
 %</minimalist-classical>
 
@@ -1552,7 +1552,7 @@
 %%  Lists
 %%================================
 \RequirePackage { enumitem }
-\setlistdepth{9}
+\setlistdepth{10}
 \setlist{noitemsep, topsep=.33\topsep}
 % \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
@@ -1571,18 +1571,14 @@
 }
 %</minimalist-classical>
 
-\setlist[itemize]{leftmargin=*}
+\renewlist{itemize}{itemize}{10}
+\setlist[itemize]{leftmargin=*,label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
 \AddLanguageSetting { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}} }
 \AddLanguageSetting [french] { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{---}} }
 \setlist[itemize,2]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{--}}
 % \setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\diamond$}}
 \setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\circ$}}
 \setlist[itemize,4]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\ast$}}
-\setlist[itemize,5]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
-\setlist[itemize,6]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
-\setlist[itemize,7]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
-
-\renewlist{itemize}{itemize}{9}
 
 %%================================
 %%  Blank page

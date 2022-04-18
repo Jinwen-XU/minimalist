@@ -28,6 +28,8 @@
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
 
+\usepackage{relsize}
+
 \usepackage{blindtext}
 
 %<minimalist-doc,einfart-doc-en,simplivre-doc-en>\UseLanguage{English}
@@ -126,7 +128,7 @@
 %%================================
 \begin{document}
 
-\def\PackageVersion{2022/04/03}
+\def\PackageVersion{2022/04/17}
 
 %<*minimalist-doc>
 \title{\minimalist{}, write your articles or books in a simple and clear way}
@@ -157,8 +159,8 @@
   {
     , title     = \simplivre{}
     , subtitle  = {
-                    \textsc{Write your books in \\a simple and clear way}\\[10pt]
-                    \tiny Corresponding to: \texttt{\simplivre{} \PackageVersion}
+                    \textsc{Write your books in \\a simple and clear way}\\[20pt]
+                    \smaller[3] Corresponding to: \texttt{\simplivre{} \PackageVersion}
                   }
     , author    = Jinwen XU
     , date      = {\TheDate{\PackageVersion}[only-year-month], in Paris}
@@ -185,8 +187,8 @@
   {
     , title     = \simplivre{}
     , subtitle  = {
-                    \textsc{以极简主义风格排版你的图书}\\[10pt]
-                    \tiny 对应版本. \texttt{\simplivre{} \PackageVersion}
+                    \textsc{以极简主义风格排版你的图书}\\[20pt]
+                    \smaller[3] 对应版本. \texttt{\simplivre{} \PackageVersion}
                   }
     , author    = 许锦文
     , date      = {\TheDate{\PackageVersion}[only-year-month]，巴黎}
@@ -213,8 +215,8 @@
   {
     , title     = \simplivre{}
     , subtitle  = {
-                    \textsc{Écrivez vos livres \\de manière simple et claire}\\[10pt]
-                    \tiny Correspondant à : \texttt{\simplivre{} \PackageVersion}
+                    \textsc{Écrivez vos livres \\de manière simple et claire}\\[20pt]
+                    \smaller[3] Correspondant à : \texttt{\simplivre{} \PackageVersion}
                   }
     , author    = Jinwen XU
     , date      = {\TheDate{\PackageVersion}[only-year-month], à Paris}
