@@ -762,7 +762,14 @@
 \setlength { \parfillskip } { 0pt plus\dimexpr\linewidth-2\parindent }
 \setlist* { first* = \setlength { \parfillskip } { 0pt plus\dimexpr\linewidth-3em } }
 
-\RequirePackage { embrac }
+\hook_gput_code:nnn { begindocument/before } { minimclass }
+  {
+    \@ifpackageloaded { biblatex }
+      {
+        \PassOptionsToPackage { biblatex } { embrac }
+      } {}
+    \RequirePackage { embrac }
+  }
 
 %%================================
 %%  Graphics
