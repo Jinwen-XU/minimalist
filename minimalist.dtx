@@ -756,6 +756,9 @@
 
 \PassOptionsToPackage { all } { nowidow }
 \RequirePackage { nowidow }
+\setlength { \parfillskip } { 0pt plus\dimexpr\linewidth-2\parindent }
+\setlist* { first* = \setlength { \parfillskip } { 0pt plus\dimexpr\linewidth-3em } }
+
 \RequirePackage { embrac }
 
 %%================================
@@ -1709,9 +1712,13 @@ heading_suffix "}\n"
       {}{}
       {\normalfont}{}
       {\normalfont}{}
-      {\newline}
-      {{\thmname{#1}\thmnumber{\nobreakspace #2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\smallskip}
+      {0pt}
+      {
+        \rlap{\vbox{\hbox{
+          {\thmname{#1}\thmnumber{\nobreakspace #2}}
+          {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+        }\hbox{\strut}\vskip0pt}}
+      }
   }
   {
     \newtheoremstyle{simple}
@@ -1734,9 +1741,10 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\newline}
       { \global\let\qedsymbol\simpleqedsymbol
-        {\thmname{#1}\thmnumber{\nobreakspace #2}}
-        \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
-        \smallskip
+        \rlap{\vbox{\hbox{
+          {\thmname{#1}\thmnumber{\nobreakspace #2}}
+          \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
+        }\hbox{\strut}\vskip0pt}}
         \pushQED{\qed}
       }
   }
@@ -1921,41 +1929,41 @@ heading_suffix "}\n"
 \RequirePackage { tcolorbox }
 \bool_if:NT \l__minimalist_fast_bool { \tcbstartdraftmode }
 
-\bool_if:NF \l__minimalist_fast_bool
-  {
-    \bool_if:NT \l__minimalist_theorem_in_new_line_bool
-      {
-        \cs_new_protected:Nn \minimclass_box_environment:n
-          {
-            \hook_gput_code:nnn { env/#1/before } { minimalist }
-              {
-                \LocallyStopLineNumbers
-                \begin { tcolorbox }
-                  [
-                    enhanced~jigsaw,
-                    frame~hidden,
-                    interior~hidden,
-                    top = 0pt, bottom = 0pt,
-                    left = 0pt, right = 0pt,
-                    boxrule = 0pt, boxsep = 0pt,
-                    before~skip = \parskip+\topsep+.25\baselineskip,
-                    after~skip = \parskip+\topsep+.25\baselineskip,
-                    enforce~breakable, lines~before~break=3,
-                  ]
-              }
-            \hook_gput_code:nnn { env/#1/after } { minimalist }
-              {
-                \end { tcolorbox }
-                \ResumeLineNumbers
-              }
-          }
-        \exp_args:No \clist_map_inline:nn { \c_projlib_theorem_supported_clist }
-          {
-            \minimclass_box_environment:n { #1 }
-            \minimclass_box_environment:n { #1 * }
-          }
-      }
-  }
+% \bool_if:NF \l__minimalist_fast_bool
+%   {
+%     \bool_if:NT \l__minimalist_theorem_in_new_line_bool
+%       {
+%         \cs_new_protected:Nn \minimclass_box_environment:n
+%           {
+%             \hook_gput_code:nnn { env/#1/before } { minimalist }
+%               {
+%                 \LocallyStopLineNumbers
+%                 \begin { tcolorbox }
+%                   [
+%                     enhanced~jigsaw,
+%                     frame~hidden,
+%                     interior~hidden,
+%                     top = 0pt, bottom = 0pt,
+%                     left = 0pt, right = 0pt,
+%                     boxrule = 0pt, boxsep = 0pt,
+%                     before~skip = \parskip+\topsep+.25\baselineskip,
+%                     after~skip = \parskip+\topsep+.25\baselineskip,
+%                     enforce~breakable, lines~before~break=3,
+%                   ]
+%               }
+%             \hook_gput_code:nnn { env/#1/after } { minimalist }
+%               {
+%                 \end { tcolorbox }
+%                 \ResumeLineNumbers
+%               }
+%           }
+%         \exp_args:No \clist_map_inline:nn { \c_projlib_theorem_supported_clist }
+%           {
+%             \minimclass_box_environment:n { #1 }
+%             \minimclass_box_environment:n { #1 * }
+%           }
+%       }
+%   }
 
 \NewDocumentEnvironment { emphasis } { }
   {
