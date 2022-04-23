@@ -1712,7 +1712,7 @@ heading_suffix "}\n"
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
     \newtheoremstyle{simple}
-      {}{}
+      {.75\baselineskip}{}
       {\normalfont}{}
       {\normalfont}{}
       {0pt}
@@ -1720,7 +1720,7 @@ heading_suffix "}\n"
         \rlap{\vbox{\hbox{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
           {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
-        }\hbox{\strut}\vskip0pt}}
+        }\hbox{\strut}\vspace{-2\parskip}}}
       }
   }
   {
@@ -1747,7 +1747,7 @@ heading_suffix "}\n"
         \rlap{\vbox{\hbox{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
           \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
-        }\hbox{\strut}\vskip0pt}}
+        }\hbox{\strut}\vspace{-2\parskip}}}
         \pushQED{\qed}
       }
   }
