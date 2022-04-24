@@ -759,8 +759,16 @@
 
 \PassOptionsToPackage { all } { nowidow }
 \RequirePackage { nowidow }
-\setlength { \parfillskip } { 0pt plus\dimexpr\linewidth-2\parindent }
-\setlist* { first* = \setlength { \parfillskip } { 0pt plus\dimexpr\linewidth-3em } }
+
+% https://tex.stackexchange.com/a/641824
+\RequirePackage { regexpatch }
+\skip_new:N \g_minimclass_parfillskip_skip
+\xpatchcmd{\@trivlist}{\@flushglue}{\g_minimclass_parfillskip_skip}{}{}
+\hook_gput_code:nnn { begindocument } { minimclass }
+  {
+    \skip_gset:Nn \g_minimclass_parfillskip_skip { 0pt plus \dim_eval:n { \linewidth - 2\parindent } }
+    \skip_gset_eq:NN \parfillskip \g_minimclass_parfillskip_skip
+  }
 
 \hook_gput_code:nnn { begindocument/before } { minimclass }
   {
@@ -1200,7 +1208,7 @@
 %%================================
 %%  Title format
 %%================================
-\RequirePackage [ explicit, newparttoc, nobottomtitles ] { titlesec }
+\RequirePackage [ explicit, newparttoc, nobottomtitles* ] { titlesec }
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
 
@@ -1724,10 +1732,10 @@ heading_suffix "}\n"
       {\normalfont}{}
       {0pt}
       {
-        \rlap{\vbox{\hbox{
+        \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
           {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
-        }\hbox{\strut}\vspace{-2\parskip}}}
+        }}\hbox{\strut}\vspace{-2\parskip}}}
       }
   }
   {
@@ -1751,10 +1759,10 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\newline}
       { \global\let\qedsymbol\simpleqedsymbol
-        \rlap{\vbox{\hbox{
+        \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
           \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
-        }\hbox{\strut}\vspace{-2\parskip}}}
+        }}\hbox{\strut}\vspace{-2\parskip}}}
         \pushQED{\qed}
       }
   }
@@ -1981,11 +1989,18 @@ heading_suffix "}\n"
     \enlargethispage{2mm}
     \begin{tcolorbox}
         [
-          enhanced ~ jigsaw, enforce~breakable, oversize,
+          enhanced ~ jigsaw, breakable, oversize,
           % nobeforeafter,
           left = .5em, right=0mm, top=0.5mm, bottom=0mm, boxrule=0pt,
+%<*minimalist-plain>
           colback=main-text!2!paper, frame ~ hidden,
-          borderline ~ west = {.3em} {0mm} {main-text!25!paper}, arc = 0.2mm,
+          borderline ~ west = {.3em} {0mm} {main-text!25!paper},
+%</minimalist-plain>
+%<*minimalist-classical>
+          colback = paper, frame ~ hidden,
+          borderline ~ west = {.125em} {-.5mm} {main-text!25!paper, double, double ~ distance=.1em},
+%</minimalist-classical>
+          arc = 0.2mm,
         ]
   }
   {
