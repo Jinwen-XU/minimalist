@@ -757,6 +757,13 @@
 %</einfart|simplivre>
   }
 
+%<*einfart|simplivre>
+% https://tex.stackexchange.com/a/419287
+\char_set_catcode_active:n { `\· }
+\cs_new_protected:Npn · { \ensuremath\cdot }
+%</einfart|simplivre>
+
+
 \PassOptionsToPackage { all } { nowidow }
 \RequirePackage { nowidow }
 
