@@ -2076,7 +2076,7 @@ heading_suffix "}\n"
           \par\smallskip\vspace{-\parskip}
           {\small\@date}
         \end{center}
-        \ifx\@date\@empty\medskip\fi
+        \projlib_author_if_content_empty:nT { \@date } { \medskip }
         \medskip\par
         \ResumeLineNumbers
       }
@@ -2097,14 +2097,14 @@ heading_suffix "}\n"
           \par\vspace{-\parskip}\vspace{2pt}
           {\small\@date}
         \end{flushright}
-        % \vspace{-\parskip}
         \vspace{-.5\baselineskip}
-        \ifx\@date\@empty
-            \vspace{\baselineskip}
-            \vspace{1.2\parskip}
-        \else
+        \projlib_author_if_content_empty:nTF { \@date }
+          {
+            \vspace{-.2\baselineskip}
+          }
+          {
             \vspace{-.5\baselineskip}
-        \fi
+          }
         {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}\par}
         \ResumeLineNumbers
       }
