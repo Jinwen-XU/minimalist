@@ -813,11 +813,21 @@
     , use-boldface      .initial:n          = { false }
     , use~boldface      .bool_set:N         = \l__minimalist_use_boldface_bool
     , use boldface      .bool_set:N         = \l__minimalist_use_boldface_bool
-    , usebf             .bool_set:N         = \l__minimalist_use_boldface_bool
-    , allow-boldface    .bool_set:N         = \l__minimalist_use_boldface_bool
-    , allow~boldface    .bool_set:N         = \l__minimalist_use_boldface_bool
-    , allow boldface    .bool_set:N         = \l__minimalist_use_boldface_bool
-    , allowbf           .bool_set:N         = \l__minimalist_use_boldface_bool
+    , title-in-boldface .bool_set:N         = \l__minimalist_use_boldface_bool
+    , title~in~boldface .bool_set:N         = \l__minimalist_use_boldface_bool
+    , title in boldface .bool_set:N         = \l__minimalist_use_boldface_bool
+    , title-in-bold     .bool_set:N         = \l__minimalist_use_boldface_bool
+    , title~in~bold     .bool_set:N         = \l__minimalist_use_boldface_bool
+    , title in bold     .bool_set:N         = \l__minimalist_use_boldface_bool
+
+    , use-scshape       .bool_set:N         = \l__minimalist_use_scshape_bool
+    , use-scshape       .initial:n          = { false }
+    , use~scshape       .bool_set:N         = \l__minimalist_use_scshape_bool
+    , use scshape       .bool_set:N         = \l__minimalist_use_scshape_bool
+    , title-in-scshape  .bool_set:N         = \l__minimalist_use_scshape_bool
+    , title~in~scshape  .bool_set:N         = \l__minimalist_use_scshape_bool
+    , title in scshape  .bool_set:N         = \l__minimalist_use_scshape_bool
+
     , runin             .bool_set:N         = \l__minimalist_runin_bool
     , runin             .initial:n          = { false }
 
@@ -919,6 +929,14 @@
     \cs_new:Nn \minimalist_bfseries: {}
   }
 
+\bool_if:NTF \l__minimalist_use_scshape_bool
+  {
+    \cs_new:Nn \minimalist_scshape: { \scshape }
+  }
+  {
+    \cs_new:Nn \minimalist_scshape: {}
+  }
+
 
 \tl_new:N \g_minimalist_title_font_common_tl
 
@@ -931,19 +949,19 @@
 
 %<*minimalist-plain>
 \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
-\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
-\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 %</minimalist-plain>
 %<*minimalist-classical>
 \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \scshape }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: }
 \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: }
 \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
-\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \scshape }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \minimalist_scshape: }
 %</minimalist-classical>
 
 \bool_if:NF \l__minimalist_fast_bool
@@ -1215,7 +1233,7 @@
 %%================================
 %%  Title format
 %%================================
-\RequirePackage [ explicit, newparttoc, nobottomtitles* ] { titlesec }
+\RequirePackage [ explicit, newparttoc ] { titlesec }
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
 
@@ -2026,7 +2044,7 @@ heading_suffix "}\n"
   {
     \hook_gput_code:nnn { package/projlib-author/after } { minimalist }
       {
-        \tl_gset:Nn \g__projlib_author_font_author_tl      { \normalfont \scshape }
+        \tl_gset:Nn \g__projlib_author_font_author_tl      { \normalfont \minimalist_scshape: }
         \tl_gset:Nn \g__projlib_author_font_institute_tl   { \large \normalfont }
         \tl_gset:Nn \g__projlib_author_font_address_tl     { \large \normalfont \itshape }
         \tl_gset:Nn \g__projlib_author_font_curraddr_tl    { \large \normalfont \itshape }
@@ -2052,9 +2070,9 @@ heading_suffix "}\n"
         \LocallyStopLineNumbers
         \begin{center}
           \let\footnote\thanks
-          {\minimalist_bfseries:\sffamily\scshape\Large\@title}\\\bigskip
+          {\minimalist_bfseries:\sffamily\minimalist_scshape:\Large\@title}\\\bigskip
           \color{main-text!80!paper}
-          {\small\scshape\@author}
+          {\small\minimalist_scshape:\@author}
           \par\smallskip\vspace{-\parskip}
           {\small\@date}
         \end{center}
@@ -2075,7 +2093,7 @@ heading_suffix "}\n"
           \let\footnote\thanks
           {\minimalist_bfseries:\@title}\\\medskip
           \color{main-text!80!paper}
-          {\small\scshape\@author}
+          {\small\minimalist_scshape:\@author}
           \par\vspace{-\parskip}\vspace{2pt}
           {\small\@date}
         \end{flushright}
@@ -2103,7 +2121,7 @@ heading_suffix "}\n"
         \LocallyStopLineNumbers
         \vspace{-.5\baselineskip}
         \begin{center}
-          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\\
+          { \g_minimalist_title_font_section_tl \minimalist_scshape: \small\abstractname}\\
           \vspace{-.3\baselineskip}
           \begin{minipage}[t]{.833\textwidth}
             \vspace{0pt}
@@ -2123,7 +2141,7 @@ heading_suffix "}\n"
       {
         \LocallyStopLineNumbers
         \begin{flushright}
-          { \g_minimalist_title_font_section_tl \scshape \small\abstractname}\par
+          { \g_minimalist_title_font_section_tl \minimalist_scshape: \small\abstractname}\par
           \vspace{-\parskip}
           \vspace{-.25\baselineskip}
           \begin{minipage}[t]{.833\textwidth}
@@ -2163,7 +2181,7 @@ heading_suffix "}\n"
       \LocallyStopLineNumbers
       \vspace{-.75\baselineskip}
       \begin{center}
-        {\minimalist_bfseries:\scshape\small\keywordname}\\
+        {\minimalist_bfseries:\minimalist_scshape:\small\keywordname}\\
         \vspace{-.3\baselineskip}
         \begin{minipage}[t]{.833\textwidth}
           \vspace{0pt}
@@ -2184,7 +2202,7 @@ heading_suffix "}\n"
       \LocallyStopLineNumbers
       \vspace{-.5\baselineskip}
       \begin{flushright}
-        {\minimalist_bfseries:\scshape\small\keywordname}\par
+        {\minimalist_bfseries:\minimalist_scshape:\small\keywordname}\par
         \vspace{-\parskip}
         \vspace{-.30\baselineskip}
         \begin{minipage}[t]{.833\textwidth}
