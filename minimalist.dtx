@@ -650,10 +650,8 @@
       {
         \bool_if:NF \g_projlib_font_already_set_bool
           {
-            \bool_if:NTF \l__minimclass_fast_bool
-              {
-                \RequirePackage { amssymb }
-              }
+            \RequirePackage { amssymb }
+            \bool_if:NF \l__minimclass_fast_bool
               {
                 \PassOptionsToPackage { warnings-off = { mathtools-colon, mathtools-overbracket } } { unicode-math }
                 \RequirePackage { unicode-math }
@@ -677,6 +675,8 @@
                   [
                     range = { it / { Latin, latin }, bfit / { Latin, latin }, up / num, bfup / num }
                   ]
+
+                \let\square\mdwhtsquare
 
                 \hook_gput_code:nnn { begindocument } { minimclass }
                   {
