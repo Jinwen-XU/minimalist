@@ -330,43 +330,39 @@
 
         \__minimclass_load_file_or_config:Nnn \l__minimclass_load_custom_font_file_latin_bool { \l__minimclass_custom_font_file_latin_str }
           {
-            \__minimclass_if_font_exist:nnn { Palatino~Linotype }
+            \bool_if:NTF \l__projlib_font_useosf_bool
               {
-                \bool_if:NTF \l__projlib_font_useosf_bool
-                  {
-                    \setmainfont { Palatino~Linotype } [ Numbers = OldStyle ]
-                  }
-                  {
-                    \setmainfont { Palatino~Linotype }
-                  }
+                \setmainfont { TeXGyrePagellaX-Regular.otf }
+                  [
+                    BoldFont       = TeXGyrePagellaX-Bold.otf ,
+                    ItalicFont     = TeXGyrePagellaX-Italic.otf ,
+                    BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
+                    Numbers        = OldStyle ,
+                  ]
+                \setsansfont { SourceSansPro-Regular.otf }
+                  [
+                    Scale          = 1.05 ,
+                    BoldFont       = SourceSansPro-Semibold.otf ,
+                    ItalicFont     = SourceSansPro-RegularIt.otf ,
+                    BoldItalicFont = SourceSansPro-SemiboldIt.otf ,
+                    Numbers        = OldStyle ,
+                  ]
               }
               {
-                \bool_if:NTF \l__projlib_font_useosf_bool
-                  {
-                    \setmainfont { TeXGyrePagellaX-Regular.otf }
-                      [
-                        BoldFont       = TeXGyrePagellaX-Bold.otf ,
-                        ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
-                        Numbers        = OldStyle ,
-                      ]
-                  }
-                  {
-                    \setmainfont { TeXGyrePagellaX-Regular.otf }
-                      [
-                        BoldFont       = TeXGyrePagellaX-Bold.otf ,
-                        ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                        BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
-                      ]
-                  }
+                \setmainfont { TeXGyrePagellaX-Regular.otf }
+                  [
+                    BoldFont       = TeXGyrePagellaX-Bold.otf ,
+                    ItalicFont     = TeXGyrePagellaX-Italic.otf ,
+                    BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
+                  ]
+                \setsansfont { SourceSansPro-Regular.otf }
+                  [
+                    Scale          = 1.05 ,
+                    BoldFont       = SourceSansPro-Semibold.otf ,
+                    ItalicFont     = SourceSansPro-RegularIt.otf ,
+                    BoldItalicFont = SourceSansPro-SemiboldIt.otf ,
+                  ]
               }
-            \setsansfont { SourceSansPro-Regular.otf }
-              [
-                Scale          = 1.05 ,
-                BoldFont       = SourceSansPro-Bold.otf ,
-                ItalicFont     = SourceSansPro-RegularIt.otf ,
-                BoldItalicFont = SourceSansPro-BoldIt.otf ,
-              ]
             \setmonofont { NewCMMono10-Regular.otf }
               [
                 Scale          = 1.05 ,
@@ -779,7 +775,7 @@
 
 \hook_gput_code:nnn { begindocument/before } { minimclass }
   {
-    \@ifpackageloaded { biblatex }
+    \IfPackageLoadedTF { biblatex }
       {
         \PassOptionsToPackage { biblatex } { embrac }
       } {}
@@ -897,7 +893,7 @@
 %</minimalist>
 %
 %<*style>
-\@ifpackageloaded { minimalist } {}
+\IfPackageLoadedTF { minimalist } {}
   {
     \msg_new:nnn { \@currname }
       { minimalist-not-loaded }
