@@ -687,12 +687,12 @@
                 \hook_gput_code:nnn { begindocument } { minimclass }
                   {
                     \cs_gset_eq:NN \square \mdwhtsquare
-                    \cs_gset_eq:NN \minimclass_backup_mid: \mid
-                    \RenewDocumentCommand \mid {}
-                      { \nobreak \mskip-3mu \nobreak \minimclass_backup_mid: \nobreak \mskip-3mu \nobreak }
-                    \cs_gset_eq:NN \minimclass_backup_nmid: \nmid
-                    \RenewDocumentCommand \nmid {}
-                      { \nobreak \mskip-3mu \nobreak \minimclass_backup_nmid: \nobreak \mskip-3mu \nobreak }
+                    % \cs_gset_eq:NN \minimclass_backup_mid: \mid
+                    % \RenewDocumentCommand \mid {}
+                    %   { \nobreak \mskip-3mu \nobreak \minimclass_backup_mid: \nobreak \mskip-3mu \nobreak }
+                    % \cs_gset_eq:NN \minimclass_backup_nmid: \nmid
+                    % \RenewDocumentCommand \nmid {}
+                    %   { \nobreak \mskip-3mu \nobreak \minimclass_backup_nmid: \nobreak \mskip-3mu \nobreak }
                   }
 
                 \RequirePackage { tikz-cd }
@@ -775,13 +775,16 @@
 \RequirePackage { nowidow }
 
 % https://tex.stackexchange.com/a/641824
-\RequirePackage { regexpatch }
-\skip_new:N \g_minimclass_parfillskip_skip
-\xpatchcmd{\@trivlist}{\@flushglue}{\g_minimclass_parfillskip_skip}{}{}
-\hook_gput_code:nnn { begindocument } { minimclass }
+\sys_if_engine_xetex:T
   {
-    \skip_gset:Nn \g_minimclass_parfillskip_skip { 0pt plus \dim_eval:n { \linewidth - 3em } }
-    \skip_gset_eq:NN \parfillskip \g_minimclass_parfillskip_skip
+    \RequirePackage { regexpatch }
+    \skip_new:N \g_minimclass_parfillskip_skip
+    \xpatchcmd{\@trivlist}{\@flushglue}{\g_minimclass_parfillskip_skip}{}{}
+    \hook_gput_code:nnn { begindocument } { minimclass }
+      {
+        \skip_gset:Nn \g_minimclass_parfillskip_skip { 0pt plus \dim_eval:n { \linewidth - 3em } }
+        \skip_gset_eq:NN \parfillskip \g_minimclass_parfillskip_skip
+      }
   }
 
 \hook_gput_code:nnn { begindocument/before } { minimclass }
