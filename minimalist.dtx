@@ -682,18 +682,27 @@
                   {
                     \mathitalicsmode=1
                   }
-                \cs_gset_eq:NN \overline \wideoverbar
 
                 \hook_gput_code:nnn { begindocument } { minimclass }
                   {
+                    \cs_gset_eq:NN \overline \wideoverbar
                     \cs_gset_eq:NN \square \mdwhtsquare
-                    % \cs_gset_eq:NN \minimclass_backup_mid: \mid
-                    % \RenewDocumentCommand \mid {}
-                    %   { \nobreak \mskip-3mu \nobreak \minimclass_backup_mid: \nobreak \mskip-3mu \nobreak }
-                    % \cs_gset_eq:NN \minimclass_backup_nmid: \nmid
-                    % \RenewDocumentCommand \nmid {}
-                    %   { \nobreak \mskip-3mu \nobreak \minimclass_backup_nmid: \nobreak \mskip-3mu \nobreak }
                   }
+
+                % A temporary hack proposed in https://tex.stackexchange.com/a/647789
+                \hook_gput_code:nnn { begindocument } { minimclass }
+                  {
+                    \NewCommandCopy\unicodevdots\vdots
+                    \RenewDocumentCommand{\vdots}{}{\mathrel{\loweredvdots}}
+                  }
+                \newcommand{\loweredvdots}{\mathpalette\loweredvdots@\relax}
+                \newcommand{\loweredvdots@}[2]{%
+                  \begingroup
+                  \sbox\z@{$\m@th#1\unicodevdots$}%
+                  \vrule width \z@ height 2.25\ht\z@ depth 0.012\ht\z@
+                  \raisebox{0.25\height}{\usebox\z@}%
+                  \endgroup
+                }
 
                 \RequirePackage { tikz-cd }
                 \tikzcdset { arrow~style = tikz, diagrams = { >={Stealth[round,length=3.4pt,width=6.15pt,inset=2.25pt]} } }
