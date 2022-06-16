@@ -20,7 +20,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2022/06/07} {}
+  {2022/06/16} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -29,7 +29,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2022/06/07} {}
+  {2022/06/16} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -38,7 +38,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2022/06/07} {}
+  {2022/06/16} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -47,7 +47,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2022/06/07} {}
+  {2022/06/16} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -56,21 +56,21 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2022/06/07} {}
+  {2022/06/16} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2022/06/07} {}
+  {2022/06/16} {}
   {The plain style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2022/06/07} {}
+  {2022/06/16} {}
   {The classical style of minimalist}
 %</minimalist-classical>
 
@@ -928,6 +928,7 @@
 %%================================
 %%  Title fonts
 %%================================
+\RequirePackage { relsize }
 \RequirePackage { anyfontsize }
 
 \NewCommandCopy \minimalist_original_bfseries: \bfseries
@@ -1048,7 +1049,7 @@
           \rlap
             {
               \nobreakspace \nobreakspace \nobreakspace \nobreakspace
-              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \textcolor { main-text!75!paper } { \thepage }
             }
         }
       \fancyfoot[LE]
@@ -1056,7 +1057,7 @@
           \leavevmode
           \llap
             {
-              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \textcolor { main-text!75!paper } { \thepage }
               \nobreakspace \nobreakspace \nobreakspace \nobreakspace
             }
           \textcolor { main-text!30!paper } { \small \l_minimalist_leftmark_tl }
@@ -1068,7 +1069,7 @@
           \rlap
             {
               \nobreakspace \nobreakspace \nobreakspace \nobreakspace
-              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \textcolor { main-text!75!paper } { \thepage }
             }
         }
     \fi
@@ -1086,7 +1087,7 @@
           \rlap
             {
               \nobreakspace \nobreakspace \nobreakspace \nobreakspace
-              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \textcolor { main-text!75!paper } { \thepage }
             }
         }
       \fancyfoot[LE]
@@ -1094,7 +1095,7 @@
           \leavevmode
           \llap
             {
-              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \textcolor { main-text!75!paper } { \thepage }
               \nobreakspace \nobreakspace \nobreakspace \nobreakspace
             }
           \nobreakspace
@@ -1106,7 +1107,7 @@
           \rlap
             {
               \nobreakspace \nobreakspace \nobreakspace \nobreakspace
-              \textcolor { main-text!75!paper } { \minimalist_bfseries: \thepage }
+              \textcolor { main-text!75!paper } { \thepage }
             }
         }
     \fi
@@ -1242,7 +1243,7 @@
         \renewcommand{\chaptermark}[1]{\markboth{\textsc{#1}}{\textsc{#1}}}
     \fi
     \renewcommand*{\sectionmark}[1]{
-      \markright{\protect\g_minimalist_section_decoration_char_tl\nobreakspace\arabic{section}\nobreakspace\protect\g_minimalist_section_decoration_char_tl\nobreakspace\nobreakspace\nobreakspace#1}}
+      \markright{\protect\g_minimalist_section_decoration_char_tl\nobreakspace\thesection\nobreakspace\protect\g_minimalist_section_decoration_char_tl\nobreakspace\nobreakspace\nobreakspace#1}}
   }
   {
     \if@twoside
@@ -1259,17 +1260,35 @@
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
 
-\cs_new:Nn \minimalist_apply_title_numbering_style:n
+\cs_new_protected:Nn \minimalist_apply_title_numbering_style_static:n
   {
 %<*minimalist-plain>
     \tl_set:Nx \l_tmpa_tl { #1 }
     \regex_replace_all:nnN { (\w) } { \c{minimalist_original_bfseries:}{\1} } \l_tmpa_tl
     \regex_replace_all:nnN { (\d) } { {\c{usefont}{U}{zeur}{b}{n}\1} } \l_tmpa_tl
-    \textcolor { main-text!39!paper } { \l_tmpa_tl }
+    \textcolor { main-text!39!paper } { \normalfont \l_tmpa_tl }
 %</minimalist-plain>
 %<*minimalist-classical>
     #1
 %</minimalist-classical>
+  }
+
+\cs_new_protected:Nn \minimalist_apply_title_numbering_style:n
+  {
+    \group_begin:
+    \tl_set:Nx \l_tmpa_tl { #1 }
+    \regex_replace_all:nnN { (\w) } { \c{minimalist_original_bfseries:}{\1} } \l_tmpa_tl
+    \regex_replace_all:nnN { (\d) } { {\c{usefont}{U}{zeur}{b}{n}\1} } \l_tmpa_tl
+    \exp_args:Nnx \regex_count:nnN { \. } {#1} \l_tmpa_int
+    \int_case:nn { \l_tmpa_int }
+      {
+        { 0 } { \textcolor { main-text!24!paper } }
+        { 1 } { \textcolor { main-text!39!paper } }
+        { 2 } { \textcolor { main-text!39!paper } }
+        { 3 } { \smaller[2] \textcolor { main-text!24!paper } }
+      }
+    \l_tmpa_tl
+    \group_end:
   }
 
 \newcommand{\partstring}{\MakeUppercase{{\partname\nobreakspace\protect\thepart}}}
@@ -1303,7 +1322,7 @@
       \g_minimalist_title_font_part_tl\filleft}
       {\partstring}
       {1em}
-      {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+      {\fontsize{20}{24}\selectfont\MakeUppercase{#1}}
       [\ResumeLineNumbers]
     \titleformat{name=\part,numberless}[display]
       {\thispagestyle{part}
@@ -1312,7 +1331,7 @@
       \g_minimalist_title_font_part_tl\filleft}
       {\phantom{\MakeUppercase{\partname}}}
       {1em}
-      {\fontsize{20}{0}\selectfont\MakeUppercase{#1}}
+      {\fontsize{20}{24}\selectfont\MakeUppercase{#1}}
       [\ResumeLineNumbers]
     \titlespacing*{\part}{0pt}{5em}{6em}
     %% Text after part
@@ -1413,7 +1432,7 @@
 \titleformat{\section}
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_section_tl\centering}
-  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:n { \thesection } }}{1em}
+  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style_static:n { \thesection } }}{1em}
   {#1}
   [\ResumeLineNumbers]
 %</minimalist-plain>
@@ -1452,7 +1471,7 @@
 \titleformat{\subsection}
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_subsection_tl}
-  { \minimalist_apply_title_numbering_style:n { \thesubsection } }{.75em}
+  { \minimalist_apply_title_numbering_style_static:n { \thesubsection } }{.75em}
   {#1}
   [\ResumeLineNumbers]
 %</minimalist-plain>
@@ -1479,14 +1498,14 @@
   {
     \titleformat{\subsubsection}[runin]
       {\g_minimalist_title_font_subsubsection_tl}
-      { \minimalist_apply_title_numbering_style:n { \thesection } }{.5em}
+      { \minimalist_apply_title_numbering_style_static:n { \thesection } }{.5em}
       {#1.}[\hspace*{.3em}]
   }
   {
     \titleformat{\subsubsection}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_subsubsection_tl}
-      { \minimalist_apply_title_numbering_style:n { \thesubsubsection } }{.5em}
+      { \minimalist_apply_title_numbering_style_static:n { \thesubsubsection } }{.5em}
       {#1}
       [\ResumeLineNumbers]
   }
@@ -1524,7 +1543,7 @@
 \titlecontents{part}
   [0em]
   {\addvspace{1.5pc}\filcenter\normalfont}
-  { \minimalist_apply_title_numbering_style:n { \thecontentslabel } \nopagebreak\\\nopagebreak\uppercase}
+  { \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } \nopagebreak\\\nopagebreak\uppercase}
   {}
   {} % without page number
   [\addvspace{.5pc}]
@@ -1534,26 +1553,26 @@
     \titlecontents{chapter}
       [2em] % i.e., 0em (part) + 2em
       {\addvspace{.5pc}\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2em}}
       {\hspace*{-2em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %<*minimalist-plain>
     \titlecontents{section}
       [5em] % i.e., 2em (chapter) + 3em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsection}
       [9em] % i.e., 5em (section) + 4em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.75em}}
       {\hspace*{-3.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
       [13.5em] % i.e., 9em (subsection) + 4.5em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{4.25em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{4.25em}}
       {\hspace*{-4.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %</minimalist-plain>
@@ -1561,19 +1580,19 @@
     \titlecontents{section}
       [5em] % i.e., 2em (chapter) + 3em
       {\normalfont}
-      {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style:n { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2.75em}}
+      {\contentslabel[\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}\,\textcolor{main-text!90!paper}{ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } }\,\textcolor{main-text!27!paper}{\small\g_minimalist_section_decoration_char_tl}]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsection}
       [8em] % i.e., 5em (section) + 3em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
       [12em] % i.e., 8em (subsection) + 4em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.75em}}
       {\hspace*{-3.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %</minimalist-classical>
@@ -1582,20 +1601,20 @@
     \titlecontents{section}
       [2em] % i.e., 0em (part) + 2em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{1.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{1.75em}}
       {\hspace*{-1.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %<*minimalist-plain>
     \titlecontents{subsection}
       [5em] % i.e., 2em (section) + 3em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
       [9em] % i.e., 5em (subsection) + 4em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.75em}}
       {\hspace*{-3.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %</minimalist-plain>
@@ -1603,13 +1622,13 @@
     \titlecontents{subsection}
       [4.75em] % i.e., 2em (section) + 2.75em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{2.50em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2.50em}}
       {\hspace*{-2.50em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
       [8.25em] % i.e., 4.75em (subsection) + 3.5em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style:n { \thecontentslabel } ]{3.25em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.25em}}
       {\hspace*{-3.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
 %</minimalist-classical>
@@ -1620,7 +1639,7 @@
 %%================================
 \RequirePackage { enumitem }
 \setlistdepth{10}
-\setlist{noitemsep, topsep=.33\topsep}
+\setlist{noitemsep, topsep=.33\topsep-.5\parskip}
 % \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
 \setlist[enumerate,1]{label=\arabic*$)$,
@@ -1641,8 +1660,8 @@
 \renewlist{itemize}{itemize}{10}
 \setlist[itemize]{leftmargin=*,label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
 \AddLanguageSetting { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}} }
-\AddLanguageSetting [french] { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{---}} }
-\setlist[itemize,2]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{--}}
+\AddLanguageSetting [french] { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{\rule[.2\baselineskip]{.8em}{.75pt}}} }
+\setlist[itemize,2]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{\rule[.2\baselineskip]{.5em}{.75pt}}}
 % \setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\diamond$}}
 \setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\circ$}}
 \setlist[itemize,4]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\ast$}}
@@ -1719,7 +1738,7 @@ heading_suffix "}\n"
     \str_if_eq:nnTF { #1 } { Symbols }
       { \tl_set:Nn \l_tmpa_tl { \index_symbols_name } }
       { \tl_set:Nn \l_tmpa_tl { #1 } }
-    \centerline{ \g_minimalist_title_font_common_tl \minimalist_apply_title_numbering_style:n { \l_tmpa_tl } }
+    \centerline{ \g_minimalist_title_font_common_tl \minimalist_apply_title_numbering_style_static:n { \l_tmpa_tl } }
     \nopagebreak
     \par
     \vspace{.3\baselineskip}
@@ -1852,7 +1871,7 @@ heading_suffix "}\n"
 % \PassOptionsToPackage { simplename } { projlib-theorem }
 \RequirePackage { projlib-theorem }
 
-\exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist }
+\exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist, theorem-with-name }
   {
     name style = {
       , heading style = {
@@ -1893,7 +1912,7 @@ heading_suffix "}\n"
 
 \bool_if:NF \l__projlib_theorem_complexname_bool
   {
-    \exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist }
+    \exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist, theorem-with-name }
       {
         name style = {
           , crefname style = {
@@ -2224,6 +2243,18 @@ heading_suffix "}\n"
 %%================================
 \PassOptionsToPackage { amsfashion } { projlib-author }
 \RequirePackage { projlib-author }
+
+%%================================
+%%  Special adjustment
+%%================================
+\crefformat { chapter } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+\labelcrefformat { chapter } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+\crefformat { section } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+\labelcrefformat { section } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+\crefformat { subsection } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+\labelcrefformat { subsection } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+\crefformat { subsubsection } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+\labelcrefformat { subsubsection } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 %</style>
 
 \endinput
