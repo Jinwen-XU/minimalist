@@ -14,8 +14,7 @@
 %<*driver>
 \ProvidesFile{minimalist.dtx}
 %</driver>
-\NeedsTeXFormat{LaTeX2e}[2020-10-01]
-\RequirePackage{l3keys2e}
+\NeedsTeXFormat{LaTeX2e}[2022-06-01]
 %
 %<*minimart>
 \ProvidesExplClass
@@ -190,7 +189,7 @@
                                                       \PassOptionsToPackage { \CurrentOption } { minimalist }
                                                     }
   }
-\ProcessKeysOptions { minimclass }
+\ProcessKeyOptions [ minimclass ]
 
 \LoadClass{\l__minimclass_base_class_tl}
 
@@ -870,7 +869,7 @@
                                                 \PassOptionsToPackage { \CurrentOption } { projlib-theorem }
                                               }
   }
-\ProcessKeysOptions { minimalist }
+\ProcessKeyOptions [ minimalist ]
 
 \bool_new:N \l__minimalist_is_book_bool
 \cs_if_exist:cTF { c@chapter }
