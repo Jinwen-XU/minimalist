@@ -1641,15 +1641,15 @@
 \setlist{noitemsep, topsep=.33\topsep-.5\parskip}
 % \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
-\setlist[enumerate,1]{label=\arabic*$)$,
-    ref = \arabic*$)$}
-\setlist[enumerate,2]{label=\emph{\roman*}$)$,
-    ref = \arabic{enumi}.\emph{\roman*}$)$}
-\setlist[enumerate,3]{label=\emph{\alph*}$)$,
-    ref = \arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$)$}
+\setlist[enumerate,1]{label=\normalfont\arabic*$)$,
+    ref = \normalfont\arabic*$)$}
+\setlist[enumerate,2]{label=\normalfont\emph{\roman*}$)$,
+    ref = \normalfont\arabic{enumi}.\emph{\roman*}$)$}
+\setlist[enumerate,3]{label=\normalfont\emph{\alph*}$)$,
+    ref = \normalfont\arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$)$}
 \setlist[description]{font=\normalfont\minimalist_bfseries:}
 %<*minimalist-classical>
-\newcommand\desculine{\colorlet{currentcolor}{.}\bgroup\markoverwith{\color{currentcolor!55!paper}
+\newcommand\desculine{\bgroup\markoverwith{\color{.!55!paper}
   \rule[-.45ex]{2pt}{.75pt}}\ULon}
 \renewcommand{\descriptionlabel}[1]{
   \hspace{\labelsep}\normalfont\desculine{#1}
@@ -1657,13 +1657,13 @@
 %</minimalist-classical>
 
 \renewlist{itemize}{itemize}{10}
-\setlist[itemize]{leftmargin=*,label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\cdot$}}
-\AddLanguageSetting { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\bullet$}} }
-\AddLanguageSetting [french] { \setlist[itemize,1]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{\rule[.2\baselineskip]{.8em}{.75pt}}} }
-\setlist[itemize,2]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{\rule[.2\baselineskip]{.5em}{.75pt}}}
-% \setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\diamond$}}
-\setlist[itemize,3]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\circ$}}
-\setlist[itemize,4]{label=\colorlet{currentcolor}{.}\textcolor{currentcolor!27!paper}{$\ast$}}
+\setlist[itemize]{leftmargin=*,label=\textcolor{.!27!paper}{$\cdot$}}
+\AddLanguageSetting { \setlist[itemize,1]{label=\textcolor{.!27!paper}{$\bullet$}} }
+\AddLanguageSetting [french] { \setlist[itemize,1]{label=\textcolor{.!27!paper}{\rule[.2\baselineskip]{.8em}{.75pt}}} }
+\setlist[itemize,2]{label=\textcolor{.!27!paper}{\rule[.2\baselineskip]{.5em}{.75pt}}}
+% \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\diamond$}}
+\setlist[itemize,3]{label=\textcolor{.!27!paper}{$\circ$}}
+\setlist[itemize,4]{label=\textcolor{.!27!paper}{$\ast$}}
 
 %%================================
 %%  Blank page
