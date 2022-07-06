@@ -1547,7 +1547,13 @@
 
 \titlespacing{\section}{0pt}{1\baselineskip plus .5\baselineskip minus .2\baselineskip}{.6\baselineskip plus .3\baselineskip minus .2\baselineskip}
 \titlespacing{\subsection}{0pt}{.75\baselineskip plus .3\baselineskip minus .2\baselineskip}{.4\baselineskip plus .2\baselineskip minus .1\baselineskip}
-\titlespacing{\subsubsection}{0pt}{.5\baselineskip plus .2\baselineskip minus .1\baselineskip}{.3\baselineskip plus .2\baselineskip minus .1\baselineskip}
+\bool_if:NTF \l__minimalist_runin_bool
+  {
+    \titlespacing{\subsubsection}{0pt}{.5\baselineskip plus .2\baselineskip minus .1\baselineskip}{0pt}
+  }
+  {
+    \titlespacing{\subsubsection}{0pt}{.5\baselineskip plus .2\baselineskip minus .1\baselineskip}{.3\baselineskip plus .2\baselineskip minus .1\baselineskip}
+  }
 
 %%================================
 %%  ToC format
