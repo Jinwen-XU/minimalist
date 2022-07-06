@@ -260,7 +260,7 @@
 
 \RequirePackage { minimalist }
 
-\raggedbottom
+% \raggedbottom
 \emergencystretch=2pt
 \hfuzz=2pt
 \vfuzz=2pt
@@ -676,7 +676,7 @@
                 \setmathfont { KpMath-Regular.otf }
                 \setmathfont { KpMath-Sans.otf }
                   [
-                    range = { \sum, \prod, \coprod }
+                    range = { \sum }
                   ]
                 \setmathfont { latinmodern-math.otf }
                   [
@@ -1269,6 +1269,7 @@
 %%  Title format
 %%================================
 \RequirePackage [ explicit, newparttoc ] { titlesec }
+\renewcommand{\bottomtitlespace}{.1\textheight}
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
 
@@ -1544,9 +1545,9 @@
 \titleformat{\paragraph}[runin]
   { \g_minimalist_title_font_paragraph_tl }{\theparagraph}{1em}{#1}
 
-\titlespacing{\section}{0pt}{\baselineskip}{.6\baselineskip}
-\titlespacing{\subsection}{0pt}{.75\baselineskip}{.4\baselineskip}
-\titlespacing{\subsubsection}{0pt}{.5\baselineskip}{.3\baselineskip}
+\titlespacing{\section}{0pt}{1\baselineskip plus .5\baselineskip minus .2\baselineskip}{.6\baselineskip plus .3\baselineskip minus .2\baselineskip}
+\titlespacing{\subsection}{0pt}{.75\baselineskip plus .3\baselineskip minus .2\baselineskip}{.4\baselineskip plus .2\baselineskip minus .1\baselineskip}
+\titlespacing{\subsubsection}{0pt}{.5\baselineskip plus .2\baselineskip minus .1\baselineskip}{.3\baselineskip plus .2\baselineskip minus .1\baselineskip}
 
 %%================================
 %%  ToC format
@@ -1672,8 +1673,8 @@
 \renewlist{itemize}{itemize}{10}
 \setlist[itemize]{leftmargin=*,label=\textcolor{.!27!paper}{$\cdot$}}
 \AddLanguageSetting { \setlist[itemize,1]{label=\textcolor{.!27!paper}{$\bullet$}} }
-\AddLanguageSetting [french] { \setlist[itemize,1]{label=\textcolor{.!27!paper}{\rule[.2\baselineskip]{.8em}{.75pt}}} }
-\setlist[itemize,2]{label=\textcolor{.!27!paper}{\rule[.2\baselineskip]{.5em}{.75pt}}}
+\AddLanguageSetting [french] { \setlist[itemize,1]{label=\textcolor{.!39!paper}{\rule[.2\baselineskip]{.8em}{.75pt}}} }
+\setlist[itemize,2]{label=\textcolor{.!27!paper}{\rule[.2\baselineskip]{.55em}{.75pt}}}
 % \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\diamond$}}
 \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\circ$}}
 \setlist[itemize,4]{label=\textcolor{.!27!paper}{$\ast$}}
@@ -1759,7 +1760,7 @@ heading_suffix "}\n"
 \renewcommand*{\indexspace}
   {
     \par
-    \vspace{2pc ~ plus ~ .5pc ~ minus ~ .3pc}
+    \vspace{2pc plus .5pc minus .3pc}
   }
 
 % Prevent column break before the first sub-entry in the index
