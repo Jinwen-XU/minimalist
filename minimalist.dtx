@@ -801,8 +801,14 @@
 %</einfart|simplivre>
 
 
-\PassOptionsToPackage { all } { nowidow }
-\RequirePackage { nowidow }
+\sys_if_engine_luatex:TF
+  {
+    \RequirePackage { lua-widow-control }
+  }
+  {
+    \PassOptionsToPackage { all } { nowidow }
+    \RequirePackage { nowidow }
+  }
 
 % https://tex.stackexchange.com/a/641824
 \sys_if_engine_xetex:T
@@ -1269,7 +1275,7 @@
 %%  Title format
 %%================================
 \RequirePackage [ explicit, newparttoc ] { titlesec }
-\renewcommand{\bottomtitlespace}{.1\textheight}
+% \renewcommand{\bottomtitlespace}{.1\textheight}
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
 
