@@ -347,43 +347,53 @@
           {
             \bool_if:NTF \l__projlib_font_useosf_bool
               {
-                \setmainfont { TeXGyrePagellaX-Regular.otf }
+                \setmainfont { TeXGyrePagellaX }
                   [
-                    BoldFont       = TeXGyrePagellaX-Bold.otf ,
-                    ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                    BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Italic,
+                    BoldItalicFont = *-BoldItalic,
                     Numbers        = OldStyle ,
                   ]
-                \setsansfont { SourceSansPro-Regular.otf }
+                \setsansfont { SourceSansPro }
                   [
-                    Scale          = 1.05 ,
-                    BoldFont       = SourceSansPro-Semibold.otf ,
-                    ItalicFont     = SourceSansPro-RegularIt.otf ,
-                    BoldItalicFont = SourceSansPro-SemiboldIt.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Semibold,
+                    ItalicFont     = *-RegularIt,
+                    BoldItalicFont = *-SemiboldIt,
+                    WordSpace      = {1.25, 1, 1} ,
                     Numbers        = OldStyle ,
                   ]
               }
               {
-                \setmainfont { TeXGyrePagellaX-Regular.otf }
+                \setmainfont { TeXGyrePagellaX }
                   [
-                    BoldFont       = TeXGyrePagellaX-Bold.otf ,
-                    ItalicFont     = TeXGyrePagellaX-Italic.otf ,
-                    BoldItalicFont = TeXGyrePagellaX-BoldItalic.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Italic,
+                    BoldItalicFont = *-BoldItalic,
                   ]
-                \setsansfont { SourceSansPro-Regular.otf }
+                \setsansfont { SourceSansPro }
                   [
-                    Scale          = 1.05 ,
-                    BoldFont       = SourceSansPro-Semibold.otf ,
-                    ItalicFont     = SourceSansPro-RegularIt.otf ,
-                    BoldItalicFont = SourceSansPro-SemiboldIt.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Semibold,
+                    ItalicFont     = *-RegularIt,
+                    BoldItalicFont = *-SemiboldIt,
+                    WordSpace      = {1.25, 1, 1} ,
                   ]
               }
-            \setmonofont { NewCMMono10-Regular.otf }
+            \setmonofont { NewCMMono10 }
               [
                 Scale          = 1.05 ,
-                BoldFont       = NewCMMono10-Bold.otf ,
-                ItalicFont     = NewCMMono10-Italic.otf ,
-                BoldItalicFont = NewCMMono10-BoldOblique.otf ,
+                Extension      = .otf,
+                UprightFont    = *-Regular,
+                BoldFont       = *-Bold,
+                ItalicFont     = *-Italic,
+                BoldItalicFont = *-BoldOblique,
               ]
 
             \projlib_language_set_linespacing_latin:n { \setstretch { 1.07 } }
@@ -405,48 +415,55 @@
       {
         \__minimclass_if_font_exist:nnn { SourceHanSerifSC-Regular }
           {
-            \setCJKmainfont { SourceHanSerifSC-Regular }
+            \setCJKmainfont { SourceHanSerifSC }
               [
-                BoldFont       = SourceHanSerifSC-Bold ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanSerifSC-Bold ,
+                UprightFont    = *-Regular,
+                BoldFont       = *-Bold,
+                ItalicFont     = *-Regular,
+                BoldItalicFont = *-Bold,
               ]
           }
           {
-            \setCJKmainfont { FandolSong-Regular.otf }
+            \setCJKmainfont { FandolSong }
               [
-                BoldFont       = FandolSong-Bold.otf ,
-                ItalicFont     = FandolKai-Regular.otf ,
-                BoldItalicFont = FandolKai-Regular.otf ,
+                Extension      = .otf,
+                UprightFont    = *-Regular,
+                BoldFont       = *-Bold,
+                ItalicFont     = FandolKai-Regular ,
+                BoldItalicFont = FandolKai-Regular ,
                 BoldItalicFeatures = { FakeBold = 4 } ,
               ]
           }
 
         \__minimclass_if_font_exist:nnn { SourceHanSansSC-Regular }
           {
-            \setCJKsansfont{SourceHanSansSC-Regular}
+            \setCJKsansfont { SourceHanSansSC }
               [
-                BoldFont       = SourceHanSansSC-Bold ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanSansSC-Bold ,
+                UprightFont    = *-Regular,
+                BoldFont       = *-Bold,
+                ItalicFont     = *-Regular,
+                BoldItalicFont = *-Bold,
               ]
           }
           {
-            \setCJKsansfont { FandolHei-Regular.otf }
+            \setCJKsansfont { FandolHei }
               [
-                BoldFont       = FandolHei-Bold.otf ,
-                ItalicFont     = * ,
-                BoldItalicFont = FandolHei-Bold.otf ,
+                Extension      = .otf,
+                UprightFont    = *-Regular,
+                BoldFont       = *-Bold,
+                ItalicFont     = *-Regular,
+                BoldItalicFont = *-Bold,
               ]
           }
 
         \__minimclass_if_font_exist:nnn { SourceHanMonoSC-Regular }
           {
-            \setCJKmonofont { SourceHanMonoSC-Regular }
+            \setCJKmonofont { SourceHanMonoSC }
               [
-                BoldFont       = SourceHanMonoSC-Medium ,
-                ItalicFont     = * ,
-                BoldItalicFont = SourceHanMonoSC-Medium ,
+                UprightFont    = *-Regular,
+                BoldFont       = *-Medium,
+                ItalicFont     = *-Regular,
+                BoldItalicFont = *-Medium,
               ]
           }
           {
@@ -464,46 +481,53 @@
           {
             \__minimclass_if_font_exist:nnn { SourceHanSerifSC-Regular }
               {
-                \setCJKfamilyfont { SCmain } { SourceHanSerifSC-Regular }
+                \setCJKfamilyfont { SCmain } { SourceHanSerifSC }
                   [
-                    BoldFont       = SourceHanSerifSC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSerifSC-Bold ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
               {
-                \setCJKfamilyfont { SCmain } { FandolSong-Regular.otf }
+                \setCJKfamilyfont { SCmain } { FandolSong }
                   [
-                    BoldFont       = FandolSong-Bold.otf ,
-                    ItalicFont     = FandolKai-Regular.otf ,
-                    BoldItalicFont = FandolKai-Regular.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = FandolKai-Regular ,
+                    BoldItalicFont = FandolKai-Regular ,
                     BoldItalicFeatures = { FakeBold = 4 } ,
                   ]
               }
             \__minimclass_if_font_exist:nnn { SourceHanSansSC-Regular }
               {
-                \setCJKfamilyfont { SCsans } { SourceHanSansSC-Regular }
+                \setCJKfamilyfont { SCsans } { SourceHanSansSC }
                   [
-                    BoldFont       = SourceHanSansSC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSansSC-Bold ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
               {
-                \setCJKfamilyfont { SCsans } { FandolHei-Regular.otf }
+                \setCJKfamilyfont { SCsans } { FandolHei }
                   [
-                    BoldFont       = FandolHei-Bold.otf ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = FandolHei-Bold.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
             \__minimclass_if_font_exist:nnn { SourceHanMonoSC-Regular }
               {
-                \setCJKfamilyfont { SCmono } { SourceHanMonoSC-Regular }
+                \setCJKfamilyfont { SCmono } { SourceHanMonoSC }
                   [
-                    BoldFont       = SourceHanMonoSC-Medium ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanMonoSC-Medium ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Medium,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Medium,
                   ]
               }
               {
@@ -522,46 +546,53 @@
           {
             \__minimclass_if_font_exist:nnn { SourceHanSerifTC-Regular }
               {
-                \setCJKfamilyfont { TCmain } { SourceHanSerifTC-Regular }
+                \setCJKfamilyfont { TCmain } { SourceHanSerifTC }
                   [
-                    BoldFont       = SourceHanSerifTC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSerifTC-Bold ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
               {
-                \setCJKfamilyfont { TCmain } { FandolSong-Regular.otf }
+                \setCJKfamilyfont { TCmain } { FandolSong }
                   [
-                    BoldFont       = FandolSong-Bold.otf ,
-                    ItalicFont     = FandolKai-Regular.otf ,
-                    BoldItalicFont = FandolKai-Regular.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = FandolKai-Regular ,
+                    BoldItalicFont = FandolKai-Regular ,
                     BoldItalicFeatures = { FakeBold = 4 } ,
                   ]
               }
             \__minimclass_if_font_exist:nnn { SourceHanSansTC-Regular }
               {
-                \setCJKfamilyfont { TCsans } { SourceHanSansTC-Regular }
+                \setCJKfamilyfont { TCsans } { SourceHanSansTC }
                   [
-                    BoldFont       = SourceHanSansTC-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSansTC-Bold ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
               {
-                \setCJKfamilyfont { TCsans } { FandolHei-Regular.otf }
+                \setCJKfamilyfont { TCsans } { FandolHei }
                   [
-                    BoldFont       = FandolHei-Bold.otf ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = FandolHei-Bold.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
             \__minimclass_if_font_exist:nnn { SourceHanMonoTC-Regular }
               {
-                \setCJKfamilyfont { TCmono } { SourceHanMonoTC-Regular }
+                \setCJKfamilyfont { TCmono } { SourceHanMonoTC }
                   [
-                    BoldFont       = SourceHanMonoTC-Medium ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanMonoTC-Medium ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Medium,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Medium,
                   ]
               }
               {
@@ -580,46 +611,53 @@
           {
             \__minimclass_if_font_exist:nnn { SourceHanSerif-Regular }
               {
-                \setCJKfamilyfont { JPmain } { SourceHanSerif-Regular }
+                \setCJKfamilyfont { JPmain } { SourceHanSerif }
                   [
-                    BoldFont       = SourceHanSerif-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSerif-Bold ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
               {
-                \setCJKfamilyfont { JPmain } { FandolSong-Regular.otf }
+                \setCJKfamilyfont { JPmain } { FandolSong }
                   [
-                    BoldFont       = FandolSong-Bold.otf ,
-                    ItalicFont     = FandolKai-Regular.otf ,
-                    BoldItalicFont = FandolKai-Regular.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = FandolKai-Regular ,
+                    BoldItalicFont = FandolKai-Regular ,
                     BoldItalicFeatures = { FakeBold = 4 } ,
                   ]
               }
             \__minimclass_if_font_exist:nnn { SourceHanSans-Regular }
               {
-                \setCJKfamilyfont { JPsans } { SourceHanSans-Regular }
+                \setCJKfamilyfont { JPsans } { SourceHanSans }
                   [
-                    BoldFont       = SourceHanSans-Bold ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanSans-Bold ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
               {
-                \setCJKfamilyfont { JPsans } { FandolHei-Regular.otf }
+                \setCJKfamilyfont { JPsans } { FandolHei }
                   [
-                    BoldFont       = FandolHei-Bold.otf ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = FandolHei-Bold.otf ,
+                    Extension      = .otf,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Bold,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Bold,
                   ]
               }
             \__minimclass_if_font_exist:nnn { SourceHanMono-Regular }
               {
-                \setCJKfamilyfont { JPmono } { SourceHanMono-Regular }
+                \setCJKfamilyfont { JPmono } { SourceHanMono }
                   [
-                    BoldFont       = SourceHanMono-Medium ,
-                    ItalicFont     = * ,
-                    BoldItalicFont = SourceHanMono-Medium ,
+                    UprightFont    = *-Regular,
+                    BoldFont       = *-Medium,
+                    ItalicFont     = *-Regular,
+                    BoldItalicFont = *-Medium,
                   ]
               }
               {
@@ -710,7 +748,7 @@
                     \cs_gset_eq:NN \square \mdwhtsquare
                   }
 
-                % A temporary hack proposed in https://tex.stackexchange.com/a/647789
+                % https://tex.stackexchange.com/a/647789
                 \hook_gput_code:nnn { begindocument } { minimclass }
                   {
                     \NewCommandCopy\unicodevdots\vdots
