@@ -838,6 +838,20 @@
 \cs_new_protected:Npn · { \ensuremath\cdot }
 %</einfart|simplivre>
 
+%%================================
+%%  Graphics
+%%================================
+\RequirePackage { graphicx }
+\graphicspath { { images/ } }
+\RequirePackage { wrapfig }
+\RequirePackage { float }
+\RequirePackage { caption }
+\captionsetup { font = small }
+
+%%================================
+%%  Icing on the cake
+%%================================
+\bool_if:NT \l__minimclass_fast_bool { \endinput }
 
 \sys_if_engine_luatex:TF
   {
@@ -860,16 +874,6 @@
         \skip_gset_eq:NN \parfillskip \g_minimclass_parfillskip_skip
       }
   }
-
-%%================================
-%%  Graphics
-%%================================
-\RequirePackage { graphicx }
-\graphicspath { { images/ } }
-\RequirePackage { wrapfig }
-\RequirePackage { float }
-\RequirePackage { caption }
-\captionsetup { font = small }
 %</class>
 %
 %
