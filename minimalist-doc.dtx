@@ -28,8 +28,6 @@
 \usepackage{longtable}  % breakable tables
 \usepackage{hologo}     % more TeX logo
 
-\usepackage{relsize}
-
 \usepackage{blindtext}
 
 %<minimalist-doc,einfart-doc-en,simplivre-doc-en>\UseLanguage{English}
@@ -40,48 +38,75 @@
 %% For typesetting code
 %%================================
 \usepackage{listings}
-\definecolor{maintheme}{RGB}{70,130,180}
-\definecolor{forestgreen}{RGB}{21,122,81}
-\definecolor{lightergray}{gray}{0.99}
-\lstset{language=[LaTeX]TeX,
-    keywordstyle=\color{maintheme},
-    basicstyle=\ttfamily,
-    commentstyle=\color{forestgreen}\ttfamily,
-    stringstyle=\rmfamily,
-    showstringspaces=false,
-    breaklines=true,
-    frame=lines,
-    backgroundcolor=\color{lightergray},
-    flexiblecolumns=true,
-    escapeinside={(*}{*)},
-    % numbers=left,
-    numberstyle=\scriptsize, stepnumber=1, numbersep=5pt,
-    % firstnumber=last,
+\usepackage{xcolor}
+\usepackage{setspace}
+\definecolor{code-main}{RGB}{70,130,180}
+\definecolor{code-expl3}{RGB}{240,50,60}
+\definecolor{code-option}{RGB}{40,110,20}
+\definecolor{code-keys}{RGB}{100,130,150}
+\definecolor{code-comment}{RGB}{20,120,80}
+\definecolor{code-background}{gray}{0.99}
+\lstset{
+    language = [LaTeX]TeX,
+    basicstyle = \ttfamily,
+    keywordstyle = \color{code-main},
+    commentstyle = \color{code-comment},
+    showstringspaces = false,
+    breaklines = true,
+    frame = lines,
+    backgroundcolor = \color{code-background},
+    flexiblecolumns = true,
+    escapeinside = {(*}{*)},
+    alsoletter = {_,:},
+    % numbers = left,
+    % firstnumber = last,
+    numberstyle = \scriptsize\ttfamily,
+    stepnumber = 1,
+    numbersep = 5pt,
 }
-\providecommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
-\lstset{moretexcs=%
-    {linenumbers,nolinenumbers,part,parttext,chapter,section,subsection,subsubsection,frontmatter,mainmatter,backmatter,tableofcontents,href,
-    color,NameTheorem,CreateTheorem,cref,DNF,UseLanguage,UseOtherLanguage,AddLanguageSetting,maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,TheDate,ProjLib,qedhere
-    }
+\newcommand{\meta}[1]{$\langle${\normalfont\itshape#1}$\rangle$}
+\lstset{% LaTeX2 commands
+    classoffset = 0,
+    texcsstyle =* \color{code-main},
+    moretexcs =
+      {
+        linenumbers,nolinenumbers,
+        part,parttext,chapter,section,subsection,subsubsection,
+        frontmatter,mainmatter,backmatter,
+        tableofcontents,
+        href,
+        color,
+        NameTheorem,CreateTheorem,
+        cref,
+        ProjLib,
+        DNF,
+        UseLanguage,UseOtherLanguage,AddLanguageSetting,
+        maketitle,address,curraddr,email,keywords,subjclass,thanks,dedicatory,TheDate,
+        qedhere,
+      }
 }
-\lstnewenvironment{code}%
-{\setstretch{1.07}\LocallyStopLineNumbers%
-\setkeys{lst}{columns=fullflexible,keepspaces=true}%
+\lstset{% LaTeX3 commands
+    classoffset = 1,
+    texcsstyle =* \color{code-expl3},
+    moretexcs =
+      {
+      }
 }
-{\ResumeLineNumbers}
-\lstnewenvironment{code*}%
-{\setstretch{1.07}\LocallyStopLineNumbers%
-\setkeys{lst}{numbers=left,columns=fullflexible,keepspaces=true}%
-}
-{\ResumeLineNumbers}
+\lstnewenvironment{code}{\setstretch{1.05}\LocallyStopLineNumbers}{\ResumeLineNumbers\vspace{-.3\baselineskip}\vspace{-.5\parskip}}
+\lstnewenvironment{code*}{\setstretch{1.05}\lstset{numbers=left}\LocallyStopLineNumbers}{\ResumeLineNumbers\vspace{-.3\baselineskip}\vspace{-.5\parskip}}
+
+\newcommand{\classoption}[1]{\texttt{\textcolor{code-option}{#1}}}
+\newcommand{\packageoption}[1]{\texttt{\textcolor{code-option}{#1}}}
+\newcommand{\commandoption}[1]{\texttt{\textcolor{code-keys}{#1}}}
 
 %%================================
 %% tip
 %%================================
 \usepackage[many]{tcolorbox}
-%<einfart-doc-cn,simplivre-doc-cn>\newenvironment{tip}[1][提示]{%
-%<minimalist-doc,einfart-doc-en,simplivre-doc-en>\newenvironment{tip}[1][Tip]{%
-%<einfart-doc-fr,simplivre-doc-fr>\newenvironment{tip}[1][Astuce]{%
+%<einfart-doc-cn,simplivre-doc-cn>\newenvironment{tip}[1][提示]
+%<minimalist-doc,einfart-doc-en,simplivre-doc-en>\newenvironment{tip}[1][Tip]
+%<einfart-doc-fr,simplivre-doc-fr>\newenvironment{tip}[1][Astuce]
+  {%
     \LocallyStopLineNumbers%
     \begin{tcolorbox}[breakable,
         enhanced,
@@ -92,12 +117,16 @@
         fonttitle = \sffamily,
         attach boxed title to top left = {yshift=-\tcboxedtitleheight/2, xshift=.5cm},
         boxed title style = {boxrule=0pt, colframe=paper},
-        before skip = 0.3cm,
-        after skip = 0.3cm,
-        top = 3mm,
-        bottom = 3mm,
+        before skip = 3mm,
+        after skip = 3mm,
+        top = 2.5mm,
+        bottom = 1.5mm,
         title={\scshape\sffamily #1}]%
-}{\end{tcolorbox}\ResumeLineNumbers}
+  }
+  {%
+    \end{tcolorbox}%
+    \ResumeLineNumbers%
+  }
 
 %%================================
 %% Names
@@ -128,7 +157,7 @@
 %%================================
 \begin{document}
 
-\def\PackageVersion{2022/06/16}
+\def\PackageVersion{2022/07/31}
 
 %<*minimalist-doc>
 \title{\minimalist{}, write your articles or books in a simple and clear way}
@@ -231,7 +260,7 @@
 \begin{abstract}
     \minimalist{} is a series of styles and classes for you to typeset your articles or books in a simple and clear manner. The original intention in designing this series was to write drafts and notes that look simple yet not shabby. With the help of the \ProjLib{} toolkit, also developed by the author, the classes provided here have multi-language support, preset theorem-like environments with clever reference support, and many other functionalities. Notably, using these classes, one can organize the author information in the \AmS{} fashion, makes it easy to switch to journal classes later for publication.
 
-    Finally, this documentation is typeset using the \minimart{} class (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
+    Finally, this documentation is typeset using the \minimart{} class (with the option \classoption{classical}). You can think of it as a short introduction and demonstration.
 \end{abstract}
 %</minimalist-doc>
 %
@@ -241,7 +270,7 @@
 
     \einfart{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
 
-    This documentation is typeset using \einfart{} (with the option \texttt{classical}). You can think of it as a short introduction and demonstration.
+    This documentation is typeset using \einfart{} (with the option \classoption{classical}). You can think of it as a short introduction and demonstration.
 \end{abstract}
 %</einfart-doc-en>
 %
@@ -251,7 +280,7 @@
 
     \einfart{} 支持英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
 
-    这篇说明文档即是用 \einfart{} 排版的 (使用了参数 \texttt{classical})，你可以把它看作一份简短的说明与演示。
+    这篇说明文档即是用 \einfart{} 排版的 (使用了参数 \classoption{classical})，你可以把它看作一份简短的说明与演示。
 \end{abstract}
 %</einfart-doc-cn>
 %
@@ -261,7 +290,7 @@
 
     \einfart{} prend en charge plusieurs langues, notamment le chinois (simplifié et traditionnel), l'anglais, le français, l'allemand, l'italien, le japonais, le portugais (européen et brésilien), le russe et l'espagnol. Ces langues peuvent être commutées de manière transparente dans un seul document. En raison de l'utilisation de polices personnalisées, \einfart{} demande soit \hologo{XeLaTeX} soit \hologo{LuaLaTeX} pour la compilation.
 
-    Cette documentation est composée à l'aide de \einfart{} (avec l'option \texttt{classical}). Vous pouvez le considérer comme une courte introduction et une démonstration.
+    Cette documentation est composée à l'aide de \einfart{} (avec l'option \classoption{classical}). Vous pouvez le considérer comme une courte introduction et une démonstration.
 \end{abstract}
 %</einfart-doc-fr>
 
@@ -274,7 +303,7 @@
 
 \simplivre{} has multi-language support, including Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish. These languages can be switched seamlessly in a single document. Due to the usage of custom fonts, \einfart{} requires \hologo{XeLaTeX} or \hologo{LuaLaTeX} to compile.
 
-This documentation is typeset using \simplivre{} (with the option \texttt{use boldface}). You can think of it as a short introduction and demonstration.
+This documentation is typeset using \simplivre{} (with the option \classoption{use boldface}). You can think of it as a short introduction and demonstration.
 
 \bigskip
 \begin{tip}
@@ -289,7 +318,7 @@ This documentation is typeset using \simplivre{} (with the option \texttt{use bo
 
 \simplivre{} 支持英语、法语、德语、意大利语、葡萄牙语、巴西葡萄牙语、西班牙语、简体中文、繁体中文、日文、俄文，并且同一篇文档中这些语言可以很好地协调。由于采用了自定义字体，需要用 \hologo{XeLaTeX} 或 \hologo{LuaLaTeX} 引擎进行编译。
 
-这篇说明文档即是用 \simplivre{} 排版的 (使用了参数 \texttt{use boldface})，你可以把它看作一份简短的说明与演示。
+这篇说明文档即是用 \simplivre{} 排版的 (使用了参数 \classoption{use boldface})，你可以把它看作一份简短的说明与演示。
 
 \bigskip
 \begin{tip}
@@ -304,7 +333,7 @@ This documentation is typeset using \simplivre{} (with the option \texttt{use bo
 
 \simplivre{} prend en charge plusieurs langues, notamment le chinois (simplifié et traditionnel), l'anglais, le français, l'allemand, l'italien, le japonais, le portugais (européen et brésilien), le russe et l'espagnol. Ces langues peuvent être commutées de manière transparente dans un seul document. En raison de l'utilisation de polices personnalisées, \simplivre{} demande soit \hologo{XeLaTeX} soit \hologo{LuaLaTeX} pour la compilation.
 
-Cette documentation est composée à l'aide de \simplivre{} (avec l'option \texttt{use boldface}). Vous pouvez le considérer comme une courte introduction et une démonstration.
+Cette documentation est composée à l'aide de \simplivre{} (avec l'option \classoption{use boldface}). Vous pouvez le considérer comme une courte introduction et une démonstration.
 
 \bigskip
 \begin{tip}
@@ -312,11 +341,6 @@ Cette documentation est composée à l'aide de \simplivre{} (avec l'option \text
 \end{tip}
 %</simplivre-doc-fr>
 
-
-
-\begin{tip}
-    This documentation has not been fully up-to-date with the new \texttt{expl3} version of this class series. Some options or commands introduced here might be obsolete.
-\end{tip}
 
 
 
@@ -1083,7 +1107,7 @@ ou utilisez la classe \AmS{} :
 
 %<*minimalist-doc,einfart-doc-en>
 \begin{tip}
-If you like the current document class, but want a more ``plain'' style, then you can use the option \texttt{classical}, like this:
+If you like the current document class, but want a more ``plain'' style, then you can use the option \classoption{classical}, like this:
 
 \begin{code}
 %<minimalist-doc>\documentclass[classical]{minimart}
@@ -1094,7 +1118,7 @@ If you like the current document class, but want a more ``plain'' style, then yo
 %
 %<*einfart-doc-cn>
 \begin{tip}
-如果你喜欢这个文档类，但又希望使用一种更加中规中矩的样式，那么不妨使用 \texttt{classical} 选项，就像这样：
+如果你喜欢这个文档类，但又希望使用一种更加中规中矩的样式，那么不妨使用 \classoption{classical} 选项，就像这样：
 
 \begin{code}
 %<minimalist-doc>\documentclass[classical]{minimart}
@@ -1105,7 +1129,7 @@ If you like the current document class, but want a more ``plain'' style, then yo
 %
 %<*einfart-doc-fr>
 \begin{tip}
-Si vous aimez la classe de document actuelle, mais que vous souhaitez un style plus «~simple~», vous pouvez utiliser l'option \texttt{classical}, comme ceci :
+Si vous aimez la classe de document actuelle, mais que vous souhaitez un style plus «~simple~», vous pouvez utiliser l'option \classoption{classical}, comme ceci :
 
 \begin{code}
 %<minimalist-doc>\documentclass[classical]{minimart}
@@ -1221,17 +1245,17 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
 %<*minimalist-doc,einfart-doc-en,simplivre-doc-en>
 \LevelOneTitle{The options}
 
-%<minimalist-doc>\minimalist{} offers the following options: 
-%<einfart-doc-en>\einfart{} offers the following options: 
-%<simplivre-doc-en>\simplivre{} offers the following options: 
+%<minimalist-doc>\minimalist{} offers the following options:
+%<einfart-doc-en>\einfart{} offers the following options:
+%<simplivre-doc-en>\simplivre{} offers the following options:
 
-\begin{itemize}
-    \item The language options \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
+\begin{itemize}[label=,leftmargin=1.25em,itemindent=-1.25em]
+    \item The language options \classoption{EN} / \classoption{english} / \classoption{English}, \classoption{FR} / \classoption{french} / \classoption{French}, etc.
         \begin{itemize}
             \item For the option names of a specific language, please refer to \meta{language name} in the next section. The first specified language will be used as the default language.
             \item The language options are optional, mainly for increasing the compilation speed. Without them the result would be the same, only slower.
         \end{itemize}
-    \item \texttt{draft} or \texttt{fast}
+    \item \classoption{draft} or \classoption{fast}
         \begin{itemize}
             \item The option \verb|fast| enables a faster but slightly rougher style, main differences are:
             \begin{itemize}
@@ -1244,50 +1268,50 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
         During the draft stage, it is recommended to use the \verb|fast| option to speed up compilation. When in \verb|fast| mode, there will be a watermark ``DRAFT'' to indicate that you are currently in the draft mode.
     \end{tip}
 %<*einfart-doc-en,simplivre-doc-en>
-    \item \texttt{a4paper} or \texttt{b5paper}
+    \item \classoption{a4paper} or \classoption{b5paper}
         \begin{itemize}
             \item Paper size options. The default paper size is 7in $\times$ 10in.
         \end{itemize}
-    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{noto}, \texttt{biolinum} ~$|$~ \texttt{useosf}
+    \item \classoption{palatino}, \classoption{times}, \classoption{garamond}, \classoption{noto}, \classoption{biolinum} ~$|$~ \classoption{useosf}
         \begin{itemize}
             \item Font options. As the name suggest, font with corresponding name will be loaded. 
-            \item The \texttt{useosf} option is used to enable the old-style figures.
+            \item The \classoption{useosf} option is used to enable the old-style figures.
         \end{itemize}
 %</einfart-doc-en,simplivre-doc-en>
-    \item \texttt{use boldface}
+    \item \classoption{use boldface}
         \begin{itemize}
             \item Allow boldface. When this option is enabled, the main title, the titles of all levels and the names of theorem-like environments will be bolded.
         \end{itemize}
-    \item \texttt{classical}
+    \item \classoption{classical}
         \begin{itemize}
 %             \item Classic mode. When this option is enabled, the style will become more regular: paragraphs are indented, the use of underlines are reduced, heading styles are changed, and the theorem styles will be much closer to common styles.
             \item Classic mode. An antique-looking style will be used when this option is enabled, like in the current documentation.
         \end{itemize}
 %     \begin{tip}
-%         \texttt{use boldface} + \texttt{classical} is probably a good choice if you prefer traditional style.
+%         \classoption{use boldface} + \classoption{classical} is probably a good choice if you prefer traditional style.
 %     \end{tip}
 %<*einfart-doc-en,simplivre-doc-en>
-    \item \texttt{useindent}
+    \item \classoption{useindent}
         \begin{itemize}
             \item Use paragraph indentation instead of inter-paragraph spacing.
         \end{itemize}
 %</einfart-doc-en,simplivre-doc-en>
-    \item \texttt{runin}
+    \item \classoption{runin}
         \begin{itemize}
             \item Use the ``runin'' style for \lstinline|\subsubsection|
         \end{itemize}
-    \item \texttt{nothms}
+    \item \classoption{nothms}
         \begin{itemize}
             \item Pure text mode. Do not load theorem-like environments.
         \end{itemize}
-    \item \texttt{nothmnum}, \texttt{thmnum} or \texttt{thmnum=}\meta{counter}
+    \item \classoption{nothmnum}, \classoption{thmnum} or \classoption{thmnum=}\meta{counter}
         \begin{itemize}
             \item Theorem-like environments will not be numbered / numbered in order 1, 2, 3... / numbered within \meta{counter}. If no option is used, they will be numbered within \texttt{chapter} (book) or \texttt{section} (article).
         \end{itemize}
-    \item \texttt{regionalref}, \texttt{originalref}
+    \item \classoption{regionalref}, \classoption{originalref}
         \begin{itemize}
-            \item When referencing, whether the name of the theorem-like environment changes with the current language. The default is \texttt{regionalref}, \emph{i.e.}, the name corresponding to the current language is used; for example, when referencing a theorem-like environment in English context, the names "Theorem, Definition..." will be used no matter which language context the original environment is in. If \texttt{originalref} is enabled, then the name will always remain the same as the original place; for example, when referencing a theorem written in the French context, even if one is currently in the English context, it will still be displayed as ``Théorème''. 
-            \item In \texttt{fast} mode, the option \texttt{originalref} will have no effect.
+            \item When referencing, whether the name of the theorem-like environment changes with the current language. The default is \classoption{regionalref}, \emph{i.e.}, the name corresponding to the current language is used; for example, when referencing a theorem-like environment in English context, the names "Theorem, Definition..." will be used no matter which language context the original environment is in. If \classoption{originalref} is enabled, then the name will always remain the same as the original place; for example, when referencing a theorem written in the French context, even if one is currently in the English context, it will still be displayed as ``Théorème''. 
+            \item In \texttt{fast} mode, the option \classoption{originalref} will have no effect.
         \end{itemize}
 \end{itemize}
 %</minimalist-doc,einfart-doc-en,simplivre-doc-en>
@@ -1296,16 +1320,16 @@ De plus, Source Code Pro est utilisé comme police anglaise sans empattement, Ne
 \bigskip
 Additionally, \minimart{} and \minimbook{} offers the following options: 
 \begin{itemize}
-    \item \texttt{a4paper} or \texttt{b5paper}
+    \item \classoption{a4paper} or \classoption{b5paper}
         \begin{itemize}
             \item Optional paper size. The default paper size is 7in $\times$ 10in.
         \end{itemize}
-    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{noto}, \texttt{biolinum} ~$|$~ \texttt{useosf}
+    \item \classoption{palatino}, \classoption{times}, \classoption{garamond}, \classoption{noto}, \classoption{biolinum} ~$|$~ \classoption{useosf}
         \begin{itemize}
             \item Font options. As the name suggest, font with corresponding name will be loaded. 
-            \item The \texttt{useosf} option is used to enable the old-style figures.
+            \item The \classoption{useosf} option is used to enable the old-style figures.
         \end{itemize}
-    \item \texttt{useindent}
+    \item \classoption{useindent}
         \begin{itemize}
             \item Use paragraph indentation instead of inter-paragraph spacing.
         \end{itemize}
@@ -1314,7 +1338,7 @@ Additionally, \minimart{} and \minimbook{} offers the following options:
 %
 %<*simplivre-doc-en>
 \bigskip
-In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are also available. Two-page layout is used by default.
+In addition, the commonly used \classoption{oneside} and \classoption{twoside} options are also available. Two-page layout is used by default.
 %</simplivre-doc-en>
 %
 %<*einfart-doc-cn,simplivre-doc-cn>
@@ -1323,13 +1347,13 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
 %<einfart-doc-cn>\einfart{} 文档类有下面几个选项：
 %<simplivre-doc-cn>\simplivre{} 文档类有下面几个选项：
 
-\begin{itemize}
-    \item 语言选项 \texttt{EN} / \texttt{english} / \texttt{English}、\texttt{FR} / \texttt{french} / \texttt{French}，等等
+\begin{itemize}[label=,leftmargin=1.25em,itemindent=-1.25em]
+    \item 语言选项 \classoption{EN} / \classoption{english} / \classoption{English}、\classoption{FR} / \classoption{french} / \classoption{French}，等等
         \begin{itemize}
             \item 具体选项名称可参见下一节的 \meta{language name}。第一个指定的语言将作为默认语言。
             \item 语言选项不是必需的，其主要用途是提高编译速度。不添加语言选项时效果是一样的，只是会更慢一些。
         \end{itemize}
-    \item \texttt{draft} 或 \texttt{fast}
+    \item \classoption{draft} 或 \classoption{fast}
         \begin{itemize}
             \item 你可以使用选项 \verb|fast| 来启用快速但略微粗糙的样式，主要区别是：
             \begin{itemize}
@@ -1341,54 +1365,54 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
     \begin{tip}
         在文章的撰写阶段，建议使用 \verb|fast| 选项以加快编译速度，改善写作时的流畅度。使用 \verb|fast| 模式时会有“DRAFT”字样的水印，以提示目前处于草稿阶段。
     \end{tip}
-    \item \texttt{a4paper} 或 \texttt{b5paper}
+    \item \classoption{a4paper} 或 \classoption{b5paper}
         \begin{itemize}
             \item 可选的纸张大小。默认的纸张大小为 7in $\times$ 10in。
         \end{itemize}
-    \item \texttt{palatino}、\texttt{times}、\texttt{garamond}、\texttt{noto}、\texttt{biolinum} ~$|$~ \texttt{useosf}
+    \item \classoption{palatino}、\classoption{times}、\classoption{garamond}、\classoption{noto}、\classoption{biolinum} ~$|$~ \classoption{useosf}
         \begin{itemize}
             \item 字体选项。顾名思义，会加载相应名称的字体。
-            \item \texttt{useosf} 选项用来启用“旧式”数字。
+            \item \classoption{useosf} 选项用来启用“旧式”数字。
         \end{itemize}
-    \item \texttt{use boldface}
+    \item \classoption{use boldface}
         \begin{itemize}
             \item 允许加粗。启用这一选项时，题目、各级标题、定理类环境名称会被加粗。
         \end{itemize}
-    \item \texttt{classical}
+    \item \classoption{classical}
         \begin{itemize}
 %             \item 经典模式。启用这一选项时，样式会变得更加中规中矩：段落呈首行缩进样式、各类下划线减少、标题样式改变、定理类环境的样式也会更贴近常见的设置。
             \item 经典模式。使用这一选项时，将会启用较为古色古香的风格，如同当前的这篇说明文档一样。
         \end{itemize}
 %     \begin{tip}
-%         如果你喜欢更加传统的样式，\texttt{use boldface} + \texttt{classical} 是一个不错的搭配。
+%         如果你喜欢更加传统的样式，\classoption{use boldface} + \classoption{classical} 是一个不错的搭配。
 %     \end{tip}
-    \item \texttt{useindent}
+    \item \classoption{useindent}
         \begin{itemize}
             \item 采用段首缩进而不是段间间距。
         \end{itemize}
-    \item \texttt{runin}
+    \item \classoption{runin}
         \begin{itemize}
             \item \lstinline|\subsubsection| 采用 ``runin'' 风格。
         \end{itemize}
-    \item \texttt{nothms}
+    \item \classoption{nothms}
         \begin{itemize}
             \item 纯文本模式，不加载定理类环境。
         \end{itemize}
-    \item \texttt{nothmnum}、\texttt{thmnum} 或 \texttt{thmnum=}\meta{counter}
+    \item \classoption{nothmnum}、\classoption{thmnum} 或 \classoption{thmnum=}\meta{counter}
         \begin{itemize}
             \item 定理类环境均不编号 / 按照 1、2、3 顺序编号 / 在 \meta{counter} 内编号。在没有使用任何选项的情况下将按照 \texttt{chapter} (书) 或 \texttt{section} (文章) 编号。
         \end{itemize}
-    \item \texttt{regionalref}、\texttt{originalref}
+    \item \classoption{regionalref}、\classoption{originalref}
         \begin{itemize}
-            \item 在智能引用时，定理类环境的名称是否随当前语言而变化。默认为 \texttt{regionalref}，即引用时采用当前语言对应的名称；例如，在中文语境中引用定理类环境时，无论原环境处在什么语境中，都将使用名称“定理、定义……”。若启用 \texttt{originalref}，则引用时会始终采用定理类环境所处语境下的名称；例如，在英文语境中书写的定理，即使稍后在中文语境下引用时，仍将显示为 Theorem。
-            \item 在 \texttt{fast} 模式下，\texttt{originalref} 将不起作用。
+            \item 在智能引用时，定理类环境的名称是否随当前语言而变化。默认为 \classoption{regionalref}，即引用时采用当前语言对应的名称；例如，在中文语境中引用定理类环境时，无论原环境处在什么语境中，都将使用名称“定理、定义……”。若启用 \classoption{originalref}，则引用时会始终采用定理类环境所处语境下的名称；例如，在英文语境中书写的定理，即使稍后在中文语境下引用时，仍将显示为 Theorem。
+            \item 在 \texttt{fast} 模式下，\classoption{originalref} 将不起作用。
         \end{itemize}
 \end{itemize}
 %</einfart-doc-cn,simplivre-doc-cn>
 %
 %<*simplivre-doc-cn>
 \bigskip
-另外，排版图书时常用的 \texttt{oneside}、\texttt{twoside} 选项也是可以使用的。默认采用双页排版。
+另外，排版图书时常用的 \classoption{oneside}、\classoption{twoside} 选项也是可以使用的。默认采用双页排版。
 %</simplivre-doc-cn>
 %
 %<*einfart-doc-fr,simplivre-doc-fr>
@@ -1397,13 +1421,13 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
 %<einfart-doc-cn>\einfart{} propose les options suivantes :
 %<simplivre-doc-cn>\simplivre{} propose les options suivantes :
 
-\begin{itemize}
-    \item Les options de langue \texttt{EN} / \texttt{english} / \texttt{English}, \texttt{FR} / \texttt{french} / \texttt{French}, etc.
+\begin{itemize}[label=,leftmargin=1.25em,itemindent=-1.25em]
+    \item Les options de langue \classoption{EN} / \classoption{english} / \classoption{English}, \classoption{FR} / \classoption{french} / \classoption{French}, etc.
         \begin{itemize}
             \item Pour les noms d'options d'une langue spécifique, veuillez vous référer à \meta{language name} dans la section suivante. La première langue spécifiée sera considérée comme la langue par défaut.
             \item Les options de langue ne sont pas nécessaires, elles servent principalement à augmenter la vitesse de compilation. Sans eux, le résultat serait le même, justement plus lent.
         \end{itemize}
-    \item \texttt{draft} ou \texttt{fast}
+    \item \classoption{draft} ou \classoption{fast}
         \begin{itemize}
             \item L'option \verb|fast| permet un style plus rapide mais légèrement plus rugueux, les principales différences sont :
             \begin{itemize}
@@ -1415,54 +1439,54 @@ In addition, the commonly used \texttt{oneside} and \texttt{twoside} options are
     \begin{tip}
         Pendant la phase de brouillon, il est recommandé d'utiliser le \verb|fast| option pour accélérer la compilation. Quand dans \verb|fast| mode, il y aura un filigrane ``DRAFT'' pour indiquer que vous êtes actuellement en mode brouillon.
     \end{tip}
-    \item \texttt{a4paper} ou \texttt{b5paper}
+    \item \classoption{a4paper} ou \classoption{b5paper}
         \begin{itemize}
             \item Options de format de papier. Le format de papier par défaut est 7 pouces $\times$ 10 pouces.
         \end{itemize}
-    \item \texttt{palatino}, \texttt{times}, \texttt{garamond}, \texttt{noto}, \texttt{biolinum} ~$|$~ \texttt{useosf}
+    \item \classoption{palatino}, \classoption{times}, \classoption{garamond}, \classoption{noto}, \classoption{biolinum} ~$|$~ \classoption{useosf}
         \begin{itemize}
             \item Options de police. Comme son nom l'indique, la police avec le nom correspondant sera utilisée.
-            \item L'option \texttt{useosf} est pour activer les chiffres à l'ancienne.
+            \item L'option \classoption{useosf} est pour activer les chiffres à l'ancienne.
         \end{itemize}
-    \item \texttt{use boldface}
+    \item \classoption{use boldface}
         \begin{itemize}
             \item Afficher les titres en gras. Lorsque cette option est utilisée, le titre principal, les titres de tous les niveaux et les noms des environnements de type théorème seront en gras.
         \end{itemize}
-    \item \texttt{classical}
+    \item \classoption{classical}
         \begin{itemize}
 %             \item Mode classique. Lorsque cette option est utilisée, le style deviendra plus régulier : les paragraphes sont en retrait, l'utilisation de soulignements est réduite, les styles de titres sont modifiés et les styles de théorème seront beaucoup plus proches des styles par défaut.
             \item Mode classique. Un style antique sera utilisé lorsque cette option est activée, comme dans la documentation actuelle.
         \end{itemize}
 %     \begin{tip}
-%         \texttt{use boldface} + \texttt{classical} est probablement un bon choix si vous préférez le style traditionnel.
+%         \classoption{use boldface} + \classoption{classical} est probablement un bon choix si vous préférez le style traditionnel.
 %     \end{tip}
-    \item \texttt{useindent}
+    \item \classoption{useindent}
         \begin{itemize}
             \item Utilisez l'indentation des paragraphes au lieu de l'espacement entre les paragraphes.
         \end{itemize}
-    \item \texttt{runin}
+    \item \classoption{runin}
         \begin{itemize}
             \item Utilisez le style «~runin~» pour \lstinline|\subsubsection|
         \end{itemize}
-    \item \texttt{nothms}
+    \item \classoption{nothms}
         \begin{itemize}
             \item Mode texte pur. Ne pas définir les environnements de type théorème.
         \end{itemize}
-    \item \texttt{nothmnum}, \texttt{thmnum} ou \texttt{thmnum=}\meta{counter}
+    \item \classoption{nothmnum}, \classoption{thmnum} ou \classoption{thmnum=}\meta{counter}
         \begin{itemize}
             \item Les environnements de type théorème ne seront pas numérotés / numérotés dans l'ordre 1, 2, 3... / numérotés dans \meta{counter}. Si aucune option n'est utilisée, ils seront numérotés dans \texttt{chapter} (livre) ou \texttt{section} (article).
         \end{itemize}
-    \item \texttt{regionalref}, \texttt{originalref}
+    \item \classoption{regionalref}, \classoption{originalref}
         \begin{itemize}
-            \item Lors du référencement, si le nom de l'environnement de type théorème change avec la langue actuelle. Par défaut \texttt{regionalref} est activé, c'est-à-dire que le nom correspondant à la langue courante est utilisé ; par exemple, lors du référencement d'un environnement de type théorème dans un contexte français, les noms «~Théorème, Définition ...~» seront utilisés quel que soit le contexte linguistique dans lequel se trouve l'environnement d'origine. Si \texttt{originalref} est activé, alors le nom restera toujours le même que l'environnement d'origine ; par exemple, lors du référencement d'un théorème écrit dans le contexte français, même si l'on est actuellement dans le contexte anglais, il sera toujours affiché comme «~Théorème~». 
-            \item En mode \texttt{fast}, l'option \texttt{originalref} n'aura aucun effet.
+            \item Lors du référencement, si le nom de l'environnement de type théorème change avec la langue actuelle. Par défaut \classoption{regionalref} est activé, c'est-à-dire que le nom correspondant à la langue courante est utilisé ; par exemple, lors du référencement d'un environnement de type théorème dans un contexte français, les noms «~Théorème, Définition ...~» seront utilisés quel que soit le contexte linguistique dans lequel se trouve l'environnement d'origine. Si \classoption{originalref} est activé, alors le nom restera toujours le même que l'environnement d'origine ; par exemple, lors du référencement d'un théorème écrit dans le contexte français, même si l'on est actuellement dans le contexte anglais, il sera toujours affiché comme «~Théorème~». 
+            \item En mode \texttt{fast}, l'option \classoption{originalref} n'aura aucun effet.
         \end{itemize}
 \end{itemize}
 %</einfart-doc-fr,simplivre-doc-fr>
 %
 %<*simplivre-doc-fr>
 \bigskip
-De plus, les options \texttt{oneside} et \texttt{twoside} couramment utilisées lors de la composition de livres sont également disponibles. La disposition recto-verso est utilisée par défaut.
+De plus, les options \classoption{oneside} et \classoption{twoside} couramment utilisées lors de la composition de livres sont également disponibles. La disposition recto-verso est utilisée par défaut.
 %</simplivre-doc-fr>
 
 
