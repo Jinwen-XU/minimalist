@@ -311,6 +311,7 @@
       {
         \RequirePackage { mathpazo }
         \RequirePackage { newpxtext }
+        \bool_if:NT \l__projlib_font_useosf_bool { \useosf }
         \RequirePackage { amssymb }
         \sys_if_engine_pdftex:F
           {
@@ -712,6 +713,11 @@
                 \RequirePackage { unicode-math }
                 \unimathsetup { math-style = ISO, partial = upright, nabla = upright }
                 \setmathfont { KpMath-Regular.otf }
+                \setmathfont { KpMath-Regular.otf }
+                  [
+                    range = \amalg ,
+                    Scale = 0.84625
+                  ]
                 \setmathfont { KpMath-Sans.otf }
                   [
                     range = { \sum }
