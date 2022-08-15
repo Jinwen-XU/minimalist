@@ -862,6 +862,7 @@
 \sys_if_engine_luatex:TF
   {
     \RequirePackage { lua-widow-control }
+    \lwcsetup { balanced }
   }
   {
     \PassOptionsToPackage { all } { nowidow }
@@ -1864,7 +1865,11 @@ heading_suffix "}\n"
   {
     \newtheoremstyle{simple}
       {.75\baselineskip}{}
-      {\normalfont}{}
+      {
+        \normalfont
+        \parindent=0pt
+        \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
+      }{}
       {\normalfont}{}
       {0pt}
       {
@@ -1877,7 +1882,11 @@ heading_suffix "}\n"
   {
     \newtheoremstyle{simple}
       {}{}
-      {\normalfont}{}
+      {
+        \normalfont
+        \parindent=0pt
+        \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
+      }{}
       {\normalfont}{}
       {0pt}
       {{\thmname{#1}\thmnumber{\nobreakspace #2}}
