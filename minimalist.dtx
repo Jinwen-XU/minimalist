@@ -1950,6 +1950,13 @@ heading_suffix "}\n"
     \hypersetup{ hidelinks, linktoc = all }
     \bookmarksetup{ numbered }
     \renewcommand\Hy@numberline[1]{#1.~}
+    % https://tex.stackexchange.com/a/1821
+    % Add the bookmark of ToC
+    \hook_gput_code:nnn { cmd/tableofcontents/before } { minimalist }
+      {
+        \if@openright\cleardoublepage\else\clearpage\fi
+        \pdfbookmark[0]{\contentsname}{toc}
+      }
   }
 
 % \PassOptionsToPackage { simplename } { projlib-theorem }
