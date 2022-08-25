@@ -19,7 +19,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2022/08/13} {}
+  {2022/08/25} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -28,7 +28,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2022/08/13} {}
+  {2022/08/25} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -37,7 +37,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2022/08/13} {}
+  {2022/08/25} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -46,7 +46,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2022/08/13} {}
+  {2022/08/25} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -55,21 +55,21 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2022/08/13} {}
+  {2022/08/25} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2022/08/13} {}
+  {2022/08/25} {}
   {The plain style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2022/08/13} {}
+  {2022/08/25} {}
   {The classical style of minimalist}
 %</minimalist-classical>
 
@@ -1716,12 +1716,12 @@
 \setlist{noitemsep, topsep=.33\topsep-.5\parskip}
 % \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
-\setlist[enumerate,1]{label=\normalfont\arabic*$\mskip-1mu\big)$,
-    ref = \normalfont\arabic*$\mskip-1mu\big)$}
-\setlist[enumerate,2]{label=\normalfont\emph{\roman*}$\mskip-1mu\big)$,
-    ref = \normalfont\arabic{enumi}.\emph{\roman*}$\mskip-1mu\big)$}
-\setlist[enumerate,3]{label=\normalfont\emph{\alph*}$\mskip-1mu\big)$,
-    ref = \normalfont\arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$\mskip-1mu\big)$}
+\setlist[enumerate,1]{label = \normalfont\arabic*$\mskip-.5mu\big)$,
+    ref = \normalfont\color{.!45!paper}\arabic*$\mskip-.5mu\big)$}
+\setlist[enumerate,2]{label = \normalfont\emph{\roman*}$\mskip-.5mu\big)$,
+    ref = \normalfont\color{.!45!paper}\arabic{enumi}.\emph{\roman*}$\mskip-.5mu\big)$}
+\setlist[enumerate,3]{label = \normalfont\emph{\alph*}$\mskip-.5mu\big)$,
+    ref = \normalfont\color{.!45!paper}\arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$\mskip-.5mu\big)$}
 \setlist[description]{font=\normalfont\minimalist_bfseries:}
 %<*minimalist-classical>
 \newcommand\desculine{\bgroup\markoverwith{\color{.!55!paper}
