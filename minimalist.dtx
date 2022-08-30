@@ -19,7 +19,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2022/08/25} {}
+  {2022/08/30} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -28,7 +28,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2022/08/25} {}
+  {2022/08/30} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -37,7 +37,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2022/08/25} {}
+  {2022/08/30} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -46,7 +46,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2022/08/25} {}
+  {2022/08/30} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -55,21 +55,21 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2022/08/25} {}
+  {2022/08/30} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2022/08/25} {}
+  {2022/08/30} {}
   {The plain style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2022/08/25} {}
+  {2022/08/30} {}
   {The classical style of minimalist}
 %</minimalist-classical>
 
@@ -1733,8 +1733,8 @@
 
 \renewlist{itemize}{itemize}{10}
 \setlist[itemize]{leftmargin=*,label=\textcolor{.!27!paper}{$\cdot$}}
-\AddLanguageSetting { \setlist[itemize,1]{label=\textcolor{.!27!paper}{$\bullet$}} }
-\AddLanguageSetting [french] { \setlist[itemize,1]{label=\textcolor{.!39!paper}{\rule[.2\baselineskip]{.8em}{.75pt}}} }
+\AddLanguageSetting { \setlist[itemize,1]{label=\textcolor{.!27!paper}{$\bullet$},leftmargin=\maxof{\parindent}{1.5em}} }
+\AddLanguageSetting [french] { \setlist[itemize,1]{label=\textcolor{.!39!paper}{\rule[.2\baselineskip]{.8em}{.75pt}},leftmargin=\maxof{\parindent}{1.5em}} }
 \setlist[itemize,2]{label=\textcolor{.!27!paper}{\rule[.2\baselineskip]{.55em}{.75pt}}}
 % \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\diamond$}}
 \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\circ$}}
@@ -1939,6 +1939,7 @@ heading_suffix "}\n"
 
 \newcommand{\customqedsymbol}{
   \makebox[1em]{\color{main-text!27!paper}\rule[-0.1em]{.95em}{.95em}}}
+\let\qedsymbol\customqedsymbol
 
 \bool_if:NTF \l__minimalist_fast_bool
   {
