@@ -1805,8 +1805,28 @@ heading_suffix "}\n"
 
 \newcommand*{\IndexDotfill}
   {
-    \leaders \hbox to .67em {\hss \textcolor{main-text!15!paper}{.} \hss} \hfill
+    \null\nobreak
+    \leaders \hbox to .67em {\hss \textcolor{main-text!15!paper}{.} \hss} \hskip1em plus1fill
   }
+\newcommand*{\IndexLinebreak}
+  {
+    \nobreakspace\textcolor{main-text!50!paper}{\raisebox{.25ex}{.}\raisebox{.05ex}{.}}
+    \item\hspace*{\hangindent}
+    \textcolor{main-text!50!paper}{\raisebox{.35ex}{.}\raisebox{.15ex}{.}}\,
+    \unskip
+  }
+% % Below is another version that can produce a better automatic result,
+% % however if you are willing to make some manual interventions, you would be able to get even better result,
+% % thus this version is only left here for reference
+% \newcommand*{\IndexDotfill}
+%   {
+%     \leaders \hbox to .67em {\hss \textcolor{main-text!15!paper}{.} \hss}\hfil
+%     \penalty0\vadjust{}
+%     \leaders \hbox to .67em {\hss \textcolor{main-text!15!paper}{.} \hss}\hskip1em plus1fill
+%   }
+% \newcommand*{\IndexLinebreak}{~}
+% \hook_gput_code:nnn { cmd/theindex/after } { minimalist } { \rightskip=1pc \parfillskip=-\rightskip }
+
 \newcommand*{\IndexHeading}[1]
   {
     \str_if_eq:nnTF { #1 } { Symbols }
