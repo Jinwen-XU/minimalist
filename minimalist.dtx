@@ -116,15 +116,9 @@
 %</einfart|simplivre>
                                                     }
     , load custom font file   .default:n          = { minimalist.font }
-    , load~custom~font~file   .code:n             = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_str { #1 }
-                                                    }
+    , load~custom~font~file   .meta:n             = { load custom font file = { #1 } }
     , load~custom~font~file   .default:n          = { minimalist.font }
-    , load-custom-font-file   .code:n             = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_str { #1 }
-                                                    }
+    , load-custom-font-file   .meta:n             = { load custom font file = { #1 } }
     , load-custom-font-file   .default:n          = { minimalist.font }
 
 %<*einfart|simplivre>
@@ -133,15 +127,9 @@
                                                       \str_set:Nn \l__minimclass_custom_font_file_latin_str { #1 }
                                                     }
     , load custom latin font file   .default:n    = { minimalist.font.latin }
-    , load~custom~latin~font~file   .code:n       = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_latin_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_latin_str { #1 }
-                                                    }
+    , load~custom~latin~font~file   .meta:n       = { load custom latin font file = { #1 } }
     , load~custom~latin~font~file   .default:n    = { minimalist.font.latin }
-    , load-custom-latin-font-file   .code:n       = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_latin_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_latin_str { #1 }
-                                                    }
+    , load-custom-latin-font-file   .meta:n       = { load custom latin font file = { #1 } }
     , load-custom-latin-font-file   .default:n    = { minimalist.font.latin }
 
     , load custom cjk font file     .code:n       = {
@@ -149,15 +137,9 @@
                                                       \str_set:Nn \l__minimclass_custom_font_file_cjk_str { #1 }
                                                     }
     , load custom cjk font file     .default:n    = { minimalist.font.cjk }
-    , load~custom~cjk~font~file     .code:n       = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_cjk_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_cjk_str { #1 }
-                                                    }
+    , load~custom~cjk~font~file     .meta:n       = { load custom cjk font file = { #1 } }
     , load~custom~cjk~font~file     .default:n    = { minimalist.font.cjk }
-    , load-custom-cjk-font-file     .code:n       = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_cjk_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_cjk_str { #1 }
-                                                    }
+    , load-custom-cjk-font-file     .meta:n       = { load custom cjk font file = { #1 } }
     , load-custom-cjk-font-file     .default:n    = { minimalist.font.cjk }
 
     , load custom math font file    .code:n       = {
@@ -165,15 +147,9 @@
                                                       \str_set:Nn \l__minimclass_custom_font_file_math_str { #1 }
                                                     }
     , load custom math font file    .default:n    = { minimalist.font.math }
-    , load~custom~math~font~file    .code:n       = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_math_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_math_str { #1 }
-                                                    }
+    , load~custom~math~font~file    .meta:n       = { load custom math font file = { #1 } }
     , load~custom~math~font~file    .default:n    = { minimalist.font.math }
-    , load-custom-math-font-file    .code:n       = {
-                                                      \bool_set_true:N \l__minimclass_load_custom_font_file_math_bool
-                                                      \str_set:Nn \l__minimclass_custom_font_file_math_str { #1 }
-                                                    }
+    , load-custom-math-font-file    .meta:n       = { load custom math font file = { #1 } }
     , load-custom-math-font-file    .default:n    = { minimalist.font.math }
 %</einfart|simplivre>
 
