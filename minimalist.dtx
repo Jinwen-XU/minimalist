@@ -293,6 +293,7 @@
           {
             \setsansfont { texgyreheros }
               [
+                Extension      = .otf ,
                 Scale          = MatchUppercase ,
                 UprightFont    = *-regular ,
                 BoldFont       = *-bold ,
@@ -1938,7 +1939,7 @@ heading_suffix "}\n"
 \theoremstyle{simple}
 
 \newcommand{\customqedsymbol}{
-  \makebox[1em]{\color{main-text!27!paper}\rule[-0.1em]{.95em}{.95em}}}
+  \makebox[1em]{\color{.!27!paper}\rule[-0.1em]{.95em}{.95em}}}
 \let\qedsymbol\customqedsymbol
 
 \bool_if:NTF \l__minimalist_fast_bool
