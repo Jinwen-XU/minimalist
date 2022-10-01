@@ -802,15 +802,27 @@
                   {
                     \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/equal ] }
                   }
+                \NewDocumentCommand \xtwoheadrightarrow { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/twoheadrightarrow ] }
+                  }
+                \NewDocumentCommand \xtwoheadleftarrow { O{} m }
+                  {
+                    \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/twoheadleftarrow ] }
+                  }
                 \hook_gput_code:nnn { begindocument/end } { minimclass }
                   {
                     \RenewDocumentCommand \twoheadrightarrow {}
                       {
-                        \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadrightarrow ] }
+                        \minimclass_xarrows_generic:nnnn {
+                          \mathchoice { \,\, } { \, } { } { }
+                        } {} {} { edge [ commutative~diagrams/twoheadrightarrow ] }
                       }
                     \RenewDocumentCommand \twoheadleftarrow {}
                       {
-                        \minimclass_xarrows_generic:nnnn { \,\, } {} {} { edge [ commutative~diagrams/twoheadleftarrow ] }
+                        \minimclass_xarrows_generic:nnnn {
+                          \mathchoice { \,\, } { \, } { } { }
+                        } {} {} { edge [ commutative~diagrams/twoheadleftarrow ] }
                       }
                   }
               }
