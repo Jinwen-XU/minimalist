@@ -1872,6 +1872,10 @@ heading_suffix "}\n"
 
 \hook_gput_code:nnn { begindocument/before } { minimalist }
   {
+    \bool_if:NF \l__minimalist_fast_bool
+      {
+        \hook_gput_code:nnn { cmd/printindex/before } { minimalist } { \bookmarksetup{startatroot} }
+      }
     \hook_gput_code:nnn { cmd/printindex/before } { minimalist } { \LocallyStopLineNumbers }
     \hook_gput_code:nnn { cmd/printindex/after } { minimalist } { \ResumeLineNumbers }
   }
