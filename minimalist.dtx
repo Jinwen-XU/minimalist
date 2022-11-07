@@ -1314,6 +1314,19 @@
     \fi
   }
 
+\bool_if:NT \l__minimalist_is_book_bool
+  {
+    \hook_gput_code:nnn { cmd/frontmatter/before } { minimalist }
+      {
+        \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+      }
+    \hook_gput_code:nnn { cmd/mainmatter/before } { minimalist }
+      {
+        \setcounter{footnote}{0}
+        \renewcommand*{\thefootnote}{\arabic{footnote}}
+      }
+  }
+
 %%================================
 %%  Title format
 %%================================
