@@ -701,15 +701,9 @@
                   ]
                 \setmathfont { latinmodern-math.otf }
                   [
-                    range = { \ast } ,
+                    range = { frak, bffrak, \mitvarpi, \mupvarpi, \ast } ,
                     Scale = 1.10
                   ]
-                \setmathfont { latinmodern-math.otf }
-                  [
-                    range = { frak, bffrak, \mitvarpi, \mupvarpi } ,
-                    Scale = 1.10
-                  ]
-                \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
                 \setmathfont { texgyrepagella-math.otf }
                   [
                     range = { `(, `) } ,
@@ -723,7 +717,8 @@
                   [
                     range = { it / { Latin, latin }, bfit / { Latin, latin }, up / num, bfup / num }
                   ]
-                \setmathfont { KpMath-Regular.otf } [ range = {} ]
+                \setmathfont { KpMath-Regular.otf } [ range = { cal, bfcal }, RawFeature=+ss01 ]
+                % \setmathfont { KpMath-Regular.otf } [ range = {} ]
 
                 \sys_if_engine_luatex:T
                   {
