@@ -95,6 +95,15 @@
     , draft                   .initial:n          = { false }
     , fast                    .bool_set:N         = \l__minimclass_fast_bool
 
+    , print                   .bool_set:N         = \l__minimclass_print_mode_bool
+    , print                   .initial:n          = { false }
+    , print mode              .bool_set:N         = \l__minimclass_print_mode_bool
+    , print~mode              .bool_set:N         = \l__minimclass_print_mode_bool
+    , print-mode              .bool_set:N         = \l__minimclass_print_mode_bool
+    , print version           .bool_set:N         = \l__minimclass_print_mode_bool
+    , print~version           .bool_set:N         = \l__minimclass_print_mode_bool
+    , print-version           .bool_set:N         = \l__minimclass_print_mode_bool
+
     , classical               .bool_set:N         = \l__minimclass_classical_bool
     , classical               .initial:n          = { false }
 
@@ -173,6 +182,21 @@
   {
     \bool_set_false:N \l__minimclass_useindent_bool
   }
+
+
+\NewDocumentCommand \IfPrintModeTF { m m }
+  {
+    \bool_if:NTF \l__minimclass_print_mode_bool { #1 } { #2 }
+  }
+\NewDocumentCommand \IfPrintModeT { m }
+  {
+    \bool_if:NT \l__minimclass_print_mode_bool { #1 }
+  }
+\NewDocumentCommand \IfPrintModeF { m }
+  {
+    \bool_if:NF \l__minimclass_print_mode_bool { #1 }
+  }
+
 
 %%================================
 %%  Page layout
