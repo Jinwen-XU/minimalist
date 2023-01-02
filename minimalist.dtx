@@ -2000,10 +2000,8 @@ heading_suffix "}\n"
 
 \bool_if:NTF \l__minimalist_fast_bool
   {
-    \providecommand{\phantomsection}{}
-    \RequirePackage { url }
-    \providecommand{\href}[2]{#2}
-    \providecommand{\texorpdfstring}[2]{#1}
+    \RequirePackage { hyperref }
+    \hypersetup { draft }
   }
   {
     \RequirePackage { hyperref }
