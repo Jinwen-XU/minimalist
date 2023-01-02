@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2021-2022 by Jinwen XU -->
+<!-- Copyright (C) 2021-2023 by Jinwen XU -->
 
 # `minimalist` bundle: write you documents in a simple and clear way
 
@@ -13,6 +13,8 @@ with a simple and clear design. It mainly consists of two parts.
     - `minimalist.sty` : interface of the main style
         - `minimalist-plain.sty` : the plain style
         - `minimalist-classical.sty` : the classical style
+        - `minimalist-flow.sty` : the flow style
+        - `minimalist-stream.sty` : the stream style
     - `minimart.cls` : class for typesetting articles
     - `minimbook.cls` : class for typesetting books
 
