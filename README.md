@@ -2,23 +2,25 @@
 
 # `minimalist` bundle: write you documents in a simple and clear way
 
-**The whole series have been rewritten with `expl3`. Please note that the documentations are not yet up-to-date. The syntax of some commands have been changed since the last version, especially the declaration of theorem-like environments by `\CreateTheorem`. For the moment, you can refer to the documentation of the package `create-theorem`.**
+> **New documentations are being written and are expected to be completed by the end of 2023. In the meantime, only the core code would be included in TeX Live 2023 coming this April (old documentations have been removed from the distribution).**
 
 ## Introduction
 
-`minimalist` is a collection of styles and classes that helps you typesetting articles and books
-with a simple and clear design. It mainly consists of two parts.
+`minimalist` is a collection of styles and classes that helps you to typeset articles and books with a simple and clear design.
+
+It mainly consists of two parts.
 
 - Main part:
     - `minimalist.sty` : interface of the main style
-        - `minimalist-plain.sty` : the plain style
-        - `minimalist-classical.sty` : the classical style
-        - `minimalist-flow.sty` : the flow style
-        - `minimalist-stream.sty` : the stream style
+        - `minimalist-plain.sty` : the style "plain"
+        - `minimalist-classical.sty` : the style "classical"
+        - `minimalist-flow.sty` : the style "flow"
+        - `minimalist-stream.sty` : the style "stream"
+        - ... and more styles to come (currently on schedule: "modern")
     - `minimart.cls` : class for typesetting articles
     - `minimbook.cls` : class for typesetting books
 
-    They can be used with any major TeX engine. Currently they have native
+    They can be used with any major TeX engine. Currently, they have native
     support to English, French, German, Italian, Portuguese
     (European and Brazilian) and Spanish typesetting.
 
@@ -27,8 +29,8 @@ with a simple and clear design. It mainly consists of two parts.
     - `einfart.cls` : more advanced class for typesetting articles
     - `simplivre.cls` : more advanced class for typesetting books
 
-    They are similar to the main classes, but have unicode support, thus can
-    only be used with either XeLaTeX or LuaLaTeX. Currently they have native
+    They are similar to the main classes, but have Unicode support, thus can
+    only be used with either XeLaTeX or LuaLaTeX. Currently, they have native
     support to Chinese (simplified and traditional), English, French, German,
     Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish
     typesetting, and also use more beautiful fonts.

@@ -19,7 +19,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2023/01/02} {}
+  {2023/01/05} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -28,7 +28,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2023/01/02} {}
+  {2023/01/05} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -37,7 +37,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2023/01/02} {}
+  {2023/01/05} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -46,7 +46,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2023/01/02} {}
+  {2023/01/05} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -55,23 +55,37 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2023/01/02} {}
+  {2023/01/05} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2023/01/02} {}
-  {The plain style of minimalist}
+  {2023/01/05} {}
+  {The "plain" style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2023/01/02} {}
-  {The classical style of minimalist}
+  {2023/01/05} {}
+  {The "classical" style of minimalist}
 %</minimalist-classical>
+%
+%<*minimalist-flow>
+\ProvidesExplPackage
+  {minimalist-flow}
+  {2023/01/05} {}
+  {The "flow" style of minimalist}
+%</minimalist-flow>
+%
+%<*minimalist-stream>
+\ProvidesExplPackage
+  {minimalist-stream}
+  {2023/01/05} {}
+  {The "stream" style of minimalist}
+%</minimalist-stream>
 
 %<*class>
 
@@ -1067,6 +1081,21 @@
 \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
 \tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \minimalist_scshape: }
 %</minimalist-classical>
+%<*minimalist-flow|minimalist-stream>
+\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+% \bool_if:NTF \l__minimalist_runin_bool
+%   {
+%     \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \itshape \g_minimalist_title_font_common_tl }
+%   }
+%   {
+%     \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+%   }
+\tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \itshape \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+%</minimalist-flow|minimalist-stream>
 
 \bool_if:NF \l__minimalist_fast_bool
   {
@@ -1077,6 +1106,7 @@
     \RequirePackage { tikzpagenodes } % For `current page text area`
   }
 
+%<*minimalist-classical>
 \bool_if:NTF \l__minimalist_fast_bool
   {
     \tl_const:Nn \l_minimalist_sep_bar { $|$ }
@@ -1089,6 +1119,7 @@
         \skip_horizontal:n { .1em }
       }
   }
+%</minimalist-classical>
 
 %%================================
 %%  Footer
@@ -1119,7 +1150,7 @@
     \end{minipage}
   }
 
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
 \fancypagestyle { fancy }
   {
     \fancyhf { }
@@ -1194,7 +1225,7 @@
     \fi
     \renewcommand { \headrulewidth } { 0pt }
   }
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
 \fancypagestyle { fancy }
   {
@@ -1361,18 +1392,18 @@
 
 \cs_new_protected:Nn \minimalist_apply_title_numbering_style_static:n
   {
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
     \tl_set:Nx \l_tmpa_tl { #1 }
     \regex_replace_all:nnN { (\w) } { \c{minimalist_original_bfseries:}{\1} } \l_tmpa_tl
     \regex_replace_all:nnN { (\d) } { {\c{minimalist_title_numbering_apply_font:n}{\1}} } \l_tmpa_tl
-    \textcolor { main-text!39!paper } { \normalfont \l_tmpa_tl }
-%</minimalist-plain>
+    \textcolor { .!39!paper } { \normalfont \l_tmpa_tl }
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
     #1
 %</minimalist-classical>
   }
 
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
 \cs_new_protected:Nn \minimalist_apply_title_numbering_style:n
   {
     \group_begin:
@@ -1382,15 +1413,29 @@
     \exp_args:Nnx \regex_count:nnN { \. } {#1} \l_tmpa_int
     \int_case:nn { \l_tmpa_int }
       {
-        { 0 } { \textcolor { main-text!24!paper } }
-        { 1 } { \textcolor { main-text!39!paper } }
-        { 2 } { \textcolor { main-text!39!paper } }
-        { 3 } { \smaller[2] \textcolor { main-text!24!paper } }
+%<*minimalist-plain>
+        { 0 } { \textcolor { .!24!paper } }
+        { 1 } { \textcolor { .!39!paper } }
+        { 2 } { \textcolor { .!39!paper } }
+        { 3 } { \smaller[2] \textcolor { .!24!paper } }
+%</minimalist-plain>
+%<*minimalist-flow>
+        { 0 } { \textcolor { .!24!paper } }
+        { 1 } { \textcolor { .!39!paper } }
+        { 2 } { \textcolor { .!39!paper } }
+        { 3 } { \smaller[.5] \textcolor { .!39!paper } }
+%</minimalist-flow>
+%<*minimalist-stream>
+        { 0 } { \textcolor { .!39!paper } }
+        { 1 } { \textcolor { .!39!paper } }
+        { 2 } { \textcolor { .!39!paper } }
+        { 3 } { \smaller[2] \textcolor { .!24!paper } }
+%</minimalist-stream>
       }
     \l_tmpa_tl
     \group_end:
   }
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 
 \newcommand{\partstring}{\MakeUppercase{{\partname\nobreakspace\protect\thepart}}}
 
@@ -1411,9 +1456,20 @@
     \renewcommand{\partstring}{第 \nobreakspace\thepart\nobreakspace 部}
   }
 
+
+%<*minimalist-stream>
+\dim_new:N \l_minimalist_title_sep_dim
+\dim_set:Nn \l_minimalist_title_sep_dim { 1em }
+%</minimalist-stream>
+
 \bool_if:NTF \l__minimalist_is_book_bool
   {
+%<*minimalist-plain|minimalist-classical|minimalist-flow>
     \setcounter{secnumdepth}{3}
+%</minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-stream>
+    \setcounter{secnumdepth}{4}
+%</minimalist-stream>
 
     %% Part
     \titleclass{\part}{top} % make part like a chapter
@@ -1450,7 +1506,7 @@
     }
 
     %% Chapter
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow>
     \titleformat{\chapter}
       {\thispagestyle{fancy}
       \LocallyStopLineNumbers
@@ -1479,7 +1535,7 @@
         #1
       }
       [\ResumeLineNumbers]
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow>
 %<*minimalist-classical>
     \titleformat{\chapter}
       {\thispagestyle{fancy}
@@ -1497,6 +1553,35 @@
         \fontsize{80}{0}\selectfont\normalfont\raisebox{-7pt}{*}}} \g_minimalist_title_font_chapter_tl #1}
       [\ResumeLineNumbers]
 %</minimalist-classical>
+%<*minimalist-stream>
+    \titleformat{\chapter}
+      {\thispagestyle{fancy}
+      \LocallyStopLineNumbers
+      \color{main-text!90!paper}
+      \g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      {
+        \llap{
+          {
+            \color{main-text!24!paper}
+            \fontsize{40}{0}\selectfont
+            \raisebox{-5pt}{ \minimalist_title_numbering_apply_font:n { \thechapter } }
+          }
+          \skip_horizontal:n { .75 \l_minimalist_title_sep_dim }
+        }
+        #1
+      }
+      [\ResumeLineNumbers]
+    \titleformat{name=\chapter,numberless}
+      {\thispagestyle{fancy}
+      \LocallyStopLineNumbers
+        % \phantomsection\addcontentsline{toc}{chapter}{#1}
+      \color{main-text!90!paper}
+      \g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
+      {
+        #1
+      }
+      [\ResumeLineNumbers]
+%</minimalist-stream>
   }
   {
     %% Part
@@ -1566,6 +1651,40 @@
   {\seculine{#1}}
   [\ResumeLineNumbers]
 %</minimalist-classical>
+%<*minimalist-flow>
+\tl_gset:Nn \g_minimalist_section_decoration_char_tl {}
+\titleformat{\section}
+  {\LocallyStopLineNumbers
+  \centering}
+  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:n { \thesection } }}{1em}
+  {\g_minimalist_title_font_section_tl #1}
+  [\ResumeLineNumbers]
+%</minimalist-flow>
+%<*minimalist-stream>
+\tl_gset:Nn \g_minimalist_section_decoration_char_tl {}
+\titleformat{\section}
+  {\LocallyStopLineNumbers
+  % \needspace{2\baselineskip}
+  \larger \g_minimalist_title_font_section_tl}
+  {
+    \llap{
+      {\minimalist_apply_title_numbering_style:n { \thesection }}
+      \skip_horizontal:n { \l_minimalist_title_sep_dim }
+    }
+  }
+  {0pt}
+  {#1}
+  [\ResumeLineNumbers]
+
+\titleformat{name=\section,numberless}
+  {\LocallyStopLineNumbers
+  % \needspace{2\baselineskip}
+  \larger \g_minimalist_title_font_section_tl}
+  {}
+  {0pt}
+  {#1}
+  [\ResumeLineNumbers]
+%</minimalist-stream>
 
 %% Subsection
 %<*minimalist-plain>
@@ -1592,6 +1711,34 @@
   {\subseculine{#1}}
   [\ResumeLineNumbers]
 %</minimalist-classical>
+%<*minimalist-flow>
+\titleformat{\subsection}
+  {\LocallyStopLineNumbers}
+  { \minimalist_apply_title_numbering_style:n { \thesubsection } }{.75em}
+  {\g_minimalist_title_font_subsection_tl #1}
+  [\ResumeLineNumbers]
+%</minimalist-flow>
+%<*minimalist-stream>
+\titleformat{\subsection}[runin]
+  {\g_minimalist_title_font_subsection_tl}
+  {
+    \llap{
+      \minimalist_apply_title_numbering_style:n { \thesubsection }
+      \skip_horizontal:n { \l_minimalist_title_sep_dim }
+    }
+    \tl_if_blank:nT { #1 }
+      {
+        \hspace* { \parindent }
+      }
+  }
+  {0pt}
+  {
+    \tl_if_blank:nF { #1 }
+      {
+        #1. \hspace* { .75em }
+      }
+  }
+%</minimalist-stream>
 
 %% Subsubsection
 %<*minimalist-plain>
@@ -1628,11 +1775,62 @@
       [\ResumeLineNumbers]
   }
 %</minimalist-classical>
+%<*minimalist-flow>
+\bool_if:NTF \l__minimalist_runin_bool
+  {
+    \titleformat{\subsubsection}[runin]
+      {}
+      {
+        \minimalist_apply_title_numbering_style:n { \thesubsubsection }
+        \tl_if_blank:nT { #1 }
+          {
+            \hspace* { .5em }
+          }
+      }
+      {.5em}
+      {
+        \tl_if_blank:nF { #1 }
+          {
+            \g_minimalist_title_font_subsubsection_tl
+            #1. \hspace* { .5em }
+          }
+      }
+  }
+  {
+    \titleformat{\subsubsection}
+      {\LocallyStopLineNumbers}
+      { \minimalist_apply_title_numbering_style:n { \thesubsubsection } }{.75em}
+      {\g_minimalist_title_font_subsubsection_tl #1}
+      [\ResumeLineNumbers]
+  }
+%</minimalist-flow>
+%<*minimalist-stream>
+\titleformat{\subsubsection}[runin]
+  {\g_minimalist_title_font_subsubsection_tl}
+  {
+    \llap{
+      { \minimalist_apply_title_numbering_style:n { \thesubsubsection } }
+      \skip_horizontal:n { \l_minimalist_title_sep_dim }
+    }
+    \tl_if_blank:nT { #1 }
+      {
+        \hspace* { \parindent }
+      }
+  }
+  {0pt}
+  {
+    \tl_if_blank:nF { #1 }
+      {
+        #1. \hspace* { .5em }
+      }
+  }
+%</minimalist-stream>
 
 %% Paragraph
 \titleformat{\paragraph}[runin]
   { \g_minimalist_title_font_paragraph_tl }{\theparagraph}{1em}{#1}
 
+%<*minimalist-plain|minimalist-classical|minimalist-flow>
 \titlespacing{\section}{0pt}{1\baselineskip plus .5\baselineskip minus .2\baselineskip}{.6\baselineskip plus .3\baselineskip minus .2\baselineskip}
 \titlespacing{\subsection}{0pt}{.75\baselineskip plus .3\baselineskip minus .2\baselineskip}{.4\baselineskip plus .2\baselineskip minus .1\baselineskip}
 \bool_if:NTF \l__minimalist_runin_bool
@@ -1642,6 +1840,50 @@
   {
     \titlespacing{\subsubsection}{0pt}{.5\baselineskip plus .2\baselineskip minus .1\baselineskip}{.3\baselineskip plus .2\baselineskip minus .1\baselineskip}
   }
+%</minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-stream>
+\titlespacing{\section}{0pt}{1\baselineskip plus .5\baselineskip minus .2\baselineskip}{.6\baselineskip plus .3\baselineskip minus .2\baselineskip}
+\titlespacing{\subsection}{0pt}{.6\baselineskip plus .2\baselineskip minus .1\baselineskip}{0pt}
+\titlespacing{\subsubsection}{0pt}{.5\baselineskip plus .1\baselineskip minus .1\baselineskip}{0pt}
+%</minimalist-stream>
+
+%<*minimalist-stream>
+%% \sectionsub
+\titleclass{\sectionsub}{straight}[\section]
+\newcounter{sectionsub}
+\renewcommand{\thesectionsub}{\Alph{sectionsub}}
+
+\titleformat{\sectionsub}
+  {\LocallyStopLineNumbers
+  % \needspace{2\baselineskip}
+  \relscale{1.08} \g_minimalist_title_font_section_tl}
+  {
+    \llap{
+      {\minimalist_apply_title_numbering_style:n { \thesectionsub }}
+      \skip_horizontal:n { \l_minimalist_title_sep_dim }
+    }
+  }
+  {0pt}
+  {#1}
+  [\ResumeLineNumbers]
+
+\titleformat{name=\sectionsub,numberless}
+  {\LocallyStopLineNumbers
+  \phantomsection\addcontentsline{toc}{sectionsub}{#1}
+  % \needspace{2\baselineskip}
+  \relscale{1.08} \g_minimalist_title_font_section_tl}
+  {}
+  {0pt}
+  {#1}
+  [\ResumeLineNumbers]
+
+\titlespacing{\sectionsub}{0pt}{.8\baselineskip plus .4\baselineskip minus .2\baselineskip}{.6\baselineskip plus .2\baselineskip minus .1\baselineskip}
+
+\hook_gput_code:nnn { package/bookmark/after } { minimalist }
+  {
+    \tl_gset:NV \toclevel@sectionsub \toclevel@subsection
+  }
+%</minimalist-stream>
 
 %%================================
 %%  ToC format
@@ -1663,26 +1905,34 @@
       {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2em}}
       {\hspace*{-2em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
     \titlecontents{section}
-      [5em] % i.e., 2em (chapter) + 3em
+      [5.75em] % i.e., 2em (chapter) + 2.75em + 1em
       {\normalfont}
       {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2.75em}}
       {\hspace*{-2.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%<*minimalist-stream>
+    \titlecontents{sectionsub}
+      [10.5em] % i.e., 5.75em (section) + 3.75em + 1em
+      {\normalfont}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.75em}}
+      {\hspace*{-3.75em}}
+      {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
+%</minimalist-stream>
     \titlecontents{subsection}
-      [9em] % i.e., 5em (section) + 4em
+      [10.5em] % i.e., 5.75em (section) + 3.75em + 1em
       {\normalfont}
       {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.75em}}
       {\hspace*{-3.75em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
-      [13.5em] % i.e., 9em (subsection) + 4.5em
+      [15.75em] % i.e., 10.5em (subsection) + 4.25em + 1em
       {\normalfont}
       {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{4.25em}}
       {\hspace*{-4.25em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
     \titlecontents{section}
       [5em] % i.e., 2em (chapter) + 3em
@@ -1708,23 +1958,23 @@
     \titlecontents{section}
       [2em] % i.e., 0em (part) + 2em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{1.75em}}
-      {\hspace*{-1.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{1.5em}}
+      {\hspace*{-1.5em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
     \titlecontents{subsection}
-      [5em] % i.e., 2em (section) + 3em
+      [5em] % i.e., 2em (section) + 2.5em + 0.5em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2.75em}}
-      {\hspace*{-2.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{2.5em}}
+      {\hspace*{-2.5em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
     \titlecontents{subsubsection}
-      [9em] % i.e., 5em (subsection) + 4em
+      [9.5em] % i.e., 5em (subsection) + 3.5em + 1em
       {\normalfont}
-      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.75em}}
-      {\hspace*{-3.75em}}
+      {\contentslabel[ \minimalist_apply_title_numbering_style_static:n { \thecontentslabel } ]{3.5em}}
+      {\hspace*{-3.5em}}
       {\titlerule*[1em]{\textcolor{main-text!15!paper}{.}}\contentspage}
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
     \titlecontents{subsection}
       [4.75em] % i.e., 2em (section) + 2.75em
@@ -1923,7 +2173,7 @@ heading_suffix "}\n"
 \PassOptionsToPackage { nopatch = eqnum } { microtype }
 
 
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow>
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
     \newtheoremstyle{simple}
@@ -1937,7 +2187,12 @@ heading_suffix "}\n"
       {0pt}
       {
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
+%<*minimalist-plain>
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
+%</minimalist-plain>
+%<*minimalist-flow>
+          {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
+%</minimalist-flow>
           {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
         }}\hbox{\strut}\vspace{0pt}}}
       }
@@ -1952,10 +2207,18 @@ heading_suffix "}\n"
       }{}
       {\normalfont}{}
       {0pt}
+%<*minimalist-plain>
       {{\thmname{#1}\thmnumber{\nobreakspace #2}}
         {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
-  }
 %</minimalist-plain>
+%<*minimalist-flow>
+      {{\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+%</minimalist-flow>
+  }
+
+\theoremstyle{simple}
+%</minimalist-plain|minimalist-flow>
 %<*minimalist-classical>
 \def\simpleqedsymbol{
   \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
@@ -1990,9 +2253,89 @@ heading_suffix "}\n"
 \def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol
   \popQED\endtrivlist\@endpefalse
   \global\let\qedsymbol\qedsymbolOriginal}
-%</minimalist-classical>
 
 \theoremstyle{simple}
+%</minimalist-classical>
+%<*minimalist-stream>
+\newtheoremstyle{simple-newline}
+  {-.2\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
+  {\normalfont}{}
+  {\normalfont}{}
+  {0pt}
+  {
+    \rlap{\vbox{\hbox{\parbox{\linewidth}{
+      \llap{
+        \phantom{\rule{0pt}{\baselineskip}}
+        \minimalist_apply_title_numbering_style:n { \thmnumber{#2} }
+        \skip_horizontal:n { \l_minimalist_title_sep_dim }
+      }
+      \vspace*{-\baselineskip}
+      {\thmname{#1}}
+      {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+      \phantom{q} % To provide something below the baseline
+    }}\hbox{\strut}\vspace{0pt}}}
+  }
+
+\dim_new:N \l_minimalist_space_before_inline_theorem_dim
+\AtBeginDocument
+  {
+    \dim_set:Nn \l_minimalist_space_before_inline_theorem_dim
+      {
+        \dim_eval:n { .3\baselineskip - .6\parskip }
+      }
+  }
+
+\newtheoremstyle{simple-inline}
+  % {.3\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
+  {\l_minimalist_space_before_inline_theorem_dim}{\l_minimalist_space_before_inline_theorem_dim}
+  {\normalfont}{}
+  {\normalfont}{}
+  {0pt}
+  {
+    \llap{
+      \minimalist_apply_title_numbering_style:n { \thmnumber{#2} }
+      \skip_horizontal:n { \l_minimalist_title_sep_dim }
+    }
+    % \minimalist_bfseries:
+    {\thmname{#1}}
+    {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+    . \hspace{.5em}
+  }
+
+\bool_if:NTF \l__minimalist_theorem_in_new_line_bool
+  {
+    \theoremstyle{simple-newline}
+  }
+  {
+    \theoremstyle{simple-inline}
+  }
+
+\newtheoremstyle{proof}
+  {3\p@\@plus3\p@}{.3\baselineskip}
+  {\normalfont}{}
+  {\itshape}{}
+  {0pt}
+  {
+    \llap{
+      \minimalist_apply_title_numbering_style:n { \thmnumber{#2} }
+      \skip_horizontal:n { \l_minimalist_title_sep_dim }
+    }
+    {\thmname{#1}}
+    . \hspace{.5em}
+  }
+
+\def\simpleqedsymbol{
+  \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+\DeclareRobustCommand{\simpleqed}{%
+  \ifmmode \quad\hbox{\simpleqedsymbol}
+  \else
+    \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+    \quad\hbox{\simpleqedsymbol}%
+  \fi
+}
+
+\def\@endtheorem{\popQED\endtrivlist\@endpefalse}
+%</minimalist-stream>
 
 \newcommand{\customqedsymbol}{
   \makebox[1em]{\color{.!27!paper}\rule[-0.1em]{.95em}{.95em}}}
@@ -2019,9 +2362,22 @@ heading_suffix "}\n"
   }
 
 % \PassOptionsToPackage { simplename } { projlib-theorem }
+
+%<*minimalist-stream>
+\PassOptionsToPackage { theorem-style = { remark = simple-inline, proof = proof } } { projlib-theorem }
+%</minimalist-stream>
+
 \RequirePackage { projlib-theorem }
 
 \SetTheorem { proof, proof* } { qed-symbol = { \customqedsymbol } }
+
+%<*minimalist-flow>
+\AddToHook{env/proof/begin}{\Hy@SaveLastskip\color{blue!50!cyan!55!main-text}\Hy@RestoreLastskip}
+%</minimalist-flow>
+
+%<*minimalist-flow|minimalist-stream>
+\exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist, theorem-with-name, proof } { shared counter = subsection }
+%</minimalist-flow|minimalist-stream>
 
 \exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist, theorem-with-name }
   {
@@ -2039,6 +2395,9 @@ heading_suffix "}\n"
           , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
           , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
         }
+%<*minimalist-flow|minimalist-stream>
+      , numbering style = { \minimalist_apply_title_numbering_style_static:n }
+%</minimalist-flow|minimalist-stream>
     }
   }
 
@@ -2046,6 +2405,7 @@ heading_suffix "}\n"
   {
     name style = {
       , heading style = {
+%<*minimalist-plain|minimalist-classical|minimalist-flow>
           , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
           , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
           , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
@@ -2058,7 +2418,14 @@ heading_suffix "}\n"
           , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
           , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
           , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+%</minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-stream>
+          \g_minimalist_title_font_common_tl \textit
+%</minimalist-stream>
         }
+%<*minimalist-flow|minimalist-stream>
+      , numbering style = { \minimalist_apply_title_numbering_style_static:n }
+%</minimalist-flow|minimalist-stream>
     }
   }
 
@@ -2093,9 +2460,14 @@ heading_suffix "}\n"
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
+%<*minimalist-plain|minimalist-classical>
           , numbering style = {
               \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
+%</minimalist-plain|minimalist-classical>
+%<*minimalist-flow|minimalist-stream>
+          , numbering style = { \minimalist_apply_title_numbering_style_static:n }
+%</minimalist-flow|minimalist-stream>
         }
       }
 
@@ -2103,6 +2475,7 @@ heading_suffix "}\n"
       {
         name style = {
           , crefname style = {
+%<*minimalist-plain|minimalist-classical|minimalist-flow>
               , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
@@ -2115,8 +2488,13 @@ heading_suffix "}\n"
               , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+%</minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-stream>
+              \g_minimalist_title_font_common_tl \textit
+%</minimalist-stream>
             }
           , Crefname style = {
+%<*minimalist-plain|minimalist-classical|minimalist-flow>
               , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
               , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
@@ -2129,10 +2507,19 @@ heading_suffix "}\n"
               , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+%</minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-stream>
+              \g_minimalist_title_font_common_tl \textit
+%</minimalist-stream>
             }
+%<*minimalist-plain|minimalist-classical>
           , numbering style = {
               \minimalist_bfseries:\g_minimalist_title_font_common_tl
             }
+%</minimalist-plain|minimalist-classical>
+%<*minimalist-flow|minimalist-stream>
+          , numbering style = { \minimalist_apply_title_numbering_style_static:n }
+%</minimalist-flow|minimalist-stream>
         }
       }
   }
@@ -2187,10 +2574,10 @@ heading_suffix "}\n"
           enhanced ~ jigsaw, breakable, oversize,
           % nobeforeafter,
           left = .5em, right=0mm, top=0.5mm, bottom=0mm, boxrule=0pt,
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
           colback=main-text!2!paper, frame ~ hidden,
           borderline ~ west = {.3em} {0mm} {main-text!25!paper},
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
           colback = paper, frame ~ hidden,
           borderline ~ west = {.125em} {-.5mm} {main-text!25!paper, double, double ~ distance=.1em},
@@ -2203,9 +2590,9 @@ heading_suffix "}\n"
     \ResumeLineNumbers
   }
 
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
 \hook_gput_code:nnn { env/quote/begin } { minimalist } { \small }
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 
 %%================================
 %%  Title block style
@@ -2234,7 +2621,7 @@ heading_suffix "}\n"
     }
   }
   {
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
     \renewcommand{\@maketitle}
       {
         \LocallyStopLineNumbers
@@ -2250,7 +2637,7 @@ heading_suffix "}\n"
         \medskip\par
         \ResumeLineNumbers
       }
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
     \renewcommand{\@maketitle}
       {
@@ -2285,7 +2672,7 @@ heading_suffix "}\n"
 %%================================
 %%  Abstract style
 %%================================
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
     \renewenvironment{abstract}
       {
         \LocallyStopLineNumbers
@@ -2305,7 +2692,7 @@ heading_suffix "}\n"
         \medskip
         \ResumeLineNumbers
       }
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
     \renewenvironment{abstract}
       {
@@ -2346,7 +2733,7 @@ heading_suffix "}\n"
         RU = Ключевые~слова                         ,
       }
 
-%<*minimalist-plain>
+%<*minimalist-plain|minimalist-flow|minimalist-stream>
     \newenvironment{keyword}{
       \LocallyStopLineNumbers
       \vspace{-.75\baselineskip}
@@ -2366,7 +2753,7 @@ heading_suffix "}\n"
       \medskip
       \ResumeLineNumbers
     }
-%</minimalist-plain>
+%</minimalist-plain|minimalist-flow|minimalist-stream>
 %<*minimalist-classical>
     \newenvironment{keyword}{
       \LocallyStopLineNumbers
@@ -2399,6 +2786,11 @@ heading_suffix "}\n"
 %%================================
 %%  Special adjustment
 %%================================
+%<*minimalist-flow|minimalist-stream>
+\setcounter{tocdepth}{1}
+
+%</minimalist-flow|minimalist-stream>
+%
 \crefformat { chapter } { \nobreak \crefthemark { \crefthe_retrieve_space: } \nobreak #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 \labelcrefformat { chapter } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 \crefformat { section } { \nobreak \crefthemark { \crefthe_retrieve_space: } \nobreak #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }

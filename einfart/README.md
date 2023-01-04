@@ -2,15 +2,11 @@
 
 # `einfart` : write you articles in a simple and clear way
 
-**The current document class have been rewritten with `expl3`. Please note that the documentations are not yet up-to-date. The syntax of some commands have been changed since the last version, especially the declaration of theorem-like environments by `\CreateTheorem`. For the moment, you can refer to the documentation of the package `create-theorem`.**
+> **New documentations are being written and are expected to be completed by the end of 2023. In the meantime, only the core code would be included in TeX Live 2023 coming this April (old documentations have been removed from the distribution).**
 
-`einfart` is a LaTeX class for typesetting articles, which has a simple and
-clear design.
+`einfart` is a LaTeX class for typesetting articles, which has a simple and clear design.
 
-Currently, it has native support to Chinese (simplified and traditional),
-English, French, German, Italian, Japanese, Portuguese (European and Brazilian),
-Russian and Spanish typesetting. And it may compile with either XeLaTeX or
-LuaLaTeX.
+Currently, it has native support to Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish typesetting. And it may compile with either XeLaTeX or LuaLaTeX.
 
 This is part of the `minimalist` class series.
 
@@ -18,13 +14,12 @@ This is part of the `minimalist` class series.
 
 Compared with usual document classes, it has the following features:
 
-- Native multi-language support: Chinese (simplified and traditional), English,
-  French, German, Italian, Japanese, Portuguese (European and Brazilian),
-  Russian and Spanish
-    > In particular, for simplified Chinese, traditional Chinese and Japanese,
-    > the fonts of the corresponding glyphs can be automatically switched
-- Ready-to-use theorem-like environments, also with multi-language support
+- Several carefully designed styles
+- Native multi-language support: Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish
+    > In particular, for simplified Chinese, traditional Chinese and Japanese, the fonts of the corresponding glyphs can be automatically switched
+- Ready-to-use theorem-like environments, with clever referencing support
 - Support both the standard and the AMS writing fashion
+- ... and so much more...
 
 # License
 
