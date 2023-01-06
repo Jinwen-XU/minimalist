@@ -713,7 +713,7 @@
             \CJKfamily { JPmain }
           }
 
-        \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
+        % \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
       }
 
 
@@ -936,6 +936,14 @@
     , title~in~bold     .bool_set:N         = \l__minimalist_use_boldface_bool
     , title in bold     .bool_set:N         = \l__minimalist_use_boldface_bool
 
+    , use-sffamily       .bool_set:N        = \l__minimalist_use_sffamily_bool
+    , use-sffamily       .initial:n         = { false }
+    , use~sffamily       .bool_set:N        = \l__minimalist_use_sffamily_bool
+    , use sffamily       .bool_set:N        = \l__minimalist_use_sffamily_bool
+    , title-in-sffamily  .bool_set:N        = \l__minimalist_use_sffamily_bool
+    , title~in~sffamily  .bool_set:N        = \l__minimalist_use_sffamily_bool
+    , title in sffamily  .bool_set:N        = \l__minimalist_use_sffamily_bool
+
     , use-scshape       .bool_set:N         = \l__minimalist_use_scshape_bool
     , use-scshape       .initial:n          = { false }
     , use~scshape       .bool_set:N         = \l__minimalist_use_scshape_bool
@@ -1047,6 +1055,14 @@
     \cs_new:Nn \minimalist_bfseries: {}
   }
 
+\bool_if:NTF \l__minimalist_use_sffamily_bool
+  {
+    \cs_new:Nn \minimalist_sffamily: { \sffamily }
+  }
+  {
+    \cs_new:Nn \minimalist_sffamily: {}
+  }
+
 \bool_if:NTF \l__minimalist_use_scshape_bool
   {
     \cs_new:Nn \minimalist_scshape: { \scshape }
@@ -1066,35 +1082,35 @@
 \tl_new:N \g_minimalist_title_font_paragraph_tl
 
 %<*minimalist-plain>
-\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
-\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
-\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
-\tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 %</minimalist-plain>
 %<*minimalist-classical>
-\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
-\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: }
-\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: }
-\tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \itshape }
-\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries:\minimalist_sffamily: }
+\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries:\minimalist_sffamily: }
+\tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries:\minimalist_sffamily: \itshape }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries:\minimalist_sffamily: \minimalist_scshape: }
 %</minimalist-classical>
 %<*minimalist-flow|minimalist-stream>
-\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
-\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
-\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
+\tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 % \bool_if:NTF \l__minimalist_runin_bool
 %   {
 %     \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \itshape \g_minimalist_title_font_common_tl }
 %   }
 %   {
-%     \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries: \g_minimalist_title_font_common_tl }
+%     \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
 %   }
 \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \itshape \g_minimalist_title_font_common_tl }
-\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries: \g_minimalist_title_font_common_tl \minimalist_scshape: }
+\tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 %</minimalist-flow|minimalist-stream>
 
 \bool_if:NF \l__minimalist_fast_bool
@@ -1414,22 +1430,22 @@
     \int_case:nn { \l_tmpa_int }
       {
 %<*minimalist-plain>
-        { 0 } { \textcolor { .!24!paper } }
-        { 1 } { \textcolor { .!39!paper } }
-        { 2 } { \textcolor { .!39!paper } }
-        { 3 } { \smaller[2] \textcolor { .!24!paper } }
+        { 0 } { \textcolor { main-text!24!paper } }
+        { 1 } { \textcolor { main-text!39!paper } }
+        { 2 } { \textcolor { main-text!39!paper } }
+        { 3 } { \smaller[2] \textcolor { main-text!24!paper } }
 %</minimalist-plain>
 %<*minimalist-flow>
-        { 0 } { \textcolor { .!24!paper } }
-        { 1 } { \textcolor { .!39!paper } }
-        { 2 } { \textcolor { .!39!paper } }
-        { 3 } { \smaller[.5] \textcolor { .!39!paper } }
+        { 0 } { \textcolor { main-text!24!paper } }
+        { 1 } { \textcolor { main-text!39!paper } }
+        { 2 } { \textcolor { main-text!39!paper } }
+        { 3 } { \smaller[.5] \textcolor { main-text!39!paper } }
 %</minimalist-flow>
 %<*minimalist-stream>
-        { 0 } { \textcolor { .!39!paper } }
-        { 1 } { \textcolor { .!39!paper } }
-        { 2 } { \textcolor { .!39!paper } }
-        { 3 } { \smaller[2] \textcolor { .!24!paper } }
+        { 0 } { \textcolor { main-text!39!paper } }
+        { 1 } { \textcolor { main-text!39!paper } }
+        { 2 } { \textcolor { main-text!39!paper } }
+        { 3 } { \smaller[2] \textcolor { main-text!24!paper } }
 %</minimalist-stream>
       }
     \l_tmpa_tl
@@ -1640,7 +1656,7 @@
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_section_tl\centering}{}{0em}
   {{\small\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }
-    \,\,\textcolor{main-text!90!paper}{\minimalist_bfseries:\arabic{section}}
+    \,\,\textcolor{main-text!90!paper}{\minimalist_bfseries:\minimalist_sffamily:\arabic{section}}
     \,\,\textcolor{main-text!27!paper}{\footnotesize \g_minimalist_section_decoration_char_tl }}\\
     \seculine{#1}}
   [\ResumeLineNumbers]
@@ -2005,7 +2021,7 @@
     ref = \normalfont\color{.!45!paper}\arabic{enumi}.\emph{\roman*}$\mskip-.5mu\big)$}
 \setlist[enumerate,3]{label = \normalfont\emph{\alph*}$\mskip-.5mu\big)$,
     ref = \normalfont\color{.!45!paper}\arabic{enumi}.\emph{\roman{enumii}}.\emph{\alph*}$\mskip-.5mu\big)$}
-\setlist[description]{font=\normalfont\minimalist_bfseries:}
+\setlist[description]{font=\normalfont\minimalist_bfseries:\minimalist_sffamily:}
 %<*minimalist-classical>
 \newcommand\desculine{\bgroup\markoverwith{\color{.!55!paper}
   \rule[-.45ex]{2pt}{.75pt}}\ULon}
@@ -2209,7 +2225,8 @@ heading_suffix "}\n"
       {0pt}
 %<*minimalist-plain>
       {{\thmname{#1}\thmnumber{\nobreakspace #2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}.\nobreakspace\nobreakspace}
+        % {\normalfont\textcolor{main-text!27!paper}{---}}
 %</minimalist-plain>
 %<*minimalist-flow>
       {{\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
@@ -2296,7 +2313,7 @@ heading_suffix "}\n"
       \minimalist_apply_title_numbering_style:n { \thmnumber{#2} }
       \skip_horizontal:n { \l_minimalist_title_sep_dim }
     }
-    % \minimalist_bfseries:
+    % \minimalist_bfseries:\minimalist_sffamily:
     {\thmname{#1}}
     {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
     . \hspace{.5em}
@@ -2354,10 +2371,19 @@ heading_suffix "}\n"
     \renewcommand\Hy@numberline[1]{#1.~}
     % https://tex.stackexchange.com/a/1821
     % Add the bookmark of ToC
-    \hook_gput_code:nnn { cmd/tableofcontents/before } { minimalist }
+    \bool_if:NTF \l__minimalist_is_book_bool
       {
-        \if@openright\cleardoublepage\else\clearpage\fi
-        \pdfbookmark[0]{\contentsname}{toc}
+        \hook_gput_code:nnn { cmd/tableofcontents/before } { minimalist }
+          {
+            \if@openright\cleardoublepage\else\clearpage\fi
+            \pdfbookmark[0]{\contentsname}{toc}
+          }
+      }
+      {
+        \hook_gput_code:nnn { cmd/tableofcontents/before } { minimalist }
+          {
+            \pdfbookmark[1]{\contentsname}{toc}
+          }
       }
   }
 
@@ -2383,17 +2409,17 @@ heading_suffix "}\n"
   {
     name style = {
       , heading style = {
-          , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-          , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-          , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-          , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-          , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-          , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-          , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-          , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-          , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-          , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-          , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+          , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+          , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+          , italian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+          , portuguese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+          , brazilian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+          , spanish = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+          , schinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+          , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+          , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+          , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
         }
 %<*minimalist-flow|minimalist-stream>
       , numbering style = { \minimalist_apply_title_numbering_style_static:n }
@@ -2406,18 +2432,18 @@ heading_suffix "}\n"
     name style = {
       , heading style = {
 %<*minimalist-plain|minimalist-classical|minimalist-flow>
-          , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-          , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-          , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-          , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-          , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+          , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , italian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , portuguese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , brazilian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , spanish = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+          , schinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+          , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+          , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+          , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
 %</minimalist-plain|minimalist-classical|minimalist-flow>
 %<*minimalist-stream>
           \g_minimalist_title_font_common_tl \textit
@@ -2435,34 +2461,34 @@ heading_suffix "}\n"
       {
         name style = {
           , crefname style = {
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , italian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , portuguese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , brazilian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , spanish = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , schinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
             }
           , Crefname style = {
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textsc
-              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , italian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , portuguese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , brazilian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , spanish = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textsc
+              , schinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
             }
 %<*minimalist-plain|minimalist-classical>
           , numbering style = {
-              \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
             }
 %</minimalist-plain|minimalist-classical>
 %<*minimalist-flow|minimalist-stream>
@@ -2476,18 +2502,18 @@ heading_suffix "}\n"
         name style = {
           , crefname style = {
 %<*minimalist-plain|minimalist-classical|minimalist-flow>
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , italian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , portuguese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , brazilian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , spanish = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , schinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
 %</minimalist-plain|minimalist-classical|minimalist-flow>
 %<*minimalist-stream>
               \g_minimalist_title_font_common_tl \textit
@@ -2495,18 +2521,18 @@ heading_suffix "}\n"
             }
           , Crefname style = {
 %<*minimalist-plain|minimalist-classical|minimalist-flow>
-              , english = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , french = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , ngerman = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , italian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , portuguese = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , brazilian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , spanish = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl\textit
-              , schinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , tchinese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , japanese = \minimalist_bfseries:\g_minimalist_title_font_common_tl
-              , russian = \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , italian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , portuguese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , brazilian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , spanish = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
+              , schinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
+              , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
 %</minimalist-plain|minimalist-classical|minimalist-flow>
 %<*minimalist-stream>
               \g_minimalist_title_font_common_tl \textit
@@ -2514,7 +2540,7 @@ heading_suffix "}\n"
             }
 %<*minimalist-plain|minimalist-classical>
           , numbering style = {
-              \minimalist_bfseries:\g_minimalist_title_font_common_tl
+              \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
             }
 %</minimalist-plain|minimalist-classical>
 %<*minimalist-flow|minimalist-stream>
@@ -2627,7 +2653,7 @@ heading_suffix "}\n"
         \LocallyStopLineNumbers
         \begin{center}
           \let\footnote\thanks
-          {\minimalist_bfseries:\sffamily\minimalist_scshape:\Large\@title}\\\bigskip
+          {\minimalist_bfseries:\minimalist_scshape:\sffamily\Large\@title}\\\bigskip
           \color{main-text!80!paper}
           {\small\minimalist_scshape:\@author}
           \par\smallskip\vspace{-\parskip}
@@ -2648,7 +2674,7 @@ heading_suffix "}\n"
         \vspace{-.5\baselineskip}
         \begin{flushright}
           \let\footnote\thanks
-          {\minimalist_bfseries:\@title}\\\medskip
+          {\minimalist_bfseries:\minimalist_sffamily:\@title}\\\medskip
           \color{main-text!80!paper}
           {\small\minimalist_scshape:\@author}
           \par\vspace{-\parskip}\vspace{2pt}
@@ -2738,7 +2764,7 @@ heading_suffix "}\n"
       \LocallyStopLineNumbers
       \vspace{-.75\baselineskip}
       \begin{center}
-        {\minimalist_bfseries:\minimalist_scshape:\small\keywordname}\\
+        { \g_minimalist_title_font_section_tl \minimalist_scshape: \small\keywordname}\\
         \vspace{-.3\baselineskip}
         \begin{minipage}[t]{.833\textwidth}
           \vspace{0pt}
@@ -2759,7 +2785,7 @@ heading_suffix "}\n"
       \LocallyStopLineNumbers
       \vspace{-.5\baselineskip}
       \begin{flushright}
-        {\minimalist_bfseries:\minimalist_scshape:\small\keywordname}\par
+        {\minimalist_bfseries:\minimalist_sffamily:\minimalist_scshape:\small\keywordname}\par
         \vspace{-\parskip}
         \vspace{-.30\baselineskip}
         \begin{minipage}[t]{.833\textwidth}

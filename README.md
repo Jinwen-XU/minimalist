@@ -51,13 +51,12 @@ latex minimalist-doc.ins
 
 Compared with usual document classes, it has the following features:
 
-- Native multi-language support: Chinese (simplified and traditional), English,
-  French, German, Italian, Japanese, Portuguese (European and Brazilian),
-  Russian and Spanish
-    > In particular, for simplified Chinese, traditional Chinese and Japanese,
-    > the fonts of the corresponding glyphs can be automatically switched
-- Ready-to-use theorem-like environments, also with multi-language support
+- Several carefully designed styles
+- Native multi-language support: Chinese (simplified and traditional), English, French, German, Italian, Japanese, Portuguese (European and Brazilian), Russian and Spanish
+    > In particular, for simplified Chinese, traditional Chinese and Japanese, the fonts of the corresponding glyphs can be automatically switched
+- Ready-to-use theorem-like environments, with clever referencing support
 - Support both the standard and the AMS writing fashion
+- ... and so much more...
 
 
 # License
