@@ -1448,22 +1448,10 @@
     \exp_args:Nnx \regex_count:nnN { \. } {#1} \l_tmpa_int
     \int_case:nn { \l_tmpa_int }
       {
-%<*minimalist-plain>
-        { 0 } { \textcolor { main-text!24!paper } }
-        { 1 } { \textcolor { main-text!39!paper } }
-        { 2 } { \textcolor { main-text!39!paper } }
-        { 3 } { \smaller[2] \textcolor { main-text!24!paper } }
-%</minimalist-plain>
-%<*minimalist-flow>
-        { 0 } { \textcolor { main-text!24!paper } }
-        { 1 } { \textcolor { main-text!39!paper } }
-        { 2 } { \textcolor { main-text!39!paper } }
-        { 3 } { \smaller[.5] \textcolor { main-text!39!paper } }
-%</minimalist-flow>
-%<*minimalist-stream>
         { 0 } { \textcolor { main-text!39!paper } }
         { 1 } { \textcolor { main-text!39!paper } }
         { 2 } { \textcolor { main-text!39!paper } }
+%<*minimalist-stream>
         { 3 } { \smaller[2] \textcolor { main-text!24!paper } }
 %</minimalist-stream>
       }
@@ -1653,7 +1641,7 @@
 \titleformat{\section}
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_section_tl\centering}
-  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style_static:n { \thesection } }}{1em}
+  {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:n { \thesection } }}{1em}
   {#1}
   [\ResumeLineNumbers]
 %</minimalist-plain>
@@ -1726,7 +1714,7 @@
 \titleformat{\subsection}
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_subsection_tl}
-  { \minimalist_apply_title_numbering_style_static:n { \thesubsection } }{.75em}
+  { \minimalist_apply_title_numbering_style:n { \thesubsection } }{.75em}
   {#1}
   [\ResumeLineNumbers]
 %</minimalist-plain>
@@ -1781,14 +1769,14 @@
   {
     \titleformat{\subsubsection}[runin]
       {\g_minimalist_title_font_subsubsection_tl}
-      { \minimalist_apply_title_numbering_style_static:n { \thesection } }{.5em}
+      { \minimalist_apply_title_numbering_style:n { \thesection } }{.5em}
       {#1.}[\hspace*{.3em}]
   }
   {
     \titleformat{\subsubsection}
       {\LocallyStopLineNumbers
       \g_minimalist_title_font_subsubsection_tl}
-      { \minimalist_apply_title_numbering_style_static:n { \thesubsubsection } }{.5em}
+      { \minimalist_apply_title_numbering_style:n { \thesubsubsection } }{.5em}
       {#1}
       [\ResumeLineNumbers]
   }
