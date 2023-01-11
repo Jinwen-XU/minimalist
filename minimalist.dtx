@@ -863,6 +863,41 @@
                   {
                     \minimclass_xarrows_generic:nnnn { #1 } { #2 } {} { edge [ commutative~diagrams/twoheadleftarrow ] }
                   }
+
+                \cs_new_protected:Nn \minimclass_xarrows_double_generic:nnnnnn
+                  % #3 = option of \tikz
+                  % #4 = edge 1 of \draw
+                  % #5 = edge 2 of \draw
+                  % #6 = sep/2
+                  {
+                    \hbox_set:Nn \l__minimclass_xarrows_below_box { \ensuremath { \scriptstyle #1 } }
+                    \hbox_set:Nn \l__minimclass_xarrows_above_box { \ensuremath { \scriptstyle #2 } }
+                    \dim_set:Nn \l__minimclass_xarrows_length_dim
+                      { \dim_eval:n { \dim_max:nn { \box_wd:N \l__minimclass_xarrows_below_box } { \box_wd:N \l__minimclass_xarrows_above_box } + 1em } }
+                    \mathrel
+                      {
+                        \tikz [ #3, line~width = .6pt, baseline = -.5ex, every~node/.style = { inner~sep = 0pt }, >={Stealth[round,length=3.4pt,width=6.15pt,inset=2.25pt]} ]
+                          {
+                            \draw (0,#6) #4
+                              node [ below = 4pt+#6 ] { \box_use:N \l__minimclass_xarrows_below_box }
+                              ( \l__minimclass_xarrows_length_dim ,#6) ;
+                            \draw (0,-#6) #5
+                              node [ above = 3pt+#6 ] { \box_use:N \l__minimclass_xarrows_above_box }
+                              ( \l__minimclass_xarrows_length_dim ,-#6) ;
+                          }
+                      }
+                  }
+
+                \NewDocumentCommand \xrightrightarrows { O{} m }
+                  {
+                    \minimclass_xarrows_double_generic:nnnnnn { #1 } { #2 } {} { edge [ commutative~diagrams/rightarrow ] } { edge [ commutative~diagrams/rightarrow ] } { .2em }
+                  }
+
+                \NewDocumentCommand \xleftleftarrows { O{} m }
+                  {
+                    \minimclass_xarrows_double_generic:nnnnnn { #1 } { #2 } {} { edge [ commutative~diagrams/leftarrow ] } { edge [ commutative~diagrams/leftarrow ] } { .2em }
+                  }
+
                 \hook_gput_code:nnn { begindocument/end } { minimclass }
                   {
                     \RenewDocumentCommand \twoheadrightarrow {}
@@ -2017,6 +2052,7 @@
 %%================================
 %%  Lists
 %%================================
+\PassOptionsToPackage { inline } { enumitem }
 \RequirePackage { enumitem }
 \setlistdepth{10}
 \setlist{noitemsep, topsep=.33\topsep-.5\parskip}
