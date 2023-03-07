@@ -2232,7 +2232,8 @@ heading_suffix "}\n"
 \RequirePackage { amsthm }
 
 % Change equation numbers to gray
-\def\tagform@#1{\maketag@@@{\textcolor{main-text!39!paper}{(\ignorespaces#1\unskip\@@italiccorr)}}}
+% \def\tagform@#1{\maketag@@@{\textcolor{main-text!39!paper}{(\ignorespaces#1\unskip\@@italiccorr)}}}
+\def\tagform@#1{\maketag@@@{\textcolor{.!39!paper}{(\ignorespaces#1\unskip\@@italiccorr)}}}
 
 \PassOptionsToPackage { nopatch = eqnum } { microtype }
 
