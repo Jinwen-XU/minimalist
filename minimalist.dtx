@@ -19,7 +19,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -28,7 +28,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -37,7 +37,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -46,7 +46,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -55,35 +55,35 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {The "plain" style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {The "classical" style of minimalist}
 %</minimalist-classical>
 %
 %<*minimalist-flow>
 \ProvidesExplPackage
   {minimalist-flow}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {The "flow" style of minimalist}
 %</minimalist-flow>
 %
 %<*minimalist-stream>
 \ProvidesExplPackage
   {minimalist-stream}
-  {2023/02/13} {}
+  {2023/03/07} {}
   {The "stream" style of minimalist}
 %</minimalist-stream>
 
@@ -978,6 +978,8 @@
     , use~style         .str_set:N          = \l__minimalist_style_str
     , use style         .str_set:N          = \l__minimalist_style_str
     , classical         .meta:n             = { style = classical }
+    , flow              .meta:n             = { style = flow      }
+    , stream            .meta:n             = { style = stream    }
 
     , use-boldface      .bool_set:N         = \l__minimalist_use_boldface_bool
     , use-boldface      .initial:n          = { false }
@@ -1013,6 +1015,16 @@
     , theorem-in-new-line .initial:n        = { false }
     , theorem~in~new~line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
     , theorem in new line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
+
+    , colored-proof     .tl_set:N           = \l__minimalist_colored_proof_tl
+    , colored-proof     .initial:n          = { * }
+    , colored-proof     .default:n          = { blue!50!cyan!55!main-text }
+    , colored~proof     .tl_set:N           = \l__minimalist_colored_proof_tl
+    , colored~proof     .initial:n          = { * }
+    , colored~proof     .default:n          = { blue!50!cyan!55!main-text }
+    , colored proof     .tl_set:N           = \l__minimalist_colored_proof_tl
+    , colored proof     .initial:n          = { * }
+    , colored proof     .default:n          = { blue!50!cyan!55!main-text }
 
     , unknown           .code:n             = {
                                                 \PassOptionsToPackage { \CurrentOption } { projlib-language }
@@ -1080,6 +1092,24 @@
       { "#1"~is~an~internal~style~of~"minimalist".~To~use~it,~you~must~load~the~package~"minimalist"~first. }
     \msg_warning:nnx { \@currname } { minimalist-not-loaded } { \@currname }
     \endinput
+  }
+
+\bool_new:N \l__minimalist_colored_proof_bool
+\bool_set_true:N \l__minimalist_colored_proof_bool
+\tl_if_eq:NnTF \l__minimalist_colored_proof_tl { * }
+  {
+%<*minimalist-plain|minimalist-classical|minimalist-stream>
+    \bool_set_false:N \l__minimalist_colored_proof_bool
+%</minimalist-plain|minimalist-classical|minimalist-stream>
+%<*minimalist-flow>
+    \tl_set:Nn \l__minimalist_colored_proof_tl { blue!50!cyan!55!main-text }
+%</minimalist-flow>
+  }
+  {
+    \tl_if_eq:NnT \l__minimalist_colored_proof_tl { false }
+      {
+        \bool_set_false:N \l__minimalist_colored_proof_bool
+      }
   }
 
 %%================================
@@ -2446,9 +2476,15 @@ heading_suffix "}\n"
 
 \SetTheorem { proof, proof* } { qed-symbol = { \customqedsymbol } }
 
-%<*minimalist-flow>
-\AddToHook{env/proof/begin}{\Hy@SaveLastskip\color{blue!50!cyan!55!main-text}\Hy@RestoreLastskip}
-%</minimalist-flow>
+\bool_if:NT \l__minimalist_colored_proof_bool
+  {
+    \hook_gput_code:nnn { env/proof/begin } { minimalist }
+      {
+        \Hy@SaveLastskip
+        \color{ \l__minimalist_colored_proof_tl }
+        \Hy@RestoreLastskip
+      }
+  }
 
 %<*minimalist-flow|minimalist-stream>
 \exp_args:No \SetTheorem { \c_projlib_theorem_supported_clist, theorem-with-name, proof } { shared counter = subsection }
