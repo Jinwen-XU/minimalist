@@ -786,6 +786,10 @@
                   {
                     \cs_gset_eq:NN \overline \wideoverbar
                     \cs_gset_eq:NN \square \mdwhtsquare
+
+                    \newcommand{\limstrut}{\vrule depth0.2ex width 0pt}
+                    \renewcommand{\varprojlim}{\mathop{\underleftarrow{{\lim}\limstrut}}}
+                    \renewcommand{\varinjlim}{\mathop{\underrightarrow{{\lim}\limstrut}}}
                   }
 
                 % https://tex.stackexchange.com/a/647789
