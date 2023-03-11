@@ -777,6 +777,7 @@
                 \setmathfont { KpMath-Regular.otf } [ range = { cal, bfcal }, RawFeature=+ss01 ]
                 % \setmathfont { KpMath-Regular.otf } [ range = {} ]
 
+                % https://tex.stackexchange.com/a/646715
                 \sys_if_engine_luatex:T
                   {
                     \mathitalicsmode=1
@@ -787,6 +788,7 @@
                     \cs_gset_eq:NN \overline \wideoverbar
                     \cs_gset_eq:NN \square \mdwhtsquare
 
+                    % https://tex.stackexchange.com/a/678611
                     \newcommand{\limstrut}{\vrule depth0.2ex width 0pt}
                     \renewcommand{\varprojlim}{\mathop{\underleftarrow{{\lim}\limstrut}}}
                     \renewcommand{\varinjlim}{\mathop{\underrightarrow{{\lim}\limstrut}}}
@@ -804,6 +806,22 @@
                   \sbox\z@{$\m@th#1\unicodevdots$}%
                   \vrule width \z@ height 2.25\ht\z@ depth 0.012\ht\z@
                   \raisebox{0.25\height}{\usebox\z@}%
+                  \endgroup
+                }
+
+                % https://tex.stackexchange.com/a/678998
+                \hook_gput_code:nnn { begindocument } { minimclass }
+                  {
+                    \NewCommandCopy\standarddashv\dashv
+                    \NewCommandCopy\standardvdash\vdash
+                    \RenewDocumentCommand{\dashv}{}{\mathrel{\mathpalette\raisesymbol\standarddashv}}
+                    \RenewDocumentCommand{\vdash}{}{\mathrel{\mathpalette\raisesymbol\standardvdash}}
+                  }
+                \newcommand{\raisesymbol}[2]{%
+                  \begingroup
+                  \sbox\z@{$\m@th#1A$}%
+                  \sbox\tw@{$\m@th#1#2$}%
+                  \raisebox{\dimexpr(\ht\z@-\ht\tw@)/2}{\usebox{\tw@}}%
                   \endgroup
                 }
 
