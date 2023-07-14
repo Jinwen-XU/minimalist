@@ -2,7 +2,7 @@
 
 # `simplivre` : write you books in a simple and clear way
 
-> **New documentations are being written and are expected to be completed by the end of 2023. In the meantime, only the core code would be included in TeX Live 2023 coming this April (old documentations have been removed from the distribution).**
+> **New documentations are still being written. For now, only the core code is included in TeX Live 2023 (old documentations have been removed from the distribution).**
 
 `simplivre` is a LaTeX class for typesetting books, which has a simple and clear design.
 
