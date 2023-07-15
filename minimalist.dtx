@@ -1521,11 +1521,16 @@
 \PassOptionsToPackage { normalem } { ulem }
 \RequirePackage { ulem }
 
+%<*minimalist-default|minimalist-flow|minimalist-stream>
 \cs_new:Nn \minimalist_title_numbering_apply_font:n { { \usefont{U}{zeur}{b}{n} #1 } }
+%</minimalist-default|minimalist-flow|minimalist-stream>
+%<*minimalist-plain|minimalist-classical>
+\cs_new:Nn \minimalist_title_numbering_apply_font:n { #1 }
+%</minimalist-plain|minimalist-classical>
 
 \cs_new_protected:Nn \minimalist_apply_title_numbering_style_static:n
   {
-%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-default|minimalist-flow|minimalist-stream>
     \tl_set:Nx \l_tmpa_tl { #1 }
     \regex_replace_all:nnN { (\w) } { \c{minimalist_original_bfseries:}{\1} } \l_tmpa_tl
     \regex_replace_all:nnN { (\d) } { {\c{minimalist_title_numbering_apply_font:n}{\1}} } \l_tmpa_tl
@@ -1535,13 +1540,13 @@
         \colorlet{minimalist-temp-color}{.}
       }
     \textcolor { minimalist-temp-color!39!paper } { \normalfont \l_tmpa_tl }
-%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
-%<*minimalist-classical>
+%</minimalist-default|minimalist-flow|minimalist-stream>
+%<*minimalist-plain|minimalist-classical>
     #1
-%</minimalist-classical>
+%</minimalist-plain|minimalist-classical>
   }
 
-%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-default|minimalist-flow|minimalist-stream>
 \cs_new_protected:Nn \minimalist_apply_title_numbering_style:n
   {
     \group_begin:
@@ -1549,7 +1554,7 @@
     \regex_replace_all:nnN { (\w) } { \c{minimalist_original_bfseries:}{\1} } \l_tmpa_tl
     \regex_replace_all:nnN { (\d) } { {\c{minimalist_title_numbering_apply_font:n}{\1}} } \l_tmpa_tl
     \exp_args:Nnx \regex_count:nnN { \. } {#1} \l_tmpa_int
-%<*minimalist-default|minimalist-plain|minimalist-flow>
+%<*minimalist-default|minimalist-flow>
     \int_case:nn { \l_tmpa_int }
       {
         { 0 } { \textcolor { main-text!39!paper } }
@@ -1557,7 +1562,7 @@
         { 2 } { \textcolor { main-text!39!paper } }
         { 3 } { \textcolor { main-text!39!paper } }
       }
-%</minimalist-default|minimalist-plain|minimalist-flow>
+%</minimalist-default|minimalist-flow>
 %<*minimalist-stream>
     \bool_if:NTF \l__minimalist_is_book_bool
       {
@@ -1581,7 +1586,13 @@
     \l_tmpa_tl
     \group_end:
   }
-%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%</minimalist-default|minimalist-flow|minimalist-stream>
+%<*minimalist-plain>
+\cs_new_protected:Nn \minimalist_apply_title_numbering_style:n
+  {
+    #1
+  }
+%</minimalist-plain>
 
 \newcommand{\partstring}{\MakeUppercase{{\partname\nobreakspace\protect\thepart}}}
 
@@ -1658,12 +1669,17 @@
       \LocallyStopLineNumbers
       \color{main-text!80!paper}\g_minimalist_title_font_chapter_tl\fontsize{16}{0}\selectfont}{}{0em}
       {
+%<*minimalist-default|minimalist-flow>
         \rlap
           {
             \hspace*{-.5em}
             \color{main-text!10!paper}
             \fontsize{90}{0}\selectfont\raisebox{-10pt}{ \minimalist_title_numbering_apply_font:n { \thechapter } }
           }
+%</minimalist-default|minimalist-flow>
+%<*minimalist-plain>
+        {\fontsize{30}{0}\selectfont\minimalist_title_numbering_apply_font:n { \thechapter }}\\[1em]
+%</minimalist-plain>
         #1
       }
       [\ResumeLineNumbers]
@@ -1764,7 +1780,12 @@
 \titleformat{\section}
   {\LocallyStopLineNumbers
   \g_minimalist_title_font_section_tl\centering}
+%<*minimalist-default>
   {\raisebox{-.02\baselineskip}{\large \minimalist_apply_title_numbering_style:n { \thesection } }}{1em}
+%</minimalist-default>
+%<*minimalist-plain>
+    { \minimalist_apply_title_numbering_style:n { \thesection } }{1em}
+%</minimalist-plain>
   {#1}
   [\ResumeLineNumbers]
 %</minimalist-default|minimalist-plain>
@@ -2357,7 +2378,9 @@ heading_suffix "}\n"
       {0pt}
 %<*minimalist-default|minimalist-plain>
       {{\thmname{#1}\thmnumber{\nobreakspace #2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}.\nobreakspace\nobreakspace}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+        \minimalist_bfseries:\minimalist_sffamily: .
+        \nobreakspace\nobreakspace}
         % {\normalfont\textcolor{main-text!27!paper}{---}}
 %</minimalist-default|minimalist-plain>
 %<*minimalist-flow>
@@ -2955,7 +2978,7 @@ heading_suffix "}\n"
 \setcounter{tocdepth}{1}
 
 %</minimalist-flow|minimalist-stream>
-%
+%<*minimalist-default|minimalist-flow|minimalist-stream>
 \crefformat { chapter } { \nobreak \crefthemark { \crefthe_retrieve_space: } \nobreak #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 \labelcrefformat { chapter } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 \crefformat { section } { \nobreak \crefthemark { \crefthe_retrieve_space: } \nobreak #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
@@ -2964,6 +2987,7 @@ heading_suffix "}\n"
 \labelcrefformat { subsection } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 \crefformat { subsubsection } { \nobreak \crefthemark { \crefthe_retrieve_space: } \nobreak #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 \labelcrefformat { subsubsection } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
+%</minimalist-default|minimalist-flow|minimalist-stream>
 %</style>
 
 \endinput

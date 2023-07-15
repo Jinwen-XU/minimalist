@@ -12,9 +12,10 @@ It mainly consists of two parts.
 
 - Main part:
     - `minimalist.sty` : interface of the main style
-        - `minimalist-plain.sty` : the style "plain"
+        - `minimalist-default.sty` : the default style
         - `minimalist-classical.sty` : the style "classical"
         - `minimalist-flow.sty` : the style "flow"
+        - `minimalist-plain.sty` : the style "plain"
         - `minimalist-stream.sty` : the style "stream"
         - ... and more styles to come (currently on schedule: "modern")
     - `minimart.cls` : class for typesetting articles
