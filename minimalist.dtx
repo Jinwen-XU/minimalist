@@ -1058,6 +1058,11 @@
     , indent lists      .dim_set:N         = \l__minimalist_item_indentation_dim
     , indent lists      .default:n         = { \parindent }
 
+    , emphasis-theorems   .bool_set:N       = \l__minimalist_emphasis_theorem_bool
+    , emphasis-theorems   .initial:n        = { false }
+    , emphasis~theorems   .bool_set:N       = \l__minimalist_emphasis_theorem_bool
+    , emphasis theorems   .bool_set:N       = \l__minimalist_emphasis_theorem_bool
+
     , theorem-in-new-line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
     , theorem-in-new-line .initial:n        = { false }
     , theorem~in~new~line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
@@ -2366,7 +2371,7 @@ heading_suffix "}\n"
     \newtheoremstyle{simple}
       {.75\baselineskip}{}
       {
-        \normalfont
+        \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont }
         \parindent=0pt
         \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
       }{}
@@ -2388,7 +2393,7 @@ heading_suffix "}\n"
     \newtheoremstyle{simple}
       {}{}
       {
-        \normalfont
+        \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont }
         \parindent=0pt
         \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
       }{}
@@ -2416,7 +2421,7 @@ heading_suffix "}\n"
   {
     \newtheoremstyle{simple}
       {.5\baselineskip}{.5\baselineskip}
-      {\normalfont}{}
+      { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
       {\newline}
       { \global\let\qedsymbol\simpleqedsymbol
@@ -2430,7 +2435,7 @@ heading_suffix "}\n"
   {
     \newtheoremstyle{simple}
       {.5\baselineskip}{.5\baselineskip}
-      {\normalfont}{}
+      { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
       {0pt}
       { \global\let\qedsymbol\simpleqedsymbol
