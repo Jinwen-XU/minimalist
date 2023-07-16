@@ -1044,6 +1044,20 @@
     , runin             .bool_set:N         = \l__minimalist_runin_bool
     , runin             .initial:n          = { false }
 
+    , indent-items      .dim_set:N         = \l__minimalist_item_indentation_dim
+    , indent-items      .initial:n         = { 0pt }
+    , indent-items      .default:n         = { \parindent }
+    , indent~items      .dim_set:N         = \l__minimalist_item_indentation_dim
+    , indent~items      .default:n         = { \parindent }
+    , indent items      .dim_set:N         = \l__minimalist_item_indentation_dim
+    , indent items      .default:n         = { \parindent }
+    , indent-lists      .dim_set:N         = \l__minimalist_item_indentation_dim
+    , indent-lists      .default:n         = { \parindent }
+    , indent~lists      .dim_set:N         = \l__minimalist_item_indentation_dim
+    , indent~lists      .default:n         = { \parindent }
+    , indent lists      .dim_set:N         = \l__minimalist_item_indentation_dim
+    , indent lists      .default:n         = { \parindent }
+
     , theorem-in-new-line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
     , theorem-in-new-line .initial:n        = { false }
     , theorem~in~new~line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
@@ -2168,12 +2182,16 @@
 % \setlist{topsep = .1\baselineskip, parsep=0pt, itemsep=.05\baselineskip}
 \setlist[enumerate]{labelsep=*, leftmargin=*}
 \setlist[enumerate,1]{label = \normalfont\arabic*$\mskip-.5mu\big)$,
-    ref = \normalfont\color{.!45!paper}\arabic*$\mskip-.5mu\big)$}
+    ref = \normalfont\color{.!45!paper}\arabic*$\mskip-.5mu\big)$,
+    leftmargin= \l__minimalist_item_indentation_dim + \maxof{\parindent}{1.5em} }
+    % labelindent= \l__minimalist_item_indentation_dim }
 \setlist[enumerate,2]{label = \normalfont\roman*$\mskip-.5mu\big)$,
     ref = \normalfont\color{.!45!paper}\arabic{enumi}.\roman*$\mskip-.5mu\big)$}
 \setlist[enumerate,3]{label = \normalfont\emph{\alph*}$\mskip-.5mu\big)$,
     ref = \normalfont\color{.!45!paper}\arabic{enumi}.\roman{enumii}.\emph{\alph*}$\mskip-.5mu\big)$}
-\setlist[description]{font=\normalfont\minimalist_bfseries:\minimalist_sffamily:}
+
+\setlist[description]{font=\normalfont\minimalist_bfseries:\minimalist_sffamily: ,
+    labelindent= \l__minimalist_item_indentation_dim }
 %<*minimalist-classical>
 \newcommand\desculine{\bgroup\markoverwith{\color{.!55!paper}
   \rule[-.45ex]{2pt}{.75pt}}\ULon}
@@ -2184,8 +2202,8 @@
 
 \renewlist{itemize}{itemize}{10}
 \setlist[itemize]{leftmargin=*,label=\textcolor{.!27!paper}{$\cdot$}}
-\AddLanguageSetting { \setlist[itemize,1]{label=\textcolor{.!27!paper}{$\bullet$},leftmargin=\maxof{\parindent}{1.5em}} }
-\AddLanguageSetting [french] { \setlist[itemize,1]{label=\textcolor{.!39!paper}{\rule[.2\baselineskip]{.8em}{.75pt}},leftmargin=\maxof{\parindent}{1.5em}} }
+\AddLanguageSetting { \setlist[itemize,1]{label=\textcolor{.!27!paper}{$\bullet$},leftmargin= \l__minimalist_item_indentation_dim + \maxof{\parindent}{1.5em}} }
+\AddLanguageSetting [french] { \setlist[itemize,1]{label=\textcolor{.!39!paper}{\rule[.2\baselineskip]{.8em}{.75pt}},leftmargin= \l__minimalist_item_indentation_dim + \maxof{\parindent}{1.5em} } }
 \setlist[itemize,2]{label=\textcolor{.!27!paper}{\rule[.2\baselineskip]{.55em}{.75pt}}}
 % \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\diamond$}}
 \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\circ$}}
