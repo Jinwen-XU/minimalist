@@ -2371,6 +2371,26 @@ heading_suffix "}\n"
     \newtheoremstyle{simple}
       {.75\baselineskip}{}
       {
+        \normalfont
+        \parindent=0pt
+        \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
+      }{}
+      {\normalfont}{}
+      {0pt}
+      {
+        \rlap{\vbox{\hbox{\parbox{\linewidth}{
+%<*minimalist-default|minimalist-plain>
+          {\thmname{#1}\thmnumber{\nobreakspace #2}}
+%</minimalist-default|minimalist-plain>
+%<*minimalist-flow>
+          {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
+%</minimalist-flow>
+          {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+        }}\hbox{\strut}\vspace{0pt}}}
+      }
+    \newtheoremstyle{simple-var}
+      {.75\baselineskip}{}
+      {
         \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont }
         \parindent=0pt
         \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
@@ -2391,6 +2411,26 @@ heading_suffix "}\n"
   }
   {
     \newtheoremstyle{simple}
+      {}{}
+      {
+        \normalfont
+        \parindent=0pt
+        \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
+      }{}
+      {\normalfont}{}
+      {0pt}
+%<*minimalist-default|minimalist-plain>
+      {{\thmname{#1}\thmnumber{\nobreakspace #2}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+        \minimalist_bfseries:\minimalist_sffamily: .
+        \nobreakspace\nobreakspace}
+        % {\normalfont\textcolor{main-text!27!paper}{---}}
+%</minimalist-default|minimalist-plain>
+%<*minimalist-flow>
+      {{\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+%</minimalist-flow>
+    \newtheoremstyle{simple-var}
       {}{}
       {
         \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont }
@@ -2421,6 +2461,18 @@ heading_suffix "}\n"
   {
     \newtheoremstyle{simple}
       {.5\baselineskip}{.5\baselineskip}
+      {\normalfont}{}
+      {\normalfont}{}
+      {\newline}
+      { \global\let\qedsymbol\simpleqedsymbol
+        \rlap{\vbox{\hbox{\parbox{\linewidth}{
+          {\thmname{#1}\thmnumber{\nobreakspace #2}}
+          \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
+        }}\hbox{\strut}\vspace{0pt}}}\vspace{-2\parskip}
+        \pushQED{\qed}
+      }
+    \newtheoremstyle{simple-var}
+      {.5\baselineskip}{.5\baselineskip}
       { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
       {\newline}
@@ -2434,6 +2486,17 @@ heading_suffix "}\n"
   }
   {
     \newtheoremstyle{simple}
+      {.5\baselineskip}{.5\baselineskip}
+      {\normalfont}{}
+      {\normalfont}{}
+      {0pt}
+      { \global\let\qedsymbol\simpleqedsymbol
+        {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
+        \textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
+        \color{main-text!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
+        \pushQED{\qed}
+      }
+    \newtheoremstyle{simple-var}
       {.5\baselineskip}{.5\baselineskip}
       { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
@@ -2470,6 +2533,24 @@ heading_suffix "}\n"
       \phantom{q} % To provide something below the baseline
     }}\hbox{\strut}\vspace{0pt}}}
   }
+\newtheoremstyle{simple-newline-var}
+  {-.2\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
+  { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
+  {\normalfont}{}
+  {0pt}
+  {
+    \rlap{\vbox{\hbox{\parbox{\linewidth}{
+      \llap{
+        \phantom{\rule{0pt}{\baselineskip}}
+        \minimalist_apply_title_numbering_style:n { \thmnumber{#2} }
+        \skip_horizontal:n { \l_minimalist_title_sep_dim }
+      }
+      \vspace*{-\baselineskip}
+      {\thmname{#1}}
+      {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+      \phantom{q} % To provide something below the baseline
+    }}\hbox{\strut}\vspace{0pt}}}
+  }
 
 \dim_new:N \l_minimalist_space_before_inline_theorem_dim
 \AtBeginDocument
@@ -2484,6 +2565,22 @@ heading_suffix "}\n"
   % {.3\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
   {\l_minimalist_space_before_inline_theorem_dim}{\l_minimalist_space_before_inline_theorem_dim}
   {\normalfont}{}
+  {\normalfont}{}
+  {0pt}
+  {
+    \llap{
+      \minimalist_apply_title_numbering_style:n { \thmnumber{#2} }
+      \skip_horizontal:n { \l_minimalist_title_sep_dim }
+    }
+    % \minimalist_bfseries:\minimalist_sffamily:
+    {\thmname{#1}}
+    {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+    . \hspace{.5em}
+  }
+\newtheoremstyle{simple-inline-var}
+  % {.3\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
+  {\l_minimalist_space_before_inline_theorem_dim}{\l_minimalist_space_before_inline_theorem_dim}
+  { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
   {\normalfont}{}
   {0pt}
   {
@@ -2567,8 +2664,19 @@ heading_suffix "}\n"
 
 % \PassOptionsToPackage { simplename } { projlib-theorem }
 
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+\PassOptionsToPackage { theorem-style = { theorem = simple-var, lemma = simple-var, proposition = simple-var, corollary = simple-var, property = simple-var, axiom = simple-var, construction = simple-var, theorem-with-name = simple-var } } { projlib-theorem }
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
 %<*minimalist-stream>
-\PassOptionsToPackage { theorem-style = { remark = simple-inline, proof = proof } } { projlib-theorem }
+\bool_if:NTF \l__minimalist_theorem_in_new_line_bool
+  {
+    \PassOptionsToPackage { theorem-style = { remark = simple-inline, proof = proof,
+        theorem = simple-newline-var, lemma = simple-newline-var, proposition = simple-newline-var, corollary = simple-newline-var, property = simple-newline-var, axiom = simple-newline-var, construction = simple-newline-var, theorem-with-name = simple-newline-var } } { projlib-theorem }
+  }
+  {
+    \PassOptionsToPackage { theorem-style = { remark = simple-inline, proof = proof,
+        theorem = simple-inline-var, lemma = simple-inline-var, proposition = simple-inline-var, corollary = simple-inline-var, property = simple-inline-var, axiom = simple-inline-var, construction = simple-inline-var, theorem-with-name = simple-inline-var } } { projlib-theorem }
+  }
 %</minimalist-stream>
 
 \RequirePackage { projlib-theorem }
