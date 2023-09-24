@@ -19,7 +19,7 @@
 %<*minimart>
 \ProvidesExplClass
   {minimart}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -28,7 +28,7 @@
 %<*minimbook>
 \ProvidesExplClass
   {minimbook}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -37,7 +37,7 @@
 %<*einfart>
 \ProvidesExplClass
   {einfart}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {A simple and clear article style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { article }
@@ -46,7 +46,7 @@
 %<*simplivre>
 \ProvidesExplClass
   {simplivre}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {A simple and clear book style}
 
 \tl_const:Nn \l__minimclass_base_class_tl { book }
@@ -55,42 +55,42 @@
 %<*minimalist>
 \ProvidesExplPackage
   {minimalist}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {A simple and clear style for articles and books}
 %</minimalist>
 %
 %<*minimalist-default>
 \ProvidesExplPackage
   {minimalist-default}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {The default style of minimalist}
 %</minimalist-default>
 %
 %<*minimalist-plain>
 \ProvidesExplPackage
   {minimalist-plain}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {The "plain" style of minimalist}
 %</minimalist-plain>
 %
 %<*minimalist-classical>
 \ProvidesExplPackage
   {minimalist-classical}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {The "classical" style of minimalist}
 %</minimalist-classical>
 %
 %<*minimalist-flow>
 \ProvidesExplPackage
   {minimalist-flow}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {The "flow" style of minimalist}
 %</minimalist-flow>
 %
 %<*minimalist-stream>
 \ProvidesExplPackage
   {minimalist-stream}
-  {2023/09/21} {}
+  {2023/09/24} {}
   {The "stream" style of minimalist}
 %</minimalist-stream>
 
@@ -2453,7 +2453,7 @@ heading_suffix "}\n"
 %</minimalist-default|minimalist-plain|minimalist-flow>
 %<*minimalist-classical>
 \def\simpleqedsymbol{
-  \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+  \makebox[1em]{\rlap{\textcolor{.!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
     \newtheoremstyle{simple}
@@ -2464,7 +2464,7 @@ heading_suffix "}\n"
       { \global\let\qedsymbol\simpleqedsymbol
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
-          \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
+          \thmnote{\hspace{.4em}\textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{.!50!paper}$($#3$)$}
         }}\hbox{\strut}\vspace{0pt}}}\vspace{-2\parskip}
         \pushQED{\qed}
       }
@@ -2476,7 +2476,7 @@ heading_suffix "}\n"
       { \global\let\qedsymbol\simpleqedsymbol
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
-          \thmnote{\hspace{.4em}\textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{main-text!50!paper}$($#3$)$}
+          \thmnote{\hspace{.4em}\textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}\color{.!50!paper}$($#3$)$}
         }}\hbox{\strut}\vspace{0pt}}}\vspace{-2\parskip}
         \pushQED{\qed}
       }
@@ -2489,8 +2489,8 @@ heading_suffix "}\n"
       {0pt}
       { \global\let\qedsymbol\simpleqedsymbol
         {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
-        \textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
-        \color{main-text!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
+        \textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
+        \color{.!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
         \pushQED{\qed}
       }
     \newtheoremstyle{simple-var}
@@ -2500,8 +2500,8 @@ heading_suffix "}\n"
       {0pt}
       { \global\let\qedsymbol\simpleqedsymbol
         {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
-        \textcolor{main-text!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
-        \color{main-text!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
+        \textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
+        \color{.!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
         \pushQED{\qed}
       }
   }
