@@ -527,8 +527,8 @@
                   [
                     UprightFont    = *-Regular,
                     BoldFont       = *-Bold,
-                    ItalicFont     = *-Regular,
-                    BoldItalicFont = *-Bold,
+                    ItalicFont     = *-ExtraLight,
+                    BoldItalicFont = *-SemiBold,
                   ]
               }
               {
@@ -592,8 +592,8 @@
                   [
                     UprightFont    = *-Regular,
                     BoldFont       = *-Bold,
-                    ItalicFont     = *-Regular,
-                    BoldItalicFont = *-Bold,
+                    ItalicFont     = *-ExtraLight,
+                    BoldItalicFont = *-SemiBold,
                   ]
               }
               {
@@ -657,8 +657,8 @@
                   [
                     UprightFont    = *-Regular,
                     BoldFont       = *-Bold,
-                    ItalicFont     = *-Regular,
-                    BoldItalicFont = *-Bold,
+                    ItalicFont     = *-ExtraLight,
+                    BoldItalicFont = *-SemiBold,
                   ]
               }
               {
@@ -725,18 +725,21 @@
             \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { SCsans } }
             \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { SCmono } }
             \CJKfamily { SCmain }
+            \hook_gput_code:nnn { normalfont } { minimclass } { \CJKfamily{SCmain} }
           }
         \AddLanguageSetting [tchinese]
           {
             \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { TCsans } }
             \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { TCmono } }
             \CJKfamily { TCmain }
+            \hook_gput_code:nnn { normalfont } { minimclass } { \CJKfamily{TCmain} }
           }
         \AddLanguageSetting [japanese]
           {
             \cs_set:Nn \minimclass_cjk_sffamily: { \CJKfamily { JPsans } }
             \cs_set:Nn \minimclass_cjk_ttfamily: { \CJKfamily { JPmono } }
             \CJKfamily { JPmain }
+            \hook_gput_code:nnn { normalfont } { minimclass } { \CJKfamily{JPmain} }
           }
 
         % \tl_gset:Nn \g_minimalist_title_font_common_tl { \minimclass_cjk_sffamily: }
