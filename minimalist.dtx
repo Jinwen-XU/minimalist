@@ -2358,6 +2358,19 @@ heading_suffix "}\n"
 \RequirePackage { mathtools }
 \RequirePackage { amsthm }
 
+\tl_const:Nn \c_minimalist_l_mathparen_latin_tl { $($ }
+\tl_const:Nn \c_minimalist_r_mathparen_latin_tl { $)$ }
+\tl_const:Nn \c_minimalist_l_mathparen_cjk_tl { \!\,（ }
+\tl_const:Nn \c_minimalist_r_mathparen_cjk_tl { ）\!\, }
+\cs_new:Nn \minimalist_insert_l_mathparen:
+  {
+    \tl_use:c { c_minimalist_l_mathparen_ \l_projlib_language_current_languagetype_tl _tl }
+  }
+\cs_new:Nn \minimalist_insert_r_mathparen:
+  {
+    \tl_use:c { c_minimalist_r_mathparen_ \l_projlib_language_current_languagetype_tl _tl }
+  }
+
 % Change equation numbers to gray
 % \def\tagform@#1{\maketag@@@{\textcolor{main-text!39!paper}{(\ignorespaces#1\unskip\@@italiccorr)}}}
 \def\tagform@#1{\maketag@@@{\textcolor{.!39!paper}{(\ignorespaces#1\unskip\@@italiccorr)}}}
@@ -2385,7 +2398,7 @@ heading_suffix "}\n"
 %<*minimalist-flow>
           {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
 %</minimalist-flow>
-          {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+          {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         }}\hbox{\strut}\vspace{0pt}}}
       }
     \newtheoremstyle{simple-var}
@@ -2405,7 +2418,7 @@ heading_suffix "}\n"
 %<*minimalist-flow>
           {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
 %</minimalist-flow>
-          {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+          {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         }}\hbox{\strut}\vspace{0pt}}}
       }
   }
@@ -2421,14 +2434,14 @@ heading_suffix "}\n"
       {0pt}
 %<*minimalist-default|minimalist-plain>
       {{\thmname{#1}\thmnumber{\nobreakspace #2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         \minimalist_bfseries:\minimalist_sffamily: .
         \nobreakspace\nobreakspace}
         % {\normalfont\textcolor{main-text!27!paper}{---}}
 %</minimalist-default|minimalist-plain>
 %<*minimalist-flow>
       {{\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
 %</minimalist-flow>
     \newtheoremstyle{simple-var}
       {}{}
@@ -2441,14 +2454,14 @@ heading_suffix "}\n"
       {0pt}
 %<*minimalist-default|minimalist-plain>
       {{\thmname{#1}\thmnumber{\nobreakspace #2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         \minimalist_bfseries:\minimalist_sffamily: .
         \nobreakspace\nobreakspace}
         % {\normalfont\textcolor{main-text!27!paper}{---}}
 %</minimalist-default|minimalist-plain>
 %<*minimalist-flow>
       {{\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
 %</minimalist-flow>
   }
 
@@ -2467,7 +2480,7 @@ heading_suffix "}\n"
       { \global\let\qedsymbol\simpleqedsymbol
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
-          \thmnote{\hspace{.4em}\color{.!50!paper}$($#3$)$}
+          \thmnote{\hspace{.4em}\color{.!50!paper} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }
         }}\hbox{\strut}\vspace{0pt}}}\vspace{-2\parskip}
         \pushQED{\qed}
       }
@@ -2479,7 +2492,7 @@ heading_suffix "}\n"
       { \global\let\qedsymbol\simpleqedsymbol
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
-          \thmnote{\hspace{.4em}\color{.!50!paper}$($#3$)$}
+          \thmnote{\hspace{.4em}\color{.!50!paper} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }
         }}\hbox{\strut}\vspace{0pt}}}\vspace{-2\parskip}
         \pushQED{\qed}
       }
@@ -2493,7 +2506,7 @@ heading_suffix "}\n"
       { \global\let\qedsymbol\simpleqedsymbol
         {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
         \textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
-        \color{.!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
+        \color{.!50!paper}\thmnote{ \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: \nobreakspace\nobreakspace}
         \pushQED{\qed}
       }
     \newtheoremstyle{simple-var}
@@ -2504,7 +2517,7 @@ heading_suffix "}\n"
       { \global\let\qedsymbol\simpleqedsymbol
         {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
         \textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
-        \color{.!50!paper}\thmnote{$($#3$)$\nobreakspace\nobreakspace}
+        \color{.!50!paper}\thmnote{ \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: \nobreakspace\nobreakspace}
         \pushQED{\qed}
       }
   }
@@ -2529,7 +2542,7 @@ heading_suffix "}\n"
       }
       \vspace*{-\baselineskip}
       {\thmname{#1}}
-      {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+      {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
       \phantom{q} % To provide something below the baseline
     }}\hbox{\strut}\vspace{0pt}}}
   }
@@ -2547,7 +2560,7 @@ heading_suffix "}\n"
       }
       \vspace*{-\baselineskip}
       {\thmname{#1}}
-      {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+      {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
       \phantom{q} % To provide something below the baseline
     }}\hbox{\strut}\vspace{0pt}}}
   }
@@ -2574,7 +2587,7 @@ heading_suffix "}\n"
     }
     % \minimalist_bfseries:\minimalist_sffamily:
     {\thmname{#1}}
-    {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+    {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
     . \hspace{.5em}
   }
 \newtheoremstyle{simple-inline-var}
@@ -2590,7 +2603,7 @@ heading_suffix "}\n"
     }
     % \minimalist_bfseries:\minimalist_sffamily:
     {\thmname{#1}}
-    {\color{main-text!50!paper}\thmnote{\hspace{.4em}$($#3$)$}}
+    {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
     . \hspace{.5em}
   }
 
