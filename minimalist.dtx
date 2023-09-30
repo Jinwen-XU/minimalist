@@ -1068,6 +1068,11 @@
     , theorem~in~new~line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
     , theorem in new line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
 
+    , theorem-with-qed    .bool_set:N       = \l__minimalist_theorem_with_qed_bool
+    , theorem-with-qed    .initial:n        = { false }
+    , theorem~with~qed    .bool_set:N       = \l__minimalist_theorem_with_qed_bool
+    , theorem with qed    .bool_set:N       = \l__minimalist_theorem_with_qed_bool
+
     , colored-proof     .tl_set:N           = \l__minimalist_colored_proof_tl
     , colored-proof     .initial:n          = { * }
     , colored-proof     .default:n          = { blue!50!cyan!55!main-text }
@@ -1178,7 +1183,7 @@
     \bool_if:NF \l_minimalist_is_under_bfseries_bool
       {
         \colorlet{minimalist-temp-color}{.}
-        \color{minimalist-temp-color!70!paper}
+        \color{minimalist-temp-color!90!paper}
       }
     \minimalist_original_bfseries:
     \bool_set_true:N \l_minimalist_is_under_bfseries_bool
@@ -2378,6 +2383,16 @@ heading_suffix "}\n"
 \PassOptionsToPackage { nopatch = eqnum } { microtype }
 
 
+\def\simpleqedsymbol{
+  \makebox[1em]{\rlap{\textcolor{.!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
+\DeclareRobustCommand{\simpleqed}{%
+  \ifmmode \quad\hbox{\simpleqedsymbol}
+  \else
+    \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+    \quad\hbox{\simpleqedsymbol}%
+  \fi
+}
+
 %<*minimalist-default|minimalist-plain|minimalist-flow>
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
@@ -2400,6 +2415,10 @@ heading_suffix "}\n"
 %</minimalist-flow>
           {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         }}\hbox{\strut}\vspace{0pt}}}
+        \bool_if:NT \l__minimalist_theorem_with_qed_bool
+          {
+            \pushQED{\simpleqed}
+          }
       }
     \newtheoremstyle{simple-var}
       {.75\baselineskip}{}
@@ -2420,6 +2439,10 @@ heading_suffix "}\n"
 %</minimalist-flow>
           {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         }}\hbox{\strut}\vspace{0pt}}}
+        \bool_if:NT \l__minimalist_theorem_with_qed_bool
+          {
+            \pushQED{\simpleqed}
+          }
       }
   }
   {
@@ -2433,15 +2456,27 @@ heading_suffix "}\n"
       {\normalfont}{}
       {0pt}
 %<*minimalist-default|minimalist-plain>
-      {{\thmname{#1}\thmnumber{\nobreakspace #2}}
+      {
+        {\thmname{#1}\thmnumber{\nobreakspace #2}}
         {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         \minimalist_bfseries:\minimalist_sffamily: .
-        \nobreakspace\nobreakspace}
+        \nobreakspace\nobreakspace
         % {\normalfont\textcolor{main-text!27!paper}{---}}
+        \bool_if:NT \l__minimalist_theorem_with_qed_bool
+          {
+            \pushQED{\simpleqed}
+          }
+      }
 %</minimalist-default|minimalist-plain>
 %<*minimalist-flow>
-      {{\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+      {
+        {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace
+        \bool_if:NT \l__minimalist_theorem_with_qed_bool
+          {
+            \pushQED{\simpleqed}
+          }
+      }
 %</minimalist-flow>
     \newtheoremstyle{simple-var}
       {}{}
@@ -2453,23 +2488,33 @@ heading_suffix "}\n"
       {\normalfont}{}
       {0pt}
 %<*minimalist-default|minimalist-plain>
-      {{\thmname{#1}\thmnumber{\nobreakspace #2}}
+      {
+        {\thmname{#1}\thmnumber{\nobreakspace #2}}
         {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         \minimalist_bfseries:\minimalist_sffamily: .
-        \nobreakspace\nobreakspace}
+        \nobreakspace\nobreakspace
         % {\normalfont\textcolor{main-text!27!paper}{---}}
+        \bool_if:NT \l__minimalist_theorem_with_qed_bool
+          {
+            \pushQED{\simpleqed}
+          }
+      }
 %</minimalist-default|minimalist-plain>
 %<*minimalist-flow>
-      {{\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace}
+      {
+        {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
+        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace
+        \bool_if:NT \l__minimalist_theorem_with_qed_bool
+          {
+            \pushQED{\simpleqed}
+          }
+      }
 %</minimalist-flow>
   }
 
 \theoremstyle{simple}
 %</minimalist-default|minimalist-plain|minimalist-flow>
 %<*minimalist-classical>
-\def\simpleqedsymbol{
-  \makebox[1em]{\rlap{\textcolor{.!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
     \newtheoremstyle{simple}
@@ -2477,24 +2522,24 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\normalfont}{}
       {\newline}
-      { \global\let\qedsymbol\simpleqedsymbol
+      {
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
           \thmnote{\hspace{.4em}\color{.!50!paper} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }
         }}\hbox{\strut}\vspace{0pt}}}\vspace{-2\parskip}
-        \pushQED{\qed}
+        \pushQED{\simpleqed}
       }
     \newtheoremstyle{simple-var}
       {.5\baselineskip}{.5\baselineskip}
       { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
       {\newline}
-      { \global\let\qedsymbol\simpleqedsymbol
+      {
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
           \thmnote{\hspace{.4em}\color{.!50!paper} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }
         }}\hbox{\strut}\vspace{0pt}}}\vspace{-2\parskip}
-        \pushQED{\qed}
+        \pushQED{\simpleqed}
       }
   }
   {
@@ -2503,27 +2548,27 @@ heading_suffix "}\n"
       {\normalfont}{}
       {\normalfont}{}
       {0pt}
-      { \global\let\qedsymbol\simpleqedsymbol
+      {
         {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
         \textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
         \color{.!50!paper}\thmnote{ \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: \nobreakspace\nobreakspace}
-        \pushQED{\qed}
+        \pushQED{\simpleqed}
       }
     \newtheoremstyle{simple-var}
       {.5\baselineskip}{.5\baselineskip}
       { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
       {0pt}
-      { \global\let\qedsymbol\simpleqedsymbol
+      {
         {\thmname{#1}\thmnumber{\nobreakspace #2}}\hspace{.4em}
         \textcolor{.!27!paper}{ \l_minimalist_sep_bar }\hspace{.4em}
         \color{.!50!paper}\thmnote{ \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: \nobreakspace\nobreakspace}
-        \pushQED{\qed}
+        \pushQED{\simpleqed}
       }
   }
-\def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol
-  \popQED\endtrivlist\@endpefalse
-  \global\let\qedsymbol\customqedsymbol}
+% \def\@endtheorem{\global\let\qedsymbol\simpleqedsymbol
+%   \popQED\endtrivlist\@endpefalse
+%   \global\let\qedsymbol\customqedsymbol}
 
 \theoremstyle{simple}
 %</minimalist-classical>
@@ -2545,6 +2590,10 @@ heading_suffix "}\n"
       {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
       \phantom{q} % To provide something below the baseline
     }}\hbox{\strut}\vspace{0pt}}}
+    \bool_if:NT \l__minimalist_theorem_with_qed_bool
+      {
+        \pushQED{\simpleqed}
+      }
   }
 \newtheoremstyle{simple-newline-var}
   {-.2\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
@@ -2563,6 +2612,10 @@ heading_suffix "}\n"
       {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
       \phantom{q} % To provide something below the baseline
     }}\hbox{\strut}\vspace{0pt}}}
+    \bool_if:NT \l__minimalist_theorem_with_qed_bool
+      {
+        \pushQED{\simpleqed}
+      }
   }
 
 \dim_new:N \l_minimalist_space_before_inline_theorem_dim
@@ -2589,6 +2642,10 @@ heading_suffix "}\n"
     {\thmname{#1}}
     {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
     . \hspace{.5em}
+    \bool_if:NT \l__minimalist_theorem_with_qed_bool
+      {
+        \pushQED{\simpleqed}
+      }
   }
 \newtheoremstyle{simple-inline-var}
   % {.3\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
@@ -2605,6 +2662,10 @@ heading_suffix "}\n"
     {\thmname{#1}}
     {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
     . \hspace{.5em}
+    \bool_if:NT \l__minimalist_theorem_with_qed_bool
+      {
+        \pushQED{\simpleqed}
+      }
   }
 
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
@@ -2628,23 +2689,18 @@ heading_suffix "}\n"
     {\thmname{#1}}
     . \hspace{.5em}
   }
-
-\def\simpleqedsymbol{
-  \makebox[1em]{\rlap{\textcolor{main-text!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
-\DeclareRobustCommand{\simpleqed}{%
-  \ifmmode \quad\hbox{\simpleqedsymbol}
-  \else
-    \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
-    \quad\hbox{\simpleqedsymbol}%
-  \fi
-}
+%</minimalist-stream>
 
 \def\@endtheorem{\popQED\endtrivlist\@endpefalse}
-%</minimalist-stream>
 
 \newcommand{\customqedsymbol}{
   \makebox[1em]{\color{.!27!paper}\rule[-0.1em]{.95em}{.95em}}}
 \let\qedsymbol\customqedsymbol
+
+%% Special treatments for the Q.E.D. symbol
+\def\noQED{\let\popQED\relax}
+\let\noqed\noQED
+\def\proofless{\let\qedsymbol\customqedsymbol\let\simpleqedsymbol\customqedsymbol}
 
 \bool_if:NTF \l__minimalist_fast_bool
   {
@@ -2994,7 +3050,8 @@ heading_suffix "}\n"
           {
             \vspace{-.5\baselineskip}
           }
-        {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}\par}
+        {\textcolor{main-text!27!paper}{\rule{\textwidth}{0.75pt}}}
+        \par
         \ResumeLineNumbers
       }
 %</minimalist-classical>
