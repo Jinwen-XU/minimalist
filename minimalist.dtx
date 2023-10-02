@@ -2376,8 +2376,7 @@ heading_suffix "}\n"
     \tl_use:c { c_minimalist_r_mathparen_ \l_projlib_language_current_languagetype_tl _tl }
   }
 
-% Change equation numbers to gray
-% \def\tagform@#1{\maketag@@@{\textcolor{main-text!39!paper}{(\ignorespaces#1\unskip\@@italiccorr)}}}
+%% Change equation numbers to gray
 \def\tagform@#1{\maketag@@@{\textcolor{.!39!paper}{(\ignorespaces#1\unskip\@@italiccorr)}}}
 
 \PassOptionsToPackage { nopatch = eqnum } { microtype }
@@ -2413,7 +2412,7 @@ heading_suffix "}\n"
 %<*minimalist-flow>
           {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
 %</minimalist-flow>
-          {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+          {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         }}\hbox{\strut}\vspace{0pt}}}
         \bool_if:NT \l__minimalist_theorem_with_qed_bool
           {
@@ -2437,7 +2436,7 @@ heading_suffix "}\n"
 %<*minimalist-flow>
           {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
 %</minimalist-flow>
-          {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+          {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         }}\hbox{\strut}\vspace{0pt}}}
         \bool_if:NT \l__minimalist_theorem_with_qed_bool
           {
@@ -2458,10 +2457,10 @@ heading_suffix "}\n"
 %<*minimalist-default|minimalist-plain>
       {
         {\thmname{#1}\thmnumber{\nobreakspace #2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+        {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         \minimalist_bfseries:\minimalist_sffamily: .
         \nobreakspace\nobreakspace
-        % {\normalfont\textcolor{main-text!27!paper}{---}}
+        % {\normalfont\textcolor{.!27!paper}{---}}
         \bool_if:NT \l__minimalist_theorem_with_qed_bool
           {
             \pushQED{\simpleqed}
@@ -2471,7 +2470,7 @@ heading_suffix "}\n"
 %<*minimalist-flow>
       {
         {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace
+        {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{.!27!paper}{---}}\nobreakspace\nobreakspace
         \bool_if:NT \l__minimalist_theorem_with_qed_bool
           {
             \pushQED{\simpleqed}
@@ -2490,10 +2489,10 @@ heading_suffix "}\n"
 %<*minimalist-default|minimalist-plain>
       {
         {\thmname{#1}\thmnumber{\nobreakspace #2}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+        {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
         \minimalist_bfseries:\minimalist_sffamily: .
         \nobreakspace\nobreakspace
-        % {\normalfont\textcolor{main-text!27!paper}{---}}
+        % {\normalfont\textcolor{.!27!paper}{---}}
         \bool_if:NT \l__minimalist_theorem_with_qed_bool
           {
             \pushQED{\simpleqed}
@@ -2503,7 +2502,7 @@ heading_suffix "}\n"
 %<*minimalist-flow>
       {
         {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
-        {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{main-text!27!paper}{---}}\nobreakspace\nobreakspace
+        {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}\nobreakspace\nobreakspace{\normalfont\textcolor{.!27!paper}{---}}\nobreakspace\nobreakspace
         \bool_if:NT \l__minimalist_theorem_with_qed_bool
           {
             \pushQED{\simpleqed}
@@ -2587,7 +2586,7 @@ heading_suffix "}\n"
       }
       \vspace*{-\baselineskip}
       {\thmname{#1}}
-      {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+      {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
       \phantom{q} % To provide something below the baseline
     }}\hbox{\strut}\vspace{0pt}}}
     \bool_if:NT \l__minimalist_theorem_with_qed_bool
@@ -2609,7 +2608,7 @@ heading_suffix "}\n"
       }
       \vspace*{-\baselineskip}
       {\thmname{#1}}
-      {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+      {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
       \phantom{q} % To provide something below the baseline
     }}\hbox{\strut}\vspace{0pt}}}
     \bool_if:NT \l__minimalist_theorem_with_qed_bool
@@ -2640,7 +2639,7 @@ heading_suffix "}\n"
     }
     % \minimalist_bfseries:\minimalist_sffamily:
     {\thmname{#1}}
-    {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+    {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
     . \hspace{.5em}
     \bool_if:NT \l__minimalist_theorem_with_qed_bool
       {
@@ -2660,7 +2659,7 @@ heading_suffix "}\n"
     }
     % \minimalist_bfseries:\minimalist_sffamily:
     {\thmname{#1}}
-    {\color{main-text!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
+    {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
     . \hspace{.5em}
     \bool_if:NT \l__minimalist_theorem_with_qed_bool
       {
