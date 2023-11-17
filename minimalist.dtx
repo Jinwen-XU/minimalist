@@ -773,7 +773,7 @@
                   ]
                 \setmathfont { texgyrepagella-math.otf }
                   [
-                    range = { `(, `) } ,
+                    range = { `(, `), `/, \setminus } ,
                     Scale = 1.10
                   ]
                 \setmathfont { texgyrepagella-math.otf }
@@ -802,6 +802,9 @@
                     \newcommand{\limstrut}{\vrule depth0.2ex width 0pt}
                     \renewcommand{\varprojlim}{\mathop{\underleftarrow{{\lim}\limstrut}}}
                     \renewcommand{\varinjlim}{\mathop{\underrightarrow{{\lim}\limstrut}}}
+
+                    \let\setminus@old\setminus
+                    \renewcommand*{\setminus}{\!\setminus@old\!}
                   }
 
                 % https://tex.stackexchange.com/a/647789
