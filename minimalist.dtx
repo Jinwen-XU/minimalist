@@ -2693,7 +2693,10 @@ heading_suffix "}\n"
   }
 %</minimalist-stream>
 
-\def\@endtheorem{\popQED\endtrivlist\@endpefalse}
+\bool_if:NT \l__minimalist_theorem_with_qed_bool
+  {
+    \def\@endtheorem{\popQED\endtrivlist\@endpefalse}
+  }
 
 \newcommand{\customqedsymbol}{
   \makebox[1em]{\color{.!27!paper}\rule[-0.1em]{.95em}{.95em}}}
@@ -2702,7 +2705,8 @@ heading_suffix "}\n"
 %% Special treatments for the Q.E.D. symbol
 \def\noQED{\let\popQED\relax}
 \let\noqed\noQED
-\def\proofless{\let\qedsymbol\customqedsymbol\let\simpleqedsymbol\customqedsymbol}
+% \def\proofless{\let\qedsymbol\customqedsymbol\let\simpleqedsymbol\customqedsymbol}
+\def\proofless{\pushQED{\qed}}
 
 \bool_if:NTF \l__minimalist_fast_bool
   {
