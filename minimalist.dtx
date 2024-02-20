@@ -2740,17 +2740,40 @@ heading_suffix "}\n"
 % \PassOptionsToPackage { simplename } { projlib-theorem }
 
 %<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
-\PassOptionsToPackage { theorem-style = { theorem = simple-var, lemma = simple-var, proposition = simple-var, corollary = simple-var, property = simple-var, axiom = simple-var, construction = simple-var, theorem-with-name = simple-var } } { projlib-theorem }
+\PassOptionsToPackage
+  {
+    theorem-style = {
+      theorem = simple-var, lemma = simple-var, proposition = simple-var, corollary = simple-var, property = simple-var, axiom = simple-var, construction = simple-var,
+      theorems = simple-var, lemmas = simple-var, propositions = simple-var, corollaries = simple-var, properties = simple-var, axioms = simple-var, constructions = simple-var,
+      theorem-with-name = simple-var,
+    }
+  } { projlib-theorem }
 %</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
 %<*minimalist-stream>
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
-    \PassOptionsToPackage { theorem-style = { remark = simple-inline, proof = proof,
-        theorem = simple-newline-var, lemma = simple-newline-var, proposition = simple-newline-var, corollary = simple-newline-var, property = simple-newline-var, axiom = simple-newline-var, construction = simple-newline-var, theorem-with-name = simple-newline-var } } { projlib-theorem }
+    \PassOptionsToPackage
+      {
+        theorem-style = {
+          proof = proof,
+          remark = simple-inline, remarks = simple-inline,
+          theorem = simple-newline-var, lemma = simple-newline-var, proposition = simple-newline-var, corollary = simple-newline-var, property = simple-newline-var, axiom = simple-newline-var, construction = simple-newline-var,
+          theorems = simple-newline-var, lemmas = simple-newline-var, propositions = simple-newline-var, corollaries = simple-newline-var, properties = simple-newline-var, axioms = simple-newline-var, constructions = simple-newline-var,
+          theorem-with-name = simple-newline-var,
+        }
+      } { projlib-theorem }
   }
   {
-    \PassOptionsToPackage { theorem-style = { remark = simple-inline, proof = proof,
-        theorem = simple-inline-var, lemma = simple-inline-var, proposition = simple-inline-var, corollary = simple-inline-var, property = simple-inline-var, axiom = simple-inline-var, construction = simple-inline-var, theorem-with-name = simple-inline-var } } { projlib-theorem }
+    \PassOptionsToPackage
+      {
+        theorem-style = {
+          proof = proof,
+          remark = simple-inline, remarks = simple-inline,
+          theorem = simple-inline-var, lemma = simple-inline-var, proposition = simple-inline-var, corollary = simple-inline-var, property = simple-inline-var, axiom = simple-inline-var, construction = simple-inline-var,
+          theorems = simple-inline-var, lemmas = simple-inline-var, propositions = simple-inline-var, corollaries = simple-inline-var, properties = simple-inline-var, axioms = simple-inline-var, constructions = simple-inline-var,
+          theorem-with-name = simple-inline-var,
+        }
+      } { projlib-theorem }
   }
 %</minimalist-stream>
 
