@@ -2781,6 +2781,10 @@ heading_suffix "}\n"
 
 \SetTheorem { proof, proof* } { qed-symbol = { \customqedsymbol } }
 
+% Temporary fix to ensure that the QED symbol is not added twice
+\hook_gput_code:nnn { env/proof/begin } { minimalist } { \let\simpleqed\relax }
+\hook_gput_code:nnn { env/proof*/begin } { minimalist } { \let\simpleqed\relax }
+
 \bool_if:NT \l__minimalist_colored_proof_bool
   {
     \hook_gput_code:nnn { env/proof/begin } { minimalist }
