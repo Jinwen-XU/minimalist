@@ -1,8 +1,8 @@
-<!-- Copyright (C) 2021-2023 by Jinwen XU -->
+<!-- Copyright (C) 2021-2024 by Jinwen XU -->
 
 # `simplivre` : write you books in a simple and clear way
 
-> **New documentations are still being written. For now, only the core code is included in TeX Live 2023 (old documentations have been removed from the distribution).**
+> **New documentations are still being written. For now, only the core code is included in TeX Live 2024 and MiKTeX (old documentations have been removed from the distribution).**
 
 `simplivre` is a LaTeX class for typesetting books, which has a simple and clear design.
 
