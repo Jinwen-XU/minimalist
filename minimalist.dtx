@@ -2787,11 +2787,14 @@ heading_suffix "}\n"
 
 \bool_if:NT \l__minimalist_colored_proof_bool
   {
-    \hook_gput_code:nnn { env/proof/begin } { minimalist }
+    \clist_map_inline:nn { proof, proof* }
       {
-        \Hy@SaveLastskip
-        \color{ \l__minimalist_colored_proof_tl }
-        \Hy@RestoreLastskip
+        \hook_gput_code:nnn { env/ #1 /begin } { minimalist }
+          {
+            \Hy@SaveLastskip
+            \color{ \l__minimalist_colored_proof_tl }
+            \Hy@RestoreLastskip
+          }
       }
   }
 

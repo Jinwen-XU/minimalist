@@ -46,7 +46,7 @@
   % title in scshape,
   % title in sffamily,
   theorem in new line,
-  emphasis theorems,
+  emphasize theorems,
   theorem numbering = section,
   % number theorems separately,
   simple name,  % for clever referencing
@@ -110,12 +110,13 @@
 
 Some introductory text.
 
+\begin{definition}[something]
+    Define something.
+\end{definition}
+
 \begin{theorem}[some result]\label{thm:result}\index{Theorem on some result}
     The statement.
 \end{theorem}
-\begin{proof}
-    Some lines of proof.
-\end{proof}
 
 \begin{emphasis}
     Clever reference: \cref{thm:result} (only name: \namecref{thm:result}, only number \labelcref{thm:result}).
@@ -135,6 +136,9 @@ An equation:\index{Euler's equation}
     Some corollary.
 \end{corollary}
 \SetTheorem{corollary}{shared counter = subsection}
+\begin{proof}
+    Some lines of proof.
+\end{proof}
 
 \begin{examples}
     \begin{enumerate}
@@ -148,9 +152,16 @@ An equation:\index{Euler's equation}
     The numbering is switched in the preamble, thus \verb|example*| is the numbered version while \verb|example| is the unnumbered version.
 \end{example*}
 
-\begin{proof}[Proof of \cref{cor:result}]
+%<*einfart-demo-style-stream>
+\begin{proof*}[Proof of \cref{thm:result}]
+    Some lines of proof.
+\end{proof*}
+%</einfart-demo-style-stream>
+%<*!einfart-demo-style-stream>
+\begin{proof}[Proof of \cref{thm:result}]
     Some lines of proof.
 \end{proof}
+%</!einfart-demo-style-stream>
 
 
 \blinddocument

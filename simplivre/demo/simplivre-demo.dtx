@@ -46,7 +46,7 @@
   % title in scshape,
   % title in sffamily,
   theorem in new line,
-  emphasis theorems,
+  emphasize theorems,
   theorem numbering = section,
   % number theorems separately,
   simple name,  % for clever referencing
@@ -136,47 +136,58 @@
 
 Some introductory text.
 
+\begin{definition}[something]
+  Define something.
+\end{definition}
+
 \begin{theorem}[some result]\label{thm:result}\index{Theorem on some result}
-    The statement.
+  The statement.
 \end{theorem}
-\begin{proof}
-    Some lines of proof.
-\end{proof}
 
 \begin{emphasis}
-    Clever reference: \cref{thm:result} (only name: \namecref{thm:result}, only number \labelcref{thm:result}).
+  Clever reference: \cref{thm:result} (only name: \namecref{thm:result}, only number \labelcref{thm:result}).
 \end{emphasis}
 
 An equation:\index{Euler's equation}
 \begin{equation}\label{eq:Euler}
-    \mathrm{e}^{\mathrm{i}\pi} + 1 = 0.
+  \mathrm{e}^{\mathrm{i}\pi} + 1 = 0.
 \end{equation}
 
 \begin{emphasis}
-    Reference of equation: \eqref{eq:Euler} or \cref{eq:Euler}.
+  Reference of equation: \eqref{eq:Euler} or \cref{eq:Euler}.
 \end{emphasis}
 
 \SetTheorem{corollary}{shared counter = subsubsection}
 \begin{corollary}[of \cref{thm:result}]\label{cor:result}
-    Some corollary.
+  Some corollary.
 \end{corollary}
 \SetTheorem{corollary}{shared counter = subsection}
+\begin{proof}
+  Some lines of proof.
+\end{proof}
 
 \begin{examples}
-    \begin{enumerate}
-        \item First example.
-        \item Second example.
-        \item Third example.
-    \end{enumerate}
+  \begin{enumerate}
+      \item First example.
+      \item Second example.
+      \item Third example.
+  \end{enumerate}
 \end{examples}
 
 \begin{example*}[Important example]
-    The numbering is switched in the preamble, thus \verb|example*| is the numbered version while \verb|example| is the unnumbered version.
+  The numbering is switched in the preamble, thus \verb|example*| is the numbered version while \verb|example| is the unnumbered version.
 \end{example*}
 
-\begin{proof}[Proof of \cref{cor:result}]
+%<*simplivre-demo-style-stream>
+\begin{proof*}[Proof of \cref{thm:result}]
+    Some lines of proof.
+\end{proof*}
+%</simplivre-demo-style-stream>
+%<*!simplivre-demo-style-stream>
+\begin{proof}[Proof of \cref{thm:result}]
     Some lines of proof.
 \end{proof}
+%</!simplivre-demo-style-stream>
 
 
 \part{Demonstration}
