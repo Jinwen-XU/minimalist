@@ -1061,10 +1061,10 @@
     , indent lists      .dim_set:N         = \l__minimalist_item_indentation_dim
     , indent lists      .default:n         = { \parindent }
 
-    , emphasis-theorems   .bool_set:N       = \l__minimalist_emphasis_theorem_bool
-    , emphasis-theorems   .initial:n        = { false }
-    , emphasis~theorems   .bool_set:N       = \l__minimalist_emphasis_theorem_bool
-    , emphasis theorems   .bool_set:N       = \l__minimalist_emphasis_theorem_bool
+    , emphasize-theorems  .bool_set:N       = \l__minimalist_emphasize_theorem_bool
+    , emphasize-theorems  .initial:n        = { false }
+    , emphasize~theorems  .bool_set:N       = \l__minimalist_emphasize_theorem_bool
+    , emphasize theorems  .bool_set:N       = \l__minimalist_emphasize_theorem_bool
 
     , theorem-in-new-line .bool_set:N       = \l__minimalist_theorem_in_new_line_bool
     , theorem-in-new-line .initial:n        = { false }
@@ -2425,7 +2425,7 @@ heading_suffix "}\n"
     \newtheoremstyle{simple-var}
       {.75\baselineskip}{}
       {
-        \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont }
+        \bool_if:NTF \l__minimalist_emphasize_theorem_bool { \itshape } { \normalfont }
         \parindent=0pt
         \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
       }{}
@@ -2483,7 +2483,7 @@ heading_suffix "}\n"
     \newtheoremstyle{simple-var}
       {}{}
       {
-        \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont }
+        \bool_if:NTF \l__minimalist_emphasize_theorem_bool { \itshape } { \normalfont }
         \parindent=0pt
         \parskip=.3333\baselineskip plus .0667\baselineskip minus .0833\baselineskip
       }{}
@@ -2533,7 +2533,7 @@ heading_suffix "}\n"
       }
     \newtheoremstyle{simple-var}
       {.5\baselineskip}{.5\baselineskip}
-      { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
+      { \bool_if:NTF \l__minimalist_emphasize_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
       {\newline}
       {
@@ -2558,7 +2558,7 @@ heading_suffix "}\n"
       }
     \newtheoremstyle{simple-var}
       {.5\baselineskip}{.5\baselineskip}
-      { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
+      { \bool_if:NTF \l__minimalist_emphasize_theorem_bool { \itshape } { \normalfont } }{}
       {\normalfont}{}
       {0pt}
       {
@@ -2599,7 +2599,7 @@ heading_suffix "}\n"
   }
 \newtheoremstyle{simple-newline-var}
   {-.2\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
-  { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
+  { \bool_if:NTF \l__minimalist_emphasize_theorem_bool { \itshape } { \normalfont } }{}
   {\normalfont}{}
   {0pt}
   {
@@ -2652,7 +2652,7 @@ heading_suffix "}\n"
 \newtheoremstyle{simple-inline-var}
   % {.3\baselineskip plus 2pt minus .1\baselineskip}{.3\baselineskip plus 2pt minus .1\baselineskip}
   {\l_minimalist_space_before_inline_theorem_dim}{\l_minimalist_space_before_inline_theorem_dim}
-  { \bool_if:NTF \l__minimalist_emphasis_theorem_bool { \itshape } { \normalfont } }{}
+  { \bool_if:NTF \l__minimalist_emphasize_theorem_bool { \itshape } { \normalfont } }{}
   {\normalfont}{}
   {0pt}
   {

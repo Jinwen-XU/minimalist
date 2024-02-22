@@ -1,0 +1,192 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2021-2024 by Jinwen XU
+% -------------------------------
+%
+% This file may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License, either version 1.3c of this license or (at your option)
+% any later version. The latest version of this license is in:
+%
+%    http://www.latex-project.org/lppl.txt
+%
+% \fi
+%
+%<*driver>
+\ProvidesFile{simplivre-demo.dtx}
+%</driver>
+%
+%<*simplivre-demo-style>
+\documentclass[a4paper, 11pt,
+  % use font = times, % garamond, newcm, lmodern, ...
+%<*simplivre-demo-style-plain>
+  % use osf,
+%</simplivre-demo-style-plain>
+%<*!simplivre-demo-style-plain>
+  use osf,
+%</!simplivre-demo-style-plain>
+%<*simplivre-demo-style-classical>
+  use style = classical,
+%</simplivre-demo-style-classical>
+%<*simplivre-demo-style-flow>
+  use style = flow,
+%</simplivre-demo-style-flow>
+%<*simplivre-demo-style-plain>
+  use style = plain,
+%</simplivre-demo-style-plain>
+%<*simplivre-demo-style-stream>
+  use style = stream,
+%</simplivre-demo-style-stream>
+  % use indent = false,
+%<*simplivre-demo-style-classical>
+  % title in boldface,
+%</simplivre-demo-style-classical>
+%<*!simplivre-demo-style-classical>
+  title in boldface,
+%</!simplivre-demo-style-classical>
+  % title in scshape,
+  % title in sffamily,
+  theorem in new line,
+  emphasis theorems,
+  theorem numbering = section,
+  % number theorems separately,
+  simple name,  % for clever referencing
+  name in link, % for clever referencing
+]{simplivre}
+\usepackage{ProjLib}
+\usepackage[
+    % lang     = {french},
+    type     = {CC},
+    modifier = {by},
+    version  = {4.0},
+    hyperxmp = false,
+]{doclicense}
+
+\usepackage{blindtext}
+
+%% \UseLanguage{French}
+
+\numberwithin{equation}{section}
+\SwitchTheoremNumbering{example,examples,claim}
+
+\begin{document}
+
+\frontmatter
+
+%<*simplivre-demo-style-default>
+\TitlePage [ style = academic ]
+%</simplivre-demo-style-default>
+%<*simplivre-demo-style-classical>
+\TitlePage [ style = simple ]
+%</simplivre-demo-style-classical>
+%<*simplivre-demo-style-flow>
+\TitlePage [ style = academic ]
+%</simplivre-demo-style-flow>
+%<*simplivre-demo-style-plain>
+\TitlePage
+%</simplivre-demo-style-plain>
+%<*simplivre-demo-style-stream>
+\TitlePage [ style = academic ]
+%</simplivre-demo-style-stream>
+  {
+    % , logo      = { }  % the logo image
+    , title     = { \fontspec{SourceSansPro}[WordSpace={1.25,1,1}]
+                    \addfontfeature{LetterSpace=2.0}
+%<*simplivre-demo-style-default>
+                    Title of the book\\(demo of the default style)
+%</simplivre-demo-style-default>
+%<*simplivre-demo-style-classical>
+                    Title of the book\\(demo of the style \textquote{classical})
+%</simplivre-demo-style-classical>
+%<*simplivre-demo-style-flow>
+                    Title of the book\\(demo of the style \textquote{flow})
+%</simplivre-demo-style-flow>
+%<*simplivre-demo-style-plain>
+                    Title of the book\\(demo of the style \textquote{plain})
+%</simplivre-demo-style-plain>
+%<*simplivre-demo-style-stream>
+                    Title of the book\\(demo of the style \textquote{stream})
+%</simplivre-demo-style-stream>
+                  }
+    , author    = { Author Name }
+    , date      = { \today[only-year-month] }
+    % , date      = { \TheDate{2024-01} }
+    , info      = {
+                    This text is... \blindtext
+                  }
+    , license   = { \addfontfeature{Numbers=Lining} \medskip\doclicenseThis }
+    , license page name = { Info }
+  }
+
+\tableofcontents
+
+
+\mainmatter
+
+
+\mainmatter
+
+\part{Basic examples}
+\parttext{Some introductory text.}
+
+\chapter{Chapter title}
+
+\section{Section title}
+
+\subsection{Subsection title}
+
+Some introductory text.
+
+\begin{theorem}[some result]\label{thm:result}\index{Theorem on some result}
+    The statement.
+\end{theorem}
+\begin{proof}
+    Some lines of proof.
+\end{proof}
+
+\begin{emphasis}
+    Clever reference: \cref{thm:result} (only name: \namecref{thm:result}, only number \labelcref{thm:result}).
+\end{emphasis}
+
+An equation:\index{Euler's equation}
+\begin{equation}\label{eq:Euler}
+    \mathrm{e}^{\mathrm{i}\pi} + 1 = 0.
+\end{equation}
+
+\begin{emphasis}
+    Reference of equation: \eqref{eq:Euler} or \cref{eq:Euler}.
+\end{emphasis}
+
+\SetTheorem{corollary}{shared counter = subsubsection}
+\begin{corollary}[of \cref{thm:result}]\label{cor:result}
+    Some corollary.
+\end{corollary}
+\SetTheorem{corollary}{shared counter = subsection}
+
+\begin{examples}
+    \begin{enumerate}
+        \item First example.
+        \item Second example.
+        \item Third example.
+    \end{enumerate}
+\end{examples}
+
+\begin{example*}[Important example]
+    The numbering is switched in the preamble, thus \verb|example*| is the numbered version while \verb|example| is the unnumbered version.
+\end{example*}
+
+\begin{proof}[Proof of \cref{cor:result}]
+    Some lines of proof.
+\end{proof}
+
+
+\part{Demonstration}
+
+\blinddocument
+
+
+\backmatter
+
+\printindex
+
+\end{document}
+%</simplivre-demo-style>
