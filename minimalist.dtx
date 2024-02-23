@@ -80,6 +80,13 @@
   {The "classical" style of minimalist}
 %</minimalist-classical>
 %
+%<*minimalist-classicthesis>
+\ProvidesExplPackage
+  {minimalist-classicthesis}
+  {2024/02/23} {}
+  {The "classicthesis" style of minimalist}
+%</minimalist-classicthesis>
+%
 %<*minimalist-flow>
 \ProvidesExplPackage
   {minimalist-flow}
@@ -1100,6 +1107,8 @@
   }
 \ProcessKeyOptions [ minimalist ]
 
+\PassOptionsToPackage { dvipsnames } { xcolor }
+
 \bool_new:N \l__minimalist_is_book_bool
 \cs_if_exist:cTF { c@chapter }
   {
@@ -1158,9 +1167,9 @@
 \bool_set_true:N \l__minimalist_colored_proof_bool
 \tl_if_eq:NnTF \l__minimalist_colored_proof_tl { * }
   {
-%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-stream>
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-stream|minimalist-classicthesis>
     \bool_set_false:N \l__minimalist_colored_proof_bool
-%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-stream>
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-stream|minimalist-classicthesis>
 %<*minimalist-flow>
     \tl_set:Nn \l__minimalist_colored_proof_tl { blue!50!cyan!55!main-text }
 %</minimalist-flow>
@@ -1178,6 +1187,7 @@
 \RequirePackage { relsize }
 \RequirePackage { anyfontsize }
 
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
 \NewCommandCopy \minimalist_original_bfseries: \bfseries
 \bool_new:N \l_minimalist_is_under_bfseries_bool
 \bool_set_false:N \l_minimalist_is_under_bfseries_bool
@@ -1214,6 +1224,23 @@
   {
     \cs_new:Nn \minimalist_scshape: {}
   }
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
+%<*minimalist-classicthesis>
+\cs_new:Nn \minimalist_bfseries: {}
+\cs_new:Nn \minimalist_sffamily: {}
+\cs_new:Nn \minimalist_scshape: {}
+
+\hook_gput_code:nnn { begindocument } { minimalist }
+  {
+    \@ifpackageloaded{classicthesis-arsclassica}
+      {
+        \cs_set:Nn \minimalist_sffamily: { \sffamily }
+      }
+      {
+        \cs_set:Nn \minimalist_sffamily: {}
+      }
+  }
+%</minimalist-classicthesis>
 
 
 \tl_new:N \g_minimalist_title_font_common_tl
@@ -1225,14 +1252,14 @@
 \tl_new:N \g_minimalist_title_font_subsubsection_tl
 \tl_new:N \g_minimalist_title_font_paragraph_tl
 
-%<*minimalist-default|minimalist-plain>
+%<*minimalist-default|minimalist-plain|minimalist-classicthesis>
 \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
 \tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 \tl_gset:Nn \g_minimalist_title_font_section_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 \tl_gset:Nn \g_minimalist_title_font_subsection_tl    { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
 \tl_gset:Nn \g_minimalist_title_font_subsubsection_tl { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
 \tl_gset:Nn \g_minimalist_title_font_paragraph_tl     { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
-%</minimalist-default|minimalist-plain>
+%</minimalist-default|minimalist-plain|minimalist-classicthesis>
 %<*minimalist-classical>
 \tl_gset:Nn \g_minimalist_title_font_part_tl          { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl }
 \tl_gset:Nn \g_minimalist_title_font_chapter_tl       { \minimalist_bfseries:\minimalist_sffamily: \g_minimalist_title_font_common_tl \minimalist_scshape: }
@@ -1281,6 +1308,7 @@
   }
 %</minimalist-classical>
 
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
 %%================================
 %%  Footer
 %%================================
@@ -2221,6 +2249,7 @@
 % \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\diamond$}}
 \setlist[itemize,3]{label=\textcolor{.!27!paper}{$\circ$}}
 \setlist[itemize,4]{label=\textcolor{.!27!paper}{$\ast$}}
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
 
 %%================================
 %%  Blank page
@@ -2314,7 +2343,12 @@ heading_suffix "}\n"
     \str_if_eq:nnTF { #1 } { Symbols }
       { \tl_set:Nn \l_tmpa_tl { \index_symbols_name } }
       { \tl_set:Nn \l_tmpa_tl { #1 } }
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
     \centerline{ \g_minimalist_title_font_common_tl \minimalist_apply_title_numbering_style_static:n { \l_tmpa_tl } }
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
+%<*minimalist-classicthesis>
+    \centerline{ \minimalist_sffamily: { \l_tmpa_tl } }
+%</minimalist-classicthesis>
     \nopagebreak
     \par
     \vspace{.3\baselineskip}
@@ -2395,7 +2429,7 @@ heading_suffix "}\n"
   \fi
 }
 
-%<*minimalist-default|minimalist-plain|minimalist-flow>
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-classicthesis>
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
     \newtheoremstyle{simple}
@@ -2409,9 +2443,9 @@ heading_suffix "}\n"
       {0pt}
       {
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
-%<*minimalist-default|minimalist-plain>
+%<*minimalist-default|minimalist-plain|minimalist-classicthesis>
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
-%</minimalist-default|minimalist-plain>
+%</minimalist-default|minimalist-plain|minimalist-classicthesis>
 %<*minimalist-flow>
           {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
 %</minimalist-flow>
@@ -2433,9 +2467,9 @@ heading_suffix "}\n"
       {0pt}
       {
         \rlap{\vbox{\hbox{\parbox{\linewidth}{
-%<*minimalist-default|minimalist-plain>
+%<*minimalist-default|minimalist-plain|minimalist-classicthesis>
           {\thmname{#1}\thmnumber{\nobreakspace #2}}
-%</minimalist-default|minimalist-plain>
+%</minimalist-default|minimalist-plain|minimalist-classicthesis>
 %<*minimalist-flow>
           {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
 %</minimalist-flow>
@@ -2457,7 +2491,7 @@ heading_suffix "}\n"
       }{}
       {\normalfont}{}
       {0pt}
-%<*minimalist-default|minimalist-plain>
+%<*minimalist-default|minimalist-plain|minimalist-classicthesis>
       {
         {\thmname{#1}\thmnumber{\nobreakspace #2}}
         {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
@@ -2469,7 +2503,7 @@ heading_suffix "}\n"
             \pushQED{\simpleqed}
           }
       }
-%</minimalist-default|minimalist-plain>
+%</minimalist-default|minimalist-plain|minimalist-classicthesis>
 %<*minimalist-flow>
       {
         {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
@@ -2489,7 +2523,7 @@ heading_suffix "}\n"
       }{}
       {\normalfont}{}
       {0pt}
-%<*minimalist-default|minimalist-plain>
+%<*minimalist-default|minimalist-plain|minimalist-classicthesis>
       {
         {\thmname{#1}\thmnumber{\nobreakspace #2}}
         {\color{.!50!paper}\thmnote{\hspace{.4em} \minimalist_insert_l_mathparen: #3 \minimalist_insert_r_mathparen: }}
@@ -2501,7 +2535,7 @@ heading_suffix "}\n"
             \pushQED{\simpleqed}
           }
       }
-%</minimalist-default|minimalist-plain>
+%</minimalist-default|minimalist-plain|minimalist-classicthesis>
 %<*minimalist-flow>
       {
         {\thmnumber{ \minimalist_apply_title_numbering_style:n { #2 } \hspace{.75em} }\thmname{#1}}
@@ -2515,7 +2549,7 @@ heading_suffix "}\n"
   }
 
 \theoremstyle{simple}
-%</minimalist-default|minimalist-plain|minimalist-flow>
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-classicthesis>
 %<*minimalist-classical>
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
@@ -2621,7 +2655,7 @@ heading_suffix "}\n"
   }
 
 \dim_new:N \l_minimalist_space_before_inline_theorem_dim
-\AtBeginDocument
+\hook_gput_code:nnn { begindocument } { minimalist }
   {
     \dim_set:Nn \l_minimalist_space_before_inline_theorem_dim
       {
@@ -2739,7 +2773,7 @@ heading_suffix "}\n"
 
 % \PassOptionsToPackage { simplename } { projlib-theorem }
 
-%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
 \PassOptionsToPackage
   {
     theorem-style = {
@@ -2748,7 +2782,7 @@ heading_suffix "}\n"
       theorem-with-name = simple-var,
     }
   } { projlib-theorem }
-%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
 %<*minimalist-stream>
 \bool_if:NTF \l__minimalist_theorem_in_new_line_bool
   {
@@ -2828,7 +2862,7 @@ heading_suffix "}\n"
   {
     name style = {
       , heading style = {
-%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
           , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
           , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
           , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
@@ -2841,7 +2875,7 @@ heading_suffix "}\n"
           , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
           , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
           , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
-%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
 %<*minimalist-stream>
           \g_minimalist_title_font_common_tl \textit
 %</minimalist-stream>
@@ -2883,11 +2917,11 @@ heading_suffix "}\n"
               , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
             }
-%<*minimalist-default|minimalist-plain|minimalist-classical>
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-classicthesis>
           , numbering style = {
               \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
             }
-%</minimalist-default|minimalist-plain|minimalist-classical>
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-classicthesis>
 %<*minimalist-flow|minimalist-stream>
           , numbering style = { \minimalist_apply_title_numbering_style_static:n }
 %</minimalist-flow|minimalist-stream>
@@ -2898,7 +2932,7 @@ heading_suffix "}\n"
       {
         name style = {
           , crefname style = {
-%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
               , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
               , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
               , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
@@ -2911,13 +2945,13 @@ heading_suffix "}\n"
               , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
               , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
-%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
 %<*minimalist-stream>
               \g_minimalist_title_font_common_tl \textit
 %</minimalist-stream>
             }
           , Crefname style = {
-%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
               , english = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
               , french = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
               , ngerman = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl\textit
@@ -2930,16 +2964,16 @@ heading_suffix "}\n"
               , tchinese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
               , japanese = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
               , russian = \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
-%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow>
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-classicthesis>
 %<*minimalist-stream>
               \g_minimalist_title_font_common_tl \textit
 %</minimalist-stream>
             }
-%<*minimalist-default|minimalist-plain|minimalist-classical>
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-classicthesis>
           , numbering style = {
               \minimalist_bfseries:\minimalist_sffamily:\g_minimalist_title_font_common_tl
             }
-%</minimalist-default|minimalist-plain|minimalist-classical>
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-classicthesis>
 %<*minimalist-flow|minimalist-stream>
           , numbering style = { \minimalist_apply_title_numbering_style_static:n }
 %</minimalist-flow|minimalist-stream>
@@ -2997,10 +3031,10 @@ heading_suffix "}\n"
           enhanced ~ jigsaw, breakable, oversize,
           % nobeforeafter,
           left = .5em, right=0mm, top=0.5mm, bottom=0mm, boxrule=0pt,
-%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
           colback=main-text!2!paper, frame ~ hidden,
           borderline ~ west = {.3em} {0mm} {main-text!25!paper},
-%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
 %<*minimalist-classical>
           colback = paper, frame ~ hidden,
           borderline ~ west = {.125em} {-.5mm} {main-text!25!paper, double, double ~ distance=.1em},
@@ -3045,13 +3079,18 @@ heading_suffix "}\n"
       }
   }
   {
-%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
     \renewcommand{\@maketitle}
       {
         \LocallyStopLineNumbers
         \begin{center}
           \let\footnote\thanks
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
           {\minimalist_bfseries:\minimalist_scshape:\sffamily\Large\@title}\\\bigskip
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-classicthesis>
+          {\minimalist_sffamily:\Large\@title}\\\bigskip
+%</minimalist-classicthesis>
           \color{main-text!80!paper}
           {\small\minimalist_scshape:\@author}
           \par\smallskip\vspace{-\parskip}
@@ -3061,7 +3100,7 @@ heading_suffix "}\n"
         \medskip\par
         \ResumeLineNumbers
       }
-%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
 %<*minimalist-classical>
     \renewcommand{\@maketitle}
       {
@@ -3092,18 +3131,25 @@ heading_suffix "}\n"
       }
 %</minimalist-classical>
 
+%<*minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
     \hook_gput_code:nnn { cmd/maketitle/after } { minimalist } { \thispagestyle{fancy} }
+%</minimalist-default|minimalist-plain|minimalist-classical|minimalist-flow|minimalist-stream>
 
 %%================================
 %%  Abstract style
 %%================================
-%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
     \renewenvironment{abstract}
       {
         \LocallyStopLineNumbers
         \vspace{-.5\baselineskip}
         \begin{center}
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
           { \g_minimalist_title_font_section_tl \minimalist_scshape: \small\abstractname}\\
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-classicthesis>
+          { \small\spacedlowsmallcaps{\abstractname} }\\
+%</minimalist-classicthesis>
           \vspace{-.3\baselineskip}
           \begin{minipage}[t]{.833\textwidth}
             \vspace{0pt}
@@ -3117,7 +3163,7 @@ heading_suffix "}\n"
         \medskip
         \ResumeLineNumbers
       }
-%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
 %<*minimalist-classical>
     \renewenvironment{abstract}
       {
@@ -3158,12 +3204,17 @@ heading_suffix "}\n"
         RU = Ключевые~слова                         ,
       }
 
-%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
     \newenvironment{keyword}{
       \LocallyStopLineNumbers
       \vspace{-.75\baselineskip}
       \begin{center}
+%<*minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
         { \g_minimalist_title_font_section_tl \minimalist_scshape: \small\keywordname}\\
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%<*minimalist-classicthesis>
+        { \small\spacedlowsmallcaps{\keywordname} }\\
+%</minimalist-classicthesis>
         \vspace{-.3\baselineskip}
         \begin{minipage}[t]{.833\textwidth}
           \vspace{0pt}
@@ -3178,7 +3229,7 @@ heading_suffix "}\n"
       \medskip
       \ResumeLineNumbers
     }
-%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream>
+%</minimalist-default|minimalist-plain|minimalist-flow|minimalist-stream|minimalist-classicthesis>
 %<*minimalist-classical>
     \newenvironment{keyword}{
       \LocallyStopLineNumbers
@@ -3225,6 +3276,16 @@ heading_suffix "}\n"
 \crefformat { subsubsection } { \nobreak \crefthemark { \crefthe_retrieve_space: } \nobreak #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 \labelcrefformat { subsubsection } { #2 \minimalist_apply_title_numbering_style_static:n {#1} #3 }
 %</minimalist-default|minimalist-flow|minimalist-stream>
+
+%<*minimalist-classicthesis>
+%%================================
+%%  Load the main design
+%%================================
+\hook_gput_code:nnn { begindocument/before } { minimalist }
+  {
+    \RequirePackage { classicthesis }
+  }
+%</minimalist-classicthesis>
 %</style>
 
 \endinput

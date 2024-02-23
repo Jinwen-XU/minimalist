@@ -11,13 +11,20 @@
 It mainly consists of two parts.
 
 - Main part:
-    - `minimalist.sty` : interface of the main style
-        - `minimalist-default.sty` : the default style
-        - `minimalist-classical.sty` : the style "classical"
-        - `minimalist-flow.sty` : the style "flow"
-        - `minimalist-plain.sty` : the style "plain"
-        - `minimalist-stream.sty` : the style "stream"
-        - ... and more styles to come (currently on schedule: "modern")
+    - `minimalist.sty` : *interface of the main style*
+        - `minimalist-plain.sty` : *the style "plain"*
+          - The best choice for formal usage.
+        - `minimalist-default.sty` : *the default style*
+          - Slightly fancier than the plain style.
+        - `minimalist-flow.sty` : *the style "flow"*
+          - Suitable for writing course notes: sections and theorems are numbered together to create a storytelling atmosphere; proofs are colored by default.
+        - `minimalist-stream.sty` : *the style "stream"*
+          - Numbers are placed in the left margin; sections and theorems are numbered together to gain a streamlined feeling.
+        - `minimalist-classical.sty` : *the style "classical"*
+          - Originated in the typewriter style, now modernized.
+        - `minimalist-classicthesis.sty`
+          - Use your favorite design of [ClassicThesis](https://ctan.org/pkg/classicthesis) (and its carefully designed styles such as [ArsClassica](https://ctan.org/pkg/arsclassica)), while still have access to the features provided here, such as preconfigured theorem environments, multilingual support, enhanced author info block, etc.
+        - ... and more styles to come (currently on schedule: "elegant", "french", "modern", "typewriter")
     - `minimart.cls` : class for typesetting articles
     - `minimbook.cls` : class for typesetting books
 
