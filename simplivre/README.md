@@ -21,6 +21,21 @@ Compared with usual document classes, it has the following features:
 - Support both the standard and the AMS writing fashion.
 - ... and much more...
 
+## To get started
+
+Prepration:
+
+- Make sure that your TeX distribution is up-to-dated.
+- Check the required fonts indicated below, and make sure that they are installed.
+
+Once prepared:
+
+- You may get started by looking at one of the [demo documents](https://github.com/Jinwen-XU/minimalist/tree/main/simplivre/demo) that suits your need and edit the code there to get your own template.
+
+If you run into a problem, or if you would like some elements to be changed or improved:
+
+- Feel free to raise an issue or post a feature request via [the GitHub issue](https://github.com/Jinwen-XU/minimalist/issues).
+
 ## Required fonts
 
 The current document class requires the following open-source fonts that are not included in the standard TeX collection:
