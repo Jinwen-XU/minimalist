@@ -10,6 +10,8 @@ Currently, it has native support to Chinese (simplified and traditional), Englis
 
 This is part of the `minimalist` class series.
 
+> Package dependencies: [`amsfonts`](https://ctan.org/pkg/amsfonts), [`caption`](https://ctan.org/pkg/caption), [`ctex`](https://ctan.org/pkg/ctex), [*`draftwatermark`*](https://ctan.org/pkg/draftwatermark), [`embrac`](https://ctan.org/pkg/embrac), [`float`](https://ctan.org/pkg/float), [`fontspec`](https://ctan.org/pkg/fontspec), [`geometry`](https://ctan.org/pkg/geometry), [`graphicx`](https://ctan.org/pkg/graphicx), [*`lua-widow-control`*](https://ctan.org/pkg/lua-widow-control), [`indentfirst`](https://ctan.org/pkg/indentfirst), [*`mathpazo`*](https://ctan.org/pkg/mathpazo), [`minimalist`](https://ctan.org/pkg/minimalist), [*`nowidow`*](https://ctan.org/pkg/nowidow), [`parskip`](https://ctan.org/pkg/parskip), [`projlib`](https://ctan.org/pkg/projlib), [`regexpatch`](https://ctan.org/pkg/regexpatch), [`silence`](https://ctan.org/pkg/silence), [`tikz-cd`](https://ctan.org/pkg/tikz-cd), [`unicode-math`](https://ctan.org/pkg/unicode-math), [`wrapfig2`](https://ctan.org/pkg/wrapfig2).
+
 ## Features
 
 Compared with usual document classes, it has the following features:
