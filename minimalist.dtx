@@ -780,7 +780,7 @@
                   ]
                 \setmathfont { texgyrepagella-math.otf }
                   [
-                    range = { `(, `), `/, \setminus } ,
+                    range = { `(, `), `/, \setminus, `| } ,
                     Scale = 1.10
                   ]
                 \setmathfont { texgyrepagella-math.otf }
@@ -1612,10 +1612,10 @@
 %<*minimalist-default|minimalist-flow>
     \int_case:nn { \l_tmpa_int }
       {
-        { 0 } { \textcolor { main-text!39!paper } }
-        { 1 } { \textcolor { main-text!39!paper } }
-        { 2 } { \textcolor { main-text!39!paper } }
-        { 3 } { \textcolor { main-text!39!paper } }
+        { 0 } { \textcolor { .!39!paper } }
+        { 1 } { \textcolor { .!39!paper } }
+        { 2 } { \textcolor { .!39!paper } }
+        { 3 } { \textcolor { .!39!paper } }
       }
 %</minimalist-default|minimalist-flow>
 %<*minimalist-stream>
@@ -1623,18 +1623,18 @@
       {
         \int_case:nn { \l_tmpa_int }
           {
-            { 0 } { \textcolor { main-text!39!paper } }
-            { 1 } { \textcolor { main-text!39!paper } }
-            { 2 } { \textcolor { main-text!39!paper } }
-            { 3 } { \smaller \textcolor { main-text!24!paper } }
+            { 0 } { \textcolor { .!39!paper } }
+            { 1 } { \textcolor { .!39!paper } }
+            { 2 } { \textcolor { .!39!paper } }
+            { 3 } { \smaller \textcolor { .!24!paper } }
           }
       }
       {
         \int_case:nn { \l_tmpa_int }
           {
-            { 0 } { \textcolor { main-text!39!paper } }
-            { 1 } { \textcolor { main-text!39!paper } }
-            { 2 } { \smaller[2] \textcolor { main-text!24!paper } }
+            { 0 } { \textcolor { .!39!paper } }
+            { 1 } { \textcolor { .!39!paper } }
+            { 2 } { \smaller[2] \textcolor { .!24!paper } }
           }
       }
 %</minimalist-stream>
@@ -2107,6 +2107,8 @@
   }
 %</minimalist-stream>
 
+\titlespacing{\paragraph}{0pt}{.3\baselineskip plus .2\baselineskip minus .1\baselineskip}{1em}
+
 %%================================
 %%  ToC format
 %%================================
@@ -2422,7 +2424,7 @@ heading_suffix "}\n"
 \def\simpleqedsymbol{
   \makebox[1em]{\rlap{\textcolor{.!12!paper}{\rule[-0.1em]{.95em}{.95em}}}{\kern.07em\raisebox{.07em}{\textcolor{paper}{\rule[-0.1em]{.81em}{.81em}}}\kern.07em}}}
 \DeclareRobustCommand{\simpleqed}{%
-  \ifmmode \quad\hbox{\simpleqedsymbol}
+  \ifmmode \tag*{\hbox{\simpleqedsymbol}}
   \else
     \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
     \quad\hbox{\simpleqedsymbol}%
@@ -2739,8 +2741,9 @@ heading_suffix "}\n"
 %% Special treatments for the Q.E.D. symbol
 \def\noQED{\let\popQED\relax}
 \let\noqed\noQED
-% \def\proofless{\let\qedsymbol\customqedsymbol\let\simpleqedsymbol\customqedsymbol}
-\def\proofless{\pushQED{\qed}}
+% Temporary fix so that when nested, the outside level would still have a QED symbol (should be sufficient in most cases, but is certainly not a reliable approach)
+\def\proofless{\pushQED{\qed}\AddToHookNext{env/\@currenvir/after}{\pushQED{\qed}}}
+% \def\proofless{\pushQED{\qed}}
 
 \bool_if:NTF \l__minimalist_fast_bool
   {
