@@ -1,8 +1,8 @@
-<!-- Copyright (C) 2021-2025 by Jinwen XU -->
+<!-- Copyright (C) 2021-2026 by Jinwen XU -->
 
 # `einfart` : write you articles in a simple and clear way
 
-> **New documentations are still being written. For now, only the core code is included in TeX Live 2025 and MiKTeX (old documentations have been removed from the distribution).**
+> **New documentations are still being written. For now, only the core code is included in TeX Live and MiKTeX (old documentations have been removed from the distribution).**
 
 `einfart` is a LaTeX class for typesetting articles, which has a simple and clear design.
 
